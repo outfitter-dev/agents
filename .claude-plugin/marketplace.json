@@ -1,0 +1,34 @@
+{
+  "name": "outfitter",
+  "owner": {
+    "name": "Outfitter",
+    "email": "team@outfitter.dev"
+  },
+  "metadata": {
+    "description": "Official Outfitter development tools and integrations for Claude Code",
+    "version": "1.0.0",
+    "homepage": "https://github.com/outfitter-dev/agents",
+    "repository": "https://github.com/outfitter-dev/agents"
+  },
+  "plugins": [
+    {
+      "name": "claude-dev",
+      "source": "./claude-dev",
+      "description": "Skills for authoring Claude Code plugins, marketplaces, and configuration management",
+      "version": "1.0.0",
+      "keywords": ["plugin-authoring", "marketplace", "skills", "development"],
+      "category": "development"
+    },
+    {
+      "name": "blz",
+      "source": {
+        "source": "github",
+        "repo": "outfitter-dev/blz"
+      },
+      "description": "Fast local documentation search with llms.txt indexing. Search 12K+ line docs in 6ms with line-accurate citations.",
+      "version": "0.5.0",
+      "keywords": ["documentation", "search", "llms-txt", "cli"],
+      "category": "documentation"
+    }
+  ]
+}

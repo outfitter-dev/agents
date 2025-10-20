@@ -1,0 +1,21 @@
+{
+  "name": "claude-dev",
+  "version": "1.0.0",
+  "description": "Skills and tools for authoring Claude Code plugins, marketplaces, and configuration. Includes comprehensive guides for plugin development, marketplace setup, config management, and distribution workflows.",
+  "author": {
+    "name": "Outfitter",
+    "email": "team@outfitter.dev"
+  },
+  "homepage": "https://github.com/outfitter-dev/agents",
+  "repository": "https://github.com/outfitter-dev/agents",
+  "license": "MIT",
+  "keywords": [
+    "plugin-authoring",
+    "marketplace",
+    "skills",
+    "development",
+    "claude-code",
+    "tooling"
+  ],
+  "category": "development"
+}
