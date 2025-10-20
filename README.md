@@ -61,17 +61,26 @@ GitButler virtual branch workflows for parallel development and multi-agent coll
 
 ### claude-dev
 
-Skills for authoring Claude Code plugins, marketplaces, and configuration management.
+Comprehensive skills and scripts for authoring Claude Code plugins, slash commands, hooks, marketplaces, and configuration.
 
 ```bash
 /plugin install claude-dev@outfitter
 ```
 
-**4 skills** for:
-- Plugin structure and authoring
-- Marketplace setup and management
-- Claude configuration files
-- Plugin distribution and versioning
+**What it does:**
+- **6 specialized skills** covering all plugin components:
+  - Plugin authoring (complete plugins from scratch)
+  - Slash command authoring (custom commands with arguments)
+  - Hook authoring (automation with 9 event types)
+  - Marketplace setup (distribution and management)
+  - Config management (Claude Desktop & Code settings)
+  - Plugin distribution (versioning and releases)
+- **3 utility scripts** for plugin workflow:
+  - `init-plugin.sh` - Interactive plugin initialization wizard
+  - `validate-plugin.sh` - Comprehensive validation with auto-fix
+  - `test-plugin.sh` - Local testing environment setup
+
+**Use when:** Building plugins, creating commands/hooks, setting up marketplaces, managing config, or distributing plugins.
 
 [See claude-dev/README.md](claude-dev/README.md)
 
