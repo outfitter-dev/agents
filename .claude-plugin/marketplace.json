@@ -29,7 +29,7 @@
       "name": "gitbutler",
       "source": "./gitbutler",
       "description": "GitButler virtual branch workflows for parallel development, multi-agent collaboration, and post-hoc organization",
-      "version": "0.1.0",
+      "version": "2.0.0",
       "keywords": ["gitbutler", "virtual-branches", "version-control", "multi-agent", "parallel-development"]
     }
   ]

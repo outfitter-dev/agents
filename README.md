@@ -1,10 +1,10 @@
 # Outfitter Agents
 
-Official Outfitter development tools and integrations for Claude Code.
+Official Claude Code plugins for disciplined software development.
 
 ## What's This?
 
-This repository hosts the **Outfitter Marketplace** - a curated collection of Claude Code plugins for developers working with Outfitter projects.
+This repository hosts the **Outfitter Marketplace** — a curated collection of Claude Code plugins providing development methodology, tooling, and workflow skills.
 
 ## Installation
 
@@ -18,39 +18,90 @@ This repository hosts the **Outfitter Marketplace** - a curated collection of Cl
 
 ## Available Plugins
 
+### baselayer
+
+Core development methodology skills: TDD, debugging, architecture, research, and code quality.
+
+```bash
+/plugin install baselayer@outfitter
+```
+
+**18 skills** including:
+- Test-driven development (Red-Green-Refactor)
+- Systematic debugging (root cause first)
+- Architecture design with tradeoff analysis
+- Technical research with citations
+- TypeScript, Bun, Hono, React patterns
+
+**7 agents**: developer, analyst, reviewer, tester, specialist, skeptic, pattern-analyzer
+
+[See baselayer/README.md](baselayer/README.md)
+
+---
+
+### gitbutler
+
+GitButler virtual branch workflows for parallel development and multi-agent collaboration.
+
+```bash
+/plugin install gitbutler@outfitter
+```
+
+**4 skills** for:
+- Virtual branch management
+- Multi-agent concurrent development
+- Stacked branch workflows
+- Branch completion and merging
+
+**1 agent**: gitbutler-expert
+
+[See gitbutler/README.md](gitbutler/README.md)
+
+---
+
 ### claude-dev
 
 Skills for authoring Claude Code plugins, marketplaces, and configuration management.
 
-**Install:**
 ```bash
 /plugin install claude-dev@outfitter
 ```
 
-**What it does:**
-- Creates complete Claude Code plugins
-- Sets up plugin marketplaces
-- Manages Claude configuration files
-- Handles plugin distribution and versioning
+**4 skills** for:
+- Plugin structure and authoring
+- Marketplace setup and management
+- Claude configuration files
+- Plugin distribution and versioning
 
-**Use when:** Building Claude Code plugins, setting up marketplaces, or managing configuration.
+[See claude-dev/README.md](claude-dev/README.md)
 
-### blz
+## Quick Start
 
-Fast local documentation search with llms.txt indexing.
+For most projects, start with baselayer:
 
-**Install:**
 ```bash
-/plugin install blz@outfitter
+# Add marketplace and install foundation
+/plugin marketplace add outfitter-dev/agents
+/plugin install baselayer@outfitter
+
+# Add GitButler if using virtual branches
+/plugin install gitbutler@outfitter
+
+# Add claude-dev if building plugins
+/plugin install claude-dev@outfitter
 ```
 
-**What it does:**
-- Search 12K+ line docs in 6ms
-- Line-accurate citations
-- Works offline after initial download
-- Smart HTTP caching
+## Repository Structure
 
-**Use when:** Searching technical documentation, looking up APIs, or finding code examples.
+```
+agents/
+├── .claude-plugin/
+│   └── marketplace.json    # Plugin catalog
+├── baselayer/              # Core methodology (18 skills, 7 agents)
+├── gitbutler/              # Virtual branch workflows (4 skills, 1 agent)
+├── claude-dev/             # Plugin authoring (4 skills)
+└── README.md
+```
 
 ## Plugin Development
 
@@ -67,35 +118,9 @@ Want to add your own plugin to the marketplace?
 
 See [claude-dev/README.md](claude-dev/README.md) for detailed guidance.
 
-## Repository Structure
-
-```
-agents/
-├── .claude-plugin/
-│   └── marketplace.json       # Marketplace catalog
-├── claude-dev/                # Plugin authoring skills
-│   ├── .claude-plugin/
-│   │   └── plugin.json
-│   ├── skills/
-│   └── README.md
-└── README.md                  # This file
-```
-
-## For Outfitter Contributors
-
-If you're working on Outfitter projects and want to use these tools locally:
-
-```bash
-# From this directory
-/plugin marketplace add .
-/plugin install claude-dev@outfitter
-/plugin install blz@outfitter
-```
-
 ## Links
 
 - **Outfitter**: https://github.com/outfitter-dev
-- **BLZ**: https://github.com/outfitter-dev/blz
 - **Issues**: https://github.com/outfitter-dev/agents/issues
 
 ## License
