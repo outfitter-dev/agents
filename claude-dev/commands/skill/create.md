@@ -168,7 +168,7 @@ When all phases complete:
 
 ## Example Session
 
-**User:** `/claude-dev:skill-create github-issues`
+**User:** `/claude-dev:skill:create github-issues`
 
 **Assistant:**
 1. Asks clarifying questions about GitHub issues skill
@@ -204,5 +204,5 @@ skill-archetypes/
 
 ## Related Commands
 
-- `/claude-dev:skill-validate` - Validate skill structure (future)
-- `/claude-dev:skill-package` - Package skill for distribution (future)
+- `/claude-dev:skill:validate` - Validate skill structure (future)
+- `/claude-dev:skill:package` - Package skill for distribution (future)
