@@ -1,0 +1,20 @@
+{
+  "name": "baselayer",
+  "version": "0.2.0",
+  "description": "Core development methodology skills: TDD, systematic debugging, type safety, architecture design, technical research, and requirements discovery",
+  "author": {
+    "name": "Outfitter",
+    "email": "team@outfitter.dev"
+  },
+  "homepage": "https://github.com/outfitter-dev/agents",
+  "repository": "https://github.com/outfitter-dev/agents",
+  "license": "MIT",
+  "keywords": [
+    "tdd",
+    "debugging",
+    "type-safety",
+    "architecture",
+    "research",
+    "methodology"
+  ]
+}
