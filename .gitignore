@@ -1,0 +1,8 @@
+# Scratch directory for scenario testing
+.scratch/
+
+# Beads database (local issue tracking)
+.beads/
+
+# Agent planning notes (internal)
+.agents/plans/

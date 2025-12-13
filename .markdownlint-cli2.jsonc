@@ -1,0 +1,62 @@
+{
+  "$schema": "https://json.schemastore.org/markdownlint-cli2.jsonc",
+  "globs": ["**/*.md"],
+  "gitignore": true,
+  "default": true,
+  "fix": true,
+  "config": {
+    // "MD001": true, // heading-increment
+    // "MD002": true, // first-heading-h1 (deprecated)
+    "MD003": { "style": "atx" }, // heading-style
+    "MD004": { "style": "dash" }, // ul-style
+    // "MD005": true, // list-indent
+    // "MD006": true, // ul-start-left (deprecated)
+    "MD007": { "indent": 2 }, // ul-indent
+    // "MD009": true, // no-trailing-spaces
+    // "MD010": true, // no-hard-tabs
+    // "MD011": true, // no-reversed-links
+    // "MD012": true, // no-multiple-blanks
+    "MD013": false, // line-length
+    // "MD014": true, // commands-show-output
+    // "MD018": true, // no-missing-space-atx
+    // "MD019": true, // no-multiple-space-atx
+    // "MD020": true, // no-missing-space-closed-atx
+    // "MD021": true, // no-multiple-space-closed-atx
+    // "MD022": true, // blanks-around-headings
+    // "MD023": true, // heading-start-left
+    "MD024": { "siblings_only": true }, // no-duplicate-heading
+    // "MD025": true, // single-title
+    "MD026": false, // no-trailing-punctuation
+    // "MD027": true, // no-multiple-space-blockquote
+    // "MD028": true, // no-blanks-blockquote
+    "MD029": false, // ol-prefix
+    // "MD030": true, // list-marker-space
+    // "MD031": true, // blanks-around-fences
+    "MD032": false, // blanks-around-lists
+    "MD033": false, // no-inline-html
+    // "MD034": true, // no-bare-urls
+    // "MD035": true, // hr-style
+    "MD036": false, // no-emphasis-as-heading
+    // "MD037": true, // no-space-in-emphasis
+    // "MD038": true, // no-space-in-code
+    // "MD039": true, // no-space-in-links
+    // "MD040": true, // fenced-code-language
+    "MD041": false, // first-line-heading
+    // "MD042": true, // no-empty-links
+    "MD043": false, // required-headings
+    // "MD044": true, // proper-names
+    // "MD045": true, // no-alt-text
+    "MD046": { "style": "fenced" }, // code-block-style
+    // "MD047": true, // single-trailing-newline
+    // "MD048": true, // code-fence-style
+    "MD049": { "style": "asterisk" } // emphasis-style
+    // "MD050": true, // strong-style
+    // "MD051": true, // link-fragments
+    // "MD052": true, // reference-links-images
+    // "MD053": true, // link-image-reference-definitions
+    // "MD054": true, // link-image-style
+    // "MD055": true, // table-pipe-style
+    // "MD056": true  // table-column-count
+  },
+  "outputFormatters": [["markdownlint-cli2-formatter-default"]]
+}
