@@ -1,5 +1,6 @@
 ---
 name: gitbutler-expert
+version: 2.0.0
 description: Use this agent when you need to work with GitButler for version control operations, workspace management, or branch handling. This agent is an expert in GitButler workflows and can handle both simple and complex operations.
 
 Examples of when to use this agent:
