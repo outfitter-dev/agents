@@ -12,23 +12,25 @@
   },
   "plugins": [
     {
+      "name": "baselayer",
+      "source": "./baselayer",
+      "description": "Core development methodology skills: TDD, systematic debugging, type safety, architecture design, technical research, and requirements discovery",
+      "version": "0.2.0",
+      "keywords": ["tdd", "debugging", "type-safety", "architecture", "research", "methodology"]
+    },
+    {
       "name": "claude-dev",
       "source": "./claude-dev",
       "description": "Skills for authoring Claude Code plugins, marketplaces, and configuration management",
       "version": "1.0.0",
-      "keywords": ["plugin-authoring", "marketplace", "skills", "development"],
-      "category": "development"
+      "keywords": ["plugin-authoring", "marketplace", "skills", "development"]
     },
     {
-      "name": "blz",
-      "source": {
-        "source": "github",
-        "repo": "outfitter-dev/blz"
-      },
-      "description": "Fast local documentation search with llms.txt indexing. Search 12K+ line docs in 6ms with line-accurate citations.",
-      "version": "0.5.0",
-      "keywords": ["documentation", "search", "llms-txt", "cli"],
-      "category": "documentation"
+      "name": "gitbutler",
+      "source": "./gitbutler",
+      "description": "GitButler virtual branch workflows for parallel development, multi-agent collaboration, and post-hoc organization",
+      "version": "0.1.0",
+      "keywords": ["gitbutler", "virtual-branches", "version-control", "multi-agent", "parallel-development"]
     }
   ]
 }
