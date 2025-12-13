@@ -1,57 +1,45 @@
 # GitButler Examples
 
-Real-world patterns and workflows from multi-agent testing and production use.
-
-## Table of Contents
-
-1. [Basic Workflows](#basic-workflows)
-2. [Reorganizing Work](#reorganizing-work)
-3. [Multi-Agent Patterns](#multi-agent-patterns)
-4. [Stack Management](#stack-management)
-5. [Emergency Recovery](#emergency-recovery)
+Real-world patterns and workflows for virtual branches, multi-agent collaboration, and post-hoc organization.
 
 ---
 
 ## Basic Workflows
 
-### Creating Your First Virtual Branch
+### First Virtual Branch
 
 ```bash
-# Initialize GitButler (one time)
+# Initialize (one time)
 cd /path/to/repo
 but init
 
-# Check current state
+# Check state
 but status
 # ● 0c60c71 (common base) [origin/main]
 
-# Create virtual branch
+# Create branch
 but branch new feature-user-auth
 
 # Make changes
 echo "export function authenticate()" > src/auth.ts
 echo "test('authenticates user')" > src/auth.test.ts
 
-# Check status - see file IDs
+# Check status for file IDs
 but status
 # ╭┄00 [Unassigned Changes]
 # │   m6 A src/auth.ts
 # │   p9 A src/auth.test.ts
 
-# Assign files to branch
+# Assign and commit
 but rub m6 feature-user-auth
 but rub p9 feature-user-auth
-
-# Commit
 but commit feature-user-auth -m "feat: add user authentication"
 ```
 
-### Working on Multiple Features Simultaneously
+### Context Switching (No Checkout!)
 
 ```bash
-# Scenario: Bug reported while implementing feature
-
-# You're working on feature
+# Working on feature when bug reported
 but branch new feature-dashboard
 echo "Dashboard code" > dashboard.ts
 but rub <id> feature-dashboard
@@ -62,19 +50,13 @@ echo "Fix timeout" > login.ts
 but rub <id> bugfix-login-timeout
 
 # Both exist in same workspace
-but status
-# Shows both branches with their respective files
+but status  # Shows both branches
 
 # Commit bugfix first (urgent)
 but commit bugfix-login-timeout -m "fix: resolve login timeout"
 
 # Continue feature work
-echo "More dashboard" >> dashboard.ts
 but commit feature-dashboard -m "feat: add dashboard"
-
-# Push bugfix immediately, feature when ready
-git push origin bugfix-login-timeout
-gh pr create --title "fix: resolve login timeout" --body "Urgent bugfix"
 ```
 
 ---
@@ -83,10 +65,8 @@ gh pr create --title "fix: resolve login timeout" --body "Urgent bugfix"
 
 ### Moving Commits Between Branches
 
-**Scenario**: Committed work to wrong branch.
-
 ```bash
-# Initial state - oops, committed to wrong branch!
+# Oops, committed to wrong branch!
 but log
 # Shows def5678 "feat: add new feature" on bugfix-branch
 
@@ -96,29 +76,22 @@ but branch new feature-new-capability
 # Move the commit
 but rub def5678 feature-new-capability
 
-# Result - commit moved!
+# Commit moved!
 but log
-# def5678 now on feature-new-capability
 ```
 
-### Squashing Multiple Small Commits
-
-**Scenario**: Made many small commits, want to combine into one.
+### Squashing Commits
 
 ```bash
-# Initial state - too many commits
+# Too many small commits
 but log
-# Shows c3d4e5f, c2d3e4f, c1d2e3f on feature-branch
+# c3d4e5f, c2d3e4f, c1d2e3f on feature-branch
 
-# Squash docs into tests (newer into older)
+# Squash (newer into older)
 but rub c3d4e5f c2d3e4f
-
-# Result - commits combined
 ```
 
 ### Post-Hoc File Assignment
-
-**Scenario**: Wrote code first, organize into branches after.
 
 ```bash
 # Made changes without branches
@@ -129,12 +102,12 @@ echo "Docs" > README.md
 but status
 # Shows all files in Unassigned Changes
 
-# Realize they should be separate branches
+# Create branches and organize
 but branch new feature-auth
 but branch new feature-api
 but branch new docs-update
 
-# Assign files to respective branches
+# Assign to respective branches
 but rub m6 feature-auth
 but rub p9 feature-api
 but rub i3 docs-update
@@ -143,17 +116,13 @@ but rub i3 docs-update
 but commit feature-auth -m "feat: add authentication"
 but commit feature-api -m "feat: add API endpoints"
 but commit docs-update -m "docs: update readme"
-
-# Three independent branches from one coding session!
 ```
 
 ---
 
 ## Multi-Agent Patterns
 
-### Pattern 1: Parallel Feature Development
-
-**Scenario**: Two AI agents working on different features concurrently.
+### Parallel Feature Development
 
 ```bash
 # Agent 1 (Claude)
@@ -171,9 +140,7 @@ but commit droid-feature-api -m "feat: add API endpoints"
 # Zero conflicts, zero coordination overhead
 ```
 
-### Pattern 2: Sequential Handoffs
-
-**Scenario**: Agent A starts work, Agent B continues it.
+### Sequential Handoffs
 
 ```bash
 # Agent A: Initial implementation
@@ -183,18 +150,15 @@ but rub <id> feature-user-management
 but commit feature-user-management -m "feat: initial user management"
 
 # Agent A hands off to Agent B
-# Create new branch for continuation
 but branch new feature-user-management-tests --anchor feature-user-management
 
-# Agent B: Adds tests and improvements
+# Agent B: Adds tests
 echo "Tests for user management" > user.test.ts
 but rub <id> feature-user-management-tests
 but commit feature-user-management-tests -m "test: add user management tests"
 ```
 
-### Pattern 3: Cross-Agent Commit Transfer
-
-**Scenario**: Agent A finishes, Agent B takes ownership.
+### Cross-Agent Commit Transfer
 
 ```bash
 # Agent A finishes work
@@ -207,7 +171,7 @@ but branch new agent-b-continuation
 # Transfer commit from A to B
 but rub abc1234 agent-b-continuation
 
-# Agent B continues from there
+# Agent B continues
 echo "More work" >> feature.ts
 but commit agent-b-continuation -m "feat: continue implementation"
 ```
@@ -217,8 +181,6 @@ but commit agent-b-continuation -m "feat: continue implementation"
 ## Stack Management
 
 ### Creating a Linear Stack
-
-**Scenario**: Break large feature into reviewable chunks.
 
 ```bash
 # Base refactoring
@@ -241,9 +203,11 @@ but commit test-new-model -m "test: comprehensive model tests"
 
 # Visualize stack
 but log
-# Shows three-level stack
+```
 
-# Submit as stack (using gh CLI)
+### Submit Stack as PRs
+
+```bash
 git push origin refactor-database
 gh pr create --title "refactor: database layer" --base main
 
@@ -258,24 +222,23 @@ gh pr create --title "test: model tests" --base feature-new-model
 
 ## Emergency Recovery
 
-### Recovering from Accidental Deletion
+### Recover Deleted Branch
 
 ```bash
 # Oops, deleted wrong branch
 but branch delete important-feature --force
 
-# Oh no! Check oplog
+# Check oplog
 but oplog
 
 # Undo deletion
 but undo
 
 # Verify recovery
-but log
-# Branch recovered!
+but log  # Branch recovered!
 ```
 
-### Recovering from Bad Reorganization
+### Recover from Bad Reorganization
 
 ```bash
 # Snapshot before risky operations
@@ -292,9 +255,7 @@ but restore $snapshot_id
 # Back to pre-reorganization state!
 ```
 
-### Recovering from Mixed Git/But Commands
-
-**Scenario**: Accidentally used `git commit` on virtual branch.
+### Recover from Mixed Git/But Commands
 
 ```bash
 # Made changes on virtual branch
@@ -303,41 +264,34 @@ echo "changes" > file.ts
 
 # Accidentally used git
 git add file.ts
-git commit -m "oops"  # ❌ WRONG
+git commit -m "oops"  # WRONG!
 
-# Recovery attempt 1: Update base
+# Recovery
 but base update
 
 # If still broken, reinitialize
 but snapshot --message "Before recovery"
 but init
-
-# Learn: NEVER mix git and but commands!
 ```
 
 ---
 
-## Tips and Best Practices
+## Tips and Patterns
 
-### Naming Conventions
+### Branch Naming
 
-**Agent-based naming**:
 ```bash
-# Format: <agent-name>-<task-type>-<description>
+# Agent-based naming
 but branch new claude-feat-user-auth
 but branch new droid-fix-api-timeout
-```
 
-**Task-based naming**:
-```bash
-# Format: <task-type>-<description>
+# Task-based naming
 but branch new feature-authentication
 but branch new bugfix-timeout
 ```
 
 ### Snapshot Cadence
 
-**Before risky operations**:
 ```bash
 but snapshot --message "Before major reorganization"
 but snapshot --message "Before multi-agent coordination"
@@ -346,14 +300,13 @@ but snapshot --message "Before complex stack changes"
 
 ### File Assignment Discipline
 
-**Immediate assignment**:
 ```bash
-# Good: Assign immediately after creating
+# Good: Assign immediately
 echo "code" > file1.ts
-but rub <id> my-branch  # Assign right away
+but rub <id> my-branch  # Right away
 ```
 
-### Using JSON Output Effectively
+### JSON Output
 
 ```bash
 # Get all branch names

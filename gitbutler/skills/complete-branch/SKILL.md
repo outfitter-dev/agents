@@ -1,29 +1,33 @@
 ---
-name: gitbutler-complete-branch
-description: Completes work on GitButler virtual branches and integrates to main through guided workflows with safety checks, verification steps, and cleanup. Use when finishing branches, merging to main, creating PRs, or when --complete-branch flag is mentioned.
+name: GitButler Complete Branch
+version: 2.0.0
+description: Complete work on GitButler virtual branches and integrate to main through guided workflows with safety checks and cleanup. Use when finishing branches, merging to main, creating PRs, or when `--complete-branch` flag is mentioned.
 ---
 
 # Complete GitButler Virtual Branch
 
-## Introduction
+Virtual branch ready → snapshot → merge to main → cleanup → return.
 
-This skill guides you through safely completing work on a GitButler virtual branch and integrating it into the main branch. Virtual branches in GitButler allow parallel development without traditional git checkout, but completion requires careful coordination to maintain workspace integrity.
-
-**When to use this skill:**
+<when_to_use>
 - Virtual branch work is complete and ready to ship
 - Tests pass and code is reviewed (if required)
 - Ready to merge changes into main branch
 - Need to clean up completed branches
 
-**Prerequisites:**
-- GitButler initialized in repository (`but --version` succeeds)
-- Virtual branch exists with committed changes
-- Main branch is tracked as base
-- No uncommitted changes (or changes assigned to branches)
+NOT for: ongoing work, branches needing more development, stacks (complete bottom-to-top)
+</when_to_use>
 
-## Quick Start
+<prerequisites>
+**Before completing any branch:**
+- [ ] GitButler initialized (`but --version` succeeds)
+- [ ] Virtual branch exists with committed changes
+- [ ] Main branch tracked as base
+- [ ] No uncommitted changes (or changes assigned to branches)
+- [ ] Tests passing
+</prerequisites>
 
-**Manual workflow (7 steps):**
+<quick_start>
+## Quick Start (7 Steps)
 
 ```bash
 # 1. Verify branch state
@@ -33,197 +37,228 @@ but log
 # 2. Create safety snapshot
 but snapshot --message "Before integrating feature-auth"
 
-# 3. Switch to main branch
+# 3. Switch to main
 git checkout main
 
 # 4. Update main from remote
 git pull origin main
 
 # 5. Merge virtual branch
-git merge --no-ff refs/gitbutler/feature-auth -m "Merge feature-auth: Add user authentication"
+git merge --no-ff refs/gitbutler/feature-auth -m "feat: add user authentication"
 
 # 6. Push to remote
 git push origin main
 
-# 7. Clean up branch and return to workspace
+# 7. Clean up and return
 but branch rm feature-auth
 git checkout gitbutler/workspace
 ```
+</quick_start>
 
+<pre_flight>
 ## Pre-Integration Checklist
 
-Before integrating any virtual branch to main, verify these conditions:
-
-**1. All work committed to branch:**
 ```bash
+# All work committed?
 but status  # Your branch should show committed changes
-```
 
-**2. Tests passing:**
-```bash
+# Tests passing?
 bun test  # or npm test, cargo test, etc.
-```
 
-**3. Branch up to date with main:**
-```bash
+# Branch up to date with main?
 but base update
-```
 
-**4. No uncommitted changes in workspace:**
-```bash
+# No uncommitted changes?
 but status  # Should show no unassigned files
 git status  # Should be clean or show only .gitbutler/ changes
-```
 
-**5. Create snapshot before integration:**
-```bash
+# Safety snapshot created?
 but snapshot --message "Before integrating feature-auth"
 ```
+</pre_flight>
 
+<workflows>
 ## Integration Workflows
 
-### A. Manual Direct Merge
+### A. Direct Merge to Main
 
-For learning or custom requirements, follow this 7-step manual workflow:
-
-**Step 1: Verify branch state**
 ```bash
-but status  # Confirm branch has committed changes
-but log     # View branch in stack visualization
-```
+# 1. Verify branch state
+but status
+but log
 
-**Step 2: Create safety snapshot**
-```bash
+# 2. Create snapshot
 but snapshot --message "Before integrating feature-auth"
-```
 
-**Step 3: Switch to main branch**
-```bash
+# 3. Switch to main
 git checkout main
-```
-You must leave gitbutler/workspace to merge. GitButler manages workspace, git manages main.
 
-**Step 4: Update main from remote**
-```bash
+# 4. Update main
 git pull origin main
-```
 
-**Step 5: Merge virtual branch**
-```bash
-git merge --no-ff refs/gitbutler/feature-auth -m "Merge feature-auth: Add user authentication"
-```
-- `--no-ff`: Preserves branch history (recommended)
-- Use descriptive merge commit message
-- Reference refs/gitbutler/<branch-name> for virtual branches
+# 5. Merge with --no-ff (preserves history)
+git merge --no-ff refs/gitbutler/feature-auth -m "feat: add user authentication"
 
-**Step 6: Push to remote**
-```bash
+# 6. Push
 git push origin main
-```
 
-**Step 7: Clean up branch and return to workspace**
-```bash
+# 7. Clean up
 but branch rm feature-auth
 git checkout gitbutler/workspace
 ```
 
 ### B. Pull Request Workflow
 
-For team workflows requiring code review:
-
-**Step 1: Push branch to remote**
 ```bash
+# 1. Push branch to remote
 git push origin refs/gitbutler/feature-auth:refs/heads/feature-auth
-```
 
-**Step 2: Create PR via GitHub CLI or web**
-```bash
-gh pr create --base main --head feature-auth --title "Add user authentication" --body "Description..."
-```
+# 2. Create PR
+gh pr create --base main --head feature-auth \
+  --title "feat: add user authentication" \
+  --body "Description..."
 
-**Step 3: Wait for review and approval**
+# 3. Wait for review and approval
 
-**Step 4: Merge PR (via GitHub UI or CLI)**
-```bash
+# 4. Merge PR (via GitHub UI or CLI)
 gh pr merge feature-auth --squash
-```
 
-**Step 5: Update main and clean up**
-```bash
+# 5. Update main and clean up
 git checkout main
 git pull origin main
 but branch rm feature-auth
 git checkout gitbutler/workspace
 ```
 
-## Error Scenarios and Recovery
+### C. Stacked Branches (Bottom-Up)
 
-### Merge Conflicts During Integration
-
-**Recovery:**
 ```bash
-# 1. View conflicted files
+# Must merge in order: base → dependent → final
+
+# 1. Merge base branch first
+git checkout main && git pull
+git merge --no-ff refs/gitbutler/feature-base -m "feat: base feature"
+git push origin main
+but branch rm feature-base
+git checkout gitbutler/workspace
+
+# 2. Update remaining branches
+but base update
+
+# 3. Merge next level
+git checkout main && git pull
+git merge --no-ff refs/gitbutler/feature-api -m "feat: API feature"
+git push origin main
+but branch rm feature-api
+git checkout gitbutler/workspace
+
+# 4. Repeat for remaining stack levels
+```
+</workflows>
+
+<recovery>
+## Error Recovery
+
+### Merge Conflicts
+
+```bash
+# View conflicted files
 git status
 
-# 2. Resolve conflicts manually in editor
+# Resolve conflicts manually
 
-# 3. Stage resolved files
+# Stage resolved files
 git add src/auth.ts
 
-# 4. Complete merge
+# Complete merge
 git commit
 
-# 5. Verify and push
+# Verify and push
 git push origin main
 
-# 6. Clean up branch
+# Clean up
 but branch rm feature-auth
 git checkout gitbutler/workspace
 ```
 
 ### Push Rejected (Main Moved Ahead)
 
-**Recovery:**
 ```bash
 git pull origin main
 # Resolve any conflicts if main diverged
 git push origin main
 ```
 
-### Undo Integration
+### Undo Integration (Not Pushed Yet)
 
-**If you haven't pushed yet:**
 ```bash
 git reset --hard HEAD~1
 git checkout gitbutler/workspace
 ```
 
-**If you already pushed:**
+### Undo Integration (Already Pushed)
+
 ```bash
 git revert -m 1 HEAD
 git push origin main
 ```
+</recovery>
 
+<cleanup>
 ## Post-Integration Cleanup
 
-After successful integration:
-
-**Delete integrated virtual branch:**
 ```bash
+# Delete integrated virtual branch
 but branch rm feature-auth
-```
 
-**Clean up remote branch (if created for PR):**
-```bash
+# Clean up remote branch (if created for PR)
 git push origin --delete feature-auth
-```
 
-**Verify workspace is clean:**
-```bash
+# Verify workspace is clean
 but status  # Should show remaining active branches only
-but log     # Branch should be gone from visualization
+but log     # Branch should be gone
 ```
+</cleanup>
 
+<rules>
+ALWAYS:
+- Create snapshot before integration: `but snapshot --message "..."`
+- Use `--no-ff` flag to preserve branch history
+- Return to workspace after git operations: `git checkout gitbutler/workspace`
+- Run tests before integrating
+- Complete stacked branches bottom-to-top
+
+NEVER:
+- Merge without snapshot backup
+- Skip updating main first (`git pull`)
+- Forget to return to `gitbutler/workspace`
+- Merge middle of stack before base
+- Force push to main without explicit confirmation
+</rules>
+
+<troubleshooting>
+## Common Issues
+
+| Symptom | Cause | Solution |
+|---------|-------|----------|
+| Merge conflicts | Diverged from main | Resolve conflicts, stage, commit |
+| Push rejected | Main moved ahead | `git pull`, resolve, push |
+| Branch not found | Wrong ref path | Use `refs/gitbutler/<name>` |
+| Can't return to workspace | Integration branch issue | `git checkout gitbutler/workspace` |
+
+## Emergency Recovery
+
+```bash
+# If integration went wrong
+but oplog
+but undo  # Restores pre-integration state
+
+# If stuck after git operations
+git checkout gitbutler/workspace
+```
+</troubleshooting>
+
+<best_practices>
 ## Best Practices
 
 **Keep branches small:**
@@ -236,78 +271,20 @@ but base update
 ```
 
 **Test before integrating:**
-Always run full test suite on branch before merging.
+- Always run full test suite before merging
 
 **Meaningful merge commits:**
 ```bash
 # Good: Describes what and why
-git merge --no-ff feature-auth -m "Add JWT-based user authentication"
+git merge --no-ff feature-auth -m "feat: add JWT-based user authentication"
 
 # Bad: Generic message
 git merge --no-ff feature-auth -m "Merge branch"
 ```
+</best_practices>
 
-**Use --no-ff for feature branches:**
-Preserves branch history in git log.
-
-## Examples
-
-### Example 1: Simple Feature Branch
-
-```bash
-# Pre-flight checks
-but status           # Verify branch is clean
-bun test            # Tests pass
-but base update     # Branch up to date
-
-# Safety snapshot
-but snapshot --message "Before merging feature-auth"
-
-# Integration (7 steps)
-git checkout main
-git pull origin main
-git merge --no-ff refs/gitbutler/feature-auth -m "Add user authentication"
-git push origin main
-but branch rm feature-auth
-git checkout gitbutler/workspace
-```
-
-### Example 2: Stacked Branches (Bottom-Up Merge)
-
-```bash
-# Must merge in order from bottom to top
-
-# 1. Merge base branch first
-git checkout main && git pull
-git merge --no-ff refs/gitbutler/feature-base -m "Base feature"
-git push origin main
-but branch rm feature-base
-git checkout gitbutler/workspace
-
-# 2. Update remaining branches
-but base update
-
-# 3. Merge api branch
-git checkout main && git pull
-git merge --no-ff refs/gitbutler/feature-api -m "API feature"
-git push origin main
-but branch rm feature-api
-git checkout gitbutler/workspace
-
-# 4. Repeat for remaining stack levels
-```
-
-## Reference
-
-**Related Skills:**
-- [version-control](../version-control/SKILL.md): Core GitButler workflows
-- [stack-workflows](../stack-workflows/SKILL.md): Creating and managing stacked branches
-- [multi-agent](../multi-agent/SKILL.md): Multi-agent collaboration
-
-**GitButler Commands:**
-- `but status`: View workspace state
-- `but log`: Visualize branch structure
-- `but snapshot`: Create rollback point
-- `but branch rm`: Delete virtual branch
-- `but base update`: Update main and rebase branches
-- `but oplog`: View operation history for rollback
+<references>
+- [version-control skill](../version-control/SKILL.md) — core GitButler workflows
+- [stack-workflows skill](../stack-workflows/SKILL.md) — stacked branches
+- [REFERENCE.md](../version-control/REFERENCE.md) — CLI reference and troubleshooting
+</references>
