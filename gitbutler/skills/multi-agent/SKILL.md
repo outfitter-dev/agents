@@ -1,41 +1,56 @@
 ---
-name: gitbutler-multi-agent
-description: Enables AI agents to collaborate concurrently using GitButler's virtual branches, supporting parallel feature development, sequential handoffs, and commit transfer patterns without checkout overhead or workspace duplication.
+name: GitButler Multi-Agent
+version: 2.0.0
+description: Coordinate multiple AI agents working concurrently in the same workspace using GitButler's virtual branch model. Use for parallel development, sequential handoffs, and commit transfer patterns without checkout overhead.
 ---
 
 # GitButler Multi-Agent Coordination
 
-Coordinate multiple AI agents working concurrently in the same workspace using GitButler's virtual branch model.
+Multiple agents → virtual branches → parallel execution → zero coordination overhead.
 
-## When to Use This Skill
-
-- Multiple agents need to work on different features simultaneously
-- Sequential agent handoffs (Agent A → Agent B) without checkout overhead
+<when_to_use>
+- Multiple agents working on different features simultaneously
+- Sequential agent handoffs (Agent A → Agent B)
 - Commit ownership transfer between agents
 - Parallel execution with early conflict detection
 - Post-hoc reorganization of multi-agent work
 
-## Quick Start
+NOT for: single-agent workflows (use standard GitButler), projects needing PR automation (Graphite better)
+</when_to_use>
 
-### Parallel Feature Development
+<core_advantage>
+**Traditional Git Problem:**
+- Agents must work in separate worktrees (directory coordination)
+- Constant branch switching (context loss, file churn)
+- Late conflict detection (only at merge time)
+
+**GitButler Solution:**
+- Multiple branches stay applied simultaneously
+- Single shared workspace, zero checkout operations
+- Immediate conflict detection (shared working tree)
+- Each agent manipulates their own lane
+</core_advantage>
+
+<patterns>
+## Pattern 1: Parallel Feature Development
 
 ```bash
-# Agent A: Create auth feature
-but branch new agent-a-auth
+# Agent 1
+but branch new agent-1-auth
 echo "auth code" > auth.ts
-but rub auth.ts agent-a-auth
-but commit agent-a-auth -m "feat: add authentication"
+but rub auth.ts agent-1-auth
+but commit agent-1-auth -m "feat: add authentication"
 
-# Agent B: Create API (simultaneously, same workspace!)
-but branch new agent-b-api
+# Agent 2 (simultaneously, same workspace!)
+but branch new agent-2-api
 echo "api code" > api.ts
-but rub api.ts agent-b-api
-but commit agent-b-api -m "feat: add API endpoints"
+but rub api.ts agent-2-api
+but commit agent-2-api -m "feat: add API endpoints"
 
 # Result: Two independent features, zero conflicts
 ```
 
-### Sequential Handoff
+## Pattern 2: Sequential Handoff
 
 ```bash
 # Agent A: Initial implementation
@@ -47,51 +62,19 @@ but commit initial-impl -m "feat: initial implementation"
 but rub <agent-a-commit> refinement-branch
 # ... improve code ...
 but commit refinement-branch -m "refactor: optimize implementation"
-
-# Agent A's branch now empty, Agent B owns the work
 ```
 
-### Cross-Agent Commit Transfer
+## Pattern 3: Cross-Agent Commit Transfer
 
 ```bash
-# Agent A transfers commit to Agent B's branch
-but rub <commit-sha> agent-b-branch
-
-# Agent B transfers commit to Agent A's branch
-but rub <commit-sha> agent-a-branch
-
-# Commits instantly change ownership
+# Instant ownership transfer
+but rub <commit-sha> agent-b-branch  # Agent A → Agent B
+but rub <commit-sha> agent-a-branch  # Agent B → Agent A
 ```
+</patterns>
 
-## Core Concepts
-
-### Virtual Branch Cohabitation
-
-**Problem with traditional Git**:
-- Agents must work in separate worktrees (directory coordination)
-- Constant branch switching (context loss, file churn)
-- Late conflict detection (only at merge time)
-
-**GitButler's virtual branches**:
-- Multiple branches stay applied simultaneously
-- Single shared workspace, zero checkout operations
-- Immediate conflict detection (shared working tree)
-- Each agent manipulates their own lane
-
-### The `but rub` Power Tool
-
-Single command handles four critical operations:
-
-| Operation | Example | Use Case |
-|-----------|---------|----------|
-| **Assign** | `but rub m6 claude-branch` | Organize files to branches post-hoc |
-| **Move** | `but rub abc1234 other-branch` | Transfer work between agents |
-| **Squash** | `but rub newer older` | Clean up history |
-| **Amend** | `but rub file commit` | Fix existing commits |
-
-## Essential Patterns
-
-### 1. Branch Naming Convention
+<naming>
+## Branch Naming Convention
 
 ```
 <agent-name>-<task-type>-<brief-description>
@@ -103,181 +86,147 @@ Examples:
 ```
 
 Makes ownership immediately visible in `but status` and `but log`.
+</naming>
 
-### 2. Immediate File Assignment
+<ai_integration>
+## AI Integration Methods
 
-```bash
-# Bad: File sits in unassigned changes
-echo "content" > new-file.md
-# ... later, forgot which branch it belongs to
+**1. Agents Tab (Claude Code)**
+- GUI-based launcher tied to branches
+- Each virtual branch = independent session
+- Automatic commit management per session
+- Parallel agent execution with branch isolation
 
-# Good: Assign immediately
-echo "content" > new-file.md
-but rub new-file.md my-branch
+**2. Lifecycle Hooks**
+```json
+{
+  "hooks": {
+    "PreToolUse": [{"matcher": "Edit|MultiEdit|Write", "hooks": [{"type": "command", "command": "but claude pre-tool"}]}],
+    "PostToolUse": [{"matcher": "Edit|MultiEdit|Write", "hooks": [{"type": "command", "command": "but claude post-tool"}]}],
+    "Stop": [{"matcher": "", "hooks": [{"type": "command", "command": "but claude stop"}]}]
+  }
+}
 ```
 
-### 3. Status Broadcasting Protocol
+**3. MCP Server**
+```bash
+but mcp  # Enables programmatic agent integration
+```
 
-**For concurrent agent coordination**:
+**Key Instruction for Agents:**
+> "Never use the git commit command after a task is finished"
 
+Let GitButler manage commits via hooks or MCP.
+</ai_integration>
+
+<coordination>
+## Coordination Protocols
+
+**Status Broadcasting:**
 ```bash
 # File-based coordination
 but status > /tmp/agent-$(whoami)-status.txt
 
-# Or use Linear comments
+# Or use Linear/GitHub comments
 # "[AGENT-A] Completed auth module, committed to claude-auth-feature"
 ```
 
-### 4. Snapshot Cadence
-
+**Snapshot Cadence:**
 ```bash
 # Before risky operations
 but snapshot --message "Before merging conflicting branches"
-but rub <conflict-commit> <branch>
 
 # If it breaks
 but undo
 ```
 
-## Multi-Agent Workflows
+**Concurrent Safety:**
+1. Snapshot before risky operations
+2. Broadcast status regularly to other agents
+3. Respect 🔒 locks — files assigned to other branches
+4. Use `but --json` for programmatic state inspection
+</coordination>
 
-### Parallel Execution (Agent A ∥ Agent B)
+<rub_power>
+## The `but rub` Power Tool
 
-**Killer feature**: Agents work on overlapping files without blocking.
+Single command handles four critical multi-agent operations:
+
+| Operation | Example | Use Case |
+|-----------|---------|----------|
+| **Assign** | `but rub m6 claude-branch` | Organize files to branches post-hoc |
+| **Move** | `but rub abc1234 other-branch` | Transfer work between agents |
+| **Squash** | `but rub newer older` | Clean up history |
+| **Amend** | `but rub file commit` | Fix existing commits |
+</rub_power>
+
+<comparison>
+## vs Other Workflows
+
+| Aspect | Graphite | Git Worktrees | GitButler |
+|--------|----------|---------------|-----------|
+| Multi-agent concurrency | Serial | N directories | Parallel ✓ |
+| Post-hoc organization | Difficult | Difficult | `but rub` ✓ |
+| PR Submission | `gt submit` ✓ | Manual | GUI only |
+| Physical layout | 1 directory | N × repo | 1 directory ✓ |
+| Context switching | `gt checkout` | `cd` | None ✓ |
+| Conflict detection | Late (merge) | Late (merge) | Early ✓ |
+| Disk usage | 1 × repo | N × repo | 1 × repo ✓ |
+</comparison>
+
+<rules>
+ALWAYS:
+- Use unique branch names per agent: `<agent>-<type>-<desc>`
+- Assign files immediately after creating: `but rub <id> <branch>`
+- Snapshot before coordinated operations
+- Broadcast status to other agents when completing work
+- Check for 🔒 locked files before modifying
+
+NEVER:
+- Use `git commit` — breaks GitButler state
+- Let files sit in "Unassigned Changes" — assign immediately
+- Modify files locked to other branches
+- Mix git and but commands during active agent sessions
+</rules>
+
+<troubleshooting>
+## Common Issues
+
+| Symptom | Cause | Solution |
+|---------|-------|----------|
+| Agent commit "orphaned" | Used `git commit` | Find with `git reflog`, recover |
+| Files in wrong branch | Forgot assignment | `but rub <id> <correct-branch>` |
+| Conflicting edits | Overlapping files | Reassign hunks to different branches |
+| Lost agent work | Branch deleted | `but undo` or restore from oplog |
+
+## Recovery
 
 ```bash
-# Both agents create files simultaneously
-# Both commit to different branches
-# Zero conflicts despite same directory
-# Status shows branches clearly separated
+# Find orphaned commits
+git reflog
+
+# Recover agent work
+but oplog
+but undo
+
+# Extract from snapshot
+git show <snapshot>:index/path/to/file.txt
 ```
+</troubleshooting>
 
-**Why this works**:
-1. No artificial serialization - agents don't wait
-2. Hunk-level tracking - GitButler assigns file hunks separately
-3. Early conflict detection - overlapping hunks surface immediately
-
-### Sequential Hand-offs (Agent A → Agent B)
-
-**Before GitButler**:
-```bash
-# Agent A finishes work
-git checkout -b feature-a
-git commit -m "Initial work"
-git push
-
-# Agent B takes over
-git fetch
-git checkout feature-a
-```
-
-**With GitButler**:
-```bash
-# Agent A finishes work on their branch
-but rub <commit> agent-b-branch  # Transfer ownership instantly
-
-# Agent B continues in same workspace
-# No checkout, no fetch, no directory change
-```
-
-### Review + Fix Cycle
-
-```bash
-# Agent A: Reviewer finds issues
-but branch new fixes-for-feature-x
-# ... make fixes ...
-but commit fixes-for-feature-x -m "fix: address review feedback"
-
-# Agent B: Original author
-# Sees fixes immediately in shared workspace
-# Can cherry-pick or squash fixes into original branch
-but rub <fix-commit> original-feature-x
-```
-
-## Critical Rules
-
-### Mixed-Tool Hazard
-
-**Critical warning**: Using `git` commands directly corrupts GitButler state.
-
-```bash
-# Don't do this
-but branch new my-feature
-git commit -m "Changes"  # ❌ BREAKS GITBUTLER
-
-# Must do this
-but branch new my-feature
-but commit my-feature -m "Changes"  # ✅ Maintains state
-```
-
-### Unassigned Changes Drift
-
-**Detection**:
-```bash
-but status | grep -A100 "Unassigned Changes"
-```
-
-**Prevention**: Immediate assignment discipline.
-
-### Concurrent Safety
-
-1. **Snapshot before risky operations**
-2. **Broadcast status regularly** to other agents
-3. **Respect 🔒 locks** - files assigned to other branches
-4. **Use `but --json`** for programmatic state inspection
-
-## GitButler vs. Other Workflows
-
-### vs. Graphite
-
-| Aspect | Graphite | GitButler | Winner |
-|--------|----------|-----------|--------|
-| **Multi-agent concurrency** | Serial (checkout required) | Parallel (virtual branches) ✅ | GitButler |
-| **Post-hoc organization** | Difficult | `but rub` trivial ✅ | GitButler |
-| **PR Submission** | `gt submit --stack` ✅ | GUI only ❌ | Graphite |
-| **Automation completeness** | Full CLI coverage ✅ | Partial CLI ❌ | Graphite |
-
-**Verdict**: GitButler for exploratory multi-agent development; Graphite for production automation.
-
-### vs. Git Worktrees
-
-| Aspect | Worktrees | GitButler | Winner |
-|--------|-----------|-----------|--------|
-| **Physical layout** | N directories | 1 directory ✅ | GitButler |
-| **Context switching** | `cd` required | None ✅ | GitButler |
-| **Conflict detection** | Late (merge time) | Early (shared workspace) ✅ | GitButler |
-| **Disk usage** | N × repo size | 1 × repo size ✅ | GitButler |
-
+<limitations>
 ## Current Limitations
 
-### CLI Coverage Gaps
+- **No PR submission CLI** — use `gh pr create` after organizing
+- **Overlapping file edits** — adjacent lines can only go to one branch
+- **No stack navigation CLI** — no `gt up`/`gt down` equivalent
 
-**Missing operations**:
-- ❌ PR submission (no `gt submit --stack` equivalent)
-- ❌ Stack navigation (no `gt up`/`gt down`)
-- ❌ Remote push with stack metadata
-- ❌ Interactive branch selection
+**Recommendation:** Use for exploratory multi-agent work. For production automation requiring PR submission, consider Graphite until CLI matures.
+</limitations>
 
-**Workaround**: Use GitHub CLI (`gh pr create`) after organizing with GitButler.
-
-### File Path Issues
-
-**Problem**: Filenames with dashes fail as range operators
-
-```bash
-❌ but rub file-with-dashes.md branch  # Fails
-✅ but rub m6 branch  # Only solution: use generated ID
-```
-
-## Summary
-
-GitButler's virtual branch model is **transformative for multi-agent collaboration**. Key advantages:
-
-✅ **Parallel execution** - Multiple agents, same workspace, zero blocking
-✅ **Instant transfers** - `but rub` moves commits between agents atomically
-✅ **Early conflicts** - Shared workspace surfaces issues immediately
-✅ **Post-hoc organization** - Code first, organize later
-
-**Current gaps**: PR submission, file path handling, complete JSON API
-
-**Recommendation**: Use for exploratory multi-agent work. For production automation requiring PR submission, consider Graphite until CLI matures.
+<references>
+- [version-control skill](../version-control/SKILL.md) — core GitButler workflows
+- [stack-workflows skill](../stack-workflows/SKILL.md) — stacked branches
+- [GitButler AI Docs](https://docs.gitbutler.com/features/ai-integration/) — official AI integration
+- [Agents Tab Blog](https://blog.gitbutler.com/agents-tab) — Claude Code integration details
+</references>

@@ -1,128 +1,88 @@
 ---
 name: GitButler Version Control
-description: Version control using GitButler's virtual branches for parallel multi-branch work, post-hoc organization, and multi-agent collaboration. Use when working with GitButler, virtual branches, `but` commands, stacked PRs, multi-agent workflows, or when `--gitbutler` or `--but` flags are mentioned. Enables concurrent feature development without checkout overhead.
+version: 2.0.0
+description: Version control using GitButler's virtual branches for parallel multi-branch work, post-hoc organization, and multi-agent collaboration. Use when working with GitButler, virtual branches, `but` commands, stacked PRs, multi-agent workflows, or when `--gitbutler` or `--but` flags are mentioned.
 ---
 
 # GitButler Version Control
 
-## Quick Start
+Virtual branches → parallel development → post-hoc organization.
 
-GitButler reimagines version control with **virtual branches** - multiple branches coexisting in your working directory simultaneously. No checkout, no context switching, organize work after coding.
-
-**Installation**: Download GitButler app from https://gitbutler.com (includes CLI)
-
-```bash
-# Verify installation
-but --version
-
-# Initialize in git repository
-but init
-```
-
-## When to Use GitButler
-
-**Use GitButler when:**
-- Working on multiple unrelated features simultaneously
-- Multi-agent concurrent development (agents in same workspace)
-- Exploratory coding (organize commits after writing)
-- Post-hoc branch organization needed
+<when_to_use>
+- Multiple unrelated features in same workspace simultaneously
+- Multi-agent concurrent development (agents in same repo)
+- Exploratory coding where organization comes after writing
+- Post-hoc commit reorganization needed
 - Visual organization preferred (GUI + CLI)
 
-**Use Graphite instead when:**
-- Need PR submission automation (`gt submit --stack`)
-- Terminal-first workflow without GUI
-- Full CLI automation required end-to-end
-- See [REFERENCE.md](REFERENCE.md#gitbutler-vs-graphite) for detailed comparison
+NOT for: projects using Graphite (incompatible models), simple linear workflows (use plain git), when PR submission automation required end-to-end (use Graphite instead)
+</when_to_use>
 
-**Use plain Git when:**
-- Simple linear workflows
-- Single-feature-at-a-time development
-- GitButler not installed or initialized
+<core_concepts>
+| Concept | Description |
+|---------|-------------|
+| Virtual branches | Multiple branches applied simultaneously to working directory |
+| Integration branch | `gitbutler/workspace` tracks virtual branch state — never touch directly |
+| Target branch | Base branch (e.g., `origin/main`) all work diverges from |
+| File assignment | Assign file hunks to branches with `but rub` |
+| Stacks | Dependent branches via `--anchor` flag |
+| Oplog | Operations log for undo/restore — your safety net |
 
-## Core Concepts
+**Key difference from Git**: All branches visible at once. Organize files to branches after editing. No checkout.
+</core_concepts>
 
-### Virtual Branches
-
-Multiple branches applied simultaneously to your working directory:
-
-```
-Working Directory
-├─ Virtual Branch A (feature-auth.ts)
-├─ Virtual Branch B (bugfix-api.ts)
-├─ Virtual Branch C (docs-update.md)
-└─ Unassigned Changes (new files)
-```
-
-**Key difference from Git**: All branches visible at once, organize files to branches after editing.
-
-### The Integration Branch
-
-GitButler uses `gitbutler/workspace` to track virtual branch state. **Never interact with this branch directly** - it's managed automatically.
-
-### Stacks (Optional)
-
-Create dependent branches using `--anchor`:
+<workflow>
+## Quick Start
 
 ```bash
-but branch new parent-feature
-but branch new child-feature --anchor parent-feature
-# child-feature builds on top of parent-feature
-```
+# Initialize (one time)
+but init
 
-## Essential Workflows
+# Create branch
+but branch new feature-auth
 
-### Creating and Assigning Work
-
-```bash
-# Create virtual branch
-but branch new feature-authentication
-
-# Make changes to files
-echo "auth code" > auth.ts
-echo "tests" > auth.test.ts
-
-# Check status to see file IDs
+# Make changes, check status for file IDs
 but status
 # ╭┄00 [Unassigned Changes]
-# │   m6 A auth.ts
-# │   p9 A auth.test.ts
+# │   m6 A src/auth.ts
 
-# Assign files to branch using IDs
-but rub m6 feature-authentication
-but rub p9 feature-authentication
+# Assign file to branch using ID
+but rub m6 feature-auth
 
 # Commit
-but commit feature-authentication -m "feat: add authentication"
+but commit feature-auth -m "feat: add authentication"
 ```
 
-### The Power of `but rub`
+## Core Loop
 
-Swiss Army knife command - combines entities to perform operations:
+1. **Create**: `but branch new <name>`
+2. **Edit**: Make changes in working directory
+3. **Check**: `but status` to see file IDs
+4. **Assign**: `but rub <file-id> <branch-name>`
+5. **Commit**: `but commit <branch> -m "message"`
+6. **Repeat**: Continue with other features in parallel
 
-```bash
-# Assign file to branch
-but rub <file-id> <branch-id>
+## The Power of `but rub`
 
-# Move commit between branches
-but rub <commit-sha> <branch-name>
+Swiss Army knife — combines entities to perform operations:
 
-# Squash commits (newer into older)
-but rub <newer-commit> <older-commit>
+| Source | Target | Operation |
+|--------|--------|-----------|
+| File ID | Branch | Assign file to branch |
+| File ID | Commit | Amend commit with file |
+| Commit SHA | Branch | Move commit between branches |
+| Commit SHA | Commit SHA | Squash (newer into older) |
+</workflow>
 
-# Amend commit with file changes
-but rub <file-id> <commit-sha>
-```
-
-**See [EXAMPLES.md](EXAMPLES.md#reorganizing-work) for real-world reorganization patterns**
-
-### Parallel Feature Development
+<parallel_development>
+## Parallel Feature Development
 
 ```bash
 # Create two independent features
 but branch new feature-a
 but branch new feature-b
 
-# Edit files for both features (same workspace!)
+# Edit files for both (same workspace!)
 echo "Feature A" > feature-a.ts
 echo "Feature B" > feature-b.ts
 
@@ -137,9 +97,9 @@ but commit feature-b -m "feat: implement feature B"
 # Both branches exist, zero conflicts, same directory
 ```
 
-### Multi-Agent Workflows
+## Multi-Agent Workflows
 
-**Unique capability**: Multiple AI agents working concurrently in same repo.
+Multiple AI agents working concurrently in same repo:
 
 ```bash
 # Agent 1
@@ -151,120 +111,128 @@ but commit agent-1-feature -m "feat: add feature X"
 but branch new agent-2-bugfix
 # ... make changes ...
 but commit agent-2-bugfix -m "fix: resolve issue Y"
-
-# Both visible in workspace, zero coordination overhead
 ```
 
-**See [multi-agent skill](../multi-agent/SKILL.md) for advanced multi-agent patterns**
+**See [multi-agent skill](../multi-agent/SKILL.md) for advanced patterns**
+</parallel_development>
 
-### Completing Work and Merging to Main
+<completion>
+## Completing Work
 
-**CRITICAL**: GitButler CLI has **no native command** for merging virtual branches to main or creating PRs. Use integration workflows.
-
-**See [complete-branch skill](../complete-branch/SKILL.md) for full guided workflow**
-
-**Key Concepts**:
-- GitButler virtual branches = real git branches under the hood
-- Standard `git merge` and `git push` work perfectly
-- **CRITICAL**: Always `git checkout gitbutler/workspace` after git operations
-
-### Inspection and Status
+**CRITICAL**: GitButler CLI lacks native commands for merging to main or creating PRs. Use git for integration.
 
 ```bash
-# View uncommitted changes and file assignments
-but status
+# 1. Snapshot for safety
+but snapshot --message "Before integrating feature-auth"
 
-# View commit history on active branches
-but log
+# 2. Switch to main
+git checkout main
 
-# JSON output for automation
-but --json status
-but --json log
-```
+# 3. Update main
+git pull origin main
 
-## Critical Rules
+# 4. Merge virtual branch
+git merge --no-ff refs/gitbutler/feature-auth -m "feat: add auth"
 
-### When to Use Git vs GitButler Commands
+# 5. Push
+git push origin main
 
-**Workspace Operations (NEVER use git)**:
-```bash
-but branch new my-feature
-git commit -m "Changes"        # ❌ BREAKS GITBUTLER STATE
-git add file.ts                # ❌ Use `but rub` instead
-git checkout virtual-branch    # ❌ Virtual branches don't need checkout
-```
-
-**Integration Operations (git is SAFE)**:
-```bash
-git checkout main              # ✅ Safe - switching to trunk
-git merge my-feature --no-ff   # ✅ Safe - merging completed work
-git push origin main           # ✅ Safe - pushing to remote
-git push origin my-feature     # ✅ Safe - pushing for PR
-gh pr create                   # ✅ Safe - GitHub CLI
-
-# CRITICAL: Always return after git operations
+# 6. Clean up and return
+but branch rm feature-auth
 git checkout gitbutler/workspace
 ```
 
-**Why**: GitButler manages `gitbutler/workspace` integration branch. Using `git` for **workspace operations** corrupts this state. Using `git` for **integration operations** (merge, push, PR creation) is safe and necessary because GitButler CLI lacks these commands.
+**See [complete-branch skill](../complete-branch/SKILL.md) for full guided workflow**
+</completion>
 
-**Rule of Thumb**:
+<commands>
+## Essential Commands
+
+| Command | Purpose |
+|---------|---------|
+| `but init` | Initialize GitButler in repository |
+| `but status` | View changes and file IDs |
+| `but log` | View commits on active branches |
+| `but branch new <name>` | Create virtual branch |
+| `but branch new <name> --anchor <parent>` | Create stacked branch |
+| `but rub <source> <target>` | Assign/move/squash/amend |
+| `but commit <branch> -m "msg"` | Commit to branch |
+| `but commit <branch> -o -m "msg"` | Commit only assigned files |
+| `but publish` | Publish branches to forge (GitHub) |
+| `but forge auth` | Authenticate with GitHub |
+| `but absorb` | Amend uncommitted changes |
+| `but oplog` | Show operation history |
+| `but undo` | Undo last operation |
+| `but snapshot --message "msg"` | Create manual snapshot |
+| `but base update` | Update workspace with latest base |
+| `but .` | Open GitButler GUI for current repo |
+
+**Global flags come first**: `but --json status` ✓ | `but status --json` ✗
+</commands>
+
+<ai_integration>
+## AI Agent Integration
+
+Three integration methods:
+
+**1. Agents Tab** (Claude Code, recommended)
+- GUI-based launcher tied to branches
+- Automatic commit management per session
+- Parallel agent execution with branch isolation
+
+**2. Lifecycle Hooks**
+```json
+{
+  "hooks": {
+    "PreToolUse": [{"matcher": "Edit|MultiEdit|Write", "hooks": [{"type": "command", "command": "but claude pre-tool"}]}],
+    "PostToolUse": [{"matcher": "Edit|MultiEdit|Write", "hooks": [{"type": "command", "command": "but claude post-tool"}]}],
+    "Stop": [{"matcher": "", "hooks": [{"type": "command", "command": "but claude stop"}]}]
+  }
+}
+```
+
+**3. MCP Server**
+```bash
+but mcp  # Start MCP server for agent integration
+```
+</ai_integration>
+
+<rules>
+ALWAYS:
 - Use `but` for all work within virtual branches
 - Use `git` only for integrating completed work into main
-- Always `git checkout gitbutler/workspace` after git operations
+- Return to `gitbutler/workspace` after git operations: `git checkout gitbutler/workspace`
+- Snapshot before risky operations: `but snapshot --message "..."`
+- Assign files immediately after creating: `but rub <id> <branch>`
+- Check file IDs with `but status` before using `but rub`
 
-### Global Flags Come First
+NEVER:
+- Use `git commit` on virtual branches — breaks GitButler state
+- Use `git add` — GitButler manages index
+- Use `git checkout` on virtual branches — no checkout needed
+- Push `gitbutler/integration` to remote — it's local-only
+- Mix Graphite and GitButler in same repo — incompatible models
+- Pipe `but status` directly — causes panic; capture output first:
+  ```bash
+  status_output=$(but status)
+  echo "$status_output" | head -5
+  ```
+</rules>
 
-```bash
-✅ but --json status
-❌ but status --json  # Error: unexpected argument
-```
+<troubleshooting>
+## Quick Troubleshooting
 
-### Handle Broken Pipe
+| Symptom | Cause | Solution |
+|---------|-------|----------|
+| Branch not showing in `but log` | Not tracked | `but track --parent <parent>` |
+| Files not committing | Not assigned | `but rub <file-id> <branch>` |
+| Conflicts in workspace | All branches applied | Resolve in files or reassign hunks |
+| Mixed git/but broke state | Used git commands | `but base update` or reinit |
+| Broken pipe panic | Output consumed partially | Capture output to variable first |
+| Filename with dash fails | Interpreted as range | Use file ID from `but status` |
+| Lost work | Need recovery | Use `but oplog` and `but undo` |
 
-`but status` panics when output consumed partially:
-
-```bash
-❌ but status | head -5  # Panic!
-
-✅ status_output=$(but status)
-   echo "$status_output" | head -5
-```
-
-## Common Commands
-
-```bash
-# Branch Management
-but branch new <name>              # Create virtual branch
-but branch new <name> --anchor <parent>  # Create stacked branch
-but branch delete <name> --force   # Delete branch
-but branch list                    # List all branches
-
-# Committing
-but commit -m "message"            # Commit to inferred branch
-but commit <branch> -m "message"   # Commit to specific branch
-but commit <branch> -o -m "msg"    # Only commit assigned files
-
-# Reorganization
-but rub <source> <target>          # The Swiss Army knife
-but new <target>                   # Insert blank commit
-but describe <target>              # Edit commit message or rename branch
-
-# History & Undo
-but oplog                          # Show operation history
-but undo                           # Undo last operation
-but snapshot --message "msg"       # Create manual snapshot
-
-# Base Branch Updates
-but base check                     # Check mergeability with base
-but base update                    # Update workspace with latest base
-```
-
-**See [REFERENCE.md](REFERENCE.md#command-reference) for complete command list**
-
-## Operation History and Safety
-
-GitButler tracks all operations in oplog (like Git's reflog):
+## Recovery Pattern
 
 ```bash
 # View recent operations
@@ -273,92 +241,38 @@ but oplog
 # Undo last operation
 but undo
 
-# Create snapshot before risky operations
-but snapshot --message "Before major reorganization"
-# ... risky operations ...
-# If needed: but undo
+# Or restore to specific snapshot
+but restore <snapshot-id>
+
+# If workspace corrupted
+but base update
+# Last resort: but init
 ```
 
-**Best practice**: Snapshot before complex reorganizations, stack changes, or multi-agent coordination.
+**See [REFERENCE.md](REFERENCE.md#troubleshooting-guide) for comprehensive troubleshooting**
+</troubleshooting>
 
-## Limitations and Workarounds
+<comparison>
+## GitButler vs Graphite
 
-### Missing PR Submission CLI
+| Aspect | Graphite | GitButler |
+|--------|----------|-----------|
+| Model | Linear stacks of physical branches | Virtual branches, optional stacking |
+| Branch switching | Required (`gt up`/`gt down`) | Never needed (all applied) |
+| PR submission | ✓ `gt submit --stack` | ✗ CLI only (use `gh` or GUI) |
+| Multi-agent | Serial (checkout required) | Parallel (virtual branches) |
+| Post-hoc organization | Difficult | `but rub` trivial |
+| CLI completeness | Full automation | Partial (missing PR/push) |
 
-**Problem**: No `but submit --stack` equivalent
+**Choose GitButler for**: Exploratory work, multi-agent, post-hoc organization
+**Choose Graphite for**: Production automation, PR submission, terminal-first
+</comparison>
 
-**Workaround**: Use GitHub CLI after organizing with GitButler
-```bash
-# Organize work with GitButler
-but status  # Verify branches ready
-
-# Push and create PRs with gh
-gh pr create --title "..." --body "..."
-```
-
-### Filename Parsing Issues
-
-**Problem**: Dashes in filenames interpreted as range syntax
-
-**Workaround**: Use file IDs from `but status` instead of filenames
-
-## Integration with Project Workflows
-
-### With Graphite
-
-**Don't use both in same repo** - incompatible models:
-- GitButler: virtual branches on integration branch
-- Graphite: physical branches with metadata
-
-**Choose per-repository**:
-- GitButler for exploratory/multi-agent work
-- Graphite for production automation
-
-### With Linear
-
-Track work in Linear while using GitButler:
-
-```bash
-# Create Linear issue first
-# Use issue ID in commit messages
-but commit my-branch -m "feat: add feature (RGR-123)"
-
-# Reference commits in Linear comments
-# Link PRs to Linear issues
-```
-
-## Troubleshooting
-
-**Branch not showing in `but log`**:
-- Not tracked yet - branches created with `git` need `but track --parent <parent>`
-
-**Files not committing**:
-- Check they're assigned to a branch (`but status`)
-- Use `but rub <file-id> <branch>` to assign
-
-**Conflicts in workspace**:
-- GitButler shows conflicts immediately (all branches applied)
-- Resolve conflicts in files, then commit
-- Or reassign conflicting hunks to different branches
-
-**Mixed git/but commands broke state**:
-- Run `but base update` to sync
-- If severely broken, may need to reinitialize (`but init`)
-
-## Next Steps
-
-- **Learn advanced patterns**: See [EXAMPLES.md](EXAMPLES.md)
-- **Complete CLI reference**: See [REFERENCE.md](REFERENCE.md)
-- **Multi-agent workflows**: See [multi-agent skill](../multi-agent/SKILL.md)
-- **Stack management**: See [stack-workflows skill](../stack-workflows/SKILL.md)
-
-## Quick Reference
-
-```bash
-but branch new <name> [--anchor <parent>]  # Create branch/stack
-but rub <file-id> <branch-id>              # Assign file
-but commit <branch> -m "message"           # Commit
-but rub <commit-sha> <branch>              # Move commit
-but status / but log                       # Inspect
-but undo / but snapshot --message "msg"    # Safety
-```
+<references>
+- [REFERENCE.md](REFERENCE.md) — complete CLI reference and troubleshooting
+- [EXAMPLES.md](EXAMPLES.md) — real-world workflow patterns
+- [multi-agent skill](../multi-agent/SKILL.md) — multi-agent coordination
+- [stack-workflows skill](../stack-workflows/SKILL.md) — stacked branches
+- [complete-branch skill](../complete-branch/SKILL.md) — merging to main
+- [GitButler Docs](https://docs.gitbutler.com/) — official documentation
+</references>
