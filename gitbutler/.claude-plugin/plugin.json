@@ -1,0 +1,11 @@
+{
+  "name": "gitbutler",
+  "version": "0.1.0",
+  "description": "GitButler virtual branch workflows for parallel development, multi-agent collaboration, and post-hoc organization",
+  "author": {
+    "name": "Matt Galligan",
+    "url": "https://github.com/galligan"
+  },
+  "repository": "https://github.com/outfitter-dev/agents",
+  "keywords": ["gitbutler", "virtual-branches", "version-control", "multi-agent", "parallel-development"]
+}

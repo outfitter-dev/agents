@@ -1,0 +1,11 @@
+{
+  "name": "waymark",
+  "version": "0.1.0",
+  "description": "Search and navigate waymarks (structured code annotations) in your codebase using the wm CLI tool",
+  "author": {
+    "name": "Matt Galligan",
+    "url": "https://github.com/galligan"
+  },
+  "repository": "https://github.com/outfitter-dev/agents",
+  "keywords": ["waymarks", "code-annotations", "navigation", "todos", "documentation"]
+}
