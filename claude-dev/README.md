@@ -93,6 +93,18 @@ Packages and publishes plugins:
 - CI/CD automation
 - Documentation templates
 
+## Capabilities
+
+| Capability | Used | Notes |
+|------------|------|-------|
+| Filesystem | read/write | Creates and modifies plugin files |
+| Shell | yes | Runs scaffolding and validation scripts |
+| Network | no | — |
+| MCP | no | — |
+| Scripts | yes | Scaffolding scripts in `scripts/` and `templates/` |
+
+See [SECURITY.md](../SECURITY.md) for the full security model.
+
 ## Development
 
 These skills were built using themselves! The source is available at:

@@ -107,6 +107,20 @@ baselayer/
 └── README.md
 ```
 
+## Capabilities
+
+This plugin uses only standard Claude Code tools:
+
+| Capability | Used | Notes |
+|------------|------|-------|
+| Filesystem | read | Reads code for analysis and review |
+| Shell | no | — |
+| Network | no | Research uses built-in WebSearch |
+| MCP | no | — |
+| Scripts | no | Instructions-only, no executable scripts |
+
+See [SECURITY.md](../SECURITY.md) for the full security model.
+
 ## Related Plugins
 
 - **claude-dev** — Build your own Claude Code plugins

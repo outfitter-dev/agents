@@ -217,6 +217,29 @@ Rate limit → alternate MCP → manual search guidance
 4. Recommend → primary + alternatives + implementation
 </discovery_patterns>
 
+<findings_format>
+Two output modes based on research type:
+
+**Evaluation Mode** (claims and recommendations):
+```
+Finding: { assertion or claim }
+Source: { authoritative source with link }
+Confidence: High/Medium/Low — { brief rationale }
+Verify: { how to validate this finding }
+```
+
+**Discovery Mode** (searching and gathering):
+```
+Found: { what was discovered }
+Source: { where it came from with link }
+Notes: { relevant context or caveats }
+```
+
+Use Evaluation Mode when making recommendations or assertions.
+Use Discovery Mode when gathering options or looking things up.
+Mix modes as appropriate within a single research session.
+</findings_format>
+
 <response_structure>
 ```markdown
 ## Research Summary

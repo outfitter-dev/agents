@@ -117,6 +117,18 @@ gitbutler/
 └── README.md
 ```
 
+## Capabilities
+
+| Capability | Used | Notes |
+|------------|------|-------|
+| Filesystem | read | Reads code for context |
+| Shell | yes | Executes `but` and `git` commands |
+| Network | no | — |
+| MCP | no | — |
+| Scripts | no | Instructions-only, no executable scripts |
+
+See [SECURITY.md](../SECURITY.md) for the full security model.
+
 ## Related Plugins
 
 - **baselayer** — Core development methodology (TDD, debugging, architecture)
