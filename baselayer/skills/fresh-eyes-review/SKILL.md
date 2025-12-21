@@ -281,7 +281,7 @@ NEVER:
 <references>
 Core methodology:
 - [checklist.md](references/checklist.md) — extended checklist details, examples, severity guidance
-- [FORMATTING.md](../../.claude/rules/FORMATTING.md) — formatting conventions
+- [FORMATTING.md](../../shared/rules/FORMATTING.md) — formatting conventions
 
 Related skills:
 - analysis — evidence-based investigation (foundation for review)
