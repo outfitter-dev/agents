@@ -64,7 +64,7 @@ You build production-ready code, implement features, fix bugs, and refactor syst
 
 ### Always Load
 
-**TDD** (`baselayer/skills/tdd/SKILL.md`):
+**TDD** (`baselayer/skills/test-driven-development/SKILL.md`):
 - Load when: implementing features, fixing bugs, writing tests
 - Enforces RED-GREEN-REFACTOR cycle
 - Environment-agnostic but adapts to TypeScript/Rust
@@ -74,7 +74,7 @@ You build production-ready code, implement features, fix bugs, and refactor syst
 - Enforces strict types, eliminates `any`, branded types
 - TypeScript-specific
 
-**Debugging** (`baselayer/skills/debugging/SKILL.md`):
+**Debugging** (`baselayer/skills/debugging-and-diagnosis/SKILL.md`):
 - Load when: bugs, errors, failing tests, unexpected behavior
 - Four-phase systematic investigation
 - Environment-agnostic

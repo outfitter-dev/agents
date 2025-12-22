@@ -2,7 +2,7 @@
 
 ## Executive Summary
 
-The SPEC.md planned two complementary skills (`claude-skill-authoring` and `claude-skill-qa`), but the user already has **seven mature, production-ready skills** that comprehensively cover this scope and extend beyond it. The existing skills represent a more sophisticated, battle-tested implementation with better separation of concerns and additional capabilities.
+The SPEC.md planned two complementary skills (`claude-skills-authoring` and `claude-skill-qa`), but the user already has **seven mature, production-ready skills** that comprehensively cover this scope and extend beyond it. The existing skills represent a more sophisticated, battle-tested implementation with better separation of concerns and additional capabilities.
 
 **Key Finding**: Rather than implementing SPEC.md from scratch, we should **migrate the existing user skills into the toolkit plugin** with minimal modifications. The existing skills are superior in design, completeness, and organization.
 
@@ -12,7 +12,7 @@ The SPEC.md planned two complementary skills (`claude-skill-authoring` and `clau
 
 | SPEC.md Plan | Existing User Skills | Coverage |
 |--------------|---------------------|----------|
-| `claude-skill-authoring` | `agent-skill-authoring` | ✅ Complete + Enhanced |
+| `claude-skills-authoring` | `agent-skills-authoring` | ✅ Complete + Enhanced |
 | | `agent-authoring` | ✅ Additional capability (agents vs skills) |
 | `claude-skill-qa` | `agent-skill-validation` | ✅ Complete match |
 | | `agent-skill-review` | ✅ Enhanced (read+write vs read-only) |
@@ -52,7 +52,7 @@ The SPEC.md planned two complementary skills (`claude-skill-authoring` and `clau
 #### 4. Flag Discovery System (`agent-skill-list-flags`)
 - **Not in SPEC**: Intelligent discovery of skill trigger flags
 - **Unique value**: Helps users discover available flags across all skills
-- **Integration**: Works with `agent-skill-authoring` to validate flag naming
+- **Integration**: Works with `agent-skills-authoring` to validate flag naming
 
 #### 5. Skill Discovery (`find-skills`)
 - **Not in SPEC**: General-purpose skill discovery system
@@ -65,7 +65,7 @@ The SPEC.md planned two complementary skills (`claude-skill-authoring` and `clau
 
 ### Skill Authoring Capabilities
 
-#### SPEC: `claude-skill-authoring`
+#### SPEC: `claude-skills-authoring`
 ```yaml
 Planned Features:
 - Skill templates (API wrapper, document processor, dev workflow, research synthesizer)
@@ -75,7 +75,7 @@ Planned Features:
 - Scripts: init-skill.ts, package-skill.ts
 ```
 
-#### Existing: `agent-skill-authoring`
+#### Existing: `agent-skills-authoring`
 ```yaml
 Actual Features:
 ✅ All SPEC templates (via references)
@@ -141,7 +141,7 @@ Review (read+write):
 ### SPEC Approach: Scripts + Tools
 
 ```
-claude-skill-authoring/
+claude-skills-authoring/
 ├── SKILL.md (instructions)
 ├── scripts/
 │   ├── init-skill.ts       # Scaffold new skills
@@ -170,7 +170,7 @@ claude-skill-qa/
 ### Existing Approach: Skills as Executors
 
 ```
-agent-skill-authoring/
+agent-skills-authoring/
 ├── SKILL.md (complete instructions + validation refs)
 ├── validation/             # Linked from agent-skill-validation
 │   ├── yaml-schema.md
@@ -214,7 +214,7 @@ agent-skill-review/
 
 SPEC.md proposed renaming pattern (if bringing into plugin):
 ```
-agent-skill-authoring    → claude-skill-authoring
+agent-skills-authoring    → claude-skills-authoring
 agent-authoring          → claude-agent-authoring
 agent-validation         → claude-agent-validation
 agent-skill-validation   → claude-skill-validation
@@ -228,12 +228,12 @@ find-skills              → discover-skills
 **For `agent-` prefix removal:**
 - ✅ **Good**: More generic, not user-specific
 - ✅ **Good**: Aligns with "Claude Code" branding
-- ⚠️ **Concern**: "agent-skill-authoring" has intentional `agent-` prefix because it's about agent-driven skill creation workflows
+- ⚠️ **Concern**: "agent-skills-authoring" has intentional `agent-` prefix because it's about agent-driven skill creation workflows
 - ⚠️ **Concern**: "agent-authoring" and "agent-validation" are about creating/validating **agents**, not skills
 
 **Recommendation**: Use hybrid approach:
 ```
-agent-skill-authoring    → skill-authoring        (skill creation, no "agent" in name)
+agent-skills-authoring    → skills-authoring        (skill creation, no "agent" in name)
 agent-authoring          → agent-authoring        (KEEP: it's about agents)
 agent-validation         → agent-validation       (KEEP: it's about agents)
 agent-skill-validation   → skill-validation       (skill validation)
@@ -251,8 +251,8 @@ find-skills              → discover-skills        (more descriptive verb)
 ### Recommended Approach: Migrate Existing Skills
 
 **Phase 1: Core Skills (Priority 1)**
-1. `skill-authoring` (was `agent-skill-authoring`)
-   - Move to `plugins/toolkit/skills/skill-authoring/`
+1. `skills-authoring` (was `agent-skills-authoring`)
+   - Move to `plugins/toolkit/skills/skills-authoring/`
    - Update internal references to new naming
    - Keep all validation references
    - Include audit-skill-flags.sh script
@@ -260,7 +260,7 @@ find-skills              → discover-skills        (more descriptive verb)
 2. `skill-validation` (was `agent-skill-validation`)
    - Move to `plugins/toolkit/skills/skill-validation/`
    - Read-only validation orchestrator
-   - Reference skill-authoring's validation docs
+   - Reference skills-authoring's validation docs
 
 3. `skill-review` (was `agent-skill-review`)
    - Move to `plugins/toolkit/skills/skill-review/`
@@ -295,7 +295,7 @@ find-skills              → discover-skills        (more descriptive verb)
 
 ### 1. Merge Validation References
 
-**Current State**: `agent-skill-authoring` has validation docs that `agent-skill-validation` references.
+**Current State**: `agent-skills-authoring` has validation docs that `agent-skill-validation` references.
 
 **Opportunity**: Create shared validation references:
 ```
@@ -311,7 +311,7 @@ plugins/toolkit/references/
     └── system-prompt-guidelines.md
 ```
 
-Both skill-authoring and skill-validation can reference these.
+Both skills-authoring and skill-validation can reference these.
 
 **Benefit**: Single source of truth, easier maintenance.
 
@@ -347,7 +347,7 @@ plugins/toolkit/skills/
 
 **SPEC Scripts (not built)**:
 ```
-claude-skill-authoring/scripts/
+claude-skills-authoring/scripts/
 ├── init-skill.ts
 └── package-skill.ts
 
@@ -360,7 +360,7 @@ claude-skill-qa/scripts/
 
 **Existing Script**:
 ```
-agent-skill-authoring/scripts/
+agent-skills-authoring/scripts/
 └── audit-skill-flags.sh
 ```
 
@@ -476,7 +476,7 @@ plugins/toolkit/scripts/
 
 | Skill | LOC | Tool Access | Unique Features |
 |-------|-----|-------------|-----------------|
-| `agent-skill-authoring` | 293 | None | Flag auditing, progressive disclosure |
+| `agent-skills-authoring` | 293 | None | Flag auditing, progressive disclosure |
 | `agent-skill-validation` | 376 | Read, Grep, Glob | Read-only validation |
 | `agent-skill-review` | 506 | Read, Edit, Grep, Glob | Can apply fixes |
 | `agent-authoring` | 292 | None | Agent creation (vs skills) |

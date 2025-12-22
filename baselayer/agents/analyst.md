@@ -2,7 +2,7 @@
 name: analyst
 version: 1.0.0
 description: |
-  Evidence-based investigation and analysis. Routes to investigation skills (research, pathfinding, patternify, conversation-analysis) based on task type. Use when exploring options, researching technologies, investigating issues, analyzing patterns, or discovering architectural insights.
+  Evidence-based investigation and analysis. Routes to investigation skills (research-and-report, pathfinding, patternify, conversation-analysis) based on task type. Use when exploring options, researching technologies, investigating issues, analyzing patterns, or discovering architectural insights.
 
   <example>
   Context: User needs to evaluate technology options.
@@ -52,7 +52,7 @@ You are an evidence-based investigator who routes investigation tasks to appropr
 
 ### Always Available
 
-**research** (`baselayer/skills/research/SKILL.md`):
+**research-and-report** (`baselayer/skills/research-and-report/SKILL.md`):
 - Load when: evaluating technologies, discovering documentation, troubleshooting with authoritative sources
 - Tools: context7, firecrawl (web search/scrape), WebSearch
 - Output: comparison matrices, recommendations with citations, implementation guidance
@@ -72,7 +72,7 @@ You are an evidence-based investigator who routes investigation tasks to appropr
 - Tools: episodic-memory MCP for conversation search and retrieval
 - Output: insights from past work, recurring patterns, decisions made
 
-**architect** (`baselayer/skills/architect/SKILL.md`):
+**software-architecture** (`baselayer/skills/software-architecture/SKILL.md`):
 - Load when: understanding system structure, planning refactors, documenting architecture
 - Pattern: structure discovery → relationship mapping → insight extraction
 - Output: dependency graphs, architectural diagrams, refactoring recommendations
@@ -81,7 +81,7 @@ You are an evidence-based investigator who routes investigation tasks to appropr
 
 ```
 User asks about technology/library options
-→ Load research skill
+→ Load research-and-report skill
 → Multi-source discovery (context7 + firecrawl + WebSearch)
 
 User has unclear requirements or vague ideas
@@ -97,7 +97,7 @@ User needs to recall past work or decisions
 → Search episodic memory for context
 
 User needs codebase structural understanding
-→ Load architect skill
+→ Load software-architecture skill
 → Map structure and relationships
 ```
 

@@ -35,7 +35,7 @@ This document provides a step-by-step plan to migrate seven existing user skills
 ## Phase 1: Core Skill Lifecycle
 
 ### Skills to Migrate
-1. `skill-authoring` (was `agent-skill-authoring`)
+1. `skills-authoring` (was `agent-skills-authoring`)
 2. `skill-validation` (was `agent-skill-validation`)
 3. `skill-review` (was `agent-skill-review`)
 
@@ -44,7 +44,7 @@ This document provides a step-by-step plan to migrate seven existing user skills
 ```
 plugins/toolkit/
 ├── skills/
-│   ├── skill-authoring/
+│   ├── skills-authoring/
 │   │   ├── SKILL.md
 │   │   ├── templates/
 │   │   │   ├── simple-skill.md
@@ -78,7 +78,7 @@ plugins/toolkit/
 
 **Action**: Extract validation docs from user skill to shared location
 
-**Source**: `~/.config/claude/skills/agent-skill-authoring/validation/*.md`
+**Source**: `~/.config/claude/skills/agent-skills-authoring/validation/*.md`
 
 **Target**: `plugins/toolkit/references/skill-validation/*.md`
 
@@ -87,16 +87,16 @@ plugins/toolkit/
 mkdir -p plugins/toolkit/references/skill-validation
 
 # Copy validation docs
-cp ~/.config/claude/skills/agent-skill-authoring/validation/yaml-schema.md \
+cp ~/.config/claude/skills/agent-skills-authoring/validation/yaml-schema.md \
    plugins/toolkit/references/skill-validation/
 
-cp ~/.config/claude/skills/agent-skill-authoring/validation/description-guidelines.md \
+cp ~/.config/claude/skills/agent-skills-authoring/validation/description-guidelines.md \
    plugins/toolkit/references/skill-validation/
 
-cp ~/.config/claude/skills/agent-skill-authoring/validation/naming-conventions.md \
+cp ~/.config/claude/skills/agent-skills-authoring/validation/naming-conventions.md \
    plugins/toolkit/references/skill-validation/
 
-cp ~/.config/claude/skills/agent-skill-authoring/validation/best-practices-checklist.md \
+cp ~/.config/claude/skills/agent-skills-authoring/validation/best-practices-checklist.md \
    plugins/toolkit/references/skill-validation/
 ```
 
@@ -104,11 +104,11 @@ cp ~/.config/claude/skills/agent-skill-authoring/validation/best-practices-check
 
 ---
 
-#### Step 1.2: Migrate `skill-authoring`
+#### Step 1.2: Migrate `skills-authoring`
 
-**Source**: `~/.config/claude/skills/agent-skill-authoring/`
+**Source**: `~/.config/claude/skills/agent-skills-authoring/`
 
-**Target**: `plugins/toolkit/skills/skill-authoring/`
+**Target**: `plugins/toolkit/skills/skills-authoring/`
 
 **Changes Required**:
 
@@ -141,7 +141,7 @@ s|validation/naming-conventions.md|../../references/skill-validation/naming-conv
 s|validation/best-practices-checklist.md|../../references/skill-validation/best-practices-checklist.md|g
 
 # Update skill name references
-s|agent-skill-authoring|skill-authoring|g
+s|agent-skills-authoring|skills-authoring|g
 s|agent-skill-validation|skill-validation|g
 s|agent-skill-review|skill-review|g
 ```
@@ -149,20 +149,20 @@ s|agent-skill-review|skill-review|g
 3. **Migrate supporting files**:
 ```bash
 # Create directory
-mkdir -p plugins/toolkit/skills/skill-authoring/{templates,examples,scripts}
+mkdir -p plugins/toolkit/skills/skills-authoring/{templates,examples,scripts}
 
 # Copy SKILL.md (with updates applied)
 # Copy templates
-cp -r ~/.config/claude/skills/agent-skill-authoring/templates/* \
-   plugins/toolkit/skills/skill-authoring/templates/
+cp -r ~/.config/claude/skills/agent-skills-authoring/templates/* \
+   plugins/toolkit/skills/skills-authoring/templates/
 
 # Copy examples
-cp -r ~/.config/claude/skills/agent-skill-authoring/examples/* \
-   plugins/toolkit/skills/skill-authoring/examples/
+cp -r ~/.config/claude/skills/agent-skills-authoring/examples/* \
+   plugins/toolkit/skills/skills-authoring/examples/
 
 # Copy audit script
-cp ~/.config/claude/skills/agent-skill-authoring/scripts/audit-skill-flags.sh \
-   plugins/toolkit/skills/skill-authoring/scripts/
+cp ~/.config/claude/skills/agent-skills-authoring/scripts/audit-skill-flags.sh \
+   plugins/toolkit/skills/skills-authoring/scripts/
 ```
 
 4. **Update audit script paths**:
@@ -176,13 +176,13 @@ cp ~/.config/claude/skills/agent-skill-authoring/scripts/audit-skill-flags.sh \
 **Test**:
 ```bash
 # Test skill can be read
-cat plugins/toolkit/skills/skill-authoring/SKILL.md | head -20
+cat plugins/toolkit/skills/skills-authoring/SKILL.md | head -20
 
 # Test references resolve
 # Check that ../../references/skill-validation/*.md exist from skill dir
 
 # Test audit script
-bash plugins/toolkit/skills/skill-authoring/scripts/audit-skill-flags.sh --json
+bash plugins/toolkit/skills/skills-authoring/scripts/audit-skill-flags.sh --json
 ```
 
 ---
@@ -211,7 +211,7 @@ allowed-tools: Read, Grep, Glob
 2. **Update cross-skill references**:
 ```markdown
 # OLD
-Check against [../agent-skill-authoring/validation/yaml-schema.md](../agent-skill-authoring/validation/yaml-schema.md)
+Check against [../agent-skills-authoring/validation/yaml-schema.md](../agent-skills-authoring/validation/yaml-schema.md)
 
 # NEW
 Check against [../../references/skill-validation/yaml-schema.md](../../references/skill-validation/yaml-schema.md)
@@ -220,10 +220,10 @@ Check against [../../references/skill-validation/yaml-schema.md](../../reference
 **Find/Replace Operations**:
 ```bash
 # Update validation reference paths
-s|../agent-skill-authoring/validation/|../../references/skill-validation/|g
+s|../agent-skills-authoring/validation/|../../references/skill-validation/|g
 
 # Update skill name references
-s|agent-skill-authoring|skill-authoring|g
+s|agent-skills-authoring|skills-authoring|g
 s|agent-skill-validation|skill-validation|g
 s|agent-skill-review|skill-review|g
 ```
@@ -273,10 +273,10 @@ Use skill-validation first if...
 **Find/Replace Operations**:
 ```bash
 # Update validation reference paths
-s|../agent-skill-authoring/validation/|../../references/skill-validation/|g
+s|../agent-skills-authoring/validation/|../../references/skill-validation/|g
 
 # Update skill name references
-s|agent-skill-authoring|skill-authoring|g
+s|agent-skills-authoring|skills-authoring|g
 s|agent-skill-validation|skill-validation|g
 s|agent-skill-review|skill-review|g
 ```
@@ -445,23 +445,23 @@ description: Lists all available skill flags with intelligent grouping and categ
 2. **Update audit script reference**:
 ```markdown
 # OLD
-bash ~/.claude/skills/agent-skill-authoring/scripts/audit-skill-flags.sh --json
+bash ~/.claude/skills/agent-skills-authoring/scripts/audit-skill-flags.sh --json
 
 # NEW
 bash ../../scripts/audit-skill-flags.sh --json
-# OR (if script stays in skill-authoring)
-bash ../skill-authoring/scripts/audit-skill-flags.sh --json
+# OR (if script stays in skills-authoring)
+bash ../skills-authoring/scripts/audit-skill-flags.sh --json
 ```
 
 **Decision Point**: Where should `audit-skill-flags.sh` live?
 - **Option A**: `plugins/toolkit/scripts/audit-skill-flags.sh` (shared utility)
-- **Option B**: `plugins/toolkit/skills/skill-authoring/scripts/audit-skill-flags.sh` (owned by authoring)
+- **Option B**: `plugins/toolkit/skills/skills-authoring/scripts/audit-skill-flags.sh` (owned by authoring)
 
-**Recommendation**: Option B (keep with skill-authoring), but reference from skill-flags.
+**Recommendation**: Option B (keep with skills-authoring), but reference from skill-flags.
 
 **Find/Replace**:
 ```bash
-s|agent-skill-authoring|skill-authoring|g
+s|agent-skills-authoring|skills-authoring|g
 ```
 
 **Test**:
@@ -519,16 +519,16 @@ ls plugins/toolkit/skills/discover-skills/../../scripts/find-skills.ts
 bun run scripts/find-skills.ts --source project --text
 
 # Should show all 7 migrated skills
-# Expected: skill-authoring, skill-validation, skill-review, agent-authoring, agent-validation, skill-flags, discover-skills
+# Expected: skills-authoring, skill-validation, skill-review, agent-authoring, agent-validation, skill-flags, discover-skills
 ```
 
 #### Test 2: Flag Discovery
 ```bash
 # Should find flags across all skills
-bun run skills/skill-authoring/scripts/audit-skill-flags.sh --json
+bun run skills/skills-authoring/scripts/audit-skill-flags.sh --json
 
 # Expected flags:
-# --create-skill, --new-skill (skill-authoring)
+# --create-skill, --new-skill (skills-authoring)
 # --validate-skill, --check-skill (skill-validation)
 # --review-skill, --check-skill (skill-review)
 # --create-agent, --new-agent (agent-authoring)
@@ -542,11 +542,11 @@ bun run skills/skill-authoring/scripts/audit-skill-flags.sh --json
 # Validate all internal links resolve
 cd plugins/toolkit
 
-# Check skill-authoring references
-find skills/skill-authoring -name "*.md" -exec grep -l "\.\./" {} \;
+# Check skills-authoring references
+find skills/skills-authoring -name "*.md" -exec grep -l "\.\./" {} \;
 
 # Test each reference manually
-# Example: skills/skill-authoring/SKILL.md -> ../../references/skill-validation/yaml-schema.md
+# Example: skills/skills-authoring/SKILL.md -> ../../references/skill-validation/yaml-schema.md
 ls references/skill-validation/yaml-schema.md
 ```
 
@@ -597,7 +597,7 @@ Add section:
 The toolkit plugin provides comprehensive skills for creating, validating, and managing Claude Code skills and agents.
 
 ### Skill Lifecycle
-- **skill-authoring** (`--create-skill`) - Create and update skills with best practices
+- **skills-authoring** (`--create-skill`) - Create and update skills with best practices
 - **skill-validation** (`--validate-skill`) - Validate skills against quality standards
 - **skill-review** (`--review-skill`) - Review and improve existing skills
 
@@ -623,7 +623,7 @@ Ensure plugin.json includes all skills:
   "description": "Agentish toolkit plugin with skills for skill/agent management",
   "version": "1.0.0",
   "skills": [
-    "skills/skill-authoring",
+    "skills/skills-authoring",
     "skills/skill-validation",
     "skills/skill-review",
     "skills/agent-authoring",
@@ -649,7 +649,7 @@ If you were using these skills from your personal `~/.claude/skills/` directory,
 
 | Old Name | New Name | New Flag |
 |----------|----------|----------|
-| `agent-skill-authoring` | `skill-authoring` | `--create-skill` |
+| `agent-skills-authoring` | `skills-authoring` | `--create-skill` |
 | `agent-skill-validation` | `skill-validation` | `--validate-skill` |
 | `agent-skill-review` | `skill-review` | `--review-skill` |
 | `agent-authoring` | `agent-authoring` | `--create-agent` (unchanged) |
@@ -687,7 +687,7 @@ Keep your personal skills while using the plugin:
 If you haven't customized them:
 ```bash
 # Backup first
-mv ~/.config/claude/skills/agent-skill-authoring ~/.config/claude/skills.backup/
+mv ~/.config/claude/skills/agent-skills-authoring ~/.config/claude/skills.backup/
 mv ~/.config/claude/skills/agent-skill-validation ~/.config/claude/skills.backup/
 mv ~/.config/claude/skills/agent-skill-review ~/.config/claude/skills.backup/
 mv ~/.config/claude/skills/agent-skill-list-flags ~/.config/claude/skills.backup/
@@ -847,12 +847,12 @@ If migration fails:
 ```
 USER SKILLS → PLUGIN SKILLS
 
-~/.config/claude/skills/agent-skill-authoring/
-├── SKILL.md → plugins/toolkit/skills/skill-authoring/SKILL.md
+~/.config/claude/skills/agent-skills-authoring/
+├── SKILL.md → plugins/toolkit/skills/skills-authoring/SKILL.md
 ├── validation/*.md → plugins/toolkit/references/skill-validation/*.md
-├── templates/*.md → plugins/toolkit/skills/skill-authoring/templates/*.md
-├── examples/*.md → plugins/toolkit/skills/skill-authoring/examples/*.md
-└── scripts/audit-skill-flags.sh → plugins/toolkit/skills/skill-authoring/scripts/audit-skill-flags.sh
+├── templates/*.md → plugins/toolkit/skills/skills-authoring/templates/*.md
+├── examples/*.md → plugins/toolkit/skills/skills-authoring/examples/*.md
+└── scripts/audit-skill-flags.sh → plugins/toolkit/skills/skills-authoring/scripts/audit-skill-flags.sh
 
 ~/.config/claude/skills/agent-skill-validation/
 └── SKILL.md → plugins/toolkit/skills/skill-validation/SKILL.md

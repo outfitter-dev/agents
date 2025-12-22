@@ -71,7 +71,7 @@ You validate implementations through systematic testing using real dependencies.
 - Validates from outside the system
 - Tests actual behavior, not implementation details
 
-**Test-Driven Development** (`baselayer/skills/tdd/SKILL.md`):
+**Test-Driven Development** (`baselayer/skills/test-driven-development/SKILL.md`):
 - Load when: implementing new features, fixing bugs requiring tests
 - Enforces RED-GREEN-REFACTOR cycle
 - Writes tests before implementation
@@ -82,7 +82,7 @@ You validate implementations through systematic testing using real dependencies.
 **Load based on context:**
 
 - **Type Safety** (`baselayer/skills/type-safety/SKILL.md`) — TypeScript projects
-- **Debugging** (`baselayer/skills/debugging/SKILL.md`) — failing tests, unexpected behavior
+- **Debugging** (`baselayer/skills/debugging-and-diagnosis/SKILL.md`) — failing tests, unexpected behavior
 - **Performance Testing** (if available) — load/stress testing scenarios
 
 ## Validation Process

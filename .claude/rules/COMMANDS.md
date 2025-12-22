@@ -72,7 +72,7 @@ Commands are lightweight entry points that load skills.
 
 **Analysis command** (`/simplify`):
 - Takes proposed solution as argument
-- Loads challenge-complexity skill
+- Loads complexity-analysis skill
 - Returns structured analysis
 
 **Discovery command** (`/patternify`):
@@ -84,7 +84,7 @@ Commands are lightweight entry points that load skills.
 
 - Verb-based: `/debug`, `/simplify`, `/pathfind`
 - Action-oriented: what user wants to happen
-- Kebab-case for multi-word: `/skill-check`
+- Kebab-case for multi-word: `/skills-check`
 
 ## Anti-Patterns
 

@@ -16,7 +16,7 @@
 ## Skills Inventory
 
 ### Agent & Skill Authoring (5 skills)
-- **agent-authoring** (291 lines) - Creates/updates agents with YAML frontmatter
+- **subagent-authoring** (291 lines) - Creates/updates agents with YAML frontmatter
 - **agent-skill-authoring** (292 lines) - Creates/updates skills with progressive disclosure
 - **agent-skill-validation** (375 lines) - Validates against best practices, YAML schema
 - **agent-skill-review** (505 lines) - Reviews for discoverability, clarity, conciseness

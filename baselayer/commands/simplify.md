@@ -30,7 +30,7 @@ $ARGUMENTS
 
 ---
 
-Load the challenge-complexity skill and begin by:
+Load the complexity-analysis skill and begin by:
 1. Restating the proposed approach
 2. Identifying the complexity being introduced
 3. Proposing the simplest alternative that might work

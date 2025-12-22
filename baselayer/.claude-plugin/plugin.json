@@ -1,6 +1,6 @@
 {
   "name": "baselayer",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Core development methodology skills: TDD, systematic debugging, type safety, architecture design, technical research, and requirements discovery",
   "author": {
     "name": "Outfitter",

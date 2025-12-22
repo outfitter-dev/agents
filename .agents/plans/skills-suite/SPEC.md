@@ -4,7 +4,7 @@
 
 Two complementary skills for authoring and validating Claude skills:
 
-- **claude-skill-authoring** — Create and update skills reliably
+- **claude-skills-authoring** — Create and update skills reliably
 - **claude-skill-qa** — Debug, analyze, lint, and validate skills
 
 ---
@@ -12,7 +12,7 @@ Two complementary skills for authoring and validating Claude skills:
 ## Directory Structure
 
 ```
-claude-skill-authoring/
+claude-skills-authoring/
 ├── SKILL.md
 ├── LICENSE.txt
 ├── references/
@@ -61,13 +61,13 @@ claude-skill-qa/
 
 ---
 
-# claude-skill-authoring
+# claude-skills-authoring
 
 ## SKILL.md
 
 ````markdown
 ---
-name: claude-skill-authoring
+name: claude-skills-authoring
 description: Create and update Claude skills reliably. Use when building new skills from scratch, updating existing skills, or needing guidance on skill structure and best practices. Covers skill anatomy, progressive disclosure, description writing, and provides copyable templates for common skill archetypes (API wrappers, document processors, dev workflows, research synthesizers).
 ---
 
@@ -716,7 +716,7 @@ If a user thinks of it as "one thing," keep it as one skill.
 If the phrases that invoke A are different from B, split them.
 
 **Example:**
-- "Create a new skill" → claude-skill-authoring
+- "Create a new skill" → claude-skills-authoring
 - "Why isn't my skill working?" → claude-skill-qa
 
 ### Context Pollution
