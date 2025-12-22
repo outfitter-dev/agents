@@ -122,21 +122,21 @@ Plugins are code. Review what you install. See [SECURITY.md](SECURITY.md) for th
 | baselayer | tdd | Test-driven development with Red-Green-Refactor |
 | baselayer | debugging | Systematic root cause investigation |
 | baselayer | analysis | Evidence-based investigation methodology |
-| baselayer | architect | System design with technology selection |
+| baselayer | software-architecture | System design with technology selection |
 | baselayer | research | Multi-source technical research with citations |
 | baselayer | pathfinding | Collaborative Q&A for unclear requirements |
-| baselayer | challenge-complexity | Pushback against over-engineering |
+| baselayer | complexity-analysis | Pushback against over-engineering |
 | baselayer | patternify | Extract reusable patterns from conversations |
-| baselayer | fresh-eyes-review | Pre-commit quality gate checklist |
+| baselayer | code-review | Pre-commit quality gate checklist |
 | baselayer | scenario-testing | End-to-end testing without mocks |
-| baselayer | senior-developer | Engineering judgment and decision principles |
+| baselayer | software-engineering | Engineering judgment and decision principles |
 | baselayer | conversation-analysis | Signal extraction from chat history |
-| baselayer | dev-typescript | TypeScript patterns and strict typing |
-| baselayer | dev-bun | Bun runtime APIs and patterns |
-| baselayer | dev-hono | Type-safe Hono API development |
-| baselayer | dev-react | React 18-19 TypeScript patterns |
-| baselayer | expertise-performance | Profiling and optimization |
-| baselayer | expertise-security | Security auditing and vulnerability detection |
+| baselayer | typescript-dev | TypeScript patterns and strict typing |
+| baselayer | bun-dev | Bun runtime APIs and patterns |
+| baselayer | hono-dev | Type-safe Hono API development |
+| baselayer | react-dev | React 18-19 TypeScript patterns |
+| baselayer | performance-engineering | Profiling and optimization |
+| baselayer | security-engineering | Security auditing and vulnerability detection |
 | gitbutler | version-control | Core GitButler workflow patterns |
 | gitbutler | multi-agent | Coordinate multiple AI agents |
 | gitbutler | stack-workflows | Stacked branches with `--anchor` |

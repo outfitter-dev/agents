@@ -58,6 +58,6 @@ Keep SKILL.md focused. Move details to references/.
 
 ## Cross-Referencing
 
-Skills reference skills: `[tdd/SKILL.md](../tdd/SKILL.md)`
+Skills reference skills: `[test-driven-development/SKILL.md](../test-driven-development/SKILL.md)`
 Agents load skills: "Load TDD skill with Skill tool"
 Commands invoke skills: "Load the debugging skill and begin by..."

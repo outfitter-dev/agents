@@ -256,7 +256,7 @@ Patterns and examples:
 Related skills:
 - systematic-debugging — investigation methodology (scenarios help reproduce bugs)
 - test-driven-development — TDD workflow (scenarios validate features)
-- analysis — evidence gathering (scenarios provide empirical data)
+- investigation — evidence gathering (scenarios provide empirical data)
 
 External resources:
 - [Growing Object-Oriented Software, Guided by Tests](http://www.growing-object-oriented-software.com/) — end-to-end testing philosophy

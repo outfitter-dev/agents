@@ -21,21 +21,21 @@ Core development methodology skills for Claude Code. Provides disciplined approa
 | **tdd** | Test-driven development with Red-Green-Refactor cycles |
 | **debugging** | Systematic root cause investigation (no fixes without understanding) |
 | **analysis** | Evidence-based investigation methodology |
-| **architect** | System design with technology selection frameworks |
-| **research** | Multi-source technical research with citations |
+| **software-architecture** | System design with technology selection frameworks |
+| **research-and-report** | Multi-source technical research with citations |
 | **pathfinding** | Collaborative Q&A for unclear requirements |
-| **challenge-complexity** | Pushback against over-engineering |
+| **complexity-analysis** | Pushback against over-engineering |
 | **patternify** | Extract reusable patterns from conversations |
-| **fresh-eyes-review** | Pre-commit quality gate checklist |
+| **code-review** | Pre-commit quality gate checklist |
 | **scenario-testing** | End-to-end testing without mocks |
-| **senior-developer** | Engineering judgment and decision principles |
+| **software-engineering** | Engineering judgment and decision principles |
 | **conversation-analysis** | Signal extraction from chat history |
-| **dev-typescript** | TypeScript patterns and strict typing |
-| **dev-bun** | Bun runtime APIs and patterns |
-| **dev-hono** | Type-safe Hono API development |
-| **dev-react** | React 18-19 TypeScript patterns |
-| **expertise-performance** | Profiling and optimization |
-| **expertise-security** | Security auditing and vulnerability detection |
+| **typescript-dev** | TypeScript patterns and strict typing |
+| **bun-dev** | Bun runtime APIs and patterns |
+| **hono-dev** | Type-safe Hono API development |
+| **react-dev** | React 18-19 TypeScript patterns |
+| **performance-engineering** | Profiling and optimization |
+| **security-engineering** | Security auditing and vulnerability detection |
 
 ### Agents (7)
 
@@ -78,13 +78,13 @@ Use the reviewer agent to check this code
 **Architecture Design:**
 ```
 "Design a notification system for 100k users"
-→ Loads architect skill → Options with tradeoffs
+→ Loads software-architecture skill → Options with tradeoffs
 ```
 
 **Research:**
 ```
 "What's the best approach for rate limiting?"
-→ Loads research skill → Multi-source analysis with citations
+→ Loads research-and-report skill → Multi-source analysis with citations
 ```
 
 ## Philosophy

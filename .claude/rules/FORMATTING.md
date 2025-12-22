@@ -71,7 +71,7 @@ Escalating:
   Decisions Made:
   ✓ /simplify offers two modes: quick (skill) vs deep (agent)
   ✓ Agent returns: complexity identified + alternatives + escalation level
-  ✓ Uses ◇/◆/◆◆ indicators from challenge-complexity skill
+  ✓ Uses ◇/◆/◆◆ indicators from complexity-analysis skill
   ```
 
 ### Emphasis

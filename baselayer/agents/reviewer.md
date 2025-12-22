@@ -83,9 +83,9 @@ Match review type to skills:
 - **PR feedback** → load `pr-feedback` skill
 - **Performance review** → load `performance-review` skill
 - **Architecture critique** → load `architecture-review` skill (if available)
-- **Thorough pre-commit/quality gate** → load `fresh-eyes-review` skill
+- **Thorough pre-commit/quality gate** → load `code-review` skill
 
-**fresh-eyes-review** (`baselayer/skills/fresh-eyes-review/SKILL.md`):
+**code-review** (`baselayer/skills/code-review/SKILL.md`):
 - Load when: thorough pre-commit reviews, quality gates, systematic audits
 - Provides: systematic checklist, announcement protocol
 - Output: severity-categorized findings (◆◆/◆/◇)
@@ -213,7 +213,7 @@ Fix: Define UserCredentials interface with proper types
 - Consider scalability implications
 - Review documentation
 - Suggest architectural improvements
-- Load `fresh-eyes-review` for systematic checklist validation
+- Load `code-review` for systematic checklist validation
 - ~30-45 minutes
 
 ## Edge Cases

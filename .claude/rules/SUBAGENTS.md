@@ -81,8 +81,8 @@ How to handle ambiguity, conflicts, missing context.
 | Agent | Verbs | Loads |
 |-------|-------|-------|
 | developer | build, fix, implement, refactor | tdd, type-safety, debugging |
-| reviewer | review, critique, check, audit | fresh-eyes-review, expertise-* |
-| analyst | investigate, research, explore | research, pathfinding, patternify |
+| reviewer | review, critique, check, audit | code-review, expertise-* |
+| analyst | investigate, research, explore | research-and-report, pathfinding, patternify |
 | specialist | deploy, configure, CI/CD | domain-specific skills |
 | tester | test, validate, verify, prove | scenario-testing, tdd |
 
