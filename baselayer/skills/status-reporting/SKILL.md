@@ -174,7 +174,7 @@ Gather:
 
 Platforms: GitHub Actions, GitLab CI, CircleCI, Jenkins
 
-See [graphite.md](references/graphite.md), [github.md](references/github.md), [linear.md](references/linear.md) for tool-specific implementations.
+See [graphite.md](references/graphite.md), [github.md](references/github.md), [linear.md](references/linear.md), [beads.md](references/beads.md) for tool-specific implementations.
 </data_sources>
 
 <aggregation>
@@ -522,6 +522,7 @@ Status reporting as session starter:
 - [graphite.md](references/graphite.md) — Graphite stack visualization and PR queries
 - [github.md](references/github.md) — GitHub CLI patterns and API usage
 - [linear.md](references/linear.md) — Linear MCP integration and context mapping
+- [beads.md](references/beads.md) — Local issue tracking with dependencies
 - [FORMATTING.md](../../.claude/rules/FORMATTING.md) — Visual indicators and formatting conventions
 </references>
 
