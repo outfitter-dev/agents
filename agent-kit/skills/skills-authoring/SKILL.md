@@ -1,5 +1,6 @@
 ---
 name: skills-authoring
+version: 1.0.0
 description: Creates or updates skills with proper YAML frontmatter, progressive disclosure, and best practices per the open Agent Skills specification. Supports simple, tool-restricted, multi-file, and script-based skills. Use when creating new skills, authoring skills, extending agent capabilities, or when `--create-skill` or `--new-skill` flag is mentioned.
 allowed-tools: Read Write Edit Grep Glob TodoWrite
 ---
@@ -25,7 +26,6 @@ Create skills that follow the [Agent Skills specification](https://agentskills.i
    - Pattern: lowercase, hyphens only (e.g., `pdf-processing`, `code-review`)
    - Gerund form recommended: `processing-pdfs`, `analyzing-data`
    - Must match directory name
-   - See [validation/naming-conventions.md](validation/naming-conventions.md)
 
 4. **Write SKILL.md**
    - Valid YAML frontmatter
@@ -76,7 +76,7 @@ allowed-tools: Read Grep Glob          # optional, experimental
 ## Examples
 [Concrete, runnable examples]
 
-For advanced usage, see [references/REFERENCE.md](references/REFERENCE.md).
+For cross-tool compatibility details, see the [references/](references/) directory.
 ```
 
 ## Frontmatter Fields
@@ -90,7 +90,7 @@ For advanced usage, see [references/REFERENCE.md](references/REFERENCE.md).
 | `metadata` | No | Key-value pairs for additional info |
 | `allowed-tools` | No | Space-delimited tool list (experimental) |
 
-See [validation/yaml-schema.md](validation/yaml-schema.md) for complete schema.
+Refer to the [Agent Skills Specification](https://agentskills.io/specification) for complete schema.
 
 ## Core Principles
 
@@ -121,7 +121,7 @@ Token loading:
 description: Extracts text and tables from PDF files, fills forms, merges documents. Use when working with PDF files or when the user mentions PDFs, forms, or document extraction.
 ```
 
-See [validation/description-guidelines.md](validation/description-guidelines.md).
+Include trigger keywords that users would naturally say when they need this skill.
 
 ## Naming Requirements
 
@@ -131,8 +131,6 @@ See [validation/description-guidelines.md](validation/description-guidelines.md)
 - Cannot contain `anthropic` or `claude`
 
 **Recommended**: Gerund form (`processing-pdfs`, `reviewing-code`)
-
-See [validation/naming-conventions.md](validation/naming-conventions.md).
 
 ## Tool Restrictions
 
@@ -149,19 +147,15 @@ allowed-tools: Bash(git:*) Bash(jq:*) Read
 # Omit field entirely
 ```
 
-## Templates
+## Skill Types
 
-- [Simple Skill](templates/simple-skill.md) - Basic single-file
-- [Tool-Restricted Skill](templates/tool-restricted-skill.md) - Limited tools
-- [Multi-File Skill](templates/multi-file-skill.md) - With references
-- [Script-Based Skill](templates/script-based-skill.md) - With executables
+**Simple** - Single SKILL.md file for basic capabilities
 
-## Examples
+**Tool-Restricted** - Uses `allowed-tools` to limit tool access
 
-See real-world examples:
-- [Commit Message Generation](examples/commit-message-generation.md)
-- [Code Review](examples/code-review.md)
-- [PDF Processing](examples/pdf-processing.md)
+**Multi-File** - SKILL.md with supporting `references/` documentation
+
+**Script-Based** - Includes executable scripts in `scripts/`
 
 ## Validation
 
@@ -190,7 +184,7 @@ Before finalizing, verify:
 - ❌ "You can use this to..." → Wrong voice (second-person)
 - ❌ No "Use when..." → Missing triggers
 
-See [validation/best-practices-checklist.md](validation/best-practices-checklist.md).
+Use the `skills-check` skill to validate your skill before finalizing.
 
 ## Best Practices
 

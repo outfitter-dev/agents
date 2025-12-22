@@ -721,10 +721,6 @@ A curated collection of Claude Code plugins for [domain/purpose].
 - Security
 - Testing
 
-## Contributing
-
-See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
-
 ## License
 
 MIT

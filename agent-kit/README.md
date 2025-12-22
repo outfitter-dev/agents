@@ -22,6 +22,11 @@ This plugin provides skills for building AI agent capabilities across multiple p
 
 - **codex-configuration** - Manage Codex CLI configuration including config.toml, MCP servers, profiles, and sandbox modes
 
+### Agent Authoring Skills
+
+- **subagent-authoring** - Create custom subagents with proper frontmatter, routing logic, and skill loading patterns
+- **subagent-check** - Validate subagents against best practices and plugin conventions
+
 ## Installation
 
 ### Via Outfitter Marketplace
@@ -106,6 +111,20 @@ Packages and publishes plugins:
 - Semantic versioning
 - GitHub releases and CI/CD automation
 - Documentation templates
+
+### subagent-authoring
+
+Creates custom subagents for Claude Code plugins:
+- Agent frontmatter and routing patterns
+- Skill loading and orchestration
+- Decision tree design
+
+### subagent-check
+
+Validates subagent quality:
+- Frontmatter completeness
+- Routing logic verification
+- Best practices compliance
 
 ## Supported Platforms
 

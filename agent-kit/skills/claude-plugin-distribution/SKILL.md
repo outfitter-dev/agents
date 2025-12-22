@@ -591,6 +591,4 @@ unzip -l plugin.zip
 
 ## Next Steps
 
-- See [REFERENCE.md](REFERENCE.md) for complete distribution workflows
 - See [EXAMPLES.md](EXAMPLES.md) for real-world distribution examples
-- Use scripts in `scripts/` for automated packaging and release

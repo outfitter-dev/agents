@@ -436,10 +436,6 @@ A curated list of awesome Claude Code plugins.
 - **git-workflow** - Git workflow automation
 - **code-quality** - Code quality analysis
 
-## Contributing
-
-See [CONTRIBUTING.md](CONTRIBUTING.md) for submission guidelines.
-
 ## License
 
 CC0 1.0 Universal

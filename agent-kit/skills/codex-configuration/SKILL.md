@@ -144,18 +144,17 @@ Toggle experimental features:
 ```toml
 [features]
 unified_exec = true
-streamable_shell = true
-rmcp_client = true
-apply_patch_freeform = true
-ghost_commit = true
-web_search_request = true
 shell_snapshot = true
+apply_patch_freeform = true
+exec_policy = true
+remote_compaction = true
+skills = true
 ```
 
 **CLI toggle:**
 ```bash
-codex --enable web_search_request
-codex --disable ghost_commit
+codex --enable skills
+codex --disable remote_compaction
 ```
 
 ### TUI Settings

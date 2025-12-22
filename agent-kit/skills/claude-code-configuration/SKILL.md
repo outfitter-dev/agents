@@ -397,5 +397,4 @@ tail -f ~/Library/Logs/Claude/mcp.log
 
 ## Next Steps
 
-- See [REFERENCE.md](REFERENCE.md) for complete configuration schema
 - See [EXAMPLES.md](EXAMPLES.md) for real-world configuration examples

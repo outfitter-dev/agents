@@ -278,12 +278,6 @@ ls .claude/agents/
 find ~/.claude/agents .claude/agents -name "*test*.md" 2>/dev/null
 ```
 
-## Further Reading
-
-For detailed examples and advanced patterns, see:
-- [EXAMPLES.md](EXAMPLES.md) - Complete agent examples with analysis
-- [REFERENCE.md](REFERENCE.md) - Comprehensive field reference and patterns
-
 ## References
 
 - `docs/claude/subagents.md` - Official subagents documentation
