@@ -1,0 +1,21 @@
+{
+  "name": "agent-kit",
+  "version": "2.0.0",
+  "description": "Skills for authoring Agent Skills (cross-tool) and platform-specific configuration for Claude Code, Codex, and other AI coding assistants. Includes skills authoring, validation, plugin development, and configuration management.",
+  "author": {
+    "name": "Outfitter",
+    "email": "team@outfitter.dev"
+  },
+  "homepage": "https://github.com/outfitter-dev/agents",
+  "repository": "https://github.com/outfitter-dev/agents",
+  "license": "MIT",
+  "keywords": [
+    "agent-skills",
+    "skills-authoring",
+    "claude-code",
+    "codex",
+    "configuration",
+    "plugins",
+    "cross-tool"
+  ]
+}

@@ -1,5 +1,5 @@
 ---
-name: claude-config-management
+name: claude-code-configuration
 description: Manages Claude configuration files for both Claude Desktop and Claude Code projects. Handles MCP server configuration, environment variables, project settings, and developer options. Use when configuring Claude Desktop with MCP servers, setting up Claude Code project settings, managing environment variables for Claude, enabling debugging features, or troubleshooting Claude configuration issues.
 version: 1.0.0
 ---

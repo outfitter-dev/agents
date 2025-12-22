@@ -1,5 +1,5 @@
 ---
-name: claude-plugin-marketplace-setup
+name: claude-marketplace-setup
 description: Creates and manages plugin marketplaces for Claude Code, enabling plugin discovery, distribution, and team sharing. Generates marketplace.json files with proper schema, configures plugin sources (GitHub, Git, local), and sets up team configurations for automatic marketplace installation. Use when publishing Claude Code plugins, creating internal plugin catalogs, setting up team plugin distribution, or managing plugin discovery for Claude Code projects.
 version: 1.0.0
 ---
