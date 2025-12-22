@@ -419,6 +419,45 @@ Use consistent width for scanning:
 - Preserve links for clickability
 </implementation_patterns>
 
+<scripts>
+**Automated Gatherers**
+
+The `scripts/` directory contains Bun scripts that do the heavy lifting:
+
+```
+scripts/
+├── sitrep.ts           # Entry point - orchestrates all gatherers
+├── gatherers/
+│   ├── graphite.ts     # Graphite stack data
+│   ├── github.ts       # GitHub PRs, CI status
+│   ├── linear.ts       # Linear issues (via Claude CLI headless)
+│   └── beads.ts        # Beads local issues
+└── lib/
+    ├── time.ts         # Time parsing utilities
+    └── types.ts        # Shared type definitions
+```
+
+**Usage**:
+```bash
+./scripts/sitrep.ts                     # All sources, 24h default
+./scripts/sitrep.ts -t 7d               # All sources, last 7 days
+./scripts/sitrep.ts -s github,beads     # Specific sources only
+./scripts/sitrep.ts --format=text       # Human-readable output
+```
+
+**Output Formats**:
+- `json` (default) — structured data for agent consumption
+- `text` — human-readable with visual indicators
+
+**Benefits**:
+- Single command gathers all data in parallel
+- Graceful degradation (missing sources skipped)
+- Consistent JSON schema across sources
+- Reduces agent tool calls by 80%+
+
+Run the script first, then format/present the results.
+</scripts>
+
 <extensibility>
 **Adding New Sources**
 

@@ -17,6 +17,24 @@ Parse arguments for:
 
 ---
 
+## Quick Start (Script-Based)
+
+For fastest results, run the sitrep script:
+
+```bash
+# Run from the skills directory
+./baselayer/skills/status-reporting/scripts/sitrep.ts
+
+# With options
+./sitrep.ts -t 7d                    # Last 7 days
+./sitrep.ts -s github,beads          # Specific sources only
+./sitrep.ts --format=text            # Human-readable output
+```
+
+The script runs all gatherers in parallel and returns structured JSON (default) or formatted text.
+
+---
+
 !`cat baselayer/skills/status-reporting/SKILL.md`
 
 ## Available References
@@ -30,10 +48,24 @@ Load these as needed based on detected/requested services:
 | Linear | `baselayer/skills/status-reporting/references/linear.md` | Linear MCP available or user requests |
 | Beads | `baselayer/skills/status-reporting/references/beads.md` | `.beads/` directory exists or user requests |
 
+## Scripts
+
+The `scripts/` directory contains Bun scripts for automated data gathering:
+
+| Script | Purpose |
+|--------|---------|
+| `sitrep.ts` | Orchestrator — runs all gatherers, aggregates results |
+| `gatherers/graphite.ts` | Graphite stack and branch data |
+| `gatherers/github.ts` | GitHub PRs and CI status |
+| `gatherers/linear.ts` | Linear issues via Claude CLI headless mode |
+| `gatherers/beads.ts` | Local beads issues |
+| `lib/time.ts` | Time parsing utilities |
+| `lib/types.ts` | Shared type definitions |
+
 ---
 
 Begin by:
 1. Parse time constraints from arguments (default: 24h)
-2. Detect available services (check for gt, gh, Linear MCP, .beads/)
-3. Filter to requested services if specified
+2. **Option A (fast)**: Run `./scripts/sitrep.ts -t {time}` and present results
+3. **Option B (manual)**: Detect available services and gather individually
 4. Execute the Gather → Aggregate → Present workflow
