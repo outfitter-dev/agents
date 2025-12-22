@@ -1,19 +1,18 @@
 ---
-name: investigation
+name: codebase-analysis
 version: 1.0.0
-description: Evidence-based investigation methodology. Use when analyzing codebases, debugging issues, researching patterns, understanding architecture, or investigating root causes. Triggers when user asks to analyze, investigate, understand, research, debug, or explore technical problems. Core foundation for analyst agent and specialized investigation skills.
+description: Evidence-based codebase investigation methodology. Use when analyzing codebases, understanding architecture, exploring patterns, or investigating technical problems. Triggers when user asks to analyze, investigate, understand, research, or explore code. Core foundation for analyst and debugger agents.
 ---
 
-# Investigation
+# Codebase Analysis
 
 Evidence-based investigation → findings → confidence-tracked conclusions.
 
 <when_to_use>
 - Codebase exploration and understanding
 - Architecture analysis and mapping
-- Root cause investigation for bugs
 - Pattern extraction and recognition
-- Research synthesis across sources
+- Technical research within code
 - Performance or security analysis
 
 NOT for: wild guessing, assumptions without evidence, conclusions before investigation
@@ -149,14 +148,14 @@ Lower confidence areas:
 </output_format>
 
 <specialized_techniques>
-When analysis requires specialized approaches, reference detailed techniques:
+Load micro-skills for specialized analysis:
 
-- **Pattern analysis** → [pattern-analysis.md](references/pattern-analysis.md)
-- **Architecture analysis** → [architecture-analysis.md](references/architecture-analysis.md)
-- **Research synthesis** → [research-analysis.md](references/research-analysis.md)
-- **Root cause investigation** → [root-cause-analysis.md](references/root-cause-analysis.md)
+- **Pattern analysis** → load [pattern-analysis](../pattern-analysis/SKILL.md) skill
+- **Root cause investigation** → load [root-cause-analysis](../root-cause-analysis/SKILL.md) skill
+- **Research synthesis** → load [report-findings](../report-findings/SKILL.md) skill
+- **Architecture analysis** → see [architecture-analysis.md](references/architecture-analysis.md)
 
-These references provide deep-dive methodologies for specific analysis types.
+These provide deep-dive methodologies for specific analysis types.
 </specialized_techniques>
 
 <workflow>
@@ -225,13 +224,15 @@ Core methodology:
 - [confidence.md](../pathfinding/references/confidence.md) — confidence calibration (shared with pathfinding)
 - [FORMATTING.md](../../shared/rules/FORMATTING.md) — formatting conventions
 
-Specialized techniques:
-- [pattern-analysis.md](references/pattern-analysis.md) — extracting and validating patterns
+Micro-skills (load as needed):
+- [pattern-analysis](../pattern-analysis/SKILL.md) — extracting and validating patterns
+- [root-cause-analysis](../root-cause-analysis/SKILL.md) — systematic problem diagnosis
+- [report-findings](../report-findings/SKILL.md) — multi-source research synthesis
+
+Local references:
 - [architecture-analysis.md](references/architecture-analysis.md) — system structure mapping
-- [research-analysis.md](references/research-analysis.md) — multi-source research synthesis
-- [root-cause-analysis.md](references/root-cause-analysis.md) — debugging investigation
 
 Related skills:
 - pathfinding — clarifying requirements before analysis
-- debugging-and-diagnosis — structured bug investigation (uses this as foundation)
+- debugging-and-diagnosis — structured bug investigation (loads root-cause-analysis)
 </references>

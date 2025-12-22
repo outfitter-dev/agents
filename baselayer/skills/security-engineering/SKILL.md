@@ -703,6 +703,6 @@ Core methodology:
 - [FORMATTING.md](../../shared/rules/FORMATTING.md) — formatting conventions
 
 Related skills:
-- investigation — evidence-based investigation (foundation)
+- codebase-analysis — evidence-based investigation (foundation)
 - debugging — systematic investigation when security issues manifest as bugs
 </references>

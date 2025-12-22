@@ -284,6 +284,6 @@ Core methodology:
 - [FORMATTING.md](../../shared/rules/FORMATTING.md) — formatting conventions
 
 Related skills:
-- investigation — evidence-based investigation (foundation for review)
+- codebase-analysis — evidence-based investigation (foundation for review)
 - debugging-and-diagnosis — structured bug investigation
 </references>

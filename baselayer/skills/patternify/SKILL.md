@@ -84,7 +84,7 @@ All five quality checks must pass before codifying.
 
 <workflow>
 1. Identify: Spot repeatable behavior in conversation
-   - For deep analysis, load [investigation](../investigation/SKILL.md) skill and use [pattern-analysis](../investigation/references/pattern-analysis.md) techniques
+   - For deep analysis, load [codebase-analysis](../codebase-analysis/SKILL.md) skill and use [pattern-analysis](../pattern-analysis/SKILL.md) techniques
    - Extract success, frustration, workflow, and request signals
    - Look for 3+ occurrences of similar behavior
 2. Classify: Workflow, Orchestration, or Heuristic?
@@ -142,8 +142,8 @@ NEVER:
 </rules>
 
 <references>
-- [investigation](../investigation/SKILL.md) — core investigation methodology
-- [pattern-analysis](../investigation/references/pattern-analysis.md) — signal extraction techniques
+- [codebase-analysis](../codebase-analysis/SKILL.md) — core investigation methodology
+- [pattern-analysis](../pattern-analysis/SKILL.md) — signal extraction techniques
 - [pattern-types.md](references/pattern-types.md) — extended examples by type
 - [component-mapping.md](references/component-mapping.md) — decision tree details
 - [examples/](examples/) — captured pattern examples
