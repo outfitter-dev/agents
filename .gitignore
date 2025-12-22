@@ -1,8 +1,9 @@
 # Scratch directory for scenario testing
 .scratch/
 
-# Beads database (local issue tracking)
-.beads/
+# Beads issue tracking
+# Note: .beads/.gitignore handles internal ignores (db, daemon files, etc.)
+# We track: config.yaml, issues.jsonl, metadata.json, README.md
 
 # Agent planning notes (internal)
 .agents/plans/
