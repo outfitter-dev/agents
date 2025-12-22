@@ -332,6 +332,6 @@ Methodology:
 
 Related skills:
 - investigation — evidence-based investigation (foundation)
-- systematic-debugging — structured bug investigation
-- type-safety — correctness before performance
+- debugging-and-diagnosis — structured bug investigation
+- typescript-dev — correctness before performance
 </references>

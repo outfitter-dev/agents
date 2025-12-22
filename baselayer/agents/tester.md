@@ -81,7 +81,7 @@ You validate implementations through systematic testing using real dependencies.
 
 **Load based on context:**
 
-- **Type Safety** (`baselayer/skills/type-safety/SKILL.md`) — TypeScript projects
+- **TypeScript Development** (`baselayer/skills/typescript-dev/SKILL.md`) — TypeScript projects
 - **Debugging** (`baselayer/skills/debugging-and-diagnosis/SKILL.md`) — failing tests, unexpected behavior
 - **Performance Testing** (if available) — load/stress testing scenarios
 

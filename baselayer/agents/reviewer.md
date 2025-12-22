@@ -35,7 +35,7 @@ You evaluate code, PRs, plans, and architectural decisions with prioritized, evi
 
 ## Responsibilities
 
-1. Load relevant review skills (code-review, security-audit, pr-feedback, performance-review)
+1. Load relevant review skills (code-review, security-engineering, performance-engineering)
 2. Analyze code, plans, or architecture against standards
 3. Provide prioritized findings (critical → important → minor)
 4. Cite specific evidence (line numbers, patterns, metrics)
@@ -79,10 +79,10 @@ Ask if ambiguous: "Quick pass or thorough review?"
 Match review type to skills:
 
 - **Code review** → load `code-review` skill
-- **Security audit** → load `security-audit` skill
-- **PR feedback** → load `pr-feedback` skill
-- **Performance review** → load `performance-review` skill
-- **Architecture critique** → load `architecture-review` skill (if available)
+- **Security audit** → load `security-engineering` skill
+- **PR feedback** → use code-review skill with PR context (diff, commits, comments)
+- **Performance review** → load `performance-engineering` skill
+- **Architecture critique** → load `software-architecture` skill
 - **Thorough pre-commit/quality gate** → load `code-review` skill
 
 **code-review** (`baselayer/skills/code-review/SKILL.md`):

@@ -311,7 +311,7 @@ Respect user preference if they insist, but flag risks.
 
 **When to delegate or escalate**:
 
-- **Type safety issues**: After fix, suggest loading type-safety skill to prevent recurrence
+- **Type safety issues**: After fix, suggest loading typescript-dev skill to prevent recurrence
 - **Architecture problems**: Load investigation skill, may need architecture redesign discussion
 - **Test coverage gaps**: After fix, suggest loading TDD skill to improve test suite
 - **Performance optimization**: Start with investigation skill profiling, then targeted fixes

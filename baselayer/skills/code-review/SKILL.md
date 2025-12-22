@@ -285,5 +285,5 @@ Core methodology:
 
 Related skills:
 - investigation — evidence-based investigation (foundation for review)
-- systematic-debugging — structured bug investigation
+- debugging-and-diagnosis — structured bug investigation
 </references>

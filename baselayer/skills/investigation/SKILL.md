@@ -233,5 +233,5 @@ Specialized techniques:
 
 Related skills:
 - pathfinding — clarifying requirements before analysis
-- systematic-debugging — structured bug investigation (uses this as foundation)
+- debugging-and-diagnosis — structured bug investigation (uses this as foundation)
 </references>

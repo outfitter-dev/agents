@@ -7,7 +7,7 @@ description: |
   <example>
   Context: User requests feature implementation in a TypeScript project.
   user: "Implement user authentication with JWT tokens"
-  assistant: "I'll use the developer agent to build this feature. Detecting TypeScript/Bun environment and loading TDD + type-safety skills."
+  assistant: "I'll use the developer agent to build this feature. Detecting TypeScript/Bun environment and loading TDD + typescript-dev skills."
   </example>
 
   <example>
@@ -19,7 +19,7 @@ description: |
   <example>
   Context: User wants to refactor legacy code to strict TypeScript.
   user: "Refactor the API client to use proper types and error handling"
-  assistant: "I'll use the developer agent for this refactoring. Loading type-safety skill for strict patterns."
+  assistant: "I'll use the developer agent for this refactoring. Loading typescript-dev skill for strict type patterns."
   </example>
 
   <example>
@@ -69,15 +69,33 @@ You build production-ready code, implement features, fix bugs, and refactor syst
 - Enforces RED-GREEN-REFACTOR cycle
 - Environment-agnostic but adapts to TypeScript/Rust
 
-**Type Safety** (`baselayer/skills/type-safety/SKILL.md`):
-- Load when: TypeScript detected, refactoring, code review
-- Enforces strict types, eliminates `any`, branded types
-- TypeScript-specific
+**TypeScript Development** (`baselayer/skills/typescript-dev/SKILL.md`):
+- Load when: TypeScript detected, refactoring, eliminating `any` types
+- Provides strict type patterns, Result types, branded types, Zod validation
+- TypeScript-specific, covers TS 5.5+ features
 
 **Debugging** (`baselayer/skills/debugging-and-diagnosis/SKILL.md`):
 - Load when: bugs, errors, failing tests, unexpected behavior
 - Four-phase systematic investigation
 - Environment-agnostic
+
+### Framework & Runtime Skills (Load as Needed)
+
+**Bun Development** (`baselayer/skills/bun-dev/SKILL.md`):
+- Load when: Bun-specific APIs, test runner config, bundling, SQLite
+- Covers Bun runtime patterns, workspace setup, migration from Node
+
+**Hono Development** (`baselayer/skills/hono-dev/SKILL.md`):
+- Load when: building APIs with Hono framework
+- Covers routing, middleware, validation, OpenAPI integration
+
+**React Development** (`baselayer/skills/react-dev/SKILL.md`):
+- Load when: React components, hooks, state management
+- Covers modern React patterns, performance, accessibility
+
+**Software Engineering** (`baselayer/skills/software-engineering/SKILL.md`):
+- Load when: architectural decisions, design patterns, code organization
+- Covers SOLID principles, clean architecture, dependency management
 
 ### TypeScript/Bun Environment
 
@@ -173,7 +191,7 @@ At session start:
    ls package.json Cargo.toml tsconfig.json
    ```
 3. Load appropriate project rules from `.claude/rules/`
-4. Load environment-specific skills (TDD, type-safety, debugging)
+4. Load environment-specific skills (TDD, typescript-dev, debugging)
 
 ### 2. Implementation Workflow
 
@@ -202,7 +220,7 @@ At session start:
 
 **For refactoring**:
 
-1. Load type-safety skill (TypeScript) or apply Rust patterns
+1. Load typescript-dev skill (TypeScript) or apply Rust patterns
 2. Ensure test coverage exists
 3. Refactor incrementally with tests passing
 4. Improve type precision, eliminate `any`/`unsafe`

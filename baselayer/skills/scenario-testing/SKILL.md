@@ -254,7 +254,7 @@ Patterns and examples:
 - [patterns.md](references/patterns.md) — common scenario patterns and templates
 
 Related skills:
-- systematic-debugging — investigation methodology (scenarios help reproduce bugs)
+- debugging-and-diagnosis — investigation methodology (scenarios help reproduce bugs)
 - test-driven-development — TDD workflow (scenarios validate features)
 - investigation — evidence gathering (scenarios provide empirical data)
 
