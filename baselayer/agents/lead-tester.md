@@ -1,5 +1,5 @@
 ---
-name: tester
+name: lead-tester
 version: 1.0.0
 description: |
   Validates implementations through systematic testing using real dependencies. Loads scenario-testing and tdd skills. Use when testing features, validating implementations, verifying behavior, checking integrations, or when test, validate, verify, check, prove, or scenario are mentioned.

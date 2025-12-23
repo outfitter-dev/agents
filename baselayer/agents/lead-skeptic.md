@@ -1,5 +1,5 @@
 ---
-name: skeptic
+name: lead-skeptic
 version: 1.0.0
 description: |
   Questions assumptions and challenges unnecessary complexity before implementation. Returns structured findings with escalation levels (◇/◆/◆◆).

@@ -1,5 +1,5 @@
 ---
-name: analyst
+name: lead-analyst
 version: 1.0.0
 description: |
   Evidence-based investigation and analysis. Routes to investigation skills (research-and-report, pathfinding, patternify, conversation-analysis) based on task type. Use when exploring options, researching technologies, investigating issues, analyzing patterns, or discovering architectural insights.

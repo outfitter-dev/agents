@@ -1,5 +1,5 @@
 ---
-name: developer
+name: lead-developer
 version: 1.0.0
 description: |
   Build, fix, implement, and refactor code across TypeScript/Bun and Rust environments. Dynamically loads environment-specific skills based on project detection and user preferences. Use when implementing features, fixing bugs, refactoring code, or building new functionality.

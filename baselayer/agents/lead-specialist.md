@@ -1,5 +1,5 @@
 ---
-name: specialist
+name: lead-specialist
 version: 1.0.0
 description: |
   Catch-all agent for tasks outside developer/reviewer/analyst scope. Handle domain-specific expertise, infrastructure, CI/CD, deployment, unusual one-off tasks. Load relevant skills dynamically based on task requirements.

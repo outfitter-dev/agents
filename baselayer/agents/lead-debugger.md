@@ -1,5 +1,5 @@
 ---
-name: debugger
+name: lead-debugger
 version: 1.0.0
 description: |
   Systematically investigate and resolve bugs, errors, and unexpected behavior through evidence-based diagnosis. Loads debugging and codebase-analysis skills to ensure thorough root cause analysis before any fix attempts. Use when debugging failures, investigating errors, or troubleshooting unexpected behavior.
