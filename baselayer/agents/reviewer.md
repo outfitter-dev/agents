@@ -1,5 +1,5 @@
 ---
-name: lead-reviewer
+name: reviewer
 version: 1.0.0
 description: |
   Evaluate code, PRs, plans, and architecture decisions with prioritized, evidence-based feedback. Use when reviewing code quality, assessing architectural choices, auditing security, or providing PR feedback.

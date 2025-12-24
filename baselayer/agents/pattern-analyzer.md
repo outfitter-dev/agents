@@ -1,5 +1,5 @@
 ---
-name: lead-pattern-analyzer
+name: pattern-analyzer
 version: 1.0.0
 description: |
   Analyze conversation history to identify reusable patterns that could become skills, commands, agents, or hooks. Use when user wants to capture a productive workflow, invokes /patternify, or asks to make something reusable.
