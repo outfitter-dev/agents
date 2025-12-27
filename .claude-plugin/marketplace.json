@@ -31,6 +31,13 @@
       "description": "GitButler virtual branch workflows for parallel development, multi-agent collaboration, and post-hoc organization",
       "version": "2.0.0",
       "keywords": ["gitbutler", "virtual-branches", "version-control", "multi-agent", "parallel-development"]
+    },
+    {
+      "name": "cli-dev",
+      "source": "./cli-dev",
+      "description": "Skills for building command-line tools: argument parsing, help text, subcommands, and CLI best practices",
+      "version": "0.1.0",
+      "keywords": ["cli", "command-line", "argument-parsing", "terminal"]
     }
   ]
 }

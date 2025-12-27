@@ -499,11 +499,9 @@ else
   print_success "Git repository initialized"
 
   # Check for uncommitted changes
-  cd "$PLUGIN_DIR"
-  if ! git diff-index --quiet HEAD -- 2>/dev/null; then
+  if ! git -C "$PLUGIN_DIR" diff-index --quiet HEAD -- 2>/dev/null; then
     print_info "Repository has uncommitted changes"
   fi
-  cd - > /dev/null
 fi
 
 # Summary

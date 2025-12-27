@@ -21,6 +21,7 @@ print_step() { echo -e "${BLUE}[STEP]${NC} $1"; }
 # Cleanup flag
 CLEANUP_ON_EXIT=true
 TEST_MARKETPLACE_DIR=""
+NON_INTERACTIVE=false
 
 # Cleanup function
 cleanup() {
@@ -45,6 +46,7 @@ Arguments:
 Options:
   -k, --keep-temp     Keep temporary marketplace directory
   -v, --validate      Run validation before testing
+  -n, --non-interactive  Skip interactive prompts (for CI/automated use)
   -h, --help          Show this help
 
 Examples:
@@ -83,6 +85,10 @@ while [[ $# -gt 0 ]]; do
       ;;
     -v|--validate)
       RUN_VALIDATION=true
+      shift
+      ;;
+    -n|--non-interactive)
+      NON_INTERACTIVE=true
       shift
       ;;
     -h|--help)
@@ -305,6 +311,9 @@ if [[ "$CLEANUP_ON_EXIT" == "false" ]]; then
   print_info "Remember to clean up manually when done:"
   echo "  rm -rf $TEST_MARKETPLACE_DIR"
   echo
+elif [[ "$NON_INTERACTIVE" == "true" ]]; then
+  print_info "Non-interactive mode: skipping wait"
+  print_info "Test marketplace will be cleaned up automatically"
 else
   print_info "Test marketplace will be cleaned up automatically"
   print_warn "Press Ctrl+C to cancel and keep the marketplace"

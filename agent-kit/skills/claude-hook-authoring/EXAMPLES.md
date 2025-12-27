@@ -700,6 +700,9 @@ exit 0
 
 Send email for important events.
 
+> **Note**: Configure a valid email address before use. The `mail` command will
+> succeed even if the email is undeliverable, so verify your mail server setup.
+
 **Script** (`.claude/hooks/send-email.sh`):
 ```bash
 #!/usr/bin/env bash

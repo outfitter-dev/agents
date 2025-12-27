@@ -515,7 +515,7 @@ EOF
 
   # Update plugin.json
   tmp=$(mktemp)
-  jq --arg name "$PLUGIN_NAME" '.mcpServers = {($name): {"command": "uv", "args": ["--directory", "\${CLAUDE_PLUGIN_ROOT}/servers/\($name)-server", "run", "server.py"]}}' "$PLUGIN_PATH/.claude-plugin/plugin.json" > "$tmp"
+  jq --arg name "$PLUGIN_NAME" '.mcpServers = {($name): {"command": "uv", "args": ["--directory", "${CLAUDE_PLUGIN_ROOT}/servers/\($name)-server", "run", "server.py"]}}' "$PLUGIN_PATH/.claude-plugin/plugin.json" > "$tmp"
   mv "$tmp" "$PLUGIN_PATH/.claude-plugin/plugin.json"
 fi
 
