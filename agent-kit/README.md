@@ -9,7 +9,7 @@ This plugin provides skills for building AI agent capabilities across multiple p
 ### Cross-Tool Skills
 
 - **skills-authoring** - Create Agent Skills following the open specification at [agentskills.io](https://agentskills.io), compatible with Claude Code, Codex, Cursor, Amp, Goose, and more
-- **skills-check** - Validate skills against the Agent Skills specification
+- **skill-validation** - Validate and review skills against the Agent Skills specification
 
 ### Claude Code Skills
 
@@ -17,15 +17,15 @@ This plugin provides skills for building AI agent capabilities across multiple p
 - **claude-marketplace-setup** - Set up and manage plugin marketplaces for distribution
 - **claude-code-configuration** - Manage Claude Desktop and Claude Code configuration files
 - **claude-plugin-distribution** - Package and distribute plugins with proper versioning
+- **claude-command-authoring** - Create and maintain Claude Code slash commands
+- **claude-hook-authoring** - Author Claude Code hooks for automation
+- **claude-skill-authoring** - Build Claude Code skill packages
+- **claude-agent-authoring** - Create specialized Claude Code agents
+- **claude-agent-check** - Validate and review Claude Code agents
 
 ### OpenAI Codex Skills
 
 - **codex-configuration** - Manage Codex CLI configuration including config.toml, MCP servers, profiles, and sandbox modes
-
-### Agent Authoring Skills
-
-- **subagent-authoring** - Create custom subagents with proper frontmatter, routing logic, and skill loading patterns
-- **subagent-check** - Validate subagents against best practices and plugin conventions
 
 ## Installation
 
@@ -66,7 +66,7 @@ Includes comprehensive reference documentation on:
 - [implementations.md](skills/skills-authoring/references/implementations.md) - Per-tool implementation details
 - [invocations.md](skills/skills-authoring/references/invocations.md) - How each tool activates skills
 
-### skills-check
+### skill-validation
 
 Validates skills against the Agent Skills specification:
 - Frontmatter validation
@@ -112,16 +112,44 @@ Packages and publishes plugins:
 - GitHub releases and CI/CD automation
 - Documentation templates
 
-### subagent-authoring
+### claude-command-authoring
 
-Creates custom subagents for Claude Code plugins:
+Creates Claude Code slash commands:
+- Frontmatter, args, and file reference patterns
+- Command naming and conventions
+- Examples and validation steps
+
+### claude-hook-authoring
+
+Creates Claude Code hooks:
+- Hook lifecycle and trigger points
+- Safe shell patterns and tooling
+- Testing and validation guidance
+
+### claude-skill-authoring
+
+Creates Claude Code skills:
+- Skill structure and progressive disclosure
+- References, examples, and scripts
+- Compatibility guidance
+
+### claude-agent-authoring
+
+Creates specialized Claude Code agents:
 - Agent frontmatter and routing patterns
-- Skill loading and orchestration
-- Decision tree design
+- Task tool invocation and scoping
+- Best practices for focused expertise
 
-### subagent-check
+### claude-agent-check
 
-Validates subagent quality:
+Validates Claude Code agents:
+- YAML correctness and tool constraints
+- Prompt clarity and role definition
+- Review guidance and fixes
+
+### claude-agent-check
+
+Validates Claude agent quality:
 - Frontmatter completeness
 - Routing logic verification
 - Best practices compliance

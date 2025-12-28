@@ -555,7 +555,7 @@ See [EXAMPLES.md](EXAMPLES.md) for:
 
 ## Related Skills
 
-- **claude-slash-command-authoring**: Create user-invoked commands
+- **claude-command-authoring**: Create user-invoked commands
 - **claude-hook-authoring**: Add automation with event hooks
 - **claude-plugin-authoring**: Bundle skills into distributable plugins
 - **claude-config-management**: Configure skill behavior globally

@@ -560,7 +560,7 @@ if [[ "$INIT_GIT" == "y" ]] && command -v git &> /dev/null; then
   git add .
   git commit -q -m "feat: initial plugin structure
 
-- Generated with claude-dev init-plugin.sh
+- Generated with agent-kit init-plugin.sh
 - Initialized $PLUGIN_NAME v$VERSION"
   cd - > /dev/null
 fi
