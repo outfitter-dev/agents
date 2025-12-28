@@ -27,11 +27,6 @@ const VALIDATION_RULES: [RegExp, string, string][] = [
 		"Specify the exact directory to delete, never use '/' as target",
 	],
 	[
-		/\b(grep|find)\b(?!.*\|)/,
-		"Prefer 'rg' (ripgrep) for faster, better search",
-		"Use Grep tool or 'rg' command instead of 'grep' or 'find'",
-	],
-	[
 		/>\s*\/dev\/sda/,
 		"Dangerous: Writing directly to block device",
 		"This could corrupt the disk. Verify you meant to do this.",
@@ -92,6 +87,13 @@ if (issues.length > 0) {
 
 // Additional warnings (non-blocking)
 const warnings: string[] = [];
+
+// Suggest rg/fd over grep/find
+if (/\b(grep|find)\b/.test(command)) {
+	warnings.push(
+		"⚠️  Consider using 'rg' (ripgrep) or 'fd' for faster, better search",
+	);
+}
 
 // Warn about sudo usage
 if (/\bsudo\b/.test(command)) {

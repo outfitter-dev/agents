@@ -12,7 +12,7 @@
  */
 
 import { existsSync, readdirSync, readFileSync } from "node:fs";
-import { join, resolve } from "node:path";
+import { isAbsolute, join, resolve } from "node:path";
 
 interface ValidationResult {
 	passed: boolean;
@@ -305,7 +305,27 @@ async function main(): Promise<void> {
 
 	// Validate each plugin
 	for (const plugin of marketplace.plugins) {
-		const pluginPath = join(REPO_ROOT, plugin.source.replace("./", ""));
+		// Prevent path traversal attacks
+		const normalizedSource = plugin.source.replace(/^\.\//, "");
+		if (
+			normalizedSource.includes("..") ||
+			isAbsolute(normalizedSource) ||
+			normalizedSource.startsWith("/")
+		) {
+			log(`Invalid plugin source path: ${plugin.source}`, "error");
+			totalErrors++;
+			continue;
+		}
+
+		const pluginPath = join(REPO_ROOT, normalizedSource);
+
+		// Additional check: ensure resolved path stays within repo
+		if (!pluginPath.startsWith(REPO_ROOT)) {
+			log(`Plugin path escapes repository: ${plugin.source}`, "error");
+			totalErrors++;
+			continue;
+		}
+
 		console.log(`\nChecking ${plugin.name}...`);
 
 		if (!existsSync(pluginPath)) {

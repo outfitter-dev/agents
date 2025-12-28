@@ -11,6 +11,7 @@
  */
 
 import * as fs from "node:fs";
+import { homedir } from "node:os";
 import * as path from "node:path";
 
 const SCRIPT_DIR = path.dirname(new URL(import.meta.url).pathname);
@@ -38,6 +39,10 @@ function copyDir(src: string, dest: string): string[] {
 	fs.mkdirSync(dest, { recursive: true });
 
 	for (const entry of fs.readdirSync(src, { withFileTypes: true })) {
+		// Prevent path traversal attacks
+		if (entry.name.includes("..") || path.isAbsolute(entry.name)) {
+			throw new Error(`Invalid file name: ${entry.name}`);
+		}
 		const srcPath = path.join(src, entry.name);
 		const destPath = path.join(dest, entry.name);
 
@@ -225,20 +230,21 @@ if (!skillName || !outputDir) {
 	process.exit(1);
 }
 
-// Validate skill name
-if (!/^[a-z][a-z0-9-]*[a-z0-9]$/.test(skillName) && skillName.length > 2) {
+// Validate skill name (minimum 2 chars, kebab-case)
+if (skillName.length < 2 || !/^[a-z][a-z0-9-]*[a-z0-9]$|^[a-z]{2}$/.test(skillName)) {
 	console.log(
 		JSON.stringify({
 			status: "error",
-			error: "Skill name must be kebab-case (lowercase with hyphens)",
-			examples: ["my-skill", "github-api", "pdf-processor"],
+			error:
+				"Skill name must be kebab-case (lowercase with hyphens, min 2 chars)",
+			examples: ["my-skill", "github-api", "pdf-processor", "ai"],
 		}),
 	);
 	process.exit(1);
 }
 
 // Expand ~ to home directory
-const expandedOutputDir = outputDir.replace(/^~/, process.env.HOME || "~");
+const expandedOutputDir = outputDir.replace(/^~/, homedir());
 
 let result: InitResult;
 

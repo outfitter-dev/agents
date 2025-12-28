@@ -24,10 +24,10 @@ const { values } = parseArgs({
 
 if (values.help) {
 	console.log(`
-linear.ts - Gather Linear issue data
+linear-gatherer.ts - Gather Linear issue data
 
 Usage:
-  ./linear.ts [options]
+  ./linear-gatherer.ts [options]
 
 Options:
   -t, --time <constraint>   Time constraint (24h, 7d, 2w) [default: 24h]

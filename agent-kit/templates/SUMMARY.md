@@ -101,6 +101,7 @@ All agents include:
 
 - **Guide**: [Claude Code Documentation](https://docs.claude.com/en/docs/claude-code/overview)
 - **Existing skills**: See `agent-kit/skills/` in this repository
+- **Authoring skills**: See `claude-*-authoring` skills for detailed guidance
 
 ---
 

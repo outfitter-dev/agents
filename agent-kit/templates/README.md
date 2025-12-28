@@ -523,6 +523,7 @@ Combine multiple hooks:
 
 - **Official Docs**: [Claude Code Documentation](https://docs.claude.com/en/docs/claude-code/overview)
 - **Skills Reference**: [Agent Skills Overview](https://docs.anthropic.com/en/docs/agents-and-tools/agent-skills/overview)
+- **Authoring Skills**: See `claude-*-authoring` skills in agent-kit for detailed guidance
 
 ## Contributing
 

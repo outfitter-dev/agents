@@ -27,10 +27,10 @@ const { values } = parseArgs({
 
 if (values.help) {
 	console.log(`
-graphite.ts - Gather Graphite stack data
+graphite-gatherer.ts - Gather Graphite stack data
 
 Usage:
-  ./graphite.ts [options]
+  ./graphite-gatherer.ts [options]
 
 Options:
   -t, --time <constraint>   Time constraint for commits (24h, 7d, 2w) [default: 24h]

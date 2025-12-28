@@ -30,10 +30,10 @@ const { values } = parseArgs({
 
 if (values.help) {
 	console.log(`
-beads.ts - Gather beads issue data
+beads-gatherer.ts - Gather beads issue data
 
 Usage:
-  ./beads.ts [options]
+  ./beads-gatherer.ts [options]
 
 Options:
   -t, --time <constraint>   Time constraint (24h, 7d, 2w) [default: 24h]

@@ -9,6 +9,7 @@
  */
 
 import * as fs from "node:fs";
+import { homedir } from "node:os";
 import * as path from "node:path";
 import { $ } from "bun";
 
@@ -16,6 +17,91 @@ interface ValidationResult {
 	valid: boolean;
 	errors: string[];
 	warnings: string[];
+}
+
+/**
+ * Extract a YAML value from frontmatter, handling multiline values
+ * Supports: single line, quoted, block scalars (| and >), and folded continuation
+ */
+function extractYamlValue(frontmatter: string, key: string): string | null {
+	const lines = frontmatter.split("\n");
+	let value = "";
+	let capturing = false;
+	let blockStyle: "|" | ">" | null = null;
+	let baseIndent = 0;
+
+	for (let i = 0; i < lines.length; i++) {
+		const line = lines[i];
+
+		if (!capturing) {
+			// Look for the key
+			const keyMatch = line.match(new RegExp(`^${key}:\\s*(.*)$`));
+			if (keyMatch) {
+				const restOfLine = keyMatch[1].trim();
+
+				// Check for block scalar indicators
+				if (restOfLine === "|" || restOfLine === ">") {
+					blockStyle = restOfLine as "|" | ">";
+					capturing = true;
+					// Find base indent from next non-empty line
+					for (let j = i + 1; j < lines.length; j++) {
+						if (lines[j].trim()) {
+							baseIndent = lines[j].match(/^(\s*)/)?.[1].length || 0;
+							break;
+						}
+					}
+					continue;
+				}
+
+				// Check for quoted value
+				const quotedMatch = restOfLine.match(/^["'](.*)["']$/);
+				if (quotedMatch) {
+					return quotedMatch[1];
+				}
+
+				// Single line value (may continue if next line is indented)
+				if (restOfLine) {
+					value = restOfLine;
+					// Check if next line continues (indented)
+					const nextLine = lines[i + 1];
+					if (nextLine && /^\s+\S/.test(nextLine)) {
+						capturing = true;
+						baseIndent = nextLine.match(/^(\s*)/)?.[1].length || 2;
+					} else {
+						return value;
+					}
+				}
+			}
+		} else {
+			// Capturing multiline value
+			const indent = line.match(/^(\s*)/)?.[1].length || 0;
+
+			// Stop if we hit a new key (no indent or less indent with colon)
+			if (line.trim() && indent < baseIndent && /^\s*\w+:/.test(line)) {
+				break;
+			}
+
+			// Stop on empty line followed by non-indented content (for non-block)
+			if (!blockStyle && !line.trim()) {
+				const nextLine = lines[i + 1];
+				if (nextLine && !/^\s/.test(nextLine)) {
+					break;
+				}
+			}
+
+			// Add the line content
+			const content = line.slice(Math.min(indent, baseIndent));
+			if (blockStyle === ">") {
+				// Folded: newlines become spaces
+				value += (value && content.trim() ? " " : "") + content.trim();
+			} else {
+				// Literal or plain continuation
+				value += (value ? "\n" : "") + content;
+			}
+		}
+	}
+
+	return value.trim() || null;
 }
 
 interface PackageResult {
@@ -51,20 +137,17 @@ function validateSkill(skillDir: string): ValidationResult {
 			errors.push("Frontmatter missing 'name' field");
 		}
 
-		if (!frontmatter.includes("description:")) {
+		// Check description using proper YAML parsing
+		const description = extractYamlValue(frontmatter, "description");
+		if (!description) {
 			errors.push("Frontmatter missing 'description' field");
-		}
-
-		// Check description quality
-		const descMatch = frontmatter.match(/description:\s*["']?(.+?)["']?\n/);
-		if (descMatch) {
-			const desc = descMatch[1];
-			if (desc.length < 50) {
+		} else {
+			if (description.length < 50) {
 				warnings.push(
 					"Description seems short (<50 chars). Include capabilities and trigger contexts.",
 				);
 			}
-			if (desc.toLowerCase().includes("todo")) {
+			if (description.toLowerCase().includes("todo")) {
 				errors.push("Description contains TODO placeholder");
 			}
 		}
@@ -220,8 +303,8 @@ if (!skillDir) {
 }
 
 // Expand ~ to home directory
-const expandedSkillDir = skillDir.replace(/^~/, process.env.HOME || "~");
-const expandedOutputDir = outputDir.replace(/^~/, process.env.HOME || "~");
+const expandedSkillDir = skillDir.replace(/^~/, homedir());
+const expandedOutputDir = outputDir.replace(/^~/, homedir());
 
 if (!fs.existsSync(expandedSkillDir)) {
 	console.log(

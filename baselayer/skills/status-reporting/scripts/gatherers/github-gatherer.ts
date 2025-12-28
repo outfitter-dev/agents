@@ -27,10 +27,10 @@ const { values } = parseArgs({
 
 if (values.help) {
 	console.log(`
-github.ts - Gather GitHub PR and CI data
+github-gatherer.ts - Gather GitHub PR and CI data
 
 Usage:
-  ./github.ts [options]
+  ./github-gatherer.ts [options]
 
 Options:
   -t, --time <constraint>   Time constraint (24h, 7d, 2w) [default: 24h]
