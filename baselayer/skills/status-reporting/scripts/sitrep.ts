@@ -70,7 +70,7 @@ Sources:
 const scriptDir = import.meta.dir;
 
 async function runGatherer<T>(source: Source): Promise<GathererResult<T>> {
-	const gathererPath = `${scriptDir}/gatherers/${source}.ts`;
+	const gathererPath = `${scriptDir}/gatherers/${source}-gatherer.ts`;
 	const timeValue = values.time ?? "24h";
 	const args = [gathererPath, "-t", timeValue];
 
