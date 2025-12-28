@@ -39,7 +39,7 @@ Create skills that follow the [Agent Skills specification](https://agentskills.i
    - `assets/` - templates, data files
 
 6. **Validate**
-   - Use `skills-ref validate ./my-skill` or `skills-check`
+   - Use `skills-ref validate ./my-skill` or `skill-validation`
 
 ## Directory Structure
 
@@ -165,7 +165,7 @@ Use the official [skills-ref](https://github.com/agentskills/agentskills/tree/ma
 skills-ref validate ./my-skill
 ```
 
-Or use `skills-check` for integrated validation and review.
+Or use `skill-validation` for integrated validation and review.
 
 ### Quick Self-Check
 
@@ -184,7 +184,7 @@ Before finalizing, verify:
 - ❌ "You can use this to..." → Wrong voice (second-person)
 - ❌ No "Use when..." → Missing triggers
 
-Use the `skills-check` skill to validate your skill before finalizing.
+Use the `skill-validation` skill to validate your skill before finalizing.
 
 ## Best Practices
 
@@ -198,7 +198,7 @@ Use the `skills-check` skill to validate your skill before finalizing.
 
 ## After Creation
 
-1. **Check**: Run `skills-check` to validate and review
+1. **Check**: Run `skill-validation` to validate and review
 2. **Test**: Ask a question that should trigger it
 3. **Iterate**: Fix issues and re-check until passing
 4. **Share**: Commit to git or distribute via plugin

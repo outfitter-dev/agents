@@ -1,10 +1,10 @@
 ---
-name: claude-slash-command-authoring
+name: claude-command-authoring
 description: Creates custom slash commands for Claude Code with proper syntax, frontmatter, arguments, bash execution, and file references. Use when building slash commands, creating custom Claude Code commands, setting up team workflows, or when users mention slash commands, command files, or .md command creation.
 version: 1.0.0
 ---
 
-# Claude Slash Command Authoring
+# Claude Command Authoring
 
 Create custom slash commands that extend Claude Code with frequently-used prompts and workflows.
 

@@ -6,7 +6,7 @@ Fast track to using Claude Code templates.
 
 ```bash
 # 1. Choose a template
-cd /Users/mg/Developer/outfitter/agents/claude-dev/templates
+cd /Users/mg/Developer/outfitter/agents/agent-kit/templates
 
 # 2. Copy it
 cp slash-commands/simple.md ~/.claude/commands/my-command.md

@@ -232,7 +232,14 @@ if [[ -z "$EVENT_TYPE" ]]; then
   exit 1
 fi
 
-if [[ ! " ${VALID_EVENTS[*]} " =~ " ${EVENT_TYPE} " ]]; then
+valid_event=false
+for evt in "${VALID_EVENTS[@]}"; do
+  if [[ "$evt" == "$EVENT_TYPE" ]]; then
+    valid_event=true
+    break
+  fi
+done
+if [[ "$valid_event" == "false" ]]; then
   echo -e "${RED}Error: Invalid event type: $EVENT_TYPE${NC}"
   echo "Valid events: ${VALID_EVENTS[*]}"
   exit 1
@@ -240,7 +247,14 @@ fi
 
 # Validate language
 VALID_LANGUAGES=(bash typescript python)
-if [[ ! " ${VALID_LANGUAGES[*]} " =~ " ${LANGUAGE} " ]]; then
+valid_lang=false
+for lang in "${VALID_LANGUAGES[@]}"; do
+  if [[ "$lang" == "$LANGUAGE" ]]; then
+    valid_lang=true
+    break
+  fi
+done
+if [[ "$valid_lang" == "false" ]]; then
   echo -e "${RED}Error: Invalid language: $LANGUAGE${NC}"
   echo "Valid languages: ${VALID_LANGUAGES[*]}"
   exit 1
@@ -363,27 +377,78 @@ perl -i -pe "s/HOOK_NAME/$HOOK_NAME/g" "$SCRIPT_PATH"
 perl -i -pe "s/DESCRIPTION/Generated hook for $EVENT_TYPE event/g" "$SCRIPT_PATH"
 
 # Insert template-specific logic by replacing the placeholder line
-case "$TEMPLATE_TYPE" in
-  validation)
-    perl -i -pe 'BEGIN{undef $/;} s/# TEMPLATE_LOGIC/# Validation logic\nif [[ -z "$TOOL_NAME" ]]; then\n  exit 0\nfi\n\n# Add your validation rules here\n# Example: Block dangerous operations\necho "✓ Validation passed"/smg' "$SCRIPT_PATH"
-    ;;
+# Generate language-appropriate code based on the language choice
+insert_template_logic() {
+  local template=$1
+  local lang=$2
+  local replacement=""
 
-  formatting)
-    perl -i -pe 'BEGIN{undef $/;} s/# TEMPLATE_LOGIC/# Formatting logic\nif [[ -z "$FILE_PATH" ]]; then\n  exit 0\nfi\n\n# Add your formatting commands here\necho "✓ Formatting completed"/smg' "$SCRIPT_PATH"
-    ;;
+  case "$lang" in
+    bash)
+      case "$template" in
+        validation)
+          replacement='# Validation logic\nif [[ -z "$TOOL_NAME" ]]; then\n  exit 0\nfi\n\n# Add your validation rules here\n# Example: Block dangerous operations\necho "✓ Validation passed"'
+          ;;
+        formatting)
+          replacement='# Formatting logic\nif [[ -z "$FILE_PATH" ]]; then\n  exit 0\nfi\n\n# Add your formatting commands here\necho "✓ Formatting completed"'
+          ;;
+        logging)
+          replacement='# Logging logic\nLOG_FILE="${CLAUDE_PROJECT_DIR:-.}/.claude/hook-logs.log"\nTIMESTAMP=$(date -Iseconds)\necho "[$TIMESTAMP] Event: $HOOK_EVENT, Tool: $TOOL_NAME" >> "$LOG_FILE"'
+          ;;
+        notification)
+          replacement='# Notification logic\n# Add your notification code here\necho "✓ Notification sent"'
+          ;;
+        context)
+          replacement='# Context injection logic\necho "## Additional Context"\necho "Hook Event: $HOOK_EVENT"\necho "Tool: $TOOL_NAME"\necho "Timestamp: $(date -Iseconds)"'
+          ;;
+      esac
+      ;;
+    typescript)
+      case "$template" in
+        validation)
+          replacement='// Validation logic\n\tif (!toolName) {\n\t\tprocess.exit(0);\n\t}\n\n\t// Add your validation rules here\n\t// Example: Block dangerous operations\n\tstdout.write("✓ Validation passed\\n");\n\tprocess.exit(0);'
+          ;;
+        formatting)
+          replacement='// Formatting logic\n\tif (!filePath) {\n\t\tprocess.exit(0);\n\t}\n\n\t// Add your formatting commands here\n\tstdout.write("✓ Formatting completed\\n");\n\tprocess.exit(0);'
+          ;;
+        logging)
+          replacement='// Logging logic\n\tconst logFile = `${process.env.CLAUDE_PROJECT_DIR || "."}/.claude/hook-logs.log`;\n\tconst timestamp = new Date().toISOString();\n\tconst logLine = `[${timestamp}] Event: ${hookEvent}, Tool: ${toolName}\\n`;\n\tfs.appendFileSync(logFile, logLine);\n\tprocess.exit(0);'
+          ;;
+        notification)
+          replacement='// Notification logic\n\t// Add your notification code here\n\tstdout.write("✓ Notification sent\\n");\n\tprocess.exit(0);'
+          ;;
+        context)
+          replacement='// Context injection logic\n\tstdout.write("## Additional Context\\n");\n\tstdout.write(`Hook Event: ${hookEvent}\\n`);\n\tstdout.write(`Tool: ${toolName}\\n`);\n\tstdout.write(`Timestamp: ${new Date().toISOString()}\\n`);\n\tprocess.exit(0);'
+          ;;
+      esac
+      ;;
+    python)
+      case "$template" in
+        validation)
+          replacement='# Validation logic\n    if not tool_name:\n        sys.exit(0)\n\n    # Add your validation rules here\n    # Example: Block dangerous operations\n    print("✓ Validation passed")'
+          ;;
+        formatting)
+          replacement='# Formatting logic\n    if not file_path:\n        sys.exit(0)\n\n    # Add your formatting commands here\n    print("✓ Formatting completed")'
+          ;;
+        logging)
+          replacement='# Logging logic\n    import os\n    from datetime import datetime\n    log_file = os.path.join(os.environ.get("CLAUDE_PROJECT_DIR", "."), ".claude", "hook-logs.log")\n    timestamp = datetime.now().isoformat()\n    with open(log_file, "a") as f:\n        f.write(f"[{timestamp}] Event: {hook_event}, Tool: {tool_name}\\n")'
+          ;;
+        notification)
+          replacement='# Notification logic\n    # Add your notification code here\n    print("✓ Notification sent")'
+          ;;
+        context)
+          replacement='# Context injection logic\n    from datetime import datetime\n    print("## Additional Context")\n    print(f"Hook Event: {hook_event}")\n    print(f"Tool: {tool_name}")\n    print(f"Timestamp: {datetime.now().isoformat()}")'
+          ;;
+      esac
+      ;;
+  esac
 
-  logging)
-    perl -i -pe 'BEGIN{undef $/;} s/# TEMPLATE_LOGIC/# Logging logic\nLOG_FILE="$CLAUDE_PROJECT_DIR\/.claude\/hook-logs.log"\nTIMESTAMP=$(date -Iseconds)\necho "[$TIMESTAMP] Event: $HOOK_EVENT, Tool: $TOOL_NAME" >> "$LOG_FILE"/smg' "$SCRIPT_PATH"
-    ;;
+  if [[ -n "$replacement" ]]; then
+    perl -i -pe "BEGIN{undef \$/;} s/# TEMPLATE_LOGIC/$replacement/smg" "$SCRIPT_PATH"
+  fi
+}
 
-  notification)
-    perl -i -pe 'BEGIN{undef $/;} s/# TEMPLATE_LOGIC/# Notification logic\n# Add your notification code here\necho "✓ Notification sent"/smg' "$SCRIPT_PATH"
-    ;;
-
-  context)
-    perl -i -pe 'BEGIN{undef $/;} s/# TEMPLATE_LOGIC/# Context injection logic\necho "## Additional Context"\necho "Hook Event: $HOOK_EVENT"\necho "Tool: $TOOL_NAME"\necho "Timestamp: $(date -Iseconds)"/smg' "$SCRIPT_PATH"
-    ;;
-esac
+insert_template_logic "$TEMPLATE_TYPE" "$LANGUAGE"
 
 # Make script executable
 chmod +x "$SCRIPT_PATH"

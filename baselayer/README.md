@@ -123,7 +123,7 @@ See [SECURITY.md](../SECURITY.md) for the full security model.
 
 ## Related Plugins
 
-- **claude-dev** — Build your own Claude Code plugins
+- **agent-kit** — Build your own Claude Code plugins
 - **gitbutler** — Virtual branch workflows for parallel development
 
 ## License

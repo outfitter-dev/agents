@@ -84,7 +84,7 @@ Commands are lightweight entry points that load skills.
 
 - Verb-based: `/debug`, `/simplify`, `/pathfind`
 - Action-oriented: what user wants to happen
-- Kebab-case for multi-word: `/skills-check`
+- Kebab-case for multi-word: `/discover-skills`
 
 ## Anti-Patterns
 

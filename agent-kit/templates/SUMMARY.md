@@ -100,11 +100,11 @@ All agents include:
 ## Related
 
 - **Guide**: `/Users/mg/Developer/outfitter/agents/claude-code-plugin-development-guide.md`
-- **Existing skills**: `/Users/mg/Developer/outfitter/agents/claude-dev/skills/`
+- **Existing skills**: `/Users/mg/Developer/outfitter/agents/agent-kit/skills/`
 - **Linear Issue**: ID-94
 
 ---
 
 **Created**: 2025-10-20
 **Status**: Complete and ready for use
-**Location**: `/Users/mg/Developer/outfitter/agents/claude-dev/templates/`
+**Location**: `/Users/mg/Developer/outfitter/agents/agent-kit/templates/`

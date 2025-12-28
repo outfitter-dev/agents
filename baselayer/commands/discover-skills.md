@@ -1,9 +1,9 @@
 ---
-description: Check for relevant skills before starting a task
+description: Discover relevant skills before starting a task
 argument-hint: [task description or keyword]
 ---
 
-# Skill Check
+# Discover Skills
 
 Search for skills that might help with a task before starting.
 
@@ -22,7 +22,7 @@ Search for skills that might help with a task before starting.
 - When exploring available capabilities
 - Explicit skill discovery (vs automatic skill loading)
 
-## Task to Check
+## Task to Discover Skills For
 
 $ARGUMENTS
 

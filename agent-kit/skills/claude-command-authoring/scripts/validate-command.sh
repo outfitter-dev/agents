@@ -198,10 +198,14 @@ if [[ "$HAS_FRONTMATTER" == "true" ]]; then
     TOOLS=$(echo "$FRONTMATTER" | grep '^allowed-tools:' | sed 's/^allowed-tools: *//')
     info "Allowed tools: $TOOLS"
 
-    # Validate tool names
-    if echo "$TOOLS" | grep -qE '[a-z]'; then
-      warning "Tool names should be capitalized (e.g., 'Read' not 'read')"
-    fi
+    # Validate tool names - check for names starting with lowercase
+    # Claude tools are PascalCase (Read, Write, BashOutput)
+    for tool in $(echo "$TOOLS" | tr ',' ' '); do
+      tool=$(echo "$tool" | xargs)  # trim whitespace
+      if [[ -n "$tool" && "$tool" =~ ^[a-z] ]]; then
+        warning "Tool name '$tool' starts with lowercase (Claude tools are PascalCase, e.g., 'Read')"
+      fi
+    done
   fi
 
   # Check model
