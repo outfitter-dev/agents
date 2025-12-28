@@ -16,11 +16,12 @@ Create skills that follow the [Agent Skills specification](https://agentskills.i
    - What triggers should activate it?
    - Location: personal (`~/.claude/skills/`) or project (`.claude/skills/`)?
 
-2. **Choose template** from `templates/`:
-   - `simple-skill.md` - Single SKILL.md file
-   - `tool-restricted-skill.md` - Limited tool access
-   - `multi-file-skill.md` - With supporting files
-   - `script-based-skill.md` - Includes executable scripts
+2. **Choose archetype** from [`../../templates/skill-archetypes/`](../../templates/skill-archetypes/):
+   - `simple/` - Single SKILL.md file
+   - `api-wrapper/` - External API integration with client script
+   - `dev-workflow/` - Development automation with runner script
+   - `document-processor/` - File processing with processing script
+   - `research-synthesizer/` - Research and synthesis workflow
 
 3. **Generate name**
    - Pattern: lowercase, hyphens only (e.g., `pdf-processing`, `code-review`)
@@ -219,7 +220,14 @@ grep -oE '\[[^]]+\]\([^)]+\)' SKILL.md | while read link; do
 done
 ```
 
-## Resources
+## References
+
+For cross-tool compatibility and implementation details:
+- [implementations.md](references/implementations.md) - Per-tool storage paths and features
+- [invocations.md](references/invocations.md) - How each tool activates skills
+- [compatibility.md](references/compatibility.md) - Path compatibility matrix
+
+## External Resources
 
 - [Agent Skills Specification](https://agentskills.io/specification)
 - [Best Practices Guide](https://platform.claude.com/docs/en/agents-and-tools/agent-skills/best-practices)
