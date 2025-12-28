@@ -1,43 +1,64 @@
 {
-  "name": "outfitter",
-  "owner": {
-    "name": "Outfitter",
-    "email": "team@outfitter.dev"
-  },
-  "metadata": {
-    "description": "Official Outfitter development tools and integrations for Claude Code",
-    "version": "1.0.0",
-    "homepage": "https://github.com/outfitter-dev/agents",
-    "repository": "https://github.com/outfitter-dev/agents"
-  },
-  "plugins": [
-    {
-      "name": "baselayer",
-      "source": "./baselayer",
-      "description": "Core development methodology skills: TDD, systematic debugging, type safety, architecture design, technical research, and requirements discovery",
-      "version": "0.2.0",
-      "keywords": ["tdd", "debugging", "type-safety", "architecture", "research", "methodology"]
-    },
-    {
-      "name": "agent-kit",
-      "source": "./agent-kit",
-      "description": "Skills for authoring Agent Skills (cross-tool) and platform-specific configuration for Claude Code, Codex, and other AI coding assistants",
-      "version": "2.0.0",
-      "keywords": ["agent-skills", "skills-authoring", "claude-code", "codex", "configuration", "plugins", "cross-tool"]
-    },
-    {
-      "name": "gitbutler",
-      "source": "./gitbutler",
-      "description": "GitButler virtual branch workflows for parallel development, multi-agent collaboration, and post-hoc organization",
-      "version": "2.0.0",
-      "keywords": ["gitbutler", "virtual-branches", "version-control", "multi-agent", "parallel-development"]
-    },
-    {
-      "name": "cli-dev",
-      "source": "./cli-dev",
-      "description": "Skills for building command-line tools: argument parsing, help text, subcommands, and CLI best practices",
-      "version": "0.1.0",
-      "keywords": ["cli", "command-line", "argument-parsing", "terminal"]
-    }
-  ]
+	"name": "outfitter",
+	"owner": {
+		"name": "Outfitter",
+		"email": "team@outfitter.dev"
+	},
+	"metadata": {
+		"description": "Official Outfitter development tools and integrations for Claude Code",
+		"version": "1.0.0",
+		"homepage": "https://github.com/outfitter-dev/agents",
+		"repository": "https://github.com/outfitter-dev/agents"
+	},
+	"plugins": [
+		{
+			"name": "baselayer",
+			"source": "./baselayer",
+			"description": "Core development methodology skills: TDD, systematic debugging, type safety, architecture design, technical research, and requirements discovery",
+			"version": "0.2.0",
+			"keywords": [
+				"tdd",
+				"debugging",
+				"type-safety",
+				"architecture",
+				"research",
+				"methodology"
+			]
+		},
+		{
+			"name": "agent-kit",
+			"source": "./agent-kit",
+			"description": "Skills for authoring Agent Skills (cross-tool) and platform-specific configuration for Claude Code, Codex, and other AI coding assistants",
+			"version": "2.0.0",
+			"keywords": [
+				"agent-skills",
+				"skills-authoring",
+				"claude-code",
+				"codex",
+				"configuration",
+				"plugins",
+				"cross-tool"
+			]
+		},
+		{
+			"name": "gitbutler",
+			"source": "./gitbutler",
+			"description": "GitButler virtual branch workflows for parallel development, multi-agent collaboration, and post-hoc organization",
+			"version": "2.0.0",
+			"keywords": [
+				"gitbutler",
+				"virtual-branches",
+				"version-control",
+				"multi-agent",
+				"parallel-development"
+			]
+		},
+		{
+			"name": "cli-dev",
+			"source": "./cli-dev",
+			"description": "Skills for building command-line tools: argument parsing, help text, subcommands, and CLI best practices",
+			"version": "0.1.0",
+			"keywords": ["cli", "command-line", "argument-parsing", "terminal"]
+		}
+	]
 }

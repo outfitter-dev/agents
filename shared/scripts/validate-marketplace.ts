@@ -42,7 +42,10 @@ interface PluginJson {
 
 const REPO_ROOT = resolve(import.meta.dirname, "../..");
 
-function log(message: string, type: "info" | "error" | "warning" | "success" = "info"): void {
+function log(
+	message: string,
+	type: "info" | "error" | "warning" | "success" = "info",
+): void {
 	const prefix = {
 		info: "  ",
 		error: "✗ ",
@@ -77,7 +80,9 @@ function validateMarketplaceJson(): ValidationResult {
 
 	if (!existsSync(marketplacePath)) {
 		result.passed = false;
-		result.errors.push("marketplace.json not found at .claude-plugin/marketplace.json");
+		result.errors.push(
+			"marketplace.json not found at .claude-plugin/marketplace.json",
+		);
 		return result;
 	}
 
@@ -93,7 +98,9 @@ function validateMarketplaceJson(): ValidationResult {
 
 		if (!marketplace.plugins || !Array.isArray(marketplace.plugins)) {
 			result.passed = false;
-			result.errors.push("marketplace.json: missing or invalid 'plugins' array");
+			result.errors.push(
+				"marketplace.json: missing or invalid 'plugins' array",
+			);
 			return result;
 		}
 
@@ -105,10 +112,14 @@ function validateMarketplaceJson(): ValidationResult {
 			}
 			if (!plugin.source) {
 				result.passed = false;
-				result.errors.push(`marketplace.json: plugin '${plugin.name}' missing 'source'`);
+				result.errors.push(
+					`marketplace.json: plugin '${plugin.name}' missing 'source'`,
+				);
 			}
 			if (!plugin.version) {
-				result.warnings.push(`marketplace.json: plugin '${plugin.name}' missing 'version'`);
+				result.warnings.push(
+					`marketplace.json: plugin '${plugin.name}' missing 'version'`,
+				);
 			}
 		}
 	} catch (error) {
@@ -119,7 +130,10 @@ function validateMarketplaceJson(): ValidationResult {
 	return result;
 }
 
-function validatePluginJson(pluginPath: string, pluginName: string): ValidationResult {
+function validatePluginJson(
+	pluginPath: string,
+	pluginName: string,
+): ValidationResult {
 	const result: ValidationResult = { passed: true, errors: [], warnings: [] };
 	const pluginJsonPath = join(pluginPath, ".claude-plugin/plugin.json");
 
@@ -162,7 +176,11 @@ function validatePluginJson(pluginPath: string, pluginName: string): ValidationR
 	return result;
 }
 
-function validateSkillFrontmatter(skillPath: string, pluginName: string, skillName: string): ValidationResult {
+function validateSkillFrontmatter(
+	skillPath: string,
+	pluginName: string,
+	skillName: string,
+): ValidationResult {
 	const result: ValidationResult = { passed: true, errors: [], warnings: [] };
 	const skillMdPath = join(skillPath, "SKILL.md");
 
@@ -177,39 +195,54 @@ function validateSkillFrontmatter(skillPath: string, pluginName: string, skillNa
 
 	if (!frontmatter) {
 		result.passed = false;
-		result.errors.push(`${pluginName}/${skillName}/SKILL.md: missing YAML frontmatter`);
+		result.errors.push(
+			`${pluginName}/${skillName}/SKILL.md: missing YAML frontmatter`,
+		);
 		return result;
 	}
 
 	// Required frontmatter fields
 	if (!frontmatter.name) {
 		result.passed = false;
-		result.errors.push(`${pluginName}/${skillName}/SKILL.md: frontmatter missing 'name'`);
+		result.errors.push(
+			`${pluginName}/${skillName}/SKILL.md: frontmatter missing 'name'`,
+		);
 	}
 	if (!frontmatter.version) {
 		result.passed = false;
-		result.errors.push(`${pluginName}/${skillName}/SKILL.md: frontmatter missing 'version'`);
+		result.errors.push(
+			`${pluginName}/${skillName}/SKILL.md: frontmatter missing 'version'`,
+		);
 	}
 	if (!frontmatter.description) {
 		result.passed = false;
-		result.errors.push(`${pluginName}/${skillName}/SKILL.md: frontmatter missing 'description'`);
+		result.errors.push(
+			`${pluginName}/${skillName}/SKILL.md: frontmatter missing 'description'`,
+		);
 	}
 
 	// Check description quality (should have trigger keywords)
 	if (frontmatter.description && frontmatter.description.length < 50) {
-		result.warnings.push(`${pluginName}/${skillName}/SKILL.md: description seems short (< 50 chars)`);
+		result.warnings.push(
+			`${pluginName}/${skillName}/SKILL.md: description seems short (< 50 chars)`,
+		);
 	}
 
 	// Check file size (skills should be < 500 lines)
 	const lines = content.split("\n").length;
 	if (lines > 500) {
-		result.warnings.push(`${pluginName}/${skillName}/SKILL.md: ${lines} lines (recommended < 500)`);
+		result.warnings.push(
+			`${pluginName}/${skillName}/SKILL.md: ${lines} lines (recommended < 500)`,
+		);
 	}
 
 	return result;
 }
 
-function validatePlugin(pluginPath: string, pluginName: string): ValidationResult {
+function validatePlugin(
+	pluginPath: string,
+	pluginName: string,
+): ValidationResult {
 	const result: ValidationResult = { passed: true, errors: [], warnings: [] };
 
 	// Validate plugin.json
@@ -226,7 +259,11 @@ function validatePlugin(pluginPath: string, pluginName: string): ValidationResul
 			.map((d) => d.name);
 
 		for (const skill of skills) {
-			const skillResult = validateSkillFrontmatter(join(skillsPath, skill), pluginName, skill);
+			const skillResult = validateSkillFrontmatter(
+				join(skillsPath, skill),
+				pluginName,
+				skill,
+			);
 			result.errors.push(...skillResult.errors);
 			result.warnings.push(...skillResult.warnings);
 			if (!skillResult.passed) result.passed = false;
@@ -262,7 +299,9 @@ async function main(): Promise<void> {
 
 	// Load marketplace to get plugin list
 	const marketplacePath = join(REPO_ROOT, ".claude-plugin/marketplace.json");
-	const marketplace: MarketplaceJson = JSON.parse(readFileSync(marketplacePath, "utf-8"));
+	const marketplace: MarketplaceJson = JSON.parse(
+		readFileSync(marketplacePath, "utf-8"),
+	);
 
 	// Validate each plugin
 	for (const plugin of marketplace.plugins) {
@@ -287,12 +326,14 @@ async function main(): Promise<void> {
 	}
 
 	// Summary
-	console.log("\n" + "─".repeat(50));
+	console.log(`\n${"─".repeat(50)}`);
 	if (totalErrors === 0) {
 		console.log(`\n✅ Validation passed with ${totalWarnings} warning(s)\n`);
 		process.exit(0);
 	} else {
-		console.log(`\n❌ Validation failed: ${totalErrors} error(s), ${totalWarnings} warning(s)\n`);
+		console.log(
+			`\n❌ Validation failed: ${totalErrors} error(s), ${totalWarnings} warning(s)\n`,
+		);
 		process.exit(1);
 	}
 }

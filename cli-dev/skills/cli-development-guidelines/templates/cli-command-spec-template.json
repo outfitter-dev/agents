@@ -1,81 +1,98 @@
 {
-  "name": "mycmd",
-  "summary": "One-line description of what this tool does.",
-  "description": "Longer description: what it does, what it does not do, and when to use it.",
-  "docsUrl": "https://example.com/docs/mycmd",
-  "issuesUrl": "https://github.com/example/mycmd/issues",
-  "outputModes": {
-    "default": "human",
-    "jsonFlag": "--json",
-    "plainFlag": "--plain",
-    "quietFlag": "--quiet",
-    "verboseFlag": "--verbose",
-    "debugFlag": "--debug",
-    "noColorFlag": "--no-color",
-    "noInputFlag": "--no-input",
-    "dryRunFlag": "--dry-run",
-    "forceFlag": "--force"
-  },
-  "streamsContract": {
-    "stdout": "Primary output and machine-readable output.",
-    "stderr": "Errors, warnings, progress, and status messages."
-  },
-  "exitCodes": [
-    { "code": 0, "meaning": "Success." },
-    { "code": 1, "meaning": "General failure." },
-    { "code": 2, "meaning": "Usage / invalid arguments." }
-  ],
-  "config": {
-    "precedenceHighToLow": ["flags", "env", "projectConfig", "userConfig", "systemConfig"],
-    "xdg": true,
-    "files": {
-      "projectConfig": "./.mycmd.toml",
-      "userConfig": "~/.config/mycmd/config.toml",
-      "cacheDir": "~/.cache/mycmd/"
-    },
-    "env": [
-      { "name": "MYCMD_DEBUG", "purpose": "Enable verbose debug logging." },
-      { "name": "NO_COLOR", "purpose": "Disable ANSI color output." }
-    ]
-  },
-  "globalOptions": [
-    { "flags": ["-h", "--help"], "description": "Show help and exit." },
-    { "flags": ["--version"], "description": "Show version and exit." }
-  ],
-  "commands": [
-    {
-      "name": "example",
-      "summary": "Describe what this command does.",
-      "usage": "mycmd example [options] <arg>",
-      "args": [
-        { "name": "arg", "required": true, "description": "What this argument is." }
-      ],
-      "options": [
-        { "flags": ["-o", "--output"], "value": "PATH", "description": "Write output to PATH (or '-' for stdout)." }
-      ],
-      "examples": [
-        { "description": "Basic example.", "command": "mycmd example ./input.txt" }
-      ]
-    }
-  ],
-  "safety": {
-    "boundaryCrossingActions": [
-      "Network calls",
-      "Writing files not explicitly passed",
-      "Mutating remote state"
-    ],
-    "destructiveActions": [
-      {
-        "action": "delete-project",
-        "dangerLevel": "severe",
-        "interactiveConfirmation": "type the project name",
-        "nonInteractiveConfirmation": "--confirm=\"project-name\"",
-        "supportsDryRun": true
-      }
-    ],
-    "secrets": {
-      "neverAcceptVia": ["flags", "environment variables"],
-      "preferAcceptVia": ["stdin", "file", "OS keychain", "secret manager"]
-    }
-  }
+	"name": "mycmd",
+	"summary": "One-line description of what this tool does.",
+	"description": "Longer description: what it does, what it does not do, and when to use it.",
+	"docsUrl": "https://example.com/docs/mycmd",
+	"issuesUrl": "https://github.com/example/mycmd/issues",
+	"outputModes": {
+		"default": "human",
+		"jsonFlag": "--json",
+		"plainFlag": "--plain",
+		"quietFlag": "--quiet",
+		"verboseFlag": "--verbose",
+		"debugFlag": "--debug",
+		"noColorFlag": "--no-color",
+		"noInputFlag": "--no-input",
+		"dryRunFlag": "--dry-run",
+		"forceFlag": "--force"
+	},
+	"streamsContract": {
+		"stdout": "Primary output and machine-readable output.",
+		"stderr": "Errors, warnings, progress, and status messages."
+	},
+	"exitCodes": [
+		{ "code": 0, "meaning": "Success." },
+		{ "code": 1, "meaning": "General failure." },
+		{ "code": 2, "meaning": "Usage / invalid arguments." }
+	],
+	"config": {
+		"precedenceHighToLow": [
+			"flags",
+			"env",
+			"projectConfig",
+			"userConfig",
+			"systemConfig"
+		],
+		"xdg": true,
+		"files": {
+			"projectConfig": "./.mycmd.toml",
+			"userConfig": "~/.config/mycmd/config.toml",
+			"cacheDir": "~/.cache/mycmd/"
+		},
+		"env": [
+			{ "name": "MYCMD_DEBUG", "purpose": "Enable verbose debug logging." },
+			{ "name": "NO_COLOR", "purpose": "Disable ANSI color output." }
+		]
+	},
+	"globalOptions": [
+		{ "flags": ["-h", "--help"], "description": "Show help and exit." },
+		{ "flags": ["--version"], "description": "Show version and exit." }
+	],
+	"commands": [
+		{
+			"name": "example",
+			"summary": "Describe what this command does.",
+			"usage": "mycmd example [options] <arg>",
+			"args": [
+				{
+					"name": "arg",
+					"required": true,
+					"description": "What this argument is."
+				}
+			],
+			"options": [
+				{
+					"flags": ["-o", "--output"],
+					"value": "PATH",
+					"description": "Write output to PATH (or '-' for stdout)."
+				}
+			],
+			"examples": [
+				{
+					"description": "Basic example.",
+					"command": "mycmd example ./input.txt"
+				}
+			]
+		}
+	],
+	"safety": {
+		"boundaryCrossingActions": [
+			"Network calls",
+			"Writing files not explicitly passed",
+			"Mutating remote state"
+		],
+		"destructiveActions": [
+			{
+				"action": "delete-project",
+				"dangerLevel": "severe",
+				"interactiveConfirmation": "type the project name",
+				"nonInteractiveConfirmation": "--confirm=\"project-name\"",
+				"supportsDryRun": true
+			}
+		],
+		"secrets": {
+			"neverAcceptVia": ["flags", "environment variables"],
+			"preferAcceptVia": ["stdin", "file", "OS keychain", "secret manager"]
+		}
+	}
 }

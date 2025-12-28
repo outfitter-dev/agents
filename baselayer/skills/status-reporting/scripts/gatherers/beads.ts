@@ -10,21 +10,26 @@
  * - Recently closed (filtered by time)
  */
 
-import { parseArgs } from "node:util"
-import { filterByTime, parseTimeConstraint, toRelativeTime } from "../lib/time"
-import type { BeadsData, BeadsIssue, BeadsStats, GathererResult } from "../lib/types"
+import { parseArgs } from "node:util";
+import { filterByTime, parseTimeConstraint } from "../lib/time";
+import type {
+	BeadsData,
+	BeadsIssue,
+	BeadsStats,
+	GathererResult,
+} from "../lib/types";
 
 const { values } = parseArgs({
-  args: Bun.argv.slice(2),
-  options: {
-    time: { type: "string", short: "t", default: "24h" },
-    workspace: { type: "string", short: "w" },
-    help: { type: "boolean", short: "h" },
-  },
-})
+	args: Bun.argv.slice(2),
+	options: {
+		time: { type: "string", short: "t", default: "24h" },
+		workspace: { type: "string", short: "w" },
+		help: { type: "boolean", short: "h" },
+	},
+});
 
 if (values.help) {
-  console.log(`
+	console.log(`
 beads.ts - Gather beads issue data
 
 Usage:
@@ -37,121 +42,138 @@ Options:
 
 Output:
   JSON GathererResult with BeadsData
-`)
-  process.exit(0)
+`);
+	process.exit(0);
 }
 
 interface BdOutput<T> {
-  success: boolean
-  data?: T
-  error?: string
+	success: boolean;
+	data?: T;
+	error?: string;
 }
 
 async function runBd<T>(args: string[]): Promise<BdOutput<T>> {
-  const workspaceArgs = values.workspace ? ["--workspace-root", values.workspace] : []
+	const workspaceArgs = values.workspace
+		? ["--workspace-root", values.workspace]
+		: [];
 
-  const proc = Bun.spawn(["bd", ...workspaceArgs, ...args, "--json"], {
-    stdout: "pipe",
-    stderr: "pipe",
-  })
+	const proc = Bun.spawn(["bd", ...workspaceArgs, ...args, "--json"], {
+		stdout: "pipe",
+		stderr: "pipe",
+	});
 
-  const stdout = await new Response(proc.stdout).text()
-  const stderr = await new Response(proc.stderr).text()
-  const exitCode = await proc.exited
+	const stdout = await new Response(proc.stdout).text();
+	const stderr = await new Response(proc.stderr).text();
+	const exitCode = await proc.exited;
 
-  if (exitCode !== 0) {
-    return { success: false, error: stderr || `bd exited with code ${exitCode}` }
-  }
+	if (exitCode !== 0) {
+		return {
+			success: false,
+			error: stderr || `bd exited with code ${exitCode}`,
+		};
+	}
 
-  try {
-    const data = JSON.parse(stdout)
-    return { success: true, data }
-  } catch {
-    return { success: false, error: `Failed to parse bd output: ${stdout}` }
-  }
+	try {
+		const data = JSON.parse(stdout);
+		return { success: true, data };
+	} catch {
+		return { success: false, error: `Failed to parse bd output: ${stdout}` };
+	}
 }
 
 async function checkBeadsAvailable(): Promise<boolean> {
-  // Check if .beads directory exists
-  const beadsDir = values.workspace
-    ? `${values.workspace}/.beads`
-    : ".beads"
+	// Check if .beads directory exists
+	const beadsDir = values.workspace ? `${values.workspace}/.beads` : ".beads";
 
-  const file = Bun.file(`${beadsDir}/issues.db`)
-  return file.exists()
+	const file = Bun.file(`${beadsDir}/issues.db`);
+	return file.exists();
 }
 
 async function gatherBeadsData(): Promise<GathererResult<BeadsData>> {
-  const timestamp = new Date().toISOString()
+	const timestamp = new Date().toISOString();
 
-  // Check if beads is available
-  const available = await checkBeadsAvailable()
-  if (!available) {
-    return {
-      source: "beads",
-      status: "unavailable",
-      reason: "Beads not initialized (.beads/ directory not found)",
-      timestamp,
-    }
-  }
+	// Check if beads is available
+	const available = await checkBeadsAvailable();
+	if (!available) {
+		return {
+			source: "beads",
+			status: "unavailable",
+			reason: "Beads not initialized (.beads/ directory not found)",
+			timestamp,
+		};
+	}
 
-  // Parse time constraint
-  let timeMs: number
-  try {
-    timeMs = parseTimeConstraint(values.time!)
-  } catch (e) {
-    return {
-      source: "beads",
-      status: "error",
-      error: e instanceof Error ? e.message : "Invalid time constraint",
-      timestamp,
-    }
-  }
+	// Parse time constraint
+	const timeValue = values.time ?? "24h";
+	let timeMs: number;
+	try {
+		timeMs = parseTimeConstraint(timeValue);
+	} catch (e) {
+		return {
+			source: "beads",
+			status: "error",
+			error: e instanceof Error ? e.message : "Invalid time constraint",
+			timestamp,
+		};
+	}
 
-  // Gather data in parallel
-  const [statsResult, inProgressResult, readyResult, blockedResult, closedResult] =
-    await Promise.all([
-      runBd<BeadsStats>(["stats"]),
-      runBd<BeadsIssue[]>(["list", "--status=in_progress", "--limit=10"]),
-      runBd<BeadsIssue[]>(["ready", "--limit=10"]),
-      runBd<BeadsIssue[]>(["blocked"]),
-      runBd<BeadsIssue[]>(["list", "--status=closed", "--limit=20"]),
-    ])
+	// Gather data in parallel
+	const [
+		statsResult,
+		inProgressResult,
+		readyResult,
+		blockedResult,
+		closedResult,
+	] = await Promise.all([
+		runBd<BeadsStats>(["stats"]),
+		runBd<BeadsIssue[]>(["list", "--status=in_progress", "--limit=10"]),
+		runBd<BeadsIssue[]>(["ready", "--limit=10"]),
+		runBd<BeadsIssue[]>(["blocked"]),
+		runBd<BeadsIssue[]>(["list", "--status=closed", "--limit=20"]),
+	]);
 
-  // Check for fatal errors (stats should always work if beads is available)
-  if (!statsResult.success) {
-    return {
-      source: "beads",
-      status: "error",
-      error: statsResult.error || "Failed to get beads stats",
-      timestamp,
-    }
-  }
+	// Check for fatal errors (stats should always work if beads is available)
+	if (!statsResult.success) {
+		return {
+			source: "beads",
+			status: "error",
+			error: statsResult.error || "Failed to get beads stats",
+			timestamp,
+		};
+	}
 
-  // Build result, handling partial failures gracefully
-  const stats = statsResult.data!
-  const inProgress = inProgressResult.success ? inProgressResult.data! : []
-  const ready = readyResult.success ? readyResult.data! : []
-  const blocked = blockedResult.success ? blockedResult.data! : []
-  const closed = closedResult.success ? closedResult.data! : []
+	// Build result, handling partial failures gracefully
+	const stats = statsResult.data ?? {
+		total: 0,
+		open: 0,
+		in_progress: 0,
+		blocked: 0,
+		closed: 0,
+	};
+	const inProgress = inProgressResult.success
+		? (inProgressResult.data ?? [])
+		: [];
+	const ready = readyResult.success ? (readyResult.data ?? []) : [];
+	const blocked = blockedResult.success ? (blockedResult.data ?? []) : [];
+	const closed = closedResult.success ? (closedResult.data ?? []) : [];
 
-  // Filter closed issues by time constraint (client-side)
-  const recentlyClosed = filterByTime(closed, timeMs)
+	// Filter closed issues by time constraint (client-side)
+	const recentlyClosed = filterByTime(closed, timeMs);
 
-  return {
-    source: "beads",
-    status: "success",
-    data: {
-      stats,
-      inProgress,
-      ready,
-      blocked,
-      recentlyClosed,
-    },
-    timestamp,
-  }
+	return {
+		source: "beads",
+		status: "success",
+		data: {
+			stats,
+			inProgress,
+			ready,
+			blocked,
+			recentlyClosed,
+		},
+		timestamp,
+	};
 }
 
 // Main execution
-const result = await gatherBeadsData()
-console.log(JSON.stringify(result, null, 2))
+const result = await gatherBeadsData();
+console.log(JSON.stringify(result, null, 2));
