@@ -59,21 +59,22 @@ GitButler virtual branch workflows for parallel development and multi-agent coll
 
 ---
 
-### claude-dev
+### agent-kit
 
-Skills for authoring Claude Code plugins, marketplaces, and configuration management.
+Cross-tool skills plus Claude Code authoring, validation, and configuration utilities.
 
 ```bash
-/plugin install claude-dev@outfitter
+/plugin install agent-kit@outfitter
 ```
 
-**4 skills** for:
-- Plugin structure and authoring
-- Marketplace setup and management
-- Claude configuration files
-- Plugin distribution and versioning
+**What it does:**
+- **Cross-tool skills** for Agent Skills authoring and validation
+- **Claude Code skills** for plugin authoring, commands, hooks, skills, agents, config, and distribution
+- **Utility scripts** for plugin workflow (`init-plugin.sh`, `validate-plugin.sh`, `test-plugin.sh`)
 
-[See claude-dev/README.md](claude-dev/README.md)
+**Use when:** Building plugins, creating commands/hooks/skills/agents, configuring Claude, or distributing plugins.
+
+[See agent-kit/README.md](agent-kit/README.md)
 
 ## Quick Start
 
@@ -87,8 +88,8 @@ For most projects, start with baselayer:
 # Add GitButler if using virtual branches
 /plugin install gitbutler@outfitter
 
-# Add claude-dev if building plugins
-/plugin install claude-dev@outfitter
+# Add agent-kit if building plugins
+/plugin install agent-kit@outfitter
 ```
 
 ## Repository Structure
@@ -99,7 +100,7 @@ agents/
 │   └── marketplace.json    # Plugin catalog
 ├── baselayer/              # Core methodology (18 skills, 7 agents)
 ├── gitbutler/              # Virtual branch workflows (4 skills, 1 agent)
-├── claude-dev/             # Plugin authoring (4 skills)
+├── agent-kit/              # Authoring + validation + config utilities
 ├── shared/                 # Shared scripts and utilities
 ├── SECURITY.md             # Security model and review guidelines
 └── README.md
@@ -113,7 +114,7 @@ Plugins are code. Review what you install. See [SECURITY.md](SECURITY.md) for th
 |--------|------------|-------|---------|-------|
 | baselayer | read | no | no | Instructions-only |
 | gitbutler | read | yes | no | Runs `but`/`git` commands |
-| claude-dev | read/write | yes | yes | Scaffolding scripts |
+| agent-kit | read/write | yes | yes | Scaffolding scripts |
 
 ## Skills Reference
 
@@ -141,25 +142,33 @@ Plugins are code. Review what you install. See [SECURITY.md](SECURITY.md) for th
 | gitbutler | multi-agent | Coordinate multiple AI agents |
 | gitbutler | stack-workflows | Stacked branches with `--anchor` |
 | gitbutler | complete-branch | Safely merge virtual branches to main |
-| claude-dev | claude-plugin-authoring | Create Claude Code plugins |
-| claude-dev | claude-plugin-marketplace-setup | Set up plugin marketplaces |
-| claude-dev | claude-config-management | Manage Claude configuration files |
-| claude-dev | claude-plugin-distribution | Package and distribute plugins |
+| agent-kit | claude-plugin-authoring | Create Claude Code plugins |
+| agent-kit | claude-command-authoring | Create Claude Code slash commands |
+| agent-kit | claude-hook-authoring | Create Claude Code hooks |
+| agent-kit | claude-skill-authoring | Create Claude Code skills |
+| agent-kit | claude-agent-authoring | Create Claude Code agents |
+| agent-kit | claude-agent-validation | Validate Claude Code agents |
+| agent-kit | claude-marketplace-setup | Set up plugin marketplaces |
+| agent-kit | claude-code-configuration | Manage Claude configuration files |
+| agent-kit | claude-plugin-distribution | Package and distribute plugins |
+| agent-kit | skills-authoring | Create cross-tool Agent Skills |
+| agent-kit | skill-validation | Validate cross-tool Agent Skills |
+| agent-kit | codex-configuration | Manage Codex CLI configuration |
 
 ## Plugin Development
 
 Want to add your own plugin to the marketplace?
 
-1. **Install claude-dev**: Get the plugin authoring skills
+1. **Install agent-kit**: Get the plugin authoring skills
    ```bash
-   /plugin install claude-dev@outfitter
+   /plugin install agent-kit@outfitter
    ```
 
 2. **Create your plugin**: Use the skills to build your plugin
 
 3. **Submit a PR**: Add your plugin to `.claude-plugin/marketplace.json`
 
-See [claude-dev/README.md](claude-dev/README.md) for detailed guidance.
+See [agent-kit/README.md](agent-kit/README.md) for detailed guidance.
 
 ## Links
 

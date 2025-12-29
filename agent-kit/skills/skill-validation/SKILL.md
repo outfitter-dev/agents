@@ -1,11 +1,11 @@
 ---
-name: skills-check
+name: skill-validation
 version: 1.0.0
 description: Validates and reviews skills against the Agent Skills specification. Checks YAML syntax, naming conventions, description quality, file structure, and best practices. Provides improvement suggestions with before/after examples and optionally applies fixes. Use when validating skills, reviewing skill quality, checking skills before commit, or when `--check-skill`, `--validate-skill`, or `--review-skill` is mentioned.
 allowed-tools: Read Edit Grep Glob TodoWrite
 ---
 
-# Skill Check
+# Skill Validation
 
 Validate and review skills against the [Agent Skills specification](https://agentskills.io/specification). Combines validation (catch errors) and review (suggest improvements) in one pass.
 
@@ -260,12 +260,12 @@ head -n 15 SKILL.md
 
 **After creating a skill**:
 ```
-skills-authoring → skills-check → iterate until passing
+skills-authoring → skill-validation → iterate until passing
 ```
 
 **Before committing**:
 ```
-skills-check → fix critical issues → commit
+skill-validation → fix critical issues → commit
 ```
 
 ## Reference

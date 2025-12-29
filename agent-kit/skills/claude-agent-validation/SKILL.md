@@ -1,12 +1,13 @@
 ---
-name: subagent-check
-description: Validates and reviews Claude Code agents/subagents against best practices. Checks YAML syntax, naming conventions, description quality, system prompt effectiveness, and tool configuration. Provides improvement suggestions and optionally applies fixes. Use when validating agents, reviewing agent quality, checking agents before commit, or when `--check-agent` or `--validate-agent` is mentioned.
+name: claude-agent-validation
+version: 1.0.0
+description: Validates and reviews Claude Code agents against best practices. Checks YAML syntax, naming conventions, description quality, system prompt effectiveness, and tool configuration. Provides improvement suggestions and optionally applies fixes. Use when validating agents, reviewing agent quality, checking agents before commit, or when `--validate-agent` is mentioned.
 allowed-tools: Read Edit Grep Glob TodoWrite
 ---
 
-# Agent Check
+# Claude Agent Validation
 
-Validate and review Claude Code agents/subagents against best practices and quality standards. Combines validation (catch errors) and review (suggest improvements) in one pass.
+Validate and review Claude Code agents against best practices and quality standards. Combines validation (catch errors) and review (suggest improvements) in one pass.
 
 ## Quick Start
 
@@ -147,7 +148,7 @@ After validation passes, review for improvements:
 ### Step 5: Generate Report
 
 ```markdown
-# Agent Check Report: [Agent Name]
+# Agent Validation Report: [Agent Name]
 
 ## Summary
 - **Status**: PASS / FAIL / WARNINGS
@@ -294,10 +295,10 @@ head -n 20 ~/.claude/agents/agent-name.md
 
 **After creating an agent**:
 ```
-subagent-authoring → subagent-check → iterate until passing
+claude-agent-authoring → claude-agent-validation → iterate until passing
 ```
 
 **Before committing**:
 ```
-subagent-check → fix critical issues → commit
+claude-agent-validation → fix critical issues → commit
 ```

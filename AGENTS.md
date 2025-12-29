@@ -2,9 +2,9 @@
 
 ## Project Structure & Module Organization
 - Root `.claude-plugin/marketplace.json` lists every published plugin; keep it in sync when adding or renaming entries.
-- Plugin folders: `baselayer/`, `claude-dev/`, `guardrails/`, `gitbutler/`, `waymark/`. Each holds its own `.claude-plugin/plugin.json` plus `skills/`, `commands/`, and (where needed) `agents/` or `templates/`.
+- Plugin folders: `baselayer/`, `agent-kit/`, `guardrails/`, `gitbutler/`. Each holds its own `.claude-plugin/plugin.json` plus `skills/`, `commands/`, and (where needed) `agents/` or `templates/`.
 - The TypeScript package with code you can build/test today is `guardrails/` (`src/` for logic, `hooks/` for integrations, `node_modules/` vendored for reproducibility). Tests live beside sources as `*.test.ts`.
-- Docs live with their plugin (e.g., `claude-dev/README.md`, `baselayer/README.md`); keep user-facing instructions close to the code that implements them.
+- Docs live with their plugin (e.g., `agent-kit/README.md`, `baselayer/README.md`); keep user-facing instructions close to the code that implements them.
 
 ## Build, Test, and Development Commands
 - Use Bun everywhere. From a plugin directory (e.g., `guardrails/`):

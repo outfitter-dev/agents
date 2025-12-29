@@ -37,7 +37,7 @@ Each plugin follows Claude Code's plugin structure with a `.claude-plugin/plugin
 | Plugin | Purpose |
 |--------|---------|
 | **baselayer** | Core development methodology: TDD, debugging, type safety, architecture, research |
-| **claude-dev** | Authoring Claude Code plugins, marketplaces, and configuration |
+| **agent-kit** | Authoring Claude Code plugins, agents, skills, and configuration |
 | **gitbutler** | GitButler virtual branch workflows for parallel development |
 
 ## Working with Skills
@@ -52,7 +52,7 @@ find . -name "SKILL.md" -not -path "*/node_modules/*"
 
 # Skills live under each plugin
 baselayer/skills/     # TDD, debugging, pathfinding, etc.
-claude-dev/skills/    # Plugin authoring, marketplace setup
+agent-kit/skills/     # Plugin authoring, agents, skills, config
 gitbutler/skills/     # Version control workflows
 ```
 
