@@ -515,6 +515,7 @@ Reference documents should cover:
 </extensibility>
 
 <rules>
+
 ALWAYS:
 - Parse time constraints before queries
 - Execute source queries in parallel
@@ -530,9 +531,11 @@ NEVER:
 - Expose credentials in output
 - Overwhelm with raw data dumps
 - Skip error context when failures occur
+
 </rules>
 
 <anti_patterns>
+
 **Sequential Queries** — waiting for each source before next
 
 Why it fails: Slow, blocks on failures
@@ -556,9 +559,11 @@ Instead: Use relative timestamps ("2 hours ago") with absolute in hover/detail
 Why it fails: Not scannable, misses insights
 
 Instead: Follow presentation templates with hierarchy and indicators
+
 </anti_patterns>
 
 <integration>
+
 **Workflow Integration**
 
 Status reporting as session starter:
@@ -579,17 +584,21 @@ Status reporting as session starter:
 - Pre-commit hooks (check status before push)
 - PR creation (include status context)
 - Slack/notification integration
+
 </integration>
 
 <references>
+
 - [graphite.md](references/graphite.md) — Graphite stack visualization and PR queries
 - [github.md](references/github.md) — GitHub CLI patterns and API usage
 - [linear.md](references/linear.md) — Linear MCP integration and context mapping
 - [beads.md](references/beads.md) — Local issue tracking with dependencies
 - [FORMATTING.md](../../shared/rules/FORMATTING.md) — Visual indicators and formatting conventions
+
 </references>
 
 <examples>
+
 **Basic Usage** (no time filter):
 ```
 User: "Give me a status report"
@@ -635,4 +644,5 @@ Agent presents:
   - GitHub PR section (from gh CLI)
   - Note: "Linear and CI sections unavailable"
 ```
+
 </examples>

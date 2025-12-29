@@ -9,6 +9,7 @@ description: Applies disciplined test-driven development (TDD) using Red-Green-R
 Disciplined test-driven development — write tests first, implement minimal code to pass, refactor systematically.
 
 <when_to_use>
+
 - Implementing new features with TDD methodology
 - Complex business logic requiring test coverage
 - Critical paths — authentication, payments, data integrity
@@ -17,9 +18,11 @@ Disciplined test-driven development — write tests first, implement minimal cod
 - API design — use tests to define interface
 
 NOT for: exploratory coding, UI prototypes, static configuration, trivial glue code
+
 </when_to_use>
 
 <phases>
+
 Track with TodoWrite. Phases advance through RED-GREEN-REFACTOR cycle.
 
 | Phase | Trigger | activeForm |
@@ -47,9 +50,11 @@ Edge cases:
 - High quality start: If existing tests comprehensive, start at "Refactor" after confirming tests pass
 - Bug fix: Start at "Red" with failing test reproducing bug
 - No regression: Tests must continue passing through Refactor and Verify
+
 </phases>
 
 <cycle>
+
 Core loop:
 
 ```
@@ -67,9 +72,11 @@ Philosophy:
 - **Incremental progress** — small focused cycles
 - **Type safety throughout** — tests as type-safe as production
 - **Fast feedback loops** — leverage modern tooling
+
 </cycle>
 
 <red_phase>
+
 Write tests defining desired behavior before implementation exists.
 
 Start: Create "Red Phase" as `in_progress` if starting session
@@ -147,6 +154,7 @@ mod tests {
 Commit: `test: add failing tests for [feature]`
 
 Transition: Mark "Red Phase" `completed`, create "Green Phase" as `in_progress`
+
 </red_phase>
 
 <green_phase>
