@@ -7,3 +7,6 @@
 
 # Agent planning notes (internal)
 .agents/plans/
+
+# Agent-kit test output (scaffolding artifacts)
+agent-kit/test-output/

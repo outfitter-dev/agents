@@ -4,9 +4,9 @@
 This reference is a *condensed, operational* guide for building well-behaved CLI tools.
 
 - Primary source (adapted heavily): *Command Line Interface Guidelines* (https://clig.dev/)
-  - License: CC BY-SA 4.0 (see [references/LICENSE.md](LICENSE.md))
-  - Authors: Aanand Prasad, Ben Firshman, Carl Tashian, Eva Parish (see [references/ATTRIBUTION.md](ATTRIBUTION.md))
-- Additional sources are used for reinforcement and edge cases (POSIX utility conventions, GNU standards, Heroku CLI style guide, 12-factor CLI apps, XDG base directory spec, NO_COLOR convention). See [references/ATTRIBUTION.md](ATTRIBUTION.md).
+  - License: CC BY-SA 4.0
+  - Authors: Aanand Prasad, Ben Firshman, Carl Tashian, Eva Parish
+- Additional sources: POSIX utility conventions, GNU standards, Heroku CLI style guide, 12-factor CLI apps, XDG base directory spec, NO_COLOR convention.
 
 ## Table of contents
 - [Design principles](#design-principles)
