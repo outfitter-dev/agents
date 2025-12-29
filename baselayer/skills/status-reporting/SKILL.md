@@ -135,6 +135,7 @@ Common patterns:
 </time_parsing>
 
 <data_sources>
+
 **Version Control Systems**
 
 Gather:
@@ -183,9 +184,11 @@ Gather:
 Platforms: GitHub Actions, GitLab CI, CircleCI, Jenkins
 
 See [graphite.md](references/graphite.md), [github.md](references/github.md), [linear.md](references/linear.md), [beads.md](references/beads.md) for tool-specific implementations.
+
 </data_sources>
 
 <aggregation>
+
 **Cross-Referencing Strategy**
 
 Link related items across sources:
@@ -227,9 +230,11 @@ Convert absolute timestamps to relative:
 - >= 7 days: "X weeks ago" or absolute date
 
 Provides quick sense of recency.
+
 </aggregation>
 
 <presentation>
+
 **Output Structure**
 
 ```
@@ -324,9 +329,11 @@ Example:
 ◆  Issue BLZ-45: High priority, unassigned
 ◇  Branch feature/old: No activity for 14 days
 ```
+
 </presentation>
 
 <context_awareness>
+
 **Repository Context Mapping**
 
 For multi-repo workflows, map current directory to relevant filters:
@@ -365,9 +372,11 @@ For multi-repo workflows, map current directory to relevant filters:
 
 **Configuration Location**:
 Store in skill directory or user config (e.g., `~/.config/claude/status-reporting/config.json`)
+
 </context_awareness>
 
 <dependencies>
+
 **Required**:
 - VCS tool (git, gt, jj, etc.)
 - Shell access for command execution
@@ -384,9 +393,11 @@ Store in skill directory or user config (e.g., `~/.config/claude/status-reportin
 - Native CLIs for direct queries (preferred)
 
 Skill should work with ANY available subset of sources.
+
 </dependencies>
 
 <implementation_patterns>
+
 **Parallel Queries**
 
 Execute source queries concurrently:
@@ -425,9 +436,11 @@ Use consistent width for scanning:
 - Align columns for tabular data
 - Use indentation for hierarchy
 - Preserve links for clickability
+
 </implementation_patterns>
 
 <scripts>
+
 **Automated Gatherers**
 
 The `scripts/` directory contains Bun scripts that do the heavy lifting:
@@ -464,9 +477,11 @@ scripts/
 - Reduces agent tool calls by 80%+
 
 Run the script first, then format/present the results.
+
 </scripts>
 
 <extensibility>
+
 **Adding New Sources**
 
 To integrate additional data sources:
@@ -496,6 +511,7 @@ Reference documents should cover:
 - Rate limit handling
 - Authentication patterns
 - Caching recommendations
+
 </extensibility>
 
 <rules>
