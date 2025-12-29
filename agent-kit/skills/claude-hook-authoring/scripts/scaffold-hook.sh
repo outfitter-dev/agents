@@ -220,7 +220,11 @@ if [[ "$INTERACTIVE" == "true" ]]; then
   echo
   read -r -p "Timeout in seconds (default: 30): " INPUT_TIMEOUT
   if [[ -n "$INPUT_TIMEOUT" ]]; then
-    TIMEOUT="$INPUT_TIMEOUT"
+    if [[ "$INPUT_TIMEOUT" =~ ^[0-9]+$ ]] && [[ "$INPUT_TIMEOUT" -gt 0 ]] && [[ "$INPUT_TIMEOUT" -le 300 ]]; then
+      TIMEOUT="$INPUT_TIMEOUT"
+    else
+      echo -e "${YELLOW}Warning: Invalid timeout value, using default (30s)${NC}"
+    fi
   fi
 fi
 

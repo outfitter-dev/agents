@@ -643,9 +643,9 @@ Send notifications to Slack.
 #!/usr/bin/env bash
 set -euo pipefail
 
-# Load environment
+# Load webhook URL from .env if present (safe single-variable extraction)
 if [[ -f ".env" ]]; then
-  export $(grep -v '^#' .env | xargs)
+  SLACK_WEBHOOK_URL=$(grep -E '^SLACK_WEBHOOK_URL=' .env | cut -d'=' -f2- | tr -d '"' | tr -d "'")
 fi
 
 WEBHOOK_URL="${SLACK_WEBHOOK_URL:-}"

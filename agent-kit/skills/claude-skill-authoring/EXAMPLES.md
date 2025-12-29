@@ -729,7 +729,7 @@ Move file to new location and update imports.
 **Process:**
 1. Identify all imports of the file
 2. Calculate new relative paths
-3. Move file to new location
+3. Execute the move operation
 4. Update all import statements
 5. Verify no broken imports
 
