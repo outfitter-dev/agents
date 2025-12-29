@@ -538,7 +538,7 @@ COMMIT;
 
 If migration fails:
 1. **Stop immediately**
-2. **Rollback if transaction open**
+2. **Rollback if transaction is open**
 3. **Preserve error state**
 4. **Document failure point**
 5. **Report to team**

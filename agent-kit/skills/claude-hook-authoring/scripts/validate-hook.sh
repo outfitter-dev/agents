@@ -289,8 +289,7 @@ while IFS= read -r event; do
           if [[ ! "$FIRST_LINE" =~ ^#! ]]; then
             warning "    Script missing shebang line"
           fi
-        elif [[ "$SCRIPT_PATH" =~ ^\$ ]] || [[ "$SCRIPT_PATH" =~ ^echo ]] || [[ "$SCRIPT_PATH" =~ ^[a-z]+ ]]; then
-          # Inline command or built-in, skip
+        elif [[ "$SCRIPT_PATH" =~ ^\$ ]] || [[ "$SCRIPT_PATH" =~ ^(echo|printf|cat|true|false|test|:)$ ]]; then
           info "    Inline/built-in command, skipping script check"
         else
           warning "    Script not found: $SCRIPT_PATH"
