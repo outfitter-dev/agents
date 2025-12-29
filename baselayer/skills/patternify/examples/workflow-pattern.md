@@ -5,6 +5,7 @@ Demonstrates identifying, specifying, and implementing a workflow pattern.
 ## Pattern Identification
 
 <evidence>
+
 User: "I have a bug where users can't log in after password reset."
 
 Agent flow:
@@ -16,13 +17,16 @@ Agent flow:
 6. Bug resolved
 
 Pattern: Systematic debugging - structured investigation, not trial-and-error.
+
 </evidence>
 
 <classification>
+
 Type: Workflow (multi-step sequence with clear phases)
 
 Why not orchestration: Doesn't primarily coordinate external tools
 Why not heuristic: Not a decision rule, but a procedural process
+
 </classification>
 
 ## Pattern Specification
@@ -82,14 +86,17 @@ anti_patterns:
 ## Component Recommendation
 
 <analysis>
+
 Invocation: User-triggered (bug report, debugging request)
 Automation: Cannot be fully automated (requires judgment)
 Domain Expertise: General software engineering
 
 Decision: **SKILL**
+
 </analysis>
 
 <rationale>
+
 SKILL because:
 - User invokes when encountering bugs
 - Requires judgment (hypothesis formation, fix validation)
@@ -99,12 +106,15 @@ SKILL because:
 Not COMMAND: Can't be scripted, requires contextual decisions
 Not AGENT: General engineering, not specialized domain
 Not HOOK: User-invoked, not event-triggered
+
 </rationale>
 
 <composite>
+
 COMMAND: `/reproduce-bug` — automate running reproduction steps
 COMMAND: `/run-regression-tests` — run tests related to bug area
 HOOK: post-fix — warn if no regression test added
+
 </composite>
 
 ## Implementation Sketch

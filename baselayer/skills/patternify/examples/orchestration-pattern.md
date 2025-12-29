@@ -5,6 +5,7 @@ Demonstrates identifying, specifying, and implementing an orchestration pattern.
 ## Pattern Identification
 
 <evidence>
+
 User: "Every time I commit, I manually update Linear with the commit SHA and branch. Can we automate this?"
 
 Analysis:
@@ -13,13 +14,16 @@ Analysis:
 - Manual coordination is time-consuming and error-prone
 
 Pattern: Tool orchestration — coordinating git with Linear based on commit messages.
+
 </evidence>
 
 <classification>
+
 Type: Orchestration (coordinating multiple external tools)
 
 Why not workflow: Not multi-phase, but ongoing event-driven coordination
 Why not heuristic: Not a decision rule, but automated synchronization
+
 </classification>
 
 ## Pattern Specification
@@ -77,14 +81,17 @@ error_handling:
 ## Component Recommendation
 
 <analysis>
+
 Invocation: Event-triggered (git hooks)
 Automation: Fully automatable (pattern matching, API calls)
 Behavior modification: Yes (augments commits with Linear updates)
 
 Decision: **HOOK**
+
 </analysis>
 
 <rationale>
+
 HOOK because:
 - Event-triggered (post-commit, pre-push)
 - Fully automatable, no human judgment
@@ -94,11 +101,14 @@ HOOK because:
 Not COMMAND: Should run automatically
 Not SKILL: No guidance needed
 Not AGENT: No expertise required
+
 </rationale>
 
 <composite>
+
 COMMAND: `/linear-sync` — manually trigger for backfilling
 SKILL: linear-workflow — guidance on commit conventions
+
 </composite>
 
 ## Implementation Sketch

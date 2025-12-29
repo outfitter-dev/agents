@@ -5,6 +5,7 @@ Demonstrates identifying, specifying, and implementing a heuristic pattern.
 ## Pattern Identification
 
 <evidence>
+
 User: "Our PRs keep getting stuck in review. When reviewed, feedback is often superficial."
 
 Investigation:
@@ -13,13 +14,16 @@ Investigation:
 - Small PRs (<200 LOC): 8.7 comments avg, 1.1 days to merge
 
 Pattern: PR size correlates with review quality and merge speed. Need decision rule for when to split.
+
 </evidence>
 
 <classification>
+
 Type: Heuristic (decision rule with contextual exceptions)
 
 Why not workflow: Not multi-step process, but a guideline
 Why not orchestration: Not coordinating tools, but providing framework
+
 </classification>
 
 ## Pattern Specification
@@ -99,13 +103,16 @@ splitting_strategies:
 ## Component Recommendation
 
 <analysis>
+
 Invocation: User-invoked (manual check) or event-triggered (pre-push)
 Automation: Partially — LOC counting automated, split decision requires judgment
 
 Decision: **SKILL + HOOK** (composite)
+
 </analysis>
 
 <rationale>
+
 SKILL because:
 - Provides guidance on thresholds
 - Explains rationale for limits
@@ -120,12 +127,15 @@ HOOK because:
 
 Not just COMMAND: Requires teaching beyond execution
 Not AGENT: General engineering, not specialized
+
 </rationale>
 
 <composite>
+
 SKILL: pr-size-optimization — guidance and strategies
 HOOK: pre-push — automatic validation
 COMMAND: /check-pr-size — manual check during development
+
 </composite>
 
 ## Implementation Sketch
