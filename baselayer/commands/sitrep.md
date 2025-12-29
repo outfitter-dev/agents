@@ -17,40 +17,41 @@ Parse arguments for:
 
 ---
 
+Load the status-reporting skill and begin by:
+1. Parsing time constraints from arguments (default: 24h)
+2. Detecting available services (Graphite, GitHub, Linear, Beads)
+3. Executing the Gather → Aggregate → Present workflow
+
 ## Quick Start (Script-Based)
 
 For fastest results, run the sitrep script:
 
 ```bash
-# Run from the skills directory
-./baselayer/skills/status-reporting/scripts/sitrep.ts
+# From the plugin
+bun run ${CLAUDE_PLUGIN_ROOT}/skills/status-reporting/scripts/sitrep.ts
 
 # With options
-./sitrep.ts -t 7d                    # Last 7 days
-./sitrep.ts -s github,beads          # Specific sources only
-./sitrep.ts --format=text            # Human-readable output
+bun run ${CLAUDE_PLUGIN_ROOT}/skills/status-reporting/scripts/sitrep.ts -t 7d
+bun run ${CLAUDE_PLUGIN_ROOT}/skills/status-reporting/scripts/sitrep.ts -s github,beads
+bun run ${CLAUDE_PLUGIN_ROOT}/skills/status-reporting/scripts/sitrep.ts --format=text
 ```
 
 The script runs all gatherers in parallel and returns structured JSON (default) or formatted text.
 
----
-
-!`cat baselayer/skills/status-reporting/SKILL.md`
-
 ## Available References
 
-Load these as needed based on detected/requested services:
+Load these from the status-reporting skill as needed based on detected/requested services:
 
 | Service | Reference | When to Load |
 |---------|-----------|--------------|
-| Graphite | `baselayer/skills/status-reporting/references/graphite.md` | `gt` CLI available or user requests |
-| GitHub | `baselayer/skills/status-reporting/references/github.md` | `gh` CLI available or user requests |
-| Linear | `baselayer/skills/status-reporting/references/linear.md` | Linear MCP available or user requests |
-| Beads | `baselayer/skills/status-reporting/references/beads.md` | `.beads/` directory exists or user requests |
+| Graphite | `references/graphite.md` | `gt` CLI available or user requests |
+| GitHub | `references/github.md` | `gh` CLI available or user requests |
+| Linear | `references/linear.md` | Linear MCP available or user requests |
+| Beads | `references/beads.md` | `.beads/` directory exists or user requests |
 
 ## Scripts
 
-The `scripts/` directory contains Bun scripts for automated data gathering:
+The skill's `scripts/` directory contains Bun scripts for automated data gathering:
 
 | Script | Purpose |
 |--------|---------|
@@ -61,11 +62,3 @@ The `scripts/` directory contains Bun scripts for automated data gathering:
 | `gatherers/beads.ts` | Local beads issues |
 | `lib/time.ts` | Time parsing utilities |
 | `lib/types.ts` | Shared type definitions |
-
----
-
-Begin by:
-1. Parse time constraints from arguments (default: 24h)
-2. **Option A (fast)**: Run `./scripts/sitrep.ts -t {time}` and present results
-3. **Option B (manual)**: Detect available services and gather individually
-4. Execute the Gather → Aggregate → Present workflow
