@@ -562,7 +562,7 @@ Status reporting as session starter:
 - [github.md](references/github.md) — GitHub CLI patterns and API usage
 - [linear.md](references/linear.md) — Linear MCP integration and context mapping
 - [beads.md](references/beads.md) — Local issue tracking with dependencies
-- [FORMATTING.md](../../.claude/rules/FORMATTING.md) — Visual indicators and formatting conventions
+- [FORMATTING.md](../../shared/rules/FORMATTING.md) — Visual indicators and formatting conventions
 </references>
 
 <examples>

@@ -16,7 +16,7 @@ Create skills that follow the [Agent Skills specification](https://agentskills.i
    - What triggers should activate it?
    - Location: personal (`~/.claude/skills/`) or project (`.claude/skills/`)?
 
-2. **Choose archetype** from [`../../templates/skill-archetypes/`](../../templates/skill-archetypes/):
+2. **Choose archetype** from [`templates/skill-archetypes/`](templates/skill-archetypes/):
    - `simple/` - Single SKILL.md file
    - `api-wrapper/` - External API integration with client script
    - `dev-workflow/` - Development automation with runner script

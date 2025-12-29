@@ -70,7 +70,7 @@ Which archetype would you like to use?
 Run the init script with the chosen archetype:
 
 ```bash
-bun run ${CLAUDE_PLUGIN_ROOT}/scripts/init-skill.ts <skill-name> <output-dir> --template <archetype>
+bun run ${CLAUDE_PLUGIN_ROOT}/skills/skills-authoring/scripts/init-skill.ts <skill-name> <output-dir> --template <archetype>
 ```
 
 **Output directories by location:**
@@ -81,7 +81,7 @@ bun run ${CLAUDE_PLUGIN_ROOT}/scripts/init-skill.ts <skill-name> <output-dir> --
 If no template matches, create a minimal skill:
 
 ```bash
-bun run ${CLAUDE_PLUGIN_ROOT}/scripts/init-skill.ts <skill-name> <output-dir>
+bun run ${CLAUDE_PLUGIN_ROOT}/skills/skills-authoring/scripts/init-skill.ts <skill-name> <output-dir>
 ```
 
 ## Phase 4: Customization
@@ -144,7 +144,7 @@ Based on archetype, customize:
 Before completing, validate the skill:
 
 ```bash
-bun run ${CLAUDE_PLUGIN_ROOT}/scripts/validate-skill.sh <skill-dir>
+bun run ${CLAUDE_PLUGIN_ROOT}/skills/claude-skill-authoring/scripts/validate-skill.sh <skill-dir>
 ```
 
 Or use the validate-claude-skill skill for comprehensive checks.
@@ -180,7 +180,7 @@ When all phases complete:
 
 ## Template Locations
 
-Templates are in `${CLAUDE_PLUGIN_ROOT}/templates/skill-archetypes/`:
+Templates are in `${CLAUDE_PLUGIN_ROOT}/skills/skills-authoring/templates/skill-archetypes/`:
 
 ```
 skill-archetypes/
