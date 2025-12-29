@@ -5,8 +5,8 @@ Fast track to using Claude Code templates.
 ## 30-Second Quick Start
 
 ```bash
-# 1. Choose a template
-cd /Users/mg/Developer/outfitter/agents/agent-kit/templates
+# 1. Choose a template (from agent-kit/templates/)
+ls slash-commands/  # or hooks/, skills/, agents/
 
 # 2. Copy it
 cp slash-commands/simple.md ~/.claude/commands/my-command.md
@@ -259,9 +259,8 @@ find .claude/skills -name "*.sh" -exec chmod +x {} \;
 
 1. **Read**: [README.md](README.md) for detailed documentation
 2. **Review**: [SUMMARY.md](SUMMARY.md) for complete overview
-3. **Reference**: [Guide](/Users/mg/Developer/outfitter/agents/claude-code-plugin-development-guide.md)
-4. **Customize**: Replace placeholders with your content
-5. **Test**: Run in Claude and iterate
+3. **Customize**: Replace placeholders with your content
+4. **Test**: Run in Claude and iterate
 
 ## Help
 

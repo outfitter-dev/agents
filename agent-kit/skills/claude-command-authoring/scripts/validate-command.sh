@@ -283,11 +283,10 @@ fi
 
 # 6. Check for common issues
 
-# Unclosed code blocks
-if [[ $(echo "$CONTENT" | grep -c '^```') -ne $(echo "$CONTENT" | grep -c '^```' | xargs expr 2 \* ) ]]; then
-  if [[ $(echo "$CONTENT" | grep -c '^```') -gt 0 ]]; then
-    warning "Possibly unclosed code block (odd number of \`\`\` markers)"
-  fi
+# Unclosed code blocks (odd number of ``` markers indicates unclosed block)
+FENCE_COUNT=$(echo "$CONTENT" | grep -c '^```' || true)
+if [[ $FENCE_COUNT -gt 0 && $((FENCE_COUNT % 2)) -ne 0 ]]; then
+  warning "Possibly unclosed code block (odd number of \`\`\` markers)"
 fi
 
 # Very long lines

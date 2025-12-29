@@ -1,6 +1,6 @@
 # Claude Code Templates
 
-Copy-paste ready templates for all Claude Code component types. These templates follow best practices from the [Claude Code Plugin Development Guide](/Users/mg/Developer/outfitter/agents/claude-code-plugin-development-guide.md).
+Copy-paste ready templates for all Claude Code component types. These templates follow best practices from the [Claude Code Documentation](https://docs.claude.com/en/docs/claude-code/overview).
 
 ## Directory Structure
 
@@ -521,7 +521,6 @@ Combine multiple hooks:
 
 ## Resources
 
-- **Guide**: [Claude Code Plugin Development Guide](/Users/mg/Developer/outfitter/agents/claude-code-plugin-development-guide.md)
 - **Official Docs**: [Claude Code Documentation](https://docs.claude.com/en/docs/claude-code/overview)
 - **Skills Reference**: [Agent Skills Overview](https://docs.anthropic.com/en/docs/agents-and-tools/agent-skills/overview)
 

@@ -1,5 +1,6 @@
 ---
 name: claude-agent-validation
+version: 1.0.0
 description: Validates and reviews Claude Code agents against best practices. Checks YAML syntax, naming conventions, description quality, system prompt effectiveness, and tool configuration. Provides improvement suggestions and optionally applies fixes. Use when validating agents, reviewing agent quality, checking agents before commit, or when `--validate-agent` is mentioned.
 allowed-tools: Read Edit Grep Glob TodoWrite
 ---

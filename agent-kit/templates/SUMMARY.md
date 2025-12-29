@@ -79,7 +79,7 @@ All agents include:
 
 - **README.md** - Complete usage guide with examples
 - **SUMMARY.md** - This file, quick overview
-- **Reference** - `/Users/mg/Developer/outfitter/agents/claude-code-plugin-development-guide.md`
+- **Reference** - [Claude Code Documentation](https://docs.claude.com/en/docs/claude-code/overview)
 
 ## Validation Checklist
 
@@ -99,12 +99,9 @@ All agents include:
 
 ## Related
 
-- **Guide**: `/Users/mg/Developer/outfitter/agents/claude-code-plugin-development-guide.md`
-- **Existing skills**: `/Users/mg/Developer/outfitter/agents/agent-kit/skills/`
-- **Linear Issue**: ID-94
+- **Guide**: [Claude Code Documentation](https://docs.claude.com/en/docs/claude-code/overview)
+- **Existing skills**: See `agent-kit/skills/` in this repository
 
 ---
 
-**Created**: 2025-10-20
 **Status**: Complete and ready for use
-**Location**: `/Users/mg/Developer/outfitter/agents/agent-kit/templates/`
