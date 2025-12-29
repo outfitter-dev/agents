@@ -9,15 +9,18 @@ description: Systematic technical research combining multi-source discovery with
 Systematic investigation → evidence-based analysis → authoritative recommendations.
 
 <when_to_use>
+
 - Technology evaluation and comparison
 - Documentation discovery and troubleshooting
 - Best practices and industry standards research
 - Implementation guidance with authoritative sources
 
 NOT for: quick lookups, well-known patterns, time-critical debugging without investigation phase
+
 </when_to_use>
 
 <phases>
+
 Track with TodoWrite. Phases advance only, never regress.
 
 | Phase | Trigger | activeForm |
@@ -46,9 +49,11 @@ Workflow:
 - Simple queries: Skip directly to "Gather Information" if unambiguous
 - Gaps during synthesis: Add new "Gather Information" task
 - Early termination: Skip to "Compile Report" + `△ Caveats`
+
 </phases>
 
 <methodology>
+
 Five-phase systematic approach:
 
 **1. Question Phase** — Define scope and success criteria
@@ -122,9 +127,11 @@ Structure:
 - Alternatives → when to consider + tradeoffs
 - Implementation → next steps + pitfalls + validation
 - Limitations → edge cases + gaps + assumptions
+
 </methodology>
 
 <compression>
+
 Target 70–85% token reduction while maintaining accuracy.
 
 | Query Type | Budget | Reduction |
@@ -148,9 +155,11 @@ Validation before output:
 - Critical info cross-referenced
 - Within token budget
 - Code examples complete and runnable
+
 </compression>
 
 <tools>
+
 Multi-source orchestration:
 
 **context7** — Official library documentation
@@ -188,9 +197,11 @@ context7 fails → octocode issues → firecrawl alternatives
 Empty docs → broader topic → web search
 Rate limit → alternate MCP → manual search guidance
 ```
+
 </tools>
 
 <discovery_patterns>
+
 **Library Installation**
 1. `octocode.packageSearch(name)` → repo, version, deps
 2. `context7.resolve-library-id(name)` → doc ID
@@ -215,9 +226,11 @@ Rate limit → alternate MCP → manual search guidance
 2. Cross-reference official docs + GitHub + web
 3. Create matrix → quantified + qualitative factors
 4. Recommend → primary + alternatives + implementation
+
 </discovery_patterns>
 
 <findings_format>
+
 Two output modes based on research type:
 
 **Evaluation Mode** (claims and recommendations):
@@ -238,9 +251,11 @@ Notes: { relevant context or caveats }
 Use Evaluation Mode when making recommendations or assertions.
 Use Discovery Mode when gathering options or looking things up.
 Mix modes as appropriate within a single research session.
+
 </findings_format>
 
 <response_structure>
+
 ```markdown
 ## Research Summary
 Brief overview — what investigated, methodology, sources consulted.
@@ -296,9 +311,11 @@ When primary may not fit:
 > Context Usage: XXX tokens (XX% compression achieved)
 > Sources: context7 | octocode | firecrawl
 ```
+
 </response_structure>
 
 <quality>
+
 Always include:
 - Direct citations to authoritative sources with links
 - Quantified comparisons when available (metrics, statistics)
@@ -319,9 +336,11 @@ Always consider:
 - Previous failed attempts mentioned
 - Constraints and requirements stated
 - Security implications and best practices
+
 </quality>
 
 <proactive>
+
 When detecting common patterns:
 
 **Outdated Patterns**
@@ -355,9 +374,11 @@ Solution has complementary tools
 → Explain integration patterns
 → Provide ecosystem context
 ```
+
 </proactive>
 
 <rules>
+
 ALWAYS:
 - Create "Analyze Request" todo at session start
 - Update todos when transitioning phases
@@ -379,12 +400,15 @@ NEVER:
 - Exceed token budget without compression
 - Regress phases — add new tasks if gaps discovered
 - Leave "Compile Report" unmarked after delivering
+
 </rules>
 
 <references>
+
 - [source-hierarchy.md](references/source-hierarchy.md) — authority evaluation details
 - [compression-techniques.md](references/compression-techniques.md) — token reduction strategies
 - [tool-selection.md](references/tool-selection.md) — MCP server decision matrix
 - [examples/](examples/) — research session examples
 - [FORMATTING.md](../../shared/rules/FORMATTING.md) — formatting conventions
+
 </references>

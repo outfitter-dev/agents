@@ -9,6 +9,7 @@ description: Challenges over-engineering and identifies unnecessary complexity b
 Systematic pushback against over-engineering → justified simplicity.
 
 <when_to_use>
+
 - Planning features or architecture
 - Choosing frameworks, libraries, patterns
 - Evaluating proposed solutions
@@ -16,9 +17,11 @@ Systematic pushback against over-engineering → justified simplicity.
 - Build vs buy decisions
 
 NOT for: trivial tasks, clear requirements with validated complexity, regulatory/compliance-mandated approaches
+
 </when_to_use>
 
 <phases>
+
 Track with TodoWrite when applying framework to non-trivial proposals:
 
 | Phase | Trigger | activeForm |
@@ -41,9 +44,11 @@ Workflow:
 - Transition: Mark current `completed`, add next `in_progress`
 - Skip to Document if complexity validated immediately
 - Optional phases: skip Alternative if obvious, skip Question if constraints clear
+
 </phases>
 
 <escalation>
+
 Adjust tone based on severity:
 
 ◇ **Alternative** (Minor complexity):
@@ -54,9 +59,11 @@ Adjust tone based on severity:
 
 ◆◆ **Hazard** (High risk):
 > "This violates [principle] and will likely cause [specific issues]. I strongly recommend [alternative]. If we must proceed, we need to document the reasoning."
+
 </escalation>
 
 <triggers>
+
 Common complexity smells to watch for:
 
 **Build vs Buy**: Custom solution when proven libraries exist
@@ -99,9 +106,11 @@ Common complexity smells to watch for:
 - Custom metrics → Prometheus, Grafana
 - Custom secrets → AWS Secrets Manager, Vault
 - Custom CI/CD → GitHub Actions, CircleCI
+
 </triggers>
 
 <red_flags>
+
 Watch for these justifications — reframe with specific questions:
 
 "We might need it later"
@@ -124,9 +133,11 @@ Watch for these justifications — reframe with specific questions:
 
 "I read about it on Hacker News"
 → "Does their problem match ours?"
+
 </red_flags>
 
 <patterns>
+
 Guide toward simpler alternatives with concrete examples:
 
 **Feature Flags over Plugin Architecture**
@@ -188,9 +199,11 @@ const result = pipe(
   save
 )
 ```
+
 </patterns>
 
 <justified>
+
 Complexity is appropriate when:
 
 1. **Measured Performance Need**: Profiling shows bottleneck, optimization addresses it
@@ -205,9 +218,11 @@ Even then:
 - Add TODO to revisit when constraints change
 - Isolate complexity to smallest possible scope
 - Provide escape hatches
+
 </justified>
 
 <workflow>
+
 Apply this protocol systematically:
 
 ### 1. IDENTIFY → Recognize complexity smell
@@ -249,9 +264,11 @@ If complexity chosen after validation:
 - Add ADR (Architecture Decision Record) explaining trade-offs
 - Include TODO for revisiting when requirements change
 - Add comments explaining non-obvious complexity
+
 </workflow>
 
 <rules>
+
 ALWAYS:
 - Apply pushback protocol to non-trivial proposals
 - Provide concrete alternatives with code examples
@@ -265,10 +282,13 @@ NEVER:
 - Skip questioning performance claims without measurements
 - Proceed with indirection without clear justification
 - Accept complexity without documenting why
+
 </rules>
 
 <references>
+
 - [decision-framework.md](references/decision-framework.md) — full decision checklist
 - [redux-overkill.md](examples/redux-overkill.md) — challenging Redux for simple form
 - [custom-auth.md](examples/custom-auth.md) — challenging custom auth build
+
 </references>

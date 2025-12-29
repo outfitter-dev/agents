@@ -9,6 +9,7 @@ description: Systematic debugging methodology using evidence-based investigation
 Evidence-based investigation → root cause → verified fix.
 
 <when_to_use>
+
 - Bugs, errors, exceptions, crashes
 - Unexpected behavior or wrong results
 - Failing tests (unit, integration, e2e)
@@ -17,15 +18,19 @@ Evidence-based investigation → root cause → verified fix.
 - Integration failures (API, database, external services)
 
 NOT for: well-understood issues with obvious fixes, feature requests, architecture planning
+
 </when_to_use>
 
 <iron_law>
+
 **NO FIXES WITHOUT ROOT CAUSE INVESTIGATION FIRST**
 
 Never propose solutions, "quick fixes", or "try this" without first understanding root cause through systematic investigation.
+
 </iron_law>
 
 <phases>
+
 Track with TodoWrite. Phases advance forward only.
 
 | Phase | Trigger | activeForm |
@@ -49,9 +54,11 @@ Workflow:
 - Quick fixes: If root cause obvious from error, skip directly to "Verify Fix" (still create failing test)
 - Need more evidence: Add new "Collect Evidence" task (don't regress phases)
 - Circuit breaker: After 3 failed hypotheses → escalate (see `<escalation>`)
+
 </phases>
 
 <quick_start>
+
 When encountering a bug:
 
 1. Create "Collect Evidence" todo as `in_progress` via TodoWrite
@@ -61,9 +68,11 @@ When encountering a bug:
 5. Test hypothesis — form single specific hypothesis, test minimally
 6. Implement — write failing test, then fix
 7. On phase transitions, update todos (mark complete, add next)
+
 </quick_start>
 
 <phase_1_root_cause>
+
 Goal: Understand what's actually happening, not what you think is happening.
 
 Transition: Mark "Collect Evidence" complete and add "Isolate Variables" as `in_progress` when you have reproduction steps and initial evidence.
@@ -107,9 +116,11 @@ Red flags indicating need more investigation:
 - "Let's try changing Y"
 - "It might be related to Z"
 - Starting to write code
+
 </phase_1_root_cause>
 
 <phase_2_pattern_analysis>
+
 Goal: Learn from what works to understand what's broken.
 
 Transition: Mark "Isolate Variables" complete and add "Formulate Hypotheses" as `in_progress` when you've identified key differences between working and broken cases.
@@ -148,9 +159,11 @@ Questions to answer:
 - What's fundamentally different in broken version?
 - Are there edge cases working version handles?
 - What invariants does working version maintain?
+
 </phase_2_pattern_analysis>
 
 <phase_3_hypothesis_testing>
+
 Goal: Test one specific idea with minimal changes.
 
 Transition: Mark "Formulate Hypotheses" complete and add "Test Hypothesis" as `in_progress` when you have specific, evidence-based hypothesis.
@@ -190,9 +203,11 @@ Good hypothesis examples:
 - "Function fails because it expects number but receives string when API returns empty results"
 - "Race condition occurs because fetchData() called before initializeClient() completes, causing uninitialized error"
 - "Memory leak happens because event listeners added in useEffect but never removed in cleanup"
+
 </phase_3_hypothesis_testing>
 
 <phase_4_implementation>
+
 Goal: Fix root cause permanently with verification.
 
 Transition: Mark "Test Hypothesis" complete and add "Verify Fix" as `in_progress` when you've confirmed hypothesis and ready to implement permanent fix.
@@ -229,9 +244,11 @@ After fixing:
 - Document why bug occurred
 - Consider if similar bugs exist elsewhere
 - Update documentation if behavior was misunderstood
+
 </phase_4_implementation>
 
 <playbooks>
+
 Bug type specific investigation focus and techniques.
 
 **Runtime Errors** (crashes, exceptions)
@@ -346,9 +363,11 @@ Key techniques:
 - Test with various data sizes
 - Check for cleanup in destructors
 - Monitor resource usage trends
+
 </playbooks>
 
 <evidence>
+
 Patterns for gathering diagnostic information.
 
 **Instrumentation** — add diagnostic logging without changing behavior:
@@ -408,9 +427,11 @@ diff -u file-working.ts file-broken.ts
 12:00:01.234 - Database query completed
 12:00:01.235 - Error: stale data   <-- Bug symptom
 ```
+
 </evidence>
 
 <red_flags>
+
 If you catch yourself thinking or saying these — STOP, return to Phase 1:
 
 - "Quick fix for now, investigate later"
@@ -425,9 +446,11 @@ If you catch yourself thinking or saying these — STOP, return to Phase 1:
 ALL of these mean: STOP. Return to Phase 1.
 
 Add new "Collect Evidence" task and mark current task complete.
+
 </red_flags>
 
 <anti_patterns>
+
 Common debugging mistakes to avoid.
 
 **Random Walk** — trying different things hoping one works without systematic investigation
@@ -453,9 +476,11 @@ Instead: Use phase 2 to understand working examples thoroughly
 Why it fails: Can't tell which change fixed it or if you introduced new bugs
 
 Instead: Use phase 3 to test one hypothesis at a time
+
 </anti_patterns>
 
 <integration>
+
 Connect debugging to broader development workflow.
 
 **Test-Driven Debugging**:
@@ -506,9 +531,11 @@ Example:
  * Prevention: Always validate required fields before processing.
  */
 ```
+
 </integration>
 
 <escalation>
+
 When to ask for help or escalate:
 
 1. After 3 failed fix attempts — architecture may be wrong
@@ -516,9 +543,11 @@ When to ask for help or escalate:
 3. External system issues — need vendor/team involvement
 4. Security implications — need security expertise
 5. Data corruption risks — need backup/recovery planning
+
 </escalation>
 
 <completion>
+
 Before claiming "fixed", verify checklist:
 
 - [ ] Root cause identified with evidence
@@ -533,9 +562,11 @@ Before claiming "fixed", verify checklist:
 - [ ] "Verify Fix" marked as completed
 
 Remember: **Understanding the bug is more valuable than fixing it quickly.**
+
 </completion>
 
 <rules>
+
 ALWAYS:
 - Create "Collect Evidence" todo at session start
 - Follow four-phase framework systematically
@@ -553,10 +584,13 @@ NEVER:
 - Fix symptoms instead of root cause
 - Continue after 3 failed fixes without escalation
 - Regress phases — add new tasks if more investigation needed
+
 </rules>
 
 <references>
+
 - [reproduction.md](references/reproduction.md) — reproduction techniques
 - [examples/](examples/) — debugging session examples
 - [FORMATTING.md](../../shared/rules/FORMATTING.md) — formatting conventions
+
 </references>

@@ -36,6 +36,24 @@ Use XML tags for structural sections in skill files:
 
 Keep content inside tags terse. Sacrifice grammar for concision where meaning is preserved.
 
+**GitHub rendering**: Add blank lines after opening tags and before closing tags. Without them, content renders incorrectly on GitHub.
+
+```markdown
+<!-- Good -->
+<rules>
+
+- First rule
+- Second rule
+
+</rules>
+
+<!-- Bad — won't render properly on GitHub -->
+<rules>
+- First rule
+- Second rule
+</rules>
+```
+
 ## Indicators
 
 Prefer ASCII/Unicode over emoji for terminal output (Claude Code, CLI, interactive sessions). Emoji acceptable in docs or user-facing content where rendering is reliable.

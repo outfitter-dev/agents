@@ -9,6 +9,7 @@ description: Systematic problem investigation through hypothesis formation, evid
 Symptom → hypothesis formation → evidence gathering → elimination → root cause → verified fix.
 
 <when_to_use>
+
 - Diagnosing system failures or unexpected behavior
 - Investigating incidents or outages
 - Finding the actual cause vs surface symptoms
@@ -16,9 +17,11 @@ Symptom → hypothesis formation → evidence gathering → elimination → root
 - Any situation where "why did this happen?" needs answering
 
 NOT for: known issues with documented fixes, simple configuration errors, guessing without evidence
+
 </when_to_use>
 
 <discovery_phase>
+
 ## Core Questions
 
 | Question | Why it matters |
@@ -41,9 +44,11 @@ NOT for: known issues with documented fixes, simple configuration errors, guessi
 | `▓▓▓▓░` 4+ | Clear picture | Proceed to investigation |
 
 At level 3+, transition from discovery to hypothesis formation. Below level 3, keep gathering context.
+
 </discovery_phase>
 
 <hypothesis_formation>
+
 ## Hypothesis Quality
 
 Good hypothesis:
@@ -73,9 +78,11 @@ Generate 2–4 competing theories:
 - **Parsimony** — simplest explanation?
 - **Prior probability** — how often does this cause this symptom?
 - **Testability** — can verify quickly?
+
 </hypothesis_formation>
 
 <evidence_gathering>
+
 ## Observation Collection
 
 Gather concrete data:
@@ -101,9 +108,11 @@ Trace backwards from symptom:
 3. **Changes between** — what's different?
 4. **Correlation vs causation** — timing vs actual cause
 5. **Root trigger** — first thing that went wrong
+
 </evidence_gathering>
 
 <hypothesis_testing>
+
 ## Experimental Design
 
 For each hypothesis:
@@ -137,9 +146,11 @@ For each hypothesis:
 3. **Observe** — what happened?
 4. **Document** — record result before next test
 5. **Iterate** — adjust hypothesis or try next test
+
 </hypothesis_testing>
 
 <elimination_methodology>
+
 ## Binary Search
 
 For large problem spaces:
@@ -168,9 +179,11 @@ What it's NOT:
 - ✓ Must be in remaining scope
 
 Systematically rule out possibilities until one remains.
+
 </elimination_methodology>
 
 <time_boxing>
+
 ## Phase Durations
 
 | Phase | Duration | Exit Condition |
@@ -182,9 +195,11 @@ Systematically rule out possibilities until one remains.
 | Verification | 10–15 min | Fix confirmed, prevention documented |
 
 If stuck in any phase beyond 2x estimate → step back, seek fresh perspective, or escalate.
+
 </time_boxing>
 
 <audit_trail>
+
 ## Investigation Log
 
 Log every step for replay and review:
@@ -202,9 +217,11 @@ Benefits:
 - Enables handoff to others
 - Creates learning artifact
 - Catches circular investigation
+
 </audit_trail>
 
 <common_pitfalls>
+
 ## Resistance Patterns
 
 Rationalizations that derail investigation:
@@ -242,9 +259,11 @@ Counter:
 - Test direct causal mechanism
 - Look for confounding variables
 - Verify by removing supposed cause
+
 </common_pitfalls>
 
 <documentation>
+
 ## Root Cause Report
 
 At conclusion:
@@ -261,9 +280,11 @@ Extract patterns:
 - **Investigation efficiency** — what worked well/poorly?
 - **Knowledge gaps** — what did we not know?
 - **Process improvements** — how to prevent similar issues?
+
 </documentation>
 
 <confidence_calibration>
+
 **High confidence** (▓▓▓▓▓):
 - Consistent reproduction
 - Clear cause → effect demonstrated
@@ -281,9 +302,11 @@ Extract patterns:
 - Correlation unclear
 - Unverified hypothesis
 - Fix untested
+
 </confidence_calibration>
 
 <rules>
+
 ALWAYS:
 - Gather sufficient context before hypothesizing
 - Form multiple competing hypotheses
@@ -299,11 +322,14 @@ NEVER:
 - Skip verification of fix
 - Repeat same failed investigation steps
 - Hide uncertainty about root cause
+
 </rules>
 
 <references>
+
 Related skills:
 - [debugging-and-diagnosis](../debugging-and-diagnosis/SKILL.md) — code-specific debugging (loads this skill)
 - [codebase-analysis](../codebase-analysis/SKILL.md) — uses for code investigation
 - [report-findings](../report-findings/SKILL.md) — presenting investigation results
+
 </references>

@@ -9,15 +9,18 @@ description: Create, navigate, and reorganize stacks in GitButler using virtual 
 Dependent branches → anchor-based stacking → reviewable chunks.
 
 <when_to_use>
+
 - Sequential dependencies (e.g., refactor → API → frontend)
 - Large features broken into reviewable chunks
 - Granular code review (approve/merge early phases independently)
 - Post-hoc stack organization after exploratory coding
 
 NOT for: independent parallel features (use virtual branches), projects using Graphite stacking
+
 </when_to_use>
 
 <stack_vs_virtual>
+
 ## Stacked vs Virtual Branches
 
 | Type | Use Case | Dependencies |
@@ -27,9 +30,11 @@ NOT for: independent parallel features (use virtual branches), projects using Gr
 
 Stacked branches = virtual branches split into dependent sequence.
 Default: Virtual branches are stacks of one.
+
 </stack_vs_virtual>
 
 <create>
+
 ## Creating Stacks
 
 ```bash
@@ -49,9 +54,11 @@ but branch new grandchild-feature --anchor child-feature
 ```bash
 but branch new child -a parent
 ```
+
 </create>
 
 <patterns>
+
 ## Stack Patterns
 
 ### Feature Dependency Stack
@@ -95,9 +102,11 @@ but branch new business-logic --anchor data-access
 but branch new api-endpoints --anchor business-logic
 but branch new frontend-integration --anchor api-endpoints
 ```
+
 </patterns>
 
 <post_hoc>
+
 ## Post-Hoc Stack Organization
 
 **Problem:** Created branches independently, now want to stack them.
@@ -120,9 +129,11 @@ commit_sha=$(but log | grep "feature-c:" | head -1 | awk '{print $1}')
 but rub $commit_sha feature-c-stacked
 but branch delete feature-c --force
 ```
+
 </post_hoc>
 
 <pr_workflow>
+
 ## PR Preparation for Stacks
 
 **GitButler CLI lacks native PR submission.** Use GitHub CLI:
@@ -146,9 +157,11 @@ gh pr create --base base-feature --head dependent-feature \
 - Enable automatic branch deletion after merge
 - Use **Merge** strategy (recommended) — no force pushes needed
 - Merge bottom-to-top (sequential order)
+
 </pr_workflow>
 
 <reorganize>
+
 ## Stack Reorganization
 
 ### Squashing Within Stack
@@ -174,9 +187,11 @@ but branch new second-feature --anchor original-branch
 commit_sha=$(but log | grep "second feature commit" | awk '{print $1}')
 but rub $commit_sha second-feature
 ```
+
 </reorganize>
 
 <navigation>
+
 ## Stack Navigation
 
 **Note:** Virtual branches don't need checkout — all branches active simultaneously.
@@ -192,9 +207,11 @@ but commit dependent-feature -m "update dependent"
 # JSON for programmatic analysis
 but --json log | jq '.[] | .branchDetails[] | {name, baseCommit}'
 ```
+
 </navigation>
 
 <rules>
+
 ALWAYS:
 - Create stacks with `--anchor` from the start
 - Merge stacks bottom-to-top (base first, dependents after)
@@ -207,9 +224,11 @@ NEVER:
 - Stack independent, unrelated features (use virtual branches)
 - Create deep stacks (5+ levels) without good reason
 - Forget anchor when creating dependent branches
+
 </rules>
 
 <troubleshooting>
+
 ## Common Issues
 
 | Symptom | Cause | Solution |
@@ -227,9 +246,11 @@ commit_sha=$(but log | grep "child:" | head -1 | awk '{print $1}')
 but rub $commit_sha child-stacked
 but branch delete child --force
 ```
+
 </troubleshooting>
 
 <best_practices>
+
 ## Best Practices
 
 ### Planning
@@ -246,11 +267,14 @@ but branch delete child --force
 - Clear commit messages explaining why stack level exists
 - Descriptive names indicating stack relationship
 - Share `but status` when coordinating
+
 </best_practices>
 
 <references>
+
 - [version-control skill](../version-control/SKILL.md) — core GitButler workflows
 - [complete-branch skill](../complete-branch/SKILL.md) — merging to main
 - [multi-agent skill](../multi-agent/SKILL.md) — multi-agent coordination
 - [GitButler Stacks Docs](https://docs.gitbutler.com/features/branch-management/stacked-branches)
+
 </references>

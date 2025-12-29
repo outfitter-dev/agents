@@ -9,6 +9,7 @@ description: Version control using GitButler's virtual branches for parallel mul
 Virtual branches → parallel development → post-hoc organization.
 
 <when_to_use>
+
 - Multiple unrelated features in same workspace simultaneously
 - Multi-agent concurrent development (agents in same repo)
 - Exploratory coding where organization comes after writing
@@ -16,9 +17,11 @@ Virtual branches → parallel development → post-hoc organization.
 - Visual organization preferred (GUI + CLI)
 
 NOT for: projects using Graphite (incompatible models), simple linear workflows (use plain git), when PR submission automation required end-to-end (use Graphite instead)
+
 </when_to_use>
 
 <core_concepts>
+
 | Concept | Description |
 |---------|-------------|
 | Virtual branches | Multiple branches applied simultaneously to working directory |
@@ -29,9 +32,11 @@ NOT for: projects using Graphite (incompatible models), simple linear workflows 
 | Oplog | Operations log for undo/restore — your safety net |
 
 **Key difference from Git**: All branches visible at once. Organize files to branches after editing. No checkout.
+
 </core_concepts>
 
 <workflow>
+
 ## Quick Start
 
 ```bash
@@ -72,9 +77,11 @@ Swiss Army knife — combines entities to perform operations:
 | File ID | Commit | Amend commit with file |
 | Commit SHA | Branch | Move commit between branches |
 | Commit SHA | Commit SHA | Squash (newer into older) |
+
 </workflow>
 
 <parallel_development>
+
 ## Parallel Feature Development
 
 ```bash
@@ -114,9 +121,11 @@ but commit agent-2-bugfix -m "fix: resolve issue Y"
 ```
 
 **See [multi-agent skill](../multi-agent/SKILL.md) for advanced patterns**
+
 </parallel_development>
 
 <completion>
+
 ## Completing Work
 
 **CRITICAL**: GitButler CLI lacks native commands for merging to main or creating PRs. Use git for integration.
@@ -143,9 +152,11 @@ git checkout gitbutler/workspace
 ```
 
 **See [complete-branch skill](../complete-branch/SKILL.md) for full guided workflow**
+
 </completion>
 
 <commands>
+
 ## Essential Commands
 
 | Command | Purpose |
@@ -168,9 +179,11 @@ git checkout gitbutler/workspace
 | `but .` | Open GitButler GUI for current repo |
 
 **Global flags come first**: `but --json status` ✓ | `but status --json` ✗
+
 </commands>
 
 <ai_integration>
+
 ## AI Agent Integration
 
 Three integration methods:
@@ -195,9 +208,11 @@ Three integration methods:
 ```bash
 but mcp  # Start MCP server for agent integration
 ```
+
 </ai_integration>
 
 <rules>
+
 ALWAYS:
 - Use `but` for all work within virtual branches
 - Use `git` only for integrating completed work into main
@@ -217,9 +232,11 @@ NEVER:
   status_output=$(but status)
   echo "$status_output" | head -5
   ```
+
 </rules>
 
 <troubleshooting>
+
 ## Quick Troubleshooting
 
 | Symptom | Cause | Solution |
@@ -250,9 +267,11 @@ but base update
 ```
 
 **See [REFERENCE.md](REFERENCE.md#troubleshooting-guide) for comprehensive troubleshooting**
+
 </troubleshooting>
 
 <comparison>
+
 ## GitButler vs Graphite
 
 | Aspect | Graphite | GitButler |
@@ -266,13 +285,16 @@ but base update
 
 **Choose GitButler for**: Exploratory work, multi-agent, post-hoc organization
 **Choose Graphite for**: Production automation, PR submission, terminal-first
+
 </comparison>
 
 <references>
+
 - [REFERENCE.md](REFERENCE.md) — complete CLI reference and troubleshooting
 - [EXAMPLES.md](EXAMPLES.md) — real-world workflow patterns
 - [multi-agent skill](../multi-agent/SKILL.md) — multi-agent coordination
 - [stack-workflows skill](../stack-workflows/SKILL.md) — stacked branches
 - [complete-branch skill](../complete-branch/SKILL.md) — merging to main
 - [GitButler Docs](https://docs.gitbutler.com/) — official documentation
+
 </references>

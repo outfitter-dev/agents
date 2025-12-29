@@ -9,6 +9,7 @@ description: Generic pattern for generating comprehensive status reports by gath
 Gather → aggregate → present pattern for comprehensive project status across VCS, PRs, issues, CI.
 
 <when_to_use>
+
 - Starting work sessions (context refresh)
 - Checking project/team activity
 - Understanding PR/stack relationships
@@ -17,9 +18,11 @@ Gather → aggregate → present pattern for comprehensive project status across
 - Understanding what's blocking progress
 
 NOT for: deep-dive into specific items (use native tools), real-time monitoring, single-source queries
+
 </when_to_use>
 
 <core_pattern>
+
 **Three-phase workflow**:
 
 1. **Gather** — collect data from multiple sources
@@ -32,9 +35,11 @@ Key principles:
 - Stack-aware organization (group by branch hierarchy)
 - Scannable output (visual indicators, relative times)
 - Actionable insights (highlight blockers, failures, attention needed)
+
 </core_pattern>
 
 <workflow>
+
 **Phase 1: Parse Constraints**
 
 Extract time constraints from natural language:
@@ -95,9 +100,11 @@ Format for scanning:
 - Highlight attention-needed items
 - Include links for deep-dive
 - Summary counts at top of sections
+
 </workflow>
 
 <time_parsing>
+
 **Natural Language → Query Parameters**
 
 Common patterns:
@@ -124,6 +131,7 @@ Common patterns:
 - CLI tools: `-Xh` or `-Xd` flags
 - APIs: ISO 8601 relative (`-P7D`) or absolute timestamps
 - MCP tools: `updatedAt: "-P{X}D"` format
+
 </time_parsing>
 
 <data_sources>

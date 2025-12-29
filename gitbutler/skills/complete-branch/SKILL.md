@@ -9,24 +9,29 @@ description: Complete work on GitButler virtual branches and integrate to main t
 Virtual branch ready → snapshot → merge to main → cleanup → return.
 
 <when_to_use>
+
 - Virtual branch work is complete and ready to ship
 - Tests pass and code is reviewed (if required)
 - Ready to merge changes into main branch
 - Need to clean up completed branches
 
 NOT for: ongoing work, branches needing more development, stacks (complete bottom-to-top)
+
 </when_to_use>
 
 <prerequisites>
+
 **Before completing any branch:**
 - [ ] GitButler initialized (`but --version` succeeds)
 - [ ] Virtual branch exists with committed changes
 - [ ] Main branch tracked as base
 - [ ] No uncommitted changes (or changes assigned to branches)
 - [ ] Tests passing
+
 </prerequisites>
 
 <quick_start>
+
 ## Quick Start (7 Steps)
 
 ```bash
@@ -53,9 +58,11 @@ git push origin main
 but branch rm feature-auth
 git checkout gitbutler/workspace
 ```
+
 </quick_start>
 
 <pre_flight>
+
 ## Pre-Integration Checklist
 
 ```bash
@@ -75,9 +82,11 @@ git status  # Should be clean or show only .gitbutler/ changes
 # Safety snapshot created?
 but snapshot --message "Before integrating feature-auth"
 ```
+
 </pre_flight>
 
 <workflows>
+
 ## Integration Workflows
 
 ### A. Direct Merge to Main
@@ -154,9 +163,11 @@ git checkout gitbutler/workspace
 
 # 4. Repeat for remaining stack levels
 ```
+
 </workflows>
 
 <recovery>
+
 ## Error Recovery
 
 ### Merge Conflicts
@@ -202,9 +213,11 @@ git checkout gitbutler/workspace
 git revert -m 1 HEAD
 git push origin main
 ```
+
 </recovery>
 
 <cleanup>
+
 ## Post-Integration Cleanup
 
 ```bash
@@ -218,9 +231,11 @@ git push origin --delete feature-auth
 but status  # Should show remaining active branches only
 but log     # Branch should be gone
 ```
+
 </cleanup>
 
 <rules>
+
 ALWAYS:
 - Create snapshot before integration: `but snapshot --message "..."`
 - Use `--no-ff` flag to preserve branch history
@@ -234,9 +249,11 @@ NEVER:
 - Forget to return to `gitbutler/workspace`
 - Merge middle of stack before base
 - Force push to main without explicit confirmation
+
 </rules>
 
 <troubleshooting>
+
 ## Common Issues
 
 | Symptom | Cause | Solution |
@@ -256,9 +273,11 @@ but undo  # Restores pre-integration state
 # If stuck after git operations
 git checkout gitbutler/workspace
 ```
+
 </troubleshooting>
 
 <best_practices>
+
 ## Best Practices
 
 **Keep branches small:**
@@ -281,10 +300,13 @@ git merge --no-ff feature-auth -m "feat: add JWT-based user authentication"
 # Bad: Generic message
 git merge --no-ff feature-auth -m "Merge branch"
 ```
+
 </best_practices>
 
 <references>
+
 - [version-control skill](../version-control/SKILL.md) — core GitButler workflows
 - [stack-workflows skill](../stack-workflows/SKILL.md) — stacked branches
 - [REFERENCE.md](../version-control/REFERENCE.md) — CLI reference and troubleshooting
+
 </references>

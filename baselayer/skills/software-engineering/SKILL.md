@@ -9,6 +9,7 @@ description: Engineering judgment, decision-making principles, and code quality 
 Engineering judgment → thoughtful decisions → quality code.
 
 <when_to_use>
+
 - Making architectural or design decisions
 - Evaluating trade-offs between approaches
 - Determining appropriate level of thoroughness
@@ -17,9 +18,11 @@ Engineering judgment → thoughtful decisions → quality code.
 - Balancing speed, quality, and maintainability
 
 NOT for: mechanical tasks, clear-cut decisions, following explicit instructions
+
 </when_to_use>
 
 <principles>
+
 Core engineering judgment framework.
 
 **User preferences trump defaults**
@@ -58,9 +61,11 @@ Ship working code, don't gold-plate.
 - No unrequested features
 - No speculative abstraction
 - Refactor when needed, not preemptively
+
 </principles>
 
 <type_safety>
+
 Type safety principles that apply across languages.
 
 **Make illegal states unrepresentable**
@@ -88,9 +93,11 @@ External data (APIs, files, user input) enters the system untyped. Validate and 
 
 See [type-patterns.md](references/type-patterns.md) for detailed concepts.
 Load `typescript-dev/SKILL.md` for TypeScript-specific implementations.
+
 </type_safety>
 
 <decision_framework>
+
 Systematic approach to engineering choices.
 
 **Understand before deciding**
@@ -129,9 +136,11 @@ Example:
 // - Acceptable for current 5-minute update interval
 // - Can migrate to WebSocket if requirements tighten
 ```
+
 </decision_framework>
 
 <when_to_ask>
+
 Balance autonomy with collaboration.
 
 **Proceed independently when:**
@@ -157,9 +166,11 @@ Balance autonomy with collaboration.
 - Compliance violations possible
 
 Don't guess on high-stakes decisions. Ask.
+
 </when_to_ask>
 
 <code_quality>
+
 Standards that separate good from professional code.
 
 **Type safety**
@@ -218,9 +229,11 @@ user.active = true;
 // Mark user active to enable login after email verification
 user.active = true;
 ```
+
 </code_quality>
 
 <refactoring>
+
 When and how to improve existing code.
 
 **Refactor when:**
@@ -254,9 +267,11 @@ git commit -m "feat: add email verification"
 # Bad: mixed changes
 git commit -m "feat: add email verification and refactor validation"
 ```
+
 </refactoring>
 
 <testing>
+
 Testing philosophy for senior engineers.
 
 **Test the right things:**
@@ -281,9 +296,11 @@ Low coverage acceptable for:
 - Simple configuration
 - Type definitions
 - Framework boilerplate
+
 </testing>
 
 <performance>
+
 Balance optimization with delivery.
 
 **Premature optimization is root of all evil**
@@ -310,9 +327,11 @@ Don't optimize:
 - Based on gut feeling
 - Without measurement
 - Micro-optimizations that obscure code
+
 </performance>
 
 <security>
+
 Security mindset for all code.
 
 **Input validation:**
@@ -345,9 +364,11 @@ Red flags to escalate:
 - Processing health/financial data
 - Implementing encryption
 - Authentication/session management
+
 </security>
 
 <anti_patterns>
+
 Common mistakes to avoid.
 
 **Over-engineering:**
@@ -387,9 +408,11 @@ Fix: Use systematic debugging. Understand before changing.
 - Waiting for perfect solution
 
 Fix: Good enough + shipping > perfect + delayed. Iterate.
+
 </anti_patterns>
 
 <communication>
+
 How senior engineers collaborate.
 
 **Writing clear issues/PRs:**
@@ -417,9 +440,11 @@ How senior engineers collaborate.
 - "I recommend against this because..."
 
 Back opinions with reasoning, stay open to being wrong.
+
 </communication>
 
 <workflow_integration>
+
 Connect with other baselayer skills.
 
 **With TDD:**
@@ -439,9 +464,11 @@ Connect with other baselayer skills.
 
 Software engineering skill provides the "why" and "when".
 dev-* skills provide the "how" for specific technologies.
+
 </workflow_integration>
 
 <rules>
+
 ALWAYS:
 - Read CLAUDE.md and project rules first
 - Follow existing codebase patterns
@@ -461,9 +488,11 @@ NEVER:
 - Refactor without tests
 - Optimize without measuring
 - Over-engineer simple solutions
+
 </rules>
 
 <references>
+
 Complements other baselayer skills:
 
 **Core Practices:**
@@ -482,4 +511,5 @@ Complements other baselayer skills:
 
 **Standards:**
 - [FORMATTING.md](../../shared/rules/FORMATTING.md) — formatting conventions
+
 </references>

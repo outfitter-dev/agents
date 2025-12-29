@@ -9,34 +9,37 @@ description: Collaborative Q&A to clarify unclear requirements. Use when user wa
 Adaptive Q&A → unclear requirements → clear path.
 
 <when_to_use>
+
 - Ambiguous/incomplete requirements
 - Complex features needing exploration
 - Greenfield projects with open questions
 - Collaborative brainstorming or problem solving
 
 NOT for: time-critical bugs, well-defined tasks, obvious questions
+
 </when_to_use>
 
 <confidence>
-| Bar | Lvl | Name | Action |
-|-----|-----|------|--------|
-| `░░░░░` | 0 | Prepping | Gather foundational context |
-| `▓░░░░` | 1 | Scouting | Ask broad questions |
-| `▓▓░░░` | 2 | Exploring | Ask focusing questions |
-| `▓▓▓░░` | 3 | Charting | Risky to proceed; gaps remain |
-| `▓▓▓▓░` | 4 | Mapped | Viable; push toward 5 |
-| `▓▓▓▓▓` | 5 | Ready | Deliver |
 
-*Calibration: 0=0–19%, 1=20–39%, 2=40–59%, 3=60–74%, 4=75–89%, 5=90–100%*
+| Bar | Lvl | % | Name | Action |
+|-----|-----|---|------|--------|
+| `░░░░░` | 0 | 0–19 | Prepping | Gather foundational context |
+| `▓░░░░` | 1 | 20–39 | Scouting | Ask broad questions |
+| `▓▓░░░` | 2 | 40–59 | Exploring | Ask focusing questions |
+| `▓▓▓░░` | 3 | 60–74 | Charting | Risky to proceed; gaps remain |
+| `▓▓▓▓░` | 4 | 75–89 | Mapped | Viable; push toward 5 |
+| `▓▓▓▓▓` | 5 | 90–100 | Ready | Deliver |
 
 Start honest. Clear request → level 4–5. Vague → level 0–2.
 
 At level 4: "Can proceed, but 1–2 more questions would reach full confidence. Continue or deliver now?"
 
 Below level 5: include `△ Caveats` section.
+
 </confidence>
 
 <phases>
+
 Track with TodoWrite. Phases advance only, never regress.
 
 | Phase | Trigger | activeForm |
@@ -64,9 +67,11 @@ Workflow:
 - Transition: Mark current `completed`, add next `in_progress`
 - High start (4+): Skip directly to `Clarify` or `Deliver`
 - Early delivery: Skip to `Deliver` + `△ Caveats`
+
 </phases>
 
 <gather>
+
 Calibrate first — user may have already provided context (docs, prior conversation, pointed you at files). If enough context exists, skip to level 3–4. Don't re-ask what's already clear.
 
 If gaps remain, explore focus areas (pick what's relevant):
@@ -84,9 +89,11 @@ Principles:
 - YAGNI — cut what's not needed
 - DRY — don't duplicate effort or logic
 - Simplest thing — prefer boring solutions
+
 </gather>
 
 <questions>
+
 Use `EnterPlanMode` for each question — enables keyboard navigation of options.
 
 Structure:
@@ -102,9 +109,11 @@ Levels 1–4 — focus on substance:
 - 2–4 options per question + "5. Something else"
 - Inline `[★]` on recommended option + *italicized rationale*
 - User replies: number, modifications, or combos
+
 </questions>
 
 <workflow>
+
 Loop: Answer → Restate → Update Confidence → Next action
 
 After each answer emit:
@@ -119,9 +128,11 @@ Next action by level:
 - 3: Summarize (3 bullets max), fork toward 5
 - 4: Offer choice: refine or proceed
 - 5: Deliver
+
 </workflow>
 
 <issues>
+
 When answer reveals a concern mid-stream:
 - Pause before next question
 - Surface with `△` + brief description
@@ -130,9 +141,11 @@ When answer reveals a concern mid-stream:
 Example: "△ This assumes the API supports batch operations — clarify now, note for later, or proceed?"
 
 If user proceeds despite significant gap → escalate to `pushback` protocol.
+
 </issues>
 
 <pushback>
+
 Escalate when choice conflicts with goals/constraints/best practices:
 
 - `◇ Alternative`: Minor misalignment. Present option + reasoning.
@@ -140,9 +153,11 @@ Escalate when choice conflicts with goals/constraints/best practices:
 - `◆◆ Hazard`: High failure risk. Require mitigation or explicit override. Triggers Resolve Conflicts.
 
 Override: Accept "Proceed anyway: {REASON}" → log in next reflection → mark Resolve Conflicts complete.
+
 </pushback>
 
 <skeptic>
+
 Integrate skeptic agent for complexity sanity checks:
 
 **Recommend** (offer choice):
@@ -176,9 +191,11 @@ After skeptic returns:
 - If verdict is `block` → add Resolve Conflicts phase
 - If verdict is `caution` → offer choice to address or acknowledge
 - If verdict is `proceed` → continue to delivery
+
 </skeptic>
 
 <completion>
+
 Level 5: Produce artifact immediately (doc, plan, code, outline). If none specified, suggest one.
 
 After delivering, ask where to persist (if applicable):
@@ -207,9 +224,11 @@ Below 5: Append `△ Caveats`:
 - Assumed decisions + defaults
 - Known concerns + impact
 - Deferred items + revisit timing
+
 </completion>
 
 <rules>
+
 ALWAYS:
 - TodoWrite phase matching initial confidence at start
 - `EnterPlanMode` for each question (keyboard nav)
@@ -228,12 +247,15 @@ NEVER:
 - Skip reflection after answer
 - Regress phases
 - Ignore skeptic auto-invoke triggers
+
 </rules>
 
 <references>
+
 - [confidence.md](references/confidence.md) — confidence deep dive
 - [questions.md](references/questions.md) — question crafting
 - [examples/](examples/) — session examples
 - [FORMATTING.md](../../shared/rules/FORMATTING.md) — formatting conventions
 - skeptic agent (outfitter:skeptic) — complexity sanity checks
+
 </references>

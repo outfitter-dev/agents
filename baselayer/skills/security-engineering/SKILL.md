@@ -9,6 +9,7 @@ description: Security auditing and vulnerability detection using OWASP patterns,
 Threat-aware code review → vulnerability detection → risk-ranked remediation.
 
 <when_to_use>
+
 - Security audits and code reviews
 - Authentication/authorization review
 - Input validation and sanitization checks
@@ -18,9 +19,11 @@ Threat-aware code review → vulnerability detection → risk-ranked remediation
 - Security incident investigation
 
 NOT for: performance optimization, general code review without security focus, feature implementation
+
 </when_to_use>
 
 <phases>
+
 Track with TodoWrite. Phases build comprehensive security assessment.
 
 | Phase | Trigger | activeForm |
@@ -36,9 +39,11 @@ Workflow:
 - Transition: Mark current `completed`, add next `in_progress`
 - Critical findings: Add urgent remediation task immediately
 - Each phase feeds next — build comprehensive security picture
+
 </phases>
 
 <severity_levels>
+
 Risk indicator with CVSS-aligned severity:
 
 ◆◆ **Critical** (9.0–10.0)
@@ -66,9 +71,11 @@ Risk indicator with CVSS-aligned severity:
 - Minor information leaks
 
 Use indicators in findings: "◆◆ Remote code execution via unsanitized shell command"
+
 </severity_levels>
 
 <threat_modeling>
+
 ## STRIDE Framework
 
 **S**poofing — can attacker impersonate users/systems?
@@ -130,9 +137,11 @@ For each branch, assess:
 - Impact — what damage if successful?
 - Detection — will we notice attack?
 - Mitigation — current defenses?
+
 </threat_modeling>
 
 <attack_surface>
+
 ## Entry Points Inventory
 
 **External Interfaces**:
@@ -175,9 +184,11 @@ Prioritize review:
 2. Privileged operations
 3. Data persistence layers
 4. Third-party integrations
+
 </attack_surface>
 
 <vulnerability_patterns>
+
 ## Input Validation
 
 **SQL Injection**:
@@ -428,9 +439,11 @@ return crypto.timingSafeEqual(
   Buffer.from(inputPassword)
 );
 ```
+
 </vulnerability_patterns>
 
 <owasp_top_10>
+
 2021 OWASP Top 10 — primary vulnerability categories.
 
 **A01:2021 – Broken Access Control**
@@ -515,9 +528,11 @@ CWE: 117, 223, 532, 778
 CWE: 918
 
 See [owasp-top-10.md](references/owasp-top-10.md) for detailed breakdowns.
+
 </owasp_top_10>
 
 <workflow>
+
 Loop: Model Threats → Map Surface → Scan Vulnerabilities → Assess Risk → Plan Remediation
 
 1. **Threat Model** — identify what could go wrong
@@ -552,9 +567,11 @@ Loop: Model Threats → Map Surface → Scan Vulnerabilities → Assess Risk →
    - Low (△) — backlog or accept risk
 
 Update todos as you progress through phases.
+
 </workflow>
 
 <security_review_checklist>
+
 Before completing security review, verify:
 
 **Authentication**:
@@ -607,9 +624,11 @@ Before completing security review, verify:
 - [ ] Sensitive operations audited
 - [ ] Security events monitored
 - [ ] Logs protected from tampering
+
 </security_review_checklist>
 
 <reporting>
+
 ## Security Findings Format
 
 For each vulnerability found:
@@ -673,9 +692,11 @@ For each vulnerability found:
 ## Conclusion
 {OVERALL_SECURITY_POSTURE_ASSESSMENT}
 ```
+
 </reporting>
 
 <rules>
+
 ALWAYS:
 - Start with threat modeling before code review
 - Map complete attack surface
@@ -695,9 +716,11 @@ NEVER:
 - Disable security checks "temporarily"
 - Recommend quick fixes without understanding context
 - Mark complete without remediation plan
+
 </rules>
 
 <references>
+
 Core methodology:
 - [owasp-top-10.md](references/owasp-top-10.md) — detailed OWASP Top 10 breakdown with CWE mappings
 - [FORMATTING.md](../../shared/rules/FORMATTING.md) — formatting conventions
@@ -705,4 +728,5 @@ Core methodology:
 Related skills:
 - codebase-analysis — evidence-based investigation (foundation)
 - debugging — systematic investigation when security issues manifest as bugs
+
 </references>

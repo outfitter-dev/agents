@@ -9,6 +9,7 @@ description: System design guidance with technology selection frameworks and sca
 Design question → options with tradeoffs → documented decision.
 
 <when_to_use>
+
 - Designing new systems or major features
 - Evaluating architectural approaches
 - Making technology stack decisions
@@ -16,9 +17,11 @@ Design question → options with tradeoffs → documented decision.
 - Analyzing design tradeoffs
 
 NOT for: trivial tech choices, premature optimization, undocumented requirements
+
 </when_to_use>
 
 <phases>
+
 Track with TodoWrite. Advance only, never regress.
 
 | Phase | Trigger | activeForm |
@@ -52,9 +55,11 @@ Workflow:
 - Transition: Mark current `completed`, add next `in_progress`
 - High start: skip to Solution Design for clear problems
 - Optional end: Documentation skippable if ADR not needed
+
 </phases>
 
 <principles>
+
 Proven over Novel — favor battle-tested over bleeding-edge without strong justification.
 
 Framework:
@@ -117,9 +122,11 @@ Practices:
 - Design with migration paths in mind
 - Deployment independent from release
 - Automated compatibility testing
+
 </principles>
 
 <technology_selection>
+
 Database Selection
 
 Decision factors:
@@ -202,9 +209,11 @@ Bare metal / VMs:
 - ✓ Full control, cost-effective at scale
 - ✗ High operational burden
 - Best for: special requirements, very large scale
+
 </technology_selection>
 
 <design_patterns>
+
 Service Decomposition
 
 Monolith first, then extract:
@@ -270,9 +279,11 @@ Event Sourcing:
 - Rebuild state by replaying events
 - Use when: audit trail critical, temporal queries needed
 - Challenges: migration complexity, eventual consistency
+
 </design_patterns>
 
 <scalability>
+
 Performance Modeling
 
 Key metrics:
@@ -334,9 +345,11 @@ Database scaling:
 - Sharding: partition data across databases (customer, geography, hash)
 - Connection pooling: PgBouncer, connection reuse
 - Query optimization: indexes, query tuning, explain plans
+
 </scalability>
 
 <rust_architecture>
+
 When to Choose Rust
 
 Strong fit:
@@ -399,9 +412,11 @@ TypeScript:
 ✗ Runtime errors possible
 ✗ GC pauses
 ```
+
 </rust_architecture>
 
 <common_patterns>
+
 API Gateway — single entry point for all client requests, handles routing, auth, rate limiting.
 - Use when: multiple backend services, need centralized auth/logging
 - Options: Kong, AWS API Gateway, custom Nginx
@@ -426,9 +441,11 @@ Strangler Fig — gradually migrate from legacy by routing new features to new s
 2. Build new features in new system
 3. Gradually migrate existing features
 4. Sunset legacy when complete
+
 </common_patterns>
 
 <implementation_guidance>
+
 Phased Delivery
 
 Phase 1: MVP (2–4 weeks)
@@ -488,9 +505,11 @@ Alerting (what needs attention):
 - Actionable only (if it fires, someone must do something)
 - Runbooks for each alert
 - Escalation policies
+
 </implementation_guidance>
 
 <adr_template>
+
 ```markdown
 # ADR-XXX: {TITLE}
 
@@ -544,9 +563,11 @@ Alerting (what needs attention):
 
 {WHEN_REVISIT}
 ```
+
 </adr_template>
 
 <questions_to_ask>
+
 Understanding Requirements
 
 Functional:
@@ -603,9 +624,11 @@ For each decision:
 - Contingency plan?
 - What assumptions are we making?
 - Cost of being wrong?
+
 </questions_to_ask>
 
 <workflow>
+
 Use `EnterPlanMode` when presenting options — enables keyboard navigation.
 
 Structure:
@@ -629,9 +652,11 @@ At Documentation phase:
 - Create ADR if architectural decision
 - Skip if simple tech choice
 - Mark phase complete after delivery
+
 </workflow>
 
 <rules>
+
 ALWAYS:
 - Create Discovery todo at session start
 - Update todos at phase transitions
@@ -650,8 +675,11 @@ NEVER:
 - Ignore operational complexity in technology selection
 - Proceed without understanding non-functional requirements (latency, scale, availability)
 - Skip phase transitions when moving through workflow
+
 </rules>
 
 <references>
+
 - [FORMATTING.md](../../shared/rules/FORMATTING.md) — formatting conventions
+
 </references>

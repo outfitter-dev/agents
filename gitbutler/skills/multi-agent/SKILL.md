@@ -9,6 +9,7 @@ description: Coordinate multiple AI agents working concurrently in the same work
 Multiple agents → virtual branches → parallel execution → zero coordination overhead.
 
 <when_to_use>
+
 - Multiple agents working on different features simultaneously
 - Sequential agent handoffs (Agent A → Agent B)
 - Commit ownership transfer between agents
@@ -16,9 +17,11 @@ Multiple agents → virtual branches → parallel execution → zero coordinatio
 - Post-hoc reorganization of multi-agent work
 
 NOT for: single-agent workflows (use standard GitButler), projects needing PR automation (Graphite better)
+
 </when_to_use>
 
 <core_advantage>
+
 **Traditional Git Problem:**
 - Agents must work in separate worktrees (directory coordination)
 - Constant branch switching (context loss, file churn)
@@ -29,9 +32,11 @@ NOT for: single-agent workflows (use standard GitButler), projects needing PR au
 - Single shared workspace, zero checkout operations
 - Immediate conflict detection (shared working tree)
 - Each agent manipulates their own lane
+
 </core_advantage>
 
 <patterns>
+
 ## Pattern 1: Parallel Feature Development
 
 ```bash
@@ -71,9 +76,11 @@ but commit refinement-branch -m "refactor: optimize implementation"
 but rub <commit-sha> agent-b-branch  # Agent A → Agent B
 but rub <commit-sha> agent-a-branch  # Agent B → Agent A
 ```
+
 </patterns>
 
 <naming>
+
 ## Branch Naming Convention
 
 ```
@@ -86,9 +93,11 @@ Examples:
 ```
 
 Makes ownership immediately visible in `but status` and `but log`.
+
 </naming>
 
 <ai_integration>
+
 ## AI Integration Methods
 
 **1. Agents Tab (Claude Code)**
@@ -117,9 +126,11 @@ but mcp  # Enables programmatic agent integration
 > "Never use the git commit command after a task is finished"
 
 Let GitButler manage commits via hooks or MCP.
+
 </ai_integration>
 
 <coordination>
+
 ## Coordination Protocols
 
 **Status Broadcasting:**
@@ -145,9 +156,11 @@ but undo
 2. Broadcast status regularly to other agents
 3. Respect 🔒 locks — files assigned to other branches
 4. Use `but --json` for programmatic state inspection
+
 </coordination>
 
 <rub_power>
+
 ## The `but rub` Power Tool
 
 Single command handles four critical multi-agent operations:
@@ -158,9 +171,11 @@ Single command handles four critical multi-agent operations:
 | **Move** | `but rub abc1234 other-branch` | Transfer work between agents |
 | **Squash** | `but rub newer older` | Clean up history |
 | **Amend** | `but rub file commit` | Fix existing commits |
+
 </rub_power>
 
 <comparison>
+
 ## vs Other Workflows
 
 | Aspect | Graphite | Git Worktrees | GitButler |
@@ -172,9 +187,11 @@ Single command handles four critical multi-agent operations:
 | Context switching | `gt checkout` | `cd` | None ✓ |
 | Conflict detection | Late (merge) | Late (merge) | Early ✓ |
 | Disk usage | 1 × repo | N × repo | 1 × repo ✓ |
+
 </comparison>
 
 <rules>
+
 ALWAYS:
 - Use unique branch names per agent: `<agent>-<type>-<desc>`
 - Assign files immediately after creating: `but rub <id> <branch>`
@@ -187,9 +204,11 @@ NEVER:
 - Let files sit in "Unassigned Changes" — assign immediately
 - Modify files locked to other branches
 - Mix git and but commands during active agent sessions
+
 </rules>
 
 <troubleshooting>
+
 ## Common Issues
 
 | Symptom | Cause | Solution |
@@ -212,9 +231,11 @@ but undo
 # Extract from snapshot
 git show <snapshot>:index/path/to/file.txt
 ```
+
 </troubleshooting>
 
 <limitations>
+
 ## Current Limitations
 
 - **No PR submission CLI** — use `gh pr create` after organizing
@@ -222,11 +243,14 @@ git show <snapshot>:index/path/to/file.txt
 - **No stack navigation CLI** — no `gt up`/`gt down` equivalent
 
 **Recommendation:** Use for exploratory multi-agent work. For production automation requiring PR submission, consider Graphite until CLI matures.
+
 </limitations>
 
 <references>
+
 - [version-control skill](../version-control/SKILL.md) — core GitButler workflows
 - [stack-workflows skill](../stack-workflows/SKILL.md) — stacked branches
 - [GitButler AI Docs](https://docs.gitbutler.com/features/ai-integration/) — official AI integration
 - [Agents Tab Blog](https://blog.gitbutler.com/agents-tab) — Claude Code integration details
+
 </references>

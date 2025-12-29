@@ -9,15 +9,18 @@ description: Analyze conversation history to identify patterns, signals, and beh
 Signal extraction → pattern detection → behavioral insights.
 
 <when_to_use>
+
 - User requests conversation analysis
 - Identifying frustration, success, or workflow patterns
 - Extracting user preferences and requirements
 - Understanding task evolution and iterations
 
 NOT for: real-time monitoring, content generation, single message analysis
+
 </when_to_use>
 
 <signal_taxonomy>
+
 | Type | Subtype | Indicators |
 |------|---------|------------|
 | Success | Explicit Praise | "Perfect!", "Exactly what I needed", exclamation marks |
@@ -41,9 +44,11 @@ Confidence levels:
 - High (0.8–1.0): Explicit keywords match taxonomy, no ambiguity, strong context
 - Medium (0.5–0.79): Implicit signal, partial context, minor ambiguity
 - Low (0.2–0.49): Ambiguous language, weak context, borderline classification
+
 </signal_taxonomy>
 
 <phases>
+
 Track with TodoWrite. Phases advance only, never regress.
 
 | Phase | Trigger | activeForm |
@@ -70,9 +75,11 @@ Workflow:
 - Start: Create Parse Input `in_progress`
 - Transition: Mark current `completed`, add next `in_progress`
 - After delivery: Mark Synthesize Report `completed`
+
 </phases>
 
 <workflow>
+
 1. Define Scope
    - Message range (all, recent N, date range)
    - Actors (user only, agent only, both)
@@ -99,9 +106,11 @@ Workflow:
    - Include confidence, recommendations, action items
    - Append `△ Caveats` if gaps exist
    - Mark Synthesize Report `completed`
+
 </workflow>
 
 <pattern_detection>
+
 Behavioral patterns from signal clusters:
 
 | Pattern | Detection | Confidence |
@@ -116,9 +125,11 @@ Temporal patterns:
 - Escalation: Increasing frustration/stronger requirements
 - De-escalation: Frustration → success transition
 - Cyclical: Same issue recurs across sessions
+
 </pattern_detection>
 
 <output_format>
+
 JSON structure:
 
 ```json
@@ -161,9 +172,11 @@ JSON structure:
   }
 }
 ```
+
 </output_format>
 
 <rules>
+
 ALWAYS:
 - Create Parse Input at session start
 - Update todos at phase transitions
@@ -179,10 +192,13 @@ NEVER:
 - Regress phases
 - Deliver without marking final phase complete
 - Over-interpret neutral language
+
 </rules>
 
 <references>
+
 - [signal-patterns.md](references/signal-patterns.md) — extended taxonomy, edge cases
 - [extraction-techniques.md](references/extraction-techniques.md) — regex, heuristics
 - [sample-analysis.md](examples/sample-analysis.md) — complete walkthrough
+
 </references>

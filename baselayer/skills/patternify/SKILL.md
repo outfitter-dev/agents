@@ -9,15 +9,18 @@ description: Analyze conversation to identify and capture reusable patterns as s
 Conversation analysis → reusable pattern → correct component.
 
 <when_to_use>
+
 - Spotting repeated behavior worth codifying
 - User explicitly wants to capture a workflow
 - Recognizing orchestration sequences in conversation
 - Identifying decision heuristics being applied
 
 NOT for: one-off tasks, simple questions, well-documented existing patterns
+
 </when_to_use>
 
 <pattern_types>
+
 | Type | Purpose | Example |
 |------|---------|---------|
 | Workflow | Multi-step sequences | Debug → Test → Fix → Verify |
@@ -27,9 +30,11 @@ NOT for: one-off tasks, simple questions, well-documented existing patterns
 Workflows: Step-by-step processes with defined phases and transitions.
 Orchestration: Tool combinations that work together for a goal.
 Heuristics: Conditional logic and decision trees for common situations.
+
 </pattern_types>
 
 <component_mapping>
+
 Match pattern type to implementation:
 
 ```text
@@ -50,9 +55,11 @@ Composites:
 - Skill + Command: Skill holds logic, command provides entry point
 - Skill + Hook: Skill holds logic, hook triggers automatically
 - Agent + Skill: Agent orchestrates, skill provides methodology
+
 </component_mapping>
 
 <specification>
+
 Pattern spec format (YAML):
 
 ```yaml
@@ -80,9 +87,11 @@ quality:
 ```
 
 All five quality checks must pass before codifying.
+
 </specification>
 
 <workflow>
+
 1. Identify: Spot repeatable behavior in conversation
    - For deep analysis, load [codebase-analysis](../codebase-analysis/SKILL.md) skill and use [pattern-analysis](../pattern-analysis/SKILL.md) techniques
    - Extract success, frustration, workflow, and request signals
@@ -101,9 +110,11 @@ TodoWrite phases:
 - Specify { pattern name }
 - Implement { component type }
 ```
+
 </workflow>
 
 <quality>
+
 SRVDS criteria — all must pass:
 
 | Check | Question | Red Flag |
@@ -115,17 +126,21 @@ SRVDS criteria — all must pass:
 | Scoped | Single responsibility? | Kitchen sink |
 
 Skip if: < 3 occurrences, context-dependent, simpler inline
+
 </quality>
 
 <anti_patterns>
+
 - Premature abstraction: Codifying after first occurrence
 - Over-specification: 50-line spec for 5-line pattern
 - Wrong component: Hook when Skill needed, Agent when Command suffices
 - Missing trigger: Pattern exists but no clear activation
 - Scope creep: Pattern grows to handle edge cases
+
 </anti_patterns>
 
 <rules>
+
 ALWAYS:
 - Identify pattern type before choosing component
 - Validate all SRVDS criteria
@@ -139,12 +154,15 @@ NEVER:
 - Skip quality validation
 - Implement without clear trigger
 - Add "might need later" features
+
 </rules>
 
 <references>
+
 - [codebase-analysis](../codebase-analysis/SKILL.md) — core investigation methodology
 - [pattern-analysis](../pattern-analysis/SKILL.md) — signal extraction techniques
 - [pattern-types.md](references/pattern-types.md) — extended examples by type
 - [component-mapping.md](references/component-mapping.md) — decision tree details
 - [examples/](examples/) — captured pattern examples
+
 </references>

@@ -9,6 +9,7 @@ description: Structure and present research findings with source authority asses
 Multi-source gathering → authority assessment → cross-reference → synthesize → present with confidence.
 
 <when_to_use>
+
 - Synthesizing research from multiple sources
 - Presenting findings with proper attribution
 - Comparing options with structured analysis
@@ -16,9 +17,11 @@ Multi-source gathering → authority assessment → cross-reference → synthesi
 - Documenting research conclusions
 
 NOT for: single-source summaries, opinion without evidence, rushing to conclusions
+
 </when_to_use>
 
 <source_authority>
+
 ## Tier 1: Primary Sources (90–100% confidence)
 
 - **Official documentation** — authoritative source material
@@ -54,9 +57,11 @@ Use for: practical workarounds, common pitfalls, usage examples
 - **Unchecked AI content** — generated without verification
 
 Use for: initial leads only, must verify against higher tiers
+
 </source_authority>
 
 <cross_referencing>
+
 ## Two-Source Minimum
 
 Never rely on single source for critical claims:
@@ -84,9 +89,11 @@ For complex questions:
 
 All three align → high confidence
 Mismatches → investigate the gap
+
 </cross_referencing>
 
 <comparison_analysis>
+
 ## Feature Comparison Matrix
 
 | Feature | Option A | Option B | Option C |
@@ -110,9 +117,11 @@ For each option, capture:
 3. Score each option (1–5 on each criterion)
 4. Calculate: Σ(weight × score)
 5. Highest total → recommended option
+
 </comparison_analysis>
 
 <citation_requirements>
+
 ## When to Cite
 
 Always cite for:
@@ -141,9 +150,11 @@ Based on:
 
 △ Note: { caveats about sources }
 ```
+
 </citation_requirements>
 
 <research_workflow>
+
 ## Breadth-First Discovery
 
 1. **Formulate question** — clear, specific
@@ -167,9 +178,11 @@ Based on:
 3. **Targeted research** — fill specific gaps
 4. **Update answer** — incorporate findings
 5. **Repeat** until confidence threshold met
+
 </research_workflow>
 
 <synthesis_techniques>
+
 ## Common Themes
 
 Across sources, extract:
@@ -194,9 +207,11 @@ Present findings:
 3. **Caveats** — limitations, context-specific notes
 4. **Alternatives** — other valid approaches
 5. **Further reading** — for deeper dive
+
 </synthesis_techniques>
 
 <confidence_calibration>
+
 Research quality affects confidence:
 
 **High confidence** (▓▓▓▓▓):
@@ -215,9 +230,11 @@ Research quality affects confidence:
 - Outdated information
 
 △ Flag remaining uncertainties even at high confidence
+
 </confidence_calibration>
 
 <output_format>
+
 ## Findings Report
 
 ### Summary
@@ -251,9 +268,11 @@ Lower confidence areas:
 ### △ Caveats
 
 { uncertainties, gaps, assumptions }
+
 </output_format>
 
 <rules>
+
 ALWAYS:
 - Assess source authority before citing
 - Cross-reference critical claims (2+ sources)
@@ -267,11 +286,14 @@ NEVER:
 - Skip confidence calibration
 - Hide conflicting sources
 - Omit caveats section when uncertainty exists
+
 </rules>
 
 <references>
+
 Related skills:
 - [research-and-report](../research-and-report/SKILL.md) — full research workflow (loads this skill)
 - [codebase-analysis](../codebase-analysis/SKILL.md) — uses for technical research synthesis
 - [pattern-analysis](../pattern-analysis/SKILL.md) — identifying patterns in findings
+
 </references>

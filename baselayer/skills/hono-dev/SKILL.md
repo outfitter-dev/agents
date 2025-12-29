@@ -9,6 +9,7 @@ description: Type-safe API development with Hono framework. Covers route chainin
 Route chaining → type-safe RPC → end-to-end types.
 
 <when_to_use>
+
 - Building REST APIs with Hono
 - Type-safe RPC with hono/client
 - OpenAPI documentation with Zod
@@ -16,11 +17,14 @@ Route chaining → type-safe RPC → end-to-end types.
 - When user mentions "Hono", "RPC", "OpenAPI", or uses --hono flag
 
 NOT for: Bun runtime APIs (use bun-dev), other frameworks (Express, Fastify)
+
 </when_to_use>
 
 <version_notes>
+
 Hono v4+ with @hono/zod-openapi v1.0+
 Check hono.dev for latest patterns.
+
 </version_notes>
 
 ## Route Chaining — Critical Pattern
@@ -28,6 +32,7 @@ Check hono.dev for latest patterns.
 Type inference flows through method chain. Break chain = lose types.
 
 <route_chaining>
+
 ```typescript
 // ✅ Chained routes preserve types
 const app = new Hono()
@@ -85,6 +90,7 @@ const app = new Hono()
   .use('/api/admin/*', authMiddleware)
   .get('/api/admin/users', (c) => c.json({ users: [] }));
 ```
+
 </route_chaining>
 
 ## Factory Pattern — Context Typing
@@ -92,6 +98,7 @@ const app = new Hono()
 Use `createFactory<Env>()` to type context variables across middleware and routes.
 
 <factory_pattern>
+
 ```typescript
 import { createFactory } from 'hono/factory';
 import type { Database } from 'bun:sqlite';
@@ -149,11 +156,13 @@ const app = factory.createApp()
 ```
 
 See [factory-pattern.md](references/factory-pattern.md) for advanced patterns.
+
 </factory_pattern>
 
 ## Error Handling
 
 <error_handling>
+
 ```typescript
 import { HTTPException } from 'hono/http-exception';
 
@@ -198,11 +207,13 @@ app.notFound((c) => c.json({ error: 'Not found', path: c.req.path }, 404));
 ```
 
 See [error-handling.md](references/error-handling.md) for patterns.
+
 </error_handling>
 
 ## Zod OpenAPI
 
 <zod_openapi>
+
 ```typescript
 import { createRoute, OpenAPIHono, z } from '@hono/zod-openapi';
 import { swaggerUI } from '@hono/swagger-ui';
@@ -251,11 +262,13 @@ app.doc('/openapi.json', {
 ```
 
 See [zod-openapi.md](references/zod-openapi.md) for complete patterns.
+
 </zod_openapi>
 
 ## RPC Client — End-to-End Types
 
 <rpc_client>
+
 ```typescript
 // Server
 const app = new Hono()
@@ -291,11 +304,13 @@ const res4 = await client.posts.$get({}, {
   headers: { Authorization: 'Bearer token' }
 });
 ```
+
 </rpc_client>
 
 ## Testing with testClient
 
 <testing>
+
 ```typescript
 import { describe, expect, test, beforeEach, afterEach } from 'bun:test';
 import { testClient } from 'hono/testing';
@@ -347,11 +362,13 @@ describe('API Tests', () => {
 ```
 
 See [testing-patterns.md](examples/testing-patterns.md) for complete patterns.
+
 </testing>
 
 ## Middleware Patterns
 
 <middleware>
+
 ```typescript
 // Logging
 import { logger } from 'hono/logger';
@@ -385,9 +402,11 @@ const requestId = factory.createMiddleware(async (c, next) => {
   c.res.headers.set('x-request-id', c.get('requestId'));
 });
 ```
+
 </middleware>
 
 <rules>
+
 ## Rules
 
 **ALWAYS:**
@@ -410,9 +429,11 @@ const requestId = factory.createMiddleware(async (c, next) => {
 - Verify `export type AppType` matches actual app
 - Ensure middleware uses `createFactory` for context types
 - Check client using correct `param`, `query`, or `json` keys
+
 </rules>
 
 <references>
+
 ## References
 
 **Examples:**
@@ -428,4 +449,5 @@ const requestId = factory.createMiddleware(async (c, next) => {
 **External:**
 - Hono: https://hono.dev
 - @hono/zod-openapi: https://github.com/honojs/middleware/tree/main/packages/zod-openapi
+
 </references>

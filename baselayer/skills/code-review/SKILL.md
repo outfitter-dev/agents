@@ -9,6 +9,7 @@ description: Systematic pre-commit quality gate using checklist-based review met
 Systematic pre-commit quality gate → checklist-based review → findings → summary.
 
 <when_to_use>
+
 - Pre-commit code review and quality gates
 - Pre-merge pull request reviews
 - Systematic code audits before deployment
@@ -16,9 +17,11 @@ Systematic pre-commit quality gate → checklist-based review → findings → s
 - Second-opinion review requests
 
 NOT for: quick sanity checks, trivial typo fixes, formatting-only changes
+
 </when_to_use>
 
 <announcement_protocol>
+
 ## Starting Review
 
 **Review Scope:** { files/areas under review }
@@ -44,9 +47,11 @@ Emit findings as discovered:
 **Recommendation:** { ship / fix blockers / needs rework }
 
 { detailed findings below if any found }
+
 </announcement_protocol>
 
 <checklist>
+
 ## Type Safety
 
 - ✓ No `any` types without justification comment
@@ -128,9 +133,11 @@ Emit findings as discovered:
 - ✓ `Send`/`Sync` bounds respected
 - ✓ Unsafe code justified with comments
 - ✓ Proper error types (`thiserror`/`anyhow`)
+
 </checklist>
 
 <phases>
+
 ## 1. Announce (activeForm: Announcing review)
 
 Emit starting protocol:
@@ -162,9 +169,11 @@ Emit completion protocol:
 - Optional: patterns noticed, suggestions for future
 
 Use TodoWrite with activeForm for tracking review phases.
+
 </phases>
 
 <finding_format>
+
 **{SEVERITY}** `{FILE_PATH}:{LINE_RANGE}`
 
 **Issue:** { clear description of problem }
@@ -190,9 +199,11 @@ Example:
 **Pattern:** Single occurrence
 
 ---
+
 </finding_format>
 
 <severity_guidance>
+
 **◆◆ Severe (blocking):**
 - Security vulnerabilities
 - Data loss risks
@@ -215,9 +226,11 @@ Example:
 - Documentation improvements
 - TODOs without context
 - Naming improvements
+
 </severity_guidance>
 
 <workflow>
+
 Loop: Scan → Verify → Document → Next category
 
 1. **Announce review** — scope, focus, approach
@@ -233,9 +246,11 @@ At each finding:
 - Assess impact if shipped
 - Determine concrete fix
 - Note if pattern across files
+
 </workflow>
 
 <validation>
+
 Before completing review:
 
 **Check coverage:**
@@ -254,9 +269,11 @@ Before completing review:
 - ✓ Aligned with findings severity?
 - ✓ Blockers clearly marked?
 - ✓ Path forward unambiguous?
+
 </validation>
 
 <rules>
+
 ALWAYS:
 - Announce review start with scope and focus
 - Run systematic checklist, don't skip categories
@@ -276,9 +293,11 @@ NEVER:
 - Complete review without announcement protocol
 - Miss security checks on user input paths
 - Ignore test quality (execution != validation)
+
 </rules>
 
 <references>
+
 Core methodology:
 - [checklist.md](references/checklist.md) — extended checklist details, examples, severity guidance
 - [FORMATTING.md](../../shared/rules/FORMATTING.md) — formatting conventions
@@ -286,4 +305,5 @@ Core methodology:
 Related skills:
 - codebase-analysis — evidence-based investigation (foundation for review)
 - debugging-and-diagnosis — structured bug investigation
+
 </references>

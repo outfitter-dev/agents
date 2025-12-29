@@ -9,6 +9,7 @@ description: Identify and extract reusable patterns from repeated behaviors, wor
 Identify signals → classify patterns → validate with evidence → document for reuse.
 
 <when_to_use>
+
 - Recognizing recurring themes in work or data
 - Codifying best practices from experience
 - Extracting workflows from repeated success
@@ -16,9 +17,11 @@ Identify signals → classify patterns → validate with evidence → document f
 - Building decision frameworks from observations
 
 NOT for: single occurrences, unvalidated hunches, premature abstraction
+
 </when_to_use>
 
 <signal_identification>
+
 ## Success Signals
 
 Look for:
@@ -42,9 +45,11 @@ Identify:
 - **Decision points** — recurring choices at specific moments
 - **Quality gates** — checkpoints before proceeding
 - **Exit conditions** — how completion is determined
+
 </signal_identification>
 
 <pattern_classification>
+
 ## Workflow Pattern
 
 **Characteristics**:
@@ -76,9 +81,11 @@ Identify:
 - Inefficiency despite seeming reasonable
 - Causes specific failure modes
 - Has better alternative
+
 </pattern_classification>
 
 <evidence_thresholds>
+
 ## Codification Criteria
 
 Don't codify after first occurrence. Require:
@@ -100,9 +107,11 @@ Weak patterns show:
 - **Expertise dependency** — only works for specific person
 - **Fragility** — breaks on slight deviation
 - **Overhead** — costs more than value provided
+
 </evidence_thresholds>
 
 <quality_criteria_extraction>
+
 ## From Success Cases
 
 Analyze what made successful outcomes work:
@@ -126,9 +135,11 @@ When multiple approaches exist:
 2. **Compare outcomes** — which worked better?
 3. **Isolate variables** — what was different?
 4. **Extract criteria** — when to use each?
+
 </quality_criteria_extraction>
 
 <pattern_documentation>
+
 ## Minimum Viable Pattern
 
 Capture:
@@ -145,9 +156,11 @@ Add:
 - **Variations** — adaptations for different contexts
 - **Anti-patterns** — common mistakes
 - **References** — supporting material
+
 </pattern_documentation>
 
 <progressive_formalization>
+
 **Observation** (1–2 instances):
 - Note for future reference
 - "This worked well, watch for recurrence"
@@ -166,9 +179,11 @@ Add:
 - Update based on usage
 - Add edge cases
 - Improve clarity
+
 </progressive_formalization>
 
 <workflow>
+
 Loop: Observe → Classify → Validate → Document
 
 1. **Collect signals** — note successes, failures, recurring behaviors
@@ -178,9 +193,11 @@ Loop: Observe → Classify → Validate → Document
 5. **Document pattern** — name, when, what, why
 6. **Test deliberately** — apply consciously, track variance
 7. **Refine** — adjust based on feedback
+
 </workflow>
 
 <rules>
+
 ALWAYS:
 - Require 3+ instances before codifying
 - Validate across multiple contexts
@@ -194,11 +211,14 @@ NEVER:
 - Ignore context-sensitivity
 - Skip validation step
 - Assume transferability without testing
+
 </rules>
 
 <references>
+
 Related skills:
 - [patternify](../patternify/SKILL.md) — pattern discovery from conversations
 - [codebase-analysis](../codebase-analysis/SKILL.md) — uses pattern analysis for code investigation
 - [report-findings](../report-findings/SKILL.md) — presenting discovered patterns
+
 </references>

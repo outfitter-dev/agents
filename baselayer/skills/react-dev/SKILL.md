@@ -9,6 +9,7 @@ description: Type-safe React patterns for React 18-19 including generic componen
 Type-safe React → compile-time guarantees → confident refactoring.
 
 <when_to_use>
+
 - Building typed React components
 - Implementing generic components
 - Typing event handlers, forms, refs
@@ -18,9 +19,11 @@ Type-safe React → compile-time guarantees → confident refactoring.
 - Props composition and extension
 
 NOT for: non-React TypeScript, vanilla JS React, general TypeScript patterns
+
 </when_to_use>
 
 <react_19_changes>
+
 React 19 simplifies TypeScript patterns — breaking changes require migration:
 
 **ref as prop** — forwardRef deprecated:
@@ -94,9 +97,11 @@ async function UserPage({ params }: { params: { id: string } }) {
 ```
 
 See [react-19-patterns.md](references/react-19-patterns.md)
+
 </react_19_changes>
 
 <component_patterns>
+
 **Props typing** — three patterns:
 
 ```typescript
@@ -170,9 +175,11 @@ function Button(props: ButtonProps) {
   return <button onClick={props.onClick}>Button</button>; // onClick available
 }
 ```
+
 </component_patterns>
 
 <event_handlers>
+
 **Event types** — use specific types for accurate target typing:
 
 ```typescript
@@ -224,9 +231,11 @@ function handleEvent(event: any) { /* ... */ }
 ```
 
 See [event-handlers.md](references/event-handlers.md)
+
 </event_handlers>
 
 <hooks_typing>
+
 **useState** — type inference and explicit typing:
 
 ```typescript
@@ -353,9 +362,11 @@ function useUser() {
   return user; // Type narrowed to User
 }
 ```
+
 </hooks_typing>
 
 <generic_components>
+
 Generic components → type inference from props → no manual type annotations at call site.
 
 **Generic Table**:
@@ -470,9 +481,11 @@ function List<T extends HasId>({ items, renderItem }: ListProps<T>) {
 ```
 
 See [generic-components.md](examples/generic-components.md)
+
 </generic_components>
 
 <server_components>
+
 React 19 Server Components — async by default, run on server.
 
 **Async Server Component**:
@@ -561,9 +574,11 @@ function UserProfile({ userPromise }: { userPromise: Promise<User> }) {
 ```
 
 See [server-components.md](examples/server-components.md)
+
 </server_components>
 
 <tanstack_integration>
+
 TanStack Router — type-safe routing with loader data, search params validation.
 
 **Route definition**:
@@ -640,9 +655,11 @@ function ProductList() {
 ```
 
 See [tanstack-router.md](references/tanstack-router.md)
+
 </tanstack_integration>
 
 <rules>
+
 ALWAYS:
 - Use specific event types (MouseEvent, ChangeEvent, etc)
 - Type useState explicitly for unions/null
@@ -664,12 +681,15 @@ NEVER:
 - Mix Server and Client components in same file
 - Await promises in Server Component when passing to use()
 - Ignore type errors with ts-ignore in component props
+
 </rules>
 
 <references>
+
 - [generic-components.md](examples/generic-components.md) — table, select, list patterns
 - [server-components.md](examples/server-components.md) — async components, Server Actions
 - [react-19-patterns.md](references/react-19-patterns.md) — useActionState, use(), ref as prop
 - [event-handlers.md](references/event-handlers.md) — all event types, generic handlers
 - [tanstack-router.md](references/tanstack-router.md) — typed routes, search params, navigation
+
 </references>

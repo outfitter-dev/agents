@@ -9,6 +9,7 @@ description: Bun runtime patterns including native APIs, SQLite, testing, HTTP s
 Bun runtime → native APIs → zero-dependency patterns.
 
 <when_to_use>
+
 - Bun runtime development
 - SQLite database with bun:sqlite
 - HTTP server with Bun.serve
@@ -20,9 +21,11 @@ Bun runtime → native APIs → zero-dependency patterns.
 - Building and bundling
 
 NOT for: Node.js-only patterns, cross-runtime libraries, non-Bun projects
+
 </when_to_use>
 
 <runtime_basics>
+
 **Package management**:
 ```bash
 bun install          # Install dependencies (faster than npm/yarn)
@@ -51,11 +54,13 @@ bun test --coverage  # With coverage
 bun build ./index.ts --outfile dist/bundle.js
 bun build ./index.ts --compile --outfile myapp  # Standalone executable
 ```
+
 </runtime_basics>
 
 ## File Operations
 
 <file_operations>
+
 ```typescript
 // Read file (lazy, efficient)
 const file = Bun.file('./data.json');
@@ -87,11 +92,13 @@ await Bun.write('./blob.txt', blob);
 const readable = new ReadableStream({ ... });
 await Bun.write('./stream.txt', readable);
 ```
+
 </file_operations>
 
 ## SQLite (bun:sqlite)
 
 <sqlite>
+
 ```typescript
 import { Database } from 'bun:sqlite';
 
@@ -144,11 +151,13 @@ db.close();
 ```
 
 See [sqlite-patterns.md](references/sqlite-patterns.md) for migrations and advanced patterns.
+
 </sqlite>
 
 ## Password Hashing
 
 <password>
+
 ```typescript
 // Hash password (argon2id recommended)
 const hashedPassword = await Bun.password.hash('password123', {
@@ -192,11 +201,13 @@ app.post('/auth/register', zValidator('json', RegisterSchema), async (c) => {
   return c.json({ user }, 201);
 });
 ```
+
 </password>
 
 ## HTTP Server
 
 <http_server>
+
 ```typescript
 Bun.serve({
   port: 3000,
@@ -234,11 +245,13 @@ Bun.serve({
   fetch: app.fetch
 });
 ```
+
 </http_server>
 
 ## WebSocket
 
 <websocket>
+
 ```typescript
 import type { ServerWebSocket } from 'bun';
 
@@ -278,11 +291,13 @@ Bun.serve<WebSocketData>({
   }
 });
 ```
+
 </websocket>
 
 ## Shell Operations
 
 <shell>
+
 ```typescript
 import { $ } from 'bun';
 
@@ -309,11 +324,13 @@ console.log('Exit code:', proc.exitCode);
 const proc2 = Bun.spawn(['echo', 'Hello'], { stdout: 'pipe' });
 const output = await new Response(proc2.stdout).text();
 ```
+
 </shell>
 
 ## Testing (bun:test)
 
 <testing>
+
 ```typescript
 import { describe, test, expect, beforeAll, afterAll, beforeEach, afterEach } from 'bun:test';
 
@@ -362,11 +379,13 @@ bun test src/api.test.ts    # Specific file
 bun test --watch            # Watch mode
 bun test --coverage         # With coverage
 ```
+
 </testing>
 
 ## Environment Variables
 
 <environment>
+
 ```typescript
 // Access (same as process.env)
 console.log(Bun.env.NODE_ENV);
@@ -395,11 +414,13 @@ PORT=3000
 # .env.local (gitignored overrides)
 # .env.production (production values)
 ```
+
 </environment>
 
 ## Compression
 
 <compression>
+
 ```typescript
 import { gzipSync, gunzipSync, deflateSync, inflateSync } from 'bun';
 
@@ -432,11 +453,13 @@ app.get('/large-data', (c) => {
   return c.json(data);
 });
 ```
+
 </compression>
 
 ## Performance Utilities
 
 <performance>
+
 ```typescript
 // High-resolution timing
 const start = Bun.nanoseconds();
@@ -457,11 +480,13 @@ const usage = process.memoryUsage();
 console.log('RSS:', usage.rss / 1024 / 1024, 'MB');
 console.log('Heap Used:', usage.heapUsed / 1024 / 1024, 'MB');
 ```
+
 </performance>
 
 ## Building & Bundling
 
 <building>
+
 ```bash
 # Bundle for production
 bun build ./index.ts --outfile dist/bundle.js --minify --sourcemap
@@ -477,9 +502,11 @@ bun build ./index.ts --compile --target=bun-linux-x64 --outfile myapp-linux
 bun build ./index.ts --compile --target=bun-darwin-arm64 --outfile myapp-macos
 bun build ./index.ts --compile --target=bun-windows-x64 --outfile myapp.exe
 ```
+
 </building>
 
 <rules>
+
 ALWAYS:
 - Use Bun APIs when available (faster, native)
 - Prepared statements for database queries
@@ -500,9 +527,11 @@ PREFER:
 - bun:sqlite over external SQLite libraries
 - Bun.password over bcrypt/argon2 packages
 - $ shell template over child_process
+
 </rules>
 
 <references>
+
 - [sqlite-patterns.md](references/sqlite-patterns.md) — migrations, connection pooling
 - [server-patterns.md](references/server-patterns.md) — HTTP, WebSocket, streaming
 - [testing.md](references/testing.md) — bun:test patterns, lifecycle hooks
@@ -510,4 +539,5 @@ PREFER:
 **Examples:**
 - [database-crud.md](examples/database-crud.md) — SQLite CRUD patterns
 - [file-uploads.md](examples/file-uploads.md) — streaming file handling
+
 </references>

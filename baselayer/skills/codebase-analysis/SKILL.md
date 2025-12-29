@@ -9,6 +9,7 @@ description: Evidence-based codebase investigation methodology. Use when analyzi
 Evidence-based investigation → findings → confidence-tracked conclusions.
 
 <when_to_use>
+
 - Codebase exploration and understanding
 - Architecture analysis and mapping
 - Pattern extraction and recognition
@@ -16,9 +17,11 @@ Evidence-based investigation → findings → confidence-tracked conclusions.
 - Performance or security analysis
 
 NOT for: wild guessing, assumptions without evidence, conclusions before investigation
+
 </when_to_use>
 
 <confidence>
+
 | Bar | Lvl | Name | Action |
 |-----|-----|------|--------|
 | `░░░░░` | 0 | Gathering | Collect initial evidence |
@@ -35,9 +38,11 @@ Start honest. Clear codebase + focused question → level 2–3. Vague or comple
 At level 4: "High confidence in findings. One more angle would reach full certainty. Continue or deliver now?"
 
 Below level 5: include `△ Caveats` section.
+
 </confidence>
 
 <principles>
+
 ## Core Methodology
 
 **Evidence over assumption** — investigate when you can, guess only when you must.
@@ -51,9 +56,11 @@ Below level 5: include `△ Caveats` section.
 **Show your work** — findings include supporting evidence, not just conclusions.
 
 **Calibrate confidence** — distinguish fact from inference from assumption.
+
 </principles>
 
 <evidence_gathering>
+
 ## Source Priority
 
 1. **Direct observation** — read code, run searches, examine files
@@ -85,9 +92,11 @@ Below level 5: include `△ Caveats` section.
 - Test files → understand usage patterns
 - Error messages → reveal assumptions
 - Comments → capture historical context
+
 </evidence_gathering>
 
 <output_format>
+
 ## During Investigation
 
 After each evidence-gathering step emit:
@@ -145,9 +154,11 @@ Lower confidence areas:
 
 **Unknowns:**
 - {UNKNOWN} — { noted for future investigation }
+
 </output_format>
 
 <specialized_techniques>
+
 Load micro-skills for specialized analysis:
 
 - **Pattern analysis** → load [pattern-analysis](../pattern-analysis/SKILL.md) skill
@@ -156,9 +167,11 @@ Load micro-skills for specialized analysis:
 - **Architecture analysis** → see [architecture-analysis.md](references/architecture-analysis.md)
 
 These provide deep-dive methodologies for specific analysis types.
+
 </specialized_techniques>
 
 <workflow>
+
 Loop: Gather → Analyze → Update Confidence → Next step
 
 1. **Calibrate starting confidence** — what do we already know?
@@ -174,9 +187,11 @@ At each step:
 - Note what it means (interpretation)
 - Track what's still unclear (gaps)
 - Update confidence bar
+
 </workflow>
 
 <validation>
+
 Before concluding (level 4+):
 
 **Check evidence quality:**
@@ -196,9 +211,11 @@ Before concluding (level 4+):
 - ✓ Confidence calibrated honestly?
 - ✓ Caveats section included if <100%?
 - ✓ Next steps clear if incomplete?
+
 </validation>
 
 <rules>
+
 ALWAYS:
 - Investigate before concluding
 - Cite evidence sources with file paths/URLs
@@ -217,9 +234,11 @@ NEVER:
 - Skip validation checks
 - Deliver without confidence assessment
 - Conflate evidence with interpretation
+
 </rules>
 
 <references>
+
 Core methodology:
 - [confidence.md](../pathfinding/references/confidence.md) — confidence calibration (shared with pathfinding)
 - [FORMATTING.md](../../shared/rules/FORMATTING.md) — formatting conventions
@@ -235,4 +254,5 @@ Local references:
 Related skills:
 - pathfinding — clarifying requirements before analysis
 - debugging-and-diagnosis — structured bug investigation (loads root-cause-analysis)
+
 </references>

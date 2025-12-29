@@ -9,6 +9,7 @@ description: End-to-end scenario testing without mocks, using real dependencies.
 End-to-end validation using real dependencies, no mocks ever.
 
 <when_to_use>
+
 - End-to-end feature validation
 - Integration testing across services
 - Proof programs demonstrating behavior
@@ -17,9 +18,11 @@ End-to-end validation using real dependencies, no mocks ever.
 - Authentication flow validation
 
 NOT for: unit testing, mock testing, performance benchmarking, load testing
+
 </when_to_use>
 
 <iron_law>
+
 NO MOCKS EVER.
 
 Truth hierarchy:
@@ -30,9 +33,11 @@ Truth hierarchy:
 Mocks test your assumptions, not reality. When mocks pass but production fails, the mock lied. When scenarios fail, reality spoke.
 
 Test against real databases, real APIs, real services. Use test credentials, staging environments, local instances — but always real implementations.
+
 </iron_law>
 
 <directory_structure>
+
 ## .scratch/ (gitignored)
 
 Throwaway test scripts for quick validation. Self-contained, runnable, disposable.
@@ -50,9 +55,11 @@ Structure:
 {"name":"auth-login-success","description":"User logs in with valid credentials","setup":"Create test user with known password","steps":["POST /auth/login with credentials","Receive JWT token","GET /auth/me with token"],"expected":"User profile returned with correct data","tags":["auth","jwt","happy-path"]}
 {"name":"auth-login-invalid","description":"Login fails with wrong password","setup":"Test user exists","steps":["POST /auth/login with wrong password"],"expected":"401 Unauthorized, no token issued","tags":["auth","error-handling"]}
 ```
+
 </directory_structure>
 
 <scratch_directory>
+
 ## Purpose
 
 Quick validation without ceremony. Write script, run against real deps, verify behavior, delete or document.
@@ -110,9 +117,11 @@ async function testAuthFlow() {
 
 testAuthFlow().catch(console.error)
 ```
+
 </scratch_directory>
 
 <scenarios_jsonl>
+
 ## Format
 
 Each line is complete JSON object with fields:
@@ -149,9 +158,11 @@ Delete from .scratch/ when:
 - One-time debugging script
 - Exploratory testing that didn't find issues
 - Temporary verification during development
+
 </scenarios_jsonl>
 
 <workflow>
+
 Loop: Write → Execute → Document → Cleanup
 
 1. **Write proof program** — self-contained script in .scratch/
@@ -165,9 +176,11 @@ Each iteration:
 - Dependencies are real (no mocks, no stubs)
 - Validation is concrete (actual behavior observed)
 - Pattern captured if valuable (scenarios.jsonl)
+
 </workflow>
 
 <gitignore_check>
+
 MANDATORY before first .scratch/ use:
 
 ```bash
@@ -182,9 +195,11 @@ If .gitignore doesn't exist, create it:
 [ -f .gitignore ] || touch .gitignore
 grep -q '.scratch/' .gitignore || echo '.scratch/' >> .gitignore
 ```
+
 </gitignore_check>
 
 <phases>
+
 ## 1. Setup → Setting up scenario environment
 
 Prepare real dependencies:
@@ -219,9 +234,11 @@ If scenario validates behavior:
 - Tag for categorization
 
 Delete .scratch/ script or promote to permanent test suite.
+
 </phases>
 
 <rules>
+
 ALWAYS:
 - Verify .scratch/ in .gitignore before first use
 - Test against real dependencies (actual DB, live APIs)
@@ -247,9 +264,11 @@ ESCALATE when:
 - Real dependencies too expensive to test
 - Test requires destructive production operations
 - Cannot obtain test credentials
+
 </rules>
 
 <references>
+
 Patterns and examples:
 - [patterns.md](references/patterns.md) — common scenario patterns and templates
 
@@ -261,4 +280,5 @@ Related skills:
 External resources:
 - [Growing Object-Oriented Software, Guided by Tests](http://www.growing-object-oriented-software.com/) — end-to-end testing philosophy
 - [Testing Without Mocks](https://www.jamesshore.com/v2/blog/2018/testing-without-mocks) — James Shore's pattern library
+
 </references>

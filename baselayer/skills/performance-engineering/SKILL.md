@@ -9,6 +9,7 @@ description: Performance profiling, optimization techniques, and benchmarking me
 Evidence-based performance optimization → measure → profile → optimize → validate.
 
 <when_to_use>
+
 - Profiling slow code paths or bottlenecks
 - Identifying memory leaks or excessive allocations
 - Optimizing latency-critical operations (P95, P99)
@@ -18,9 +19,11 @@ Evidence-based performance optimization → measure → profile → optimize →
 - Improving throughput (RPS, ops/sec)
 
 NOT for: premature optimization, optimization without measurement, guessing at bottlenecks
+
 </when_to_use>
 
 <iron_law>
+
 NO OPTIMIZATION WITHOUT MEASUREMENT
 
 **Required workflow:**
@@ -31,9 +34,11 @@ NO OPTIMIZATION WITHOUT MEASUREMENT
 5. Document gains and tradeoffs
 
 Optimizing unmeasured code wastes time and introduces bugs.
+
 </iron_law>
 
 <phases>
+
 Use TodoWrite to track optimization process:
 
 **Phase 1: Establishing baseline**
@@ -55,9 +60,11 @@ Use TodoWrite to track optimization process:
 **Phase 5: Validating improvement**
 - content: "Measure performance gains and verify no regressions"
 - activeForm: "Validating performance improvement"
+
 </phases>
 
 <metrics>
+
 ## Key Performance Indicators
 
 **Latency (response time):**
@@ -93,9 +100,11 @@ Use TodoWrite to track optimization process:
 - After optimization (improvement)
 - Under realistic load (not toy data)
 - Multiple runs (account for variance)
+
 </metrics>
 
 <profiling_tools>
+
 ## TypeScript/Bun
 
 **Built-in timing:**
@@ -167,9 +176,11 @@ let start = Instant::now();
 let duration = start.elapsed();
 println!("Took: {:?}", duration);
 ```
+
 </profiling_tools>
 
 <optimization_patterns>
+
 ## Algorithm Improvements
 
 **Time complexity:**
@@ -261,9 +272,11 @@ fn format_user(name: &str, buf: &mut String) {
 - Connection pooling (don't create per request)
 - Prepared statements (avoid SQL parsing)
 - Transaction batching (reduce round trips)
+
 </optimization_patterns>
 
 <workflow>
+
 Loop: Measure → Profile → Analyze → Optimize → Validate
 
 1. **Define performance goal** — target metric (e.g., P95 < 100ms)
@@ -280,9 +293,11 @@ At each step:
 - Note profiling tool output
 - Track optimization attempts (what worked/failed)
 - Update performance documentation
+
 </workflow>
 
 <validation>
+
 Before declaring optimization complete:
 
 **Check gains:**
@@ -302,9 +317,11 @@ Before declaring optimization complete:
 - ✓ Optimization approach explained?
 - ✓ Gains quantified with numbers?
 - ✓ Tradeoffs documented?
+
 </validation>
 
 <rules>
+
 ALWAYS:
 - Measure before optimizing (baseline)
 - Profile to find actual bottleneck
@@ -324,9 +341,11 @@ NEVER:
 - Sacrifice correctness for speed
 - Optimize without clear performance goal
 - Ignore algorithmic improvements
+
 </rules>
 
 <references>
+
 Methodology:
 - [benchmarking.md](references/benchmarking.md) — rigorous benchmarking methodology
 
@@ -334,4 +353,5 @@ Related skills:
 - codebase-analysis — evidence-based investigation (foundation)
 - debugging-and-diagnosis — structured bug investigation
 - typescript-dev — correctness before performance
+
 </references>
