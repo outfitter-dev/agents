@@ -158,6 +158,7 @@ Transition: Mark "Red Phase" `completed`, create "Green Phase" as `in_progress`
 </red_phase>
 
 <green_phase>
+
 Implement minimum code needed to make tests pass.
 
 Guidelines:
@@ -243,9 +244,11 @@ cargo test
 Commit: `feat: implement [feature] to pass tests`
 
 Transition: Mark "Green Phase" `completed`, create "Refactor Phase" as `in_progress`
+
 </green_phase>
 
 <refactor_phase>
+
 Enhance code quality without changing behavior. Tests must continue passing.
 
 Guidelines:
@@ -354,9 +357,11 @@ Commit: `refactor: [improvement description]`
 Transition: Mark "Refactor Phase" `completed`, create "Verify" as `in_progress`
 
 Final verification: Run full test suite with coverage and mutation testing. Mark "Verify" `completed` when all checks pass.
+
 </refactor_phase>
 
 <patterns>
+
 Modern TypeScript patterns:
 
 Discriminated unions for test scenarios:
@@ -486,9 +491,11 @@ pub fn authenticate(credentials: &Credentials) -> Result<AuthResult, AuthError> 
     // Implementation
 }
 ```
+
 </patterns>
 
 <organization>
+
 Follow project conventions, defaulting to:
 
 TypeScript/Bun:
@@ -519,9 +526,11 @@ tests/
 └── fixtures/
     └── users.rs                 # Test data
 ```
+
 </organization>
 
 <quality>
+
 Standards to maintain:
 
 Coverage metrics:
@@ -541,9 +550,11 @@ Test smells to avoid:
 - Coupling to implementation details
 - Unclear test names
 - Flaky tests passing/failing inconsistently
+
 </quality>
 
 <mutation_testing>
+
 Verify test quality with mutation testing.
 
 TypeScript:
@@ -582,9 +593,11 @@ Mutation testing identifies:
 - Weak assertions not verifying behavior
 - Missing edge case tests
 - Dead code not actually used
+
 </mutation_testing>
 
 <common_patterns>
+
 Async operations:
 
 TypeScript:
@@ -689,9 +702,11 @@ fn test_square() {
     }
 }
 ```
+
 </common_patterns>
 
 <bug_fixes>
+
 TDD workflow for bug fixes:
 
 1. Write failing test reproducing bug (Start "Red Phase" as `in_progress`)
@@ -724,9 +739,11 @@ function divide(a: number, b: number): Result {
 // 4. Verify test passes
 // 5. Refactor if needed
 ```
+
 </bug_fixes>
 
 <rules>
+
 ALWAYS:
 - Track progress with TodoWrite phases
 - Write tests before implementation (RED first)
@@ -746,9 +763,11 @@ NEVER:
 - Write flaky tests that pass/fail inconsistently
 - Mark phase complete without running tests
 - Write multiple unrelated assertions per test
+
 </rules>
 
 <quick_reference>
+
 Commands:
 
 ```bash
@@ -766,12 +785,15 @@ cargo tarpaulin           # Coverage report
 cargo mutants             # Mutation testing
 cargo test -- --nocapture # Show println! output
 ```
+
 </quick_reference>
 
 <references>
+
 - [feature-implementation.md](examples/feature-implementation.md) — TDD session for new feature
 - [bug-fix.md](examples/bug-fix.md) — TDD workflow for bug fix
 - [test-patterns.md](references/test-patterns.md) — TypeScript and Rust test patterns
 - [quality-metrics.md](references/quality-metrics.md) — coverage and mutation testing
 - [FORMATTING.md](../../shared/rules/FORMATTING.md) — formatting conventions
+
 </references>

@@ -9,6 +9,7 @@ description: Comprehensive TypeScript patterns including strict type safety, mod
 Type-safe code → compile-time errors → runtime confidence.
 
 <when_to_use>
+
 - Writing new TypeScript code
 - Eliminating `any` types and improving type precision
 - Using modern TypeScript 5.5+ features
@@ -19,9 +20,11 @@ Type-safe code → compile-time errors → runtime confidence.
 - Modernizing codebase patterns
 
 NOT for: runtime-only logic unrelated to types, non-TypeScript projects
+
 </when_to_use>
 
 <config>
+
 **tsconfig.json** strict settings:
 
 ```json
@@ -48,11 +51,13 @@ NOT for: runtime-only logic unrelated to types, non-TypeScript projects
 - TS 5.5+: Inferred type predicates
 - TS 5.6+: Iterator helpers
 - TS 5.7+: Path rewriting
+
 </config>
 
 ## Core Type Patterns
 
 <eliminating_any>
+
 Problem: `any` defeats the type system.
 
 ```typescript
@@ -97,9 +102,11 @@ function handleClick(event: any) { ... }
 // ✅ Specific type
 function handleClick(event: MouseEvent<HTMLButtonElement>) { ... }
 ```
+
 </eliminating_any>
 
 <result_types>
+
 Problem: Exceptions hide error cases from types.
 
 ```typescript
@@ -152,9 +159,11 @@ return renderUser(result.value);
 ```
 
 See [result-pattern.md](references/result-pattern.md) for utilities.
+
 </result_types>
 
 <discriminated_unions>
+
 Problem: Loose types allow illegal state combinations.
 
 ```typescript
@@ -188,9 +197,11 @@ function assertNever(value: never): never {
   throw new Error(`Unhandled: ${JSON.stringify(value)}`);
 }
 ```
+
 </discriminated_unions>
 
 <branded_types>
+
 Problem: Primitive types allow mixing incompatible values.
 
 ```typescript
@@ -236,11 +247,13 @@ renderHtml(sanitizeHtml(userInput)); // ✅ Must sanitize first
 ```
 
 See [branded-types.md](references/branded-types.md) for advanced patterns.
+
 </branded_types>
 
 ## Modern TypeScript (5.5+)
 
 <resource_management>
+
 TS 5.2+ introduced `using` for automatic resource cleanup.
 
 ```typescript
@@ -271,9 +284,11 @@ async function asyncWork() {
 ```
 
 Use for: database connections, file handles, locks, HTTP connections, transactions.
+
 </resource_management>
 
 <satisfies_operator>
+
 TS 4.9+ validates type without widening inference.
 
 ```typescript
@@ -296,9 +311,11 @@ type HomeRoute = typeof routes.home; // '/'
 ```
 
 Use `satisfies` when: config objects, route definitions, schema definitions, API response shapes.
+
 </satisfies_operator>
 
 <const_type_parameters>
+
 TS 5.0+ preserves literal types through generics.
 
 ```typescript
@@ -321,9 +338,11 @@ const routes = defineRoutes({
 });
 // Type: { home: '/'; user: '/user/:id' }
 ```
+
 </const_type_parameters>
 
 <inferred_type_predicates>
+
 TS 5.5+ automatically infers type predicates.
 
 ```typescript
@@ -341,9 +360,11 @@ function isNotNull<T>(x: T | null): x is T {
   return x !== null;
 }
 ```
+
 </inferred_type_predicates>
 
 <template_literals>
+
 Advanced string pattern matching at type level.
 
 ```typescript
@@ -362,11 +383,13 @@ type Params = ExtractParams<'/user/:id/post/:postId'>; // 'id' | 'postId'
 ```
 
 See [modern-features.md](references/modern-features.md) for comprehensive coverage.
+
 </template_literals>
 
 ## Zod Runtime Validation
 
 <zod_fundamentals>
+
 Schema = runtime validation + TypeScript type.
 
 ```typescript
@@ -399,9 +422,11 @@ try {
 ```
 
 **Prefer safeParse**: explicit error handling, no exceptions.
+
 </zod_fundamentals>
 
 <zod_primitives>
+
 ```typescript
 // Primitives
 z.string()
@@ -436,9 +461,11 @@ z.string().optional()       // string | undefined
 z.string().nullable()       // string | null
 z.string().default("value") // never undefined
 ```
+
 </zod_primitives>
 
 <zod_objects>
+
 ```typescript
 const UserSchema = z.object({
   id: z.string(),
@@ -464,9 +491,11 @@ UserSchema.strict().parse(data);      // Error on extra fields
 UserSchema.passthrough().parse(data); // Keep extra fields
 UserSchema.strip().parse(data);       // Remove extra (default)
 ```
+
 </zod_objects>
 
 <zod_discriminated_unions>
+
 ```typescript
 // ✅ Discriminated union (preferred)
 const Result = z.discriminatedUnion("status", [
@@ -497,9 +526,11 @@ const ApiResponse = z.discriminatedUnion("type", [
 
 type ApiResponse = z.infer<typeof ApiResponse>;
 ```
+
 </zod_discriminated_unions>
 
 <zod_transforms>
+
 ```typescript
 // Coercion (parse from string)
 z.coerce.number()  // "42" → 42
@@ -519,9 +550,11 @@ const uniqueEmail = z.string().email()
     return !(await checkEmailExists(email));
   }, { message: "Email already exists" });
 ```
+
 </zod_transforms>
 
 <zod_integration>
+
 **Environment variables**:
 ```typescript
 const EnvSchema = z.object({
@@ -545,11 +578,13 @@ app.post('/users', zValidator('json', UserSchema), (c) => {
 ```
 
 See [zod-schemas.md](references/zod-schemas.md) and [zod-integration.md](references/zod-integration.md).
+
 </zod_integration>
 
 ## Type Guards & Utilities
 
 <type_guards>
+
 ```typescript
 // User-defined type guards
 function isString(value: unknown): value is string {
@@ -575,9 +610,11 @@ if (first !== undefined) {
   processUser(first);
 }
 ```
+
 </type_guards>
 
 <type_utilities>
+
 ```typescript
 // DeepReadonly
 type DeepReadonly<T> = {
@@ -602,9 +639,11 @@ function createStore<T>(
   // middleware type won't influence T inference
 }
 ```
+
 </type_utilities>
 
 <rules>
+
 ALWAYS:
 - Strict TypeScript configuration enabled
 - Type-only imports: `import type { User } from './types'`
@@ -630,9 +669,11 @@ PREFER:
 - z.discriminatedUnion over z.union
 - Inferred type predicates (TS 5.5+) over manual
 - Const type parameters for literal preservation
+
 </rules>
 
 <references>
+
 **Type Patterns:**
 - [result-pattern.md](references/result-pattern.md) — Result/Either utilities
 - [branded-types.md](references/branded-types.md) — advanced branded type patterns
@@ -651,4 +692,5 @@ PREFER:
 - [form-validation.md](examples/form-validation.md) — Zod + React Hook Form
 - [resource-management.md](examples/resource-management.md) — using declarations
 - [state-machine.md](examples/state-machine.md) — discriminated union patterns
+
 </references>
