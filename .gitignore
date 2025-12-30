@@ -10,3 +10,6 @@
 
 # Agent-kit test output (scaffolding artifacts)
 agent-kit/test-output/
+
+# Deprecated/archived components
+.archive/
