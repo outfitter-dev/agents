@@ -25,76 +25,29 @@ Create specialized subagents that extend Claude Code with focused expertise and 
 
 ## Quick Start
 
-### Basic Agent
+### Using Templates
+
+Start with a template from `templates/`:
+
+| Template                | Use When                                            |
+| ----------------------- | --------------------------------------------------- |
+| `templates/basic.md`    | Simple agents with focused expertise                |
+| `templates/advanced.md` | Full-featured agents with all configuration options |
 
 ```bash
-# Create a simple agent
-mkdir -p agents
-cat > agents/security-reviewer.md << 'EOF'
----
-name: security-reviewer
-description: Use this agent when reviewing code for security vulnerabilities, authentication issues, or secure coding practices. Triggers on security audits, vulnerability scans, or when users mention OWASP, injection, XSS, or authentication review.\n\n<example>\nContext: User wants security review of authentication code.\nuser: "Can you check this auth code for security issues?"\nassistant: "I'll use the security-reviewer agent to analyze the authentication implementation for vulnerabilities."\n</example>\n\n<example>\nContext: User mentions specific vulnerability concerns.\nuser: "Check for SQL injection in the user service"\nassistant: "I'll delegate to the security-reviewer agent to scan for SQL injection vulnerabilities."\n</example>
-model: inherit
----
-
-# Security Reviewer Agent
-
-You are a security expert focused on identifying vulnerabilities and security issues.
-
-## Expertise
-
-- OWASP Top 10 vulnerabilities
-- Common security patterns and anti-patterns
-- Authentication/authorization best practices
-- Secure coding standards
-- Dependency security
-
-## Approach
-
-1. Analyze code for security vulnerabilities
-2. Check for proper input validation
-3. Review authentication/authorization
-4. Examine dependency security
-5. Provide actionable remediation steps
-
-## Output Format
-
-For each finding:
-- **Severity**: Critical/High/Medium/Low
-- **Location**: File and line number
-- **Description**: What's vulnerable
-- **Impact**: Potential consequences
-- **Remediation**: How to fix
-EOF
-```
-
-### Agent with Tool Restrictions
-
-```markdown
----
-name: code-analyst
-description: Use this agent for read-only code analysis without modifications. Triggers on code exploration, pattern detection, or dependency review requests.\n\n<example>\nContext: User wants to understand code structure.\nuser: "Analyze the architecture of the auth module"\nassistant: "I'll use the code-analyst agent to examine the auth module structure."\n</example>
-tools: Glob, Grep, Read, Skill, Task, TodoWrite, Bash(git show:*), Bash(git diff:*)
-model: inherit
----
-
-# Code Analyst Agent
-
-You perform read-only code analysis without making any changes.
-
-[Agent instructions here...]
+# Copy template to start a new agent
+cp templates/basic.md agents/my-agent.md
 ```
 
 ### Invoking Agents
 
 Agents are invoked through the Task tool:
 
-```typescript
-// In main conversation, Claude uses Task tool:
+```json
 {
-  "task": "Review this authentication code for security issues",
-  "subagent_type": "security-reviewer",
-  "context": ["src/auth/", "Additional context here"]
+  "description": "Review auth code for security issues",
+  "prompt": "Analyze the authentication implementation for vulnerabilities",
+  "subagent_type": "security-reviewer"
 }
 ```
 
@@ -102,13 +55,62 @@ Agents are invoked through the Task tool:
 
 ### Frontmatter
 
-| Field         | Required | Purpose                                     | Example             |
-| ------------- | -------- | ------------------------------------------- | ------------------- |
-| `name`        | Yes      | Agent identifier (matches filename)         | `security-reviewer` |
-| `description` | Yes      | When to use + examples (see format below)   | See examples        |
-| `tools`       | Optional | Restrict tool usage                         | `Read, Grep, Glob`  |
-| `model`       | Optional | Use `inherit` (preferred) or specific model | `inherit`           |
-| `color`       | Optional | Status line color                           | `orange`            |
+| Field            | Required | Purpose                                               | Example             |
+| ---------------- | -------- | ----------------------------------------------------- | ------------------- |
+| `name`           | Yes      | Agent identifier (matches filename)                   | `security-reviewer` |
+| `description`    | Yes      | When to use + examples (see format below)             | See examples        |
+| `model`          | No       | Model selection (see below)                           | `inherit`           |
+| `tools`          | No       | Restrict tool usage (omit to inherit)                 | `Read, Grep, Glob`  |
+| `skills`         | No       | Skills to auto-load (subagents do NOT inherit skills) | `tdd, debugging`    |
+| `permissionMode` | No       | Permission handling mode                              | `acceptEdits`       |
+| `color`          | No       | Status line color                                     | `orange`            |
+
+### Model Selection
+
+```yaml
+model: inherit  # Use parent's model (recommended default)
+model: haiku    # Fast/cheap - simple tasks, quick exploration
+model: sonnet   # Balanced - standard tasks (default if omitted)
+model: opus     # Complex reasoning, high-stakes decisions
+```
+
+**Guidance:**
+- `inherit` — Recommended default. Adapts to parent's model context
+- `haiku` — Fast exploration, simple pattern matching, low-latency responses
+- `sonnet` — Good default for most agents. Balanced cost/capability
+- `opus` — Reserve for high-stakes work where mistakes are costly
+
+**When to use `opus`:**
+- Security auditors (missing vulnerabilities has real consequences)
+- Architecture reviewers (bad decisions compound across codebase)
+- Complex refactoring agents (reasoning about many interacting changes)
+- Agents making irreversible decisions (database migrations, API contracts)
+- Code review for critical paths (auth, payments, data handling)
+
+**When `sonnet` is fine:**
+- Most implementation tasks
+- Standard code review
+- Test generation
+- Documentation and formatting
+
+### Permission Mode
+
+```yaml
+permissionMode: default           # Standard permission handling
+permissionMode: acceptEdits       # Auto-accept edit operations
+permissionMode: bypassPermissions # Skip permission prompts entirely
+permissionMode: plan              # Planning mode permissions
+```
+
+Use `acceptEdits` or `bypassPermissions` for automation-focused agents (CI/CD, batch processing).
+
+### Skills Field
+
+**Important:** Subagents do NOT inherit skills from the parent conversation. Use the `skills` field to preload skills:
+
+```yaml
+skills: tdd, debugging, type-safety
+```
 
 ### Description Format
 
@@ -151,16 +153,19 @@ model: inherit
 ## Agent Scopes
 
 ### Personal Agents (`~/.claude/agents/`)
+
 - Available across all your projects
 - Individual workflow and preferences
 - Show "(user)" in agent list
 
 ### Project Agents (`agents/`)
+
 - Shared with team via git
 - Team-specific specializations
 - Show "(project)" in agent list
 
 ### Plugin Agents (`plugin/agents/`)
+
 - Bundled with plugins
 - Distributed via marketplaces
 - Show "(plugin-name)" in agent list
@@ -275,7 +280,6 @@ rollback_plan: [...]
 - ✅ Success: [description]
 - ⚠️ Warning: [description]
 - ❌ Error: [description]
-```
 
 ### 4. Include Context and Constraints
 
@@ -314,6 +318,7 @@ rollback_plan: [...]
 **Don't over-restrict tools.** Agents work best with appropriate access. Only restrict when there's a specific safety reason.
 
 **Baseline tools** (generally always allow):
+
 ```yaml
 tools: Glob, Grep, Read, Skill, Task, TodoWrite
 ```
@@ -351,21 +356,25 @@ model: inherit
 ### Common Tool Patterns
 
 **Standard agent (most cases):**
+
 ```yaml
 # Don't specify tools — inherits full access from parent
 ```
 
 **Implementation agent:**
+
 ```yaml
 tools: Glob, Grep, Read, Write, Edit, Bash, Skill, Task, TodoWrite
 ```
 
 **Read-only analysis:**
+
 ```yaml
 tools: Glob, Grep, Read, Skill, Task, TodoWrite
 ```
 
 **Research agent:**
+
 ```yaml
 tools: Glob, Grep, Read, Skill, Task, TodoWrite, WebSearch, WebFetch
 ```
@@ -452,38 +461,39 @@ From the main conversation, Claude uses the Task tool:
 
 ```json
 {
-  "task": "Review authentication code for security vulnerabilities",
+  "description": "Security review of auth code",
+  "prompt": "Review authentication code for security vulnerabilities",
   "subagent_type": "security-reviewer"
 }
 ```
 
-### With Context
+### With Detailed Prompt
 
 ```json
 {
-  "task": "Generate unit tests for the authentication service",
-  "subagent_type": "testing-specialist",
-  "context": [
-    "Focus on edge cases and error handling",
-    "Use existing test patterns from tests/auth/",
-    "Target 90% coverage"
-  ]
+  "description": "Generate auth service tests",
+  "prompt": "Generate unit tests for the authentication service. Focus on edge cases and error handling. Use existing test patterns from tests/auth/. Target 90% coverage.",
+  "subagent_type": "testing-specialist"
 }
 ```
 
-### With Files
+### Resumable Agents
+
+Agents can be resumed to continue previous conversations:
 
 ```json
 {
-  "task": "Optimize database queries in user service",
-  "subagent_type": "performance-optimizer",
-  "context": [
-    "@src/services/user-service.ts",
-    "Current query time: 2.3s",
-    "Target: <500ms"
-  ]
+  "description": "Continue code analysis",
+  "prompt": "Now examine the error handling patterns",
+  "subagent_type": "code-analyzer",
+  "resume": "abc123"
 }
 ```
+
+Each agent execution returns an `agentId`. Use this ID with the `resume` parameter to continue with full context from the previous conversation. Useful for:
+- Long-running research broken into multiple sessions
+- Iterative refinement without losing context
+- Multi-step workflows with sequential context
 
 ## Testing Agents
 
@@ -527,7 +537,7 @@ claude --debug
 
 After creating a new agent from scratch, load the **claude-agent-validation** skill to verify the agent follows correct conventions:
 
-```
+```text
 # Load validation skill after creating agent
 "Validate the new security-reviewer agent I just created"
 ```
@@ -746,6 +756,7 @@ Handle database migrations safely.
 **Issue:** Agent needs different tool access
 
 **Fix:**
+
 ```markdown
 ---
 tools: Glob, Grep, Read, Skill, Task, TodoWrite
@@ -775,19 +786,21 @@ Note: Prefer `model: inherit` to use parent's tool access. Only specify `tools:`
 
 Deep-dive documentation in `references/`:
 
-| Reference                                         | Content                                            |
-| ------------------------------------------------- | -------------------------------------------------- |
-| [agent-vs-skill.md](references/agent-vs-skill.md) | Critical distinction between agents and skills     |
-| [frontmatter.md](references/frontmatter.md)       | YAML schema, fields, description format            |
-| [tools.md](references/tools.md)                   | Tool configuration and restriction patterns        |
-| [task-tool.md](references/task-tool.md)           | Task tool integration and context passing          |
-| [discovery.md](references/discovery.md)           | How agents are found and loaded                    |
-| [agent-types.md](references/agent-types.md)       | Archetypes: analysis, implementation, review, etc. |
-| [patterns.md](references/patterns.md)             | Best practices and multi-agent patterns            |
-| [performance.md](references/performance.md)       | Optimization and efficiency                        |
-| [todowrite.md](references/todowrite.md)           | TodoWrite patterns for agent visibility            |
+| Reference                                               | Content                                            |
+| ------------------------------------------------------- | -------------------------------------------------- |
+| [agent-vs-skill.md](references/agent-vs-skill.md)       | Critical distinction between agents and skills     |
+| [frontmatter.md](references/frontmatter.md)             | YAML schema, fields, description format            |
+| [tools.md](references/tools.md)                         | Tool configuration and restriction patterns        |
+| [task-tool.md](references/task-tool.md)                 | Task tool integration and context passing          |
+| [discovery.md](references/discovery.md)                 | How agents are found and loaded                    |
+| [agent-types.md](references/agent-types.md)             | Archetypes: analysis, implementation, review, etc. |
+| [patterns.md](references/patterns.md)                   | Best practices and multi-agent patterns            |
+| [performance.md](references/performance.md)             | Optimization and efficiency                        |
+| [todowrite.md](references/todowrite.md)                 | TodoWrite patterns for agent visibility            |
+| [advanced-features.md](references/advanced-features.md) | Resumable agents, CLI config, built-in agents      |
 
 See [EXAMPLES.md](EXAMPLES.md) for complete real-world agent examples.
+See `templates/` for starter templates.
 
 ## Quick Reference
 
