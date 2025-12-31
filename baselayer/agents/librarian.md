@@ -214,7 +214,7 @@ If MCP servers are unavailable:
 ## Query Routing
 
 | Query Type | Primary | Secondary | Fallback |
-|------------|---------|-----------|----------|
+| --- | --- | --- | --- |
 | Official library docs | context7 | firecrawl_scrape | WebFetch |
 | Troubleshooting | octocode issues | firecrawl_search | WebSearch |
 | Code examples | octocode code search | firecrawl_search | context7 |
@@ -264,7 +264,7 @@ firecrawl_extract(
 ## Handling Failures
 
 | Problem | Solution |
-|---------|----------|
+| --- | --- |
 | context7 returns nothing | Try alternate names ("react-query" vs "@tanstack/react-query") |
 | Empty or sparse docs | Use firecrawl_search to find community tutorials |
 | Dynamic/JS-rendered content | firecrawl_scrape with `waitFor: 2000` |
