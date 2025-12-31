@@ -81,6 +81,163 @@ Agents can be resumed to continue previous conversations:
 - Iterative refinement without losing context
 - Multi-step workflows with sequential context
 
+## Background Execution
+
+Run agents asynchronously while continuing other work. Essential for parallel workflows.
+
+### When to Use Background Execution
+
+| Scenario | Background? | Rationale |
+|----------|-------------|-----------|
+| Independent parallel reviews | Yes | No dependencies, faster completion |
+| Sequential pipeline | No | Each step needs previous result |
+| Long-running analysis while user waits | Yes | Can work on other tasks meanwhile |
+| Quick consultation mid-task | No | Need immediate answer to continue |
+
+### Launching Background Agents
+
+Set `run_in_background: true` in the Task tool call:
+
+```json
+{
+  "description": "Security review (background)",
+  "prompt": "Review authentication code for vulnerabilities",
+  "subagent_type": "security-reviewer",
+  "run_in_background": true
+}
+```
+
+The Task tool returns immediately with a `task_id` instead of waiting for completion.
+
+### Retrieving Results with TaskOutput
+
+Use the `TaskOutput` tool to get results from background agents:
+
+```json
+{
+  "task_id": "abc123",
+  "block": true,
+  "timeout": 30000
+}
+```
+
+**Parameters:**
+
+| Parameter | Default | Purpose |
+|-----------|---------|---------|
+| `task_id` | Required | ID returned when launching background agent |
+| `block` | `true` | Wait for completion (`true`) or check status (`false`) |
+| `timeout` | `30000` | Max wait time in milliseconds (up to 600000) |
+
+**Blocking mode** (`block: true`): Waits until agent completes or timeout.
+
+**Non-blocking mode** (`block: false`): Returns current status immediately, useful for polling.
+
+### Parallel Execution Pattern
+
+Launch multiple agents in a single message, then collect results:
+
+```
+┌─────────────────────────────────────────────────────────────────┐
+│ Step 1: Launch all agents in parallel (single message)         │
+├─────────────────────────────────────────────────────────────────┤
+│ Task(security-reviewer, run_in_background: true) → task_id_1   │
+│ Task(performance-analyzer, run_in_background: true) → task_id_2│
+│ Task(quality-reviewer, run_in_background: true) → task_id_3    │
+└─────────────────────────────────────────────────────────────────┘
+                              ↓
+┌─────────────────────────────────────────────────────────────────┐
+│ Step 2: Collect results (can work on other tasks meanwhile)    │
+├─────────────────────────────────────────────────────────────────┤
+│ TaskOutput(task_id_1, block: true) → security findings         │
+│ TaskOutput(task_id_2, block: true) → performance findings      │
+│ TaskOutput(task_id_3, block: true) → quality findings          │
+└─────────────────────────────────────────────────────────────────┘
+                              ↓
+┌─────────────────────────────────────────────────────────────────┐
+│ Step 3: Aggregate and synthesize results                       │
+└─────────────────────────────────────────────────────────────────┘
+```
+
+### Example: Comprehensive Code Review
+
+```json
+// Launch three reviewers in parallel (single message with multiple tool calls)
+[
+  {
+    "description": "Security review",
+    "prompt": "Review src/auth/ for security vulnerabilities",
+    "subagent_type": "security-reviewer",
+    "run_in_background": true
+  },
+  {
+    "description": "Performance review",
+    "prompt": "Analyze src/auth/ for performance bottlenecks",
+    "subagent_type": "performance-analyzer",
+    "run_in_background": true
+  },
+  {
+    "description": "Type safety review",
+    "prompt": "Check src/auth/ for type safety issues",
+    "subagent_type": "type-checker",
+    "run_in_background": true
+  }
+]
+
+// Returns immediately with task IDs:
+// task_id_1: "sec-abc123"
+// task_id_2: "perf-def456"
+// task_id_3: "type-ghi789"
+
+// Later, collect results:
+{ "task_id": "sec-abc123", "block": true }
+{ "task_id": "perf-def456", "block": true }
+{ "task_id": "type-ghi789", "block": true }
+```
+
+### Working While Agents Run
+
+With background agents running, the main conversation can:
+
+- Continue other implementation work
+- Launch additional agents
+- Respond to user questions
+- Periodically check status with `block: false`
+
+```json
+// Check if agent is done without blocking
+{
+  "task_id": "abc123",
+  "block": false
+}
+// Returns status: "running" | "completed" | "failed"
+```
+
+### Error Handling
+
+Background agents can fail. Handle gracefully:
+
+**Timeout**: If `TaskOutput` times out, the agent is still running. Increase timeout or check again later.
+
+**Agent failure**: TaskOutput returns error details. Decide whether to retry, use fallback, or report to user.
+
+**Lost task ID**: Task IDs are returned when launching. Store them if needed across conversation turns.
+
+### Best Practices
+
+1. **Launch together**: Put all parallel Task calls in a single message for true concurrency
+2. **Collect together**: Retrieve results in batch when all are needed
+3. **Use timeouts wisely**: Set based on expected agent runtime
+4. **Handle failures**: Always plan for agents that fail or timeout
+5. **Don't over-parallelize**: 3-5 parallel agents is usually optimal
+
+### When NOT to Use Background
+
+- Agent result needed immediately for next step
+- Simple, fast agent calls (overhead not worth it)
+- Debugging agent behavior (harder to trace)
+- When sequential ordering matters
+
 ## Response Flow
 
 ```
