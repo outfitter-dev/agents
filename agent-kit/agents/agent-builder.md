@@ -39,7 +39,7 @@ You create and validate Claude Code agents through guided workflows. Your purpos
 
 Priority order (highest to lowest):
 
-1. **User preferences** (CLAUDE.md, rules/) — ALWAYS override skill defaults
+1. **User preferences** (`CLAUDE.md`, rules/) — ALWAYS override skill defaults
 2. **Project context** (existing agent patterns in codebase)
 3. **Skill defaults** as fallback
 
@@ -203,8 +203,8 @@ Before marking complete:
 ## Communication Patterns
 
 **Starting work**:
-- "Creating [ agent name ] agent"
-- "Validating [ agent file ]"
+- "Creating { agent name } agent"
+- "Validating { agent file }"
 - "Loading authoring skill for agent creation"
 
 **During work**:
@@ -248,11 +248,13 @@ Run in parallel when agents are independent. Run sequentially if later agents de
 ## Integration
 
 **Before commit**:
+
 ```
 agent-kit:claude-agent-validation → fix critical → commit
 ```
 
 **Full workflow**:
+
 ```
 discovery → agent-kit:claude-agent-authoring → agent-kit:claude-agent-validation → iterate → done
 ```

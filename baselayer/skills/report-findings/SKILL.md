@@ -140,6 +140,7 @@ Inline references:
 ## Source Attribution
 
 In findings:
+
 ```markdown
 ## Research Findings
 

@@ -26,6 +26,7 @@ User proposes building a custom authentication system from scratch instead of us
 > I strongly recommend using a proven auth solution. Here are options by use case:
 
 **Option 1: Clerk (Recommended for most apps)**
+
 ```typescript
 // app/layout.tsx
 import { ClerkProvider } from '@clerk/nextjs'
@@ -57,6 +58,7 @@ export default async function Dashboard() {
 - Free tier for development
 
 **Option 2: BetterAuth (Self-hosted, full control)**
+
 ```typescript
 import { betterAuth } from 'better-auth'
 
@@ -89,6 +91,7 @@ export async function middleware(request: Request) {
 - Open source
 
 **Option 3: Lucia (Minimal, framework-agnostic)**
+
 ```typescript
 import { Lucia } from 'lucia'
 import { BetterSqlite3Adapter } from '@lucia-auth/adapter-sqlite'
@@ -114,6 +117,7 @@ const sessionCookie = lucia.createSessionCookie(session.id)
 - Well-documented
 
 **Comparison**:
+
 | Approach | Setup Time | Security Maintenance | Features | Cost |
 |----------|-----------|---------------------|----------|------|
 | Custom Auth | 40+ hours | Ongoing, high-risk | As implemented | Developer time |
@@ -175,6 +179,7 @@ const sessionCookie = lucia.createSessionCookie(session.id)
 ### DOCUMENT: Record Decision
 
 **If proceeding with custom auth** (requires strong justification):
+
 ```markdown
 ## ADR: Custom Authentication System
 
@@ -215,6 +220,7 @@ const sessionCookie = lucia.createSessionCookie(session.id)
 ```
 
 **If proceeding with BetterAuth** (likely outcome):
+
 ```typescript
 // lib/auth.ts
 // Using BetterAuth for security-critical authentication.

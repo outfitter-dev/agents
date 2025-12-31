@@ -285,6 +285,7 @@ git checkout gitbutler/workspace
 - Aim for single responsibility per branch
 
 **Update base regularly:**
+
 ```bash
 but base update
 ```
@@ -293,6 +294,7 @@ but base update
 - Always run full test suite before merging
 
 **Meaningful merge commits:**
+
 ```bash
 # Good: Describes what and why
 git merge --no-ff feature-auth -m "feat: add JWT-based user authentication"

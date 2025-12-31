@@ -7,6 +7,7 @@ Utility scripts for the claude-skill-authoring skill.
 Generate new Claude Code Agent Skill from template with proper structure.
 
 **Usage:**
+
 ```bash
 ./scripts/scaffold-skill.sh <skill-name> [options]
 ```
@@ -24,6 +25,7 @@ Generate new Claude Code Agent Skill from template with proper structure.
 - `-h, --help`: Show help
 
 **Examples:**
+
 ```bash
 # Simple skill
 ./scripts/scaffold-skill.sh my-analyzer
@@ -39,7 +41,7 @@ Generate new Claude Code Agent Skill from template with proper structure.
 ```
 
 **Template Types:**
-- `simple`: Basic skill with minimal structure
+- **simple**: Basic skill with minimal structure
 - `read-only`: Analysis skill with Read, Grep, Glob tools
 - `workflow`: Multi-step workflow skill
 - `scripts`: Skill with utility scripts directory
@@ -49,6 +51,7 @@ Generate new Claude Code Agent Skill from template with proper structure.
 Validate Claude Code Agent Skill structure, frontmatter, and best practices.
 
 **Usage:**
+
 ```bash
 ./scripts/validate-skill.sh <skill-directory> [options]
 ```
@@ -61,6 +64,7 @@ Validate Claude Code Agent Skill structure, frontmatter, and best practices.
 - `-h, --help`: Show help
 
 **Examples:**
+
 ```bash
 # Basic validation
 ./scripts/validate-skill.sh .claude/skills/my-skill

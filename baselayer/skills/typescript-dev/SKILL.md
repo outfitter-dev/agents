@@ -86,6 +86,7 @@ function isDataWithValue(value: unknown): value is { value: unknown } {
 **Common patterns**:
 
 API responses:
+
 ```typescript
 async function fetchUser(id: string): Promise<User> {
   const response = await fetch(`/api/users/${id}`);
@@ -95,6 +96,7 @@ async function fetchUser(id: string): Promise<User> {
 ```
 
 Event handlers:
+
 ```typescript
 // ❌ any event
 function handleClick(event: any) { ... }
@@ -231,6 +233,7 @@ await getUser(userId); // ✅ Works
 ```
 
 Security with branded types:
+
 ```typescript
 type SanitizedHtml = Brand<string, 'SanitizedHtml'>;
 
@@ -556,6 +559,7 @@ const uniqueEmail = z.string().email()
 <zod_integration>
 
 **Environment variables**:
+
 ```typescript
 const EnvSchema = z.object({
   NODE_ENV: z.enum(['development', 'production', 'test']).default('development'),
@@ -568,6 +572,7 @@ const env = EnvSchema.parse(process.env);
 ```
 
 **API validation with Hono**:
+
 ```typescript
 import { zValidator } from '@hono/zod-validator';
 

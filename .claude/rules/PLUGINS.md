@@ -5,14 +5,19 @@
 ```
 {plugin}/
 ├── .claude-plugin/
-│   └── plugin.json      # name, version, description
+│   └── plugin.json      # name, version, description, keywords
 ├── skills/              # SKILL.md + references/ + examples/
-├── commands/            # {name}.md slash commands
-├── agents/              # {name}.md subagents
+├── agents/              # {name}.md subagents (optional)
+├── commands/            # {name}.md slash commands (optional)
+├── hooks/               # Event-triggered automation (optional)
+├── scripts/             # Shared utility scripts (optional)
+├── templates/           # Reusable templates (optional)
 ├── shared/
-│   └── rules/           # Common rules for this plugin
+│   └── rules/           # Common rules for this plugin (optional)
 └── README.md
 ```
+
+Only `.claude-plugin/`, `skills/`, and `README.md` are required.
 
 ## Marketplace Registration
 
@@ -21,16 +26,41 @@
 ```json
 {
   "name": "marketplace-name",
+  "owner": {
+    "name": "Organization Name",
+    "email": "contact@example.com"
+  },
+  "metadata": {
+    "description": "Marketplace description",
+    "version": "1.0.0",
+    "homepage": "https://github.com/org/repo",
+    "repository": "https://github.com/org/repo"
+  },
   "plugins": [
-    { "name": "plugin-name", "source": "./path", "version": "1.0.0" }
+    {
+      "name": "plugin-name",
+      "source": "./path",
+      "description": "Plugin description",
+      "version": "1.0.0",
+      "keywords": ["keyword1", "keyword2"]
+    }
   ]
 }
 ```
 
+## Available Plugins
+
+| Plugin | Purpose |
+|--------|---------|
+| **baselayer** | Core methodology: TDD, debugging, type safety, architecture, research, pathfinding |
+| **agent-kit** | Authoring skills, plugins, agents, and platform configuration (Claude Code, Codex) |
+| **gitbutler** | GitButler virtual branch workflows, multi-agent collaboration |
+| **cli-dev** | CLI development: argument parsing, help text, subcommands |
+
 ## Layer Strategy
 
 **baselayer**: Universal skills (tdd, debugging, type-safety, pathfinding)
-**domain plugins**: Tool-specific (gitbutler, waymark, guardrails)
+**domain plugins**: Tool-specific (gitbutler, cli-dev, agent-kit)
 **user overrides**: `~/.claude/` and project `.claude/`
 
 Hierarchy: user → project → plugin → baselayer
@@ -58,6 +88,6 @@ Keep SKILL.md focused. Move details to references/.
 
 ## Cross-Referencing
 
-Skills reference skills: `[test-driven-development/SKILL.md](../test-driven-development/SKILL.md)`
+Skills reference skills: "Consider using the **baselayer:test-driven-development** skill for this task."
 Agents load skills: "Load TDD skill with Skill tool"
-Commands invoke skills: "Load the debugging skill and begin by..."
+Commands invoke skills: "Load the **debugging** skill and begin by..."

@@ -268,6 +268,7 @@ Severity (use ◇◆ from formatting conventions):
 **Section Templates**
 
 VCS Section (stack-aware):
+
 ```
 📊 {VCS_NAME} STACK
 {visual tree with branch relationships}
@@ -277,6 +278,7 @@ VCS Section (stack-aware):
 ```
 
 VCS Section (standard):
+
 ```
 📊 VERSION CONTROL
 Current branch: {branch}
@@ -285,6 +287,7 @@ Recent commits: {count} in last {period}
 ```
 
 PR Section:
+
 ```
 🔀 PULL REQUESTS ({open_count} open)
 PR #{num}: {title} [{state}]
@@ -295,6 +298,7 @@ PR #{num}: {title} [{state}]
 ```
 
 Issue Section:
+
 ```
 📋 ISSUES (Recent Activity)
 {issue_key}: {title} [{status}]
@@ -304,6 +308,7 @@ Issue Section:
 ```
 
 CI Section:
+
 ```
 🔧 CI/CD ({total} runs)
 Success: {success_count} | Failed: {failed_count} | In Progress: {pending_count}
@@ -323,6 +328,7 @@ Highlight at top or in dedicated section:
 - Failed CI needing investigation
 
 Example:
+
 ```
 ⚠️  ATTENTION NEEDED
 ◆◆ PR #123: CI failing for 2 days (blocks deployment)
@@ -401,6 +407,7 @@ Skill should work with ANY available subset of sources.
 **Parallel Queries**
 
 Execute source queries concurrently:
+
 ```typescript
 const [vcsData, prData, issueData, ciData] = await Promise.allSettled([
   fetchVCSState(timeFilter),
@@ -459,6 +466,7 @@ scripts/
 ```
 
 **Usage**:
+
 ```bash
 ./scripts/sitrep.ts                     # All sources, 24h default
 ./scripts/sitrep.ts -t 7d               # All sources, last 7 days
@@ -600,6 +608,7 @@ Status reporting as session starter:
 <examples>
 
 **Basic Usage** (no time filter):
+
 ```
 User: "Give me a status report"
 Agent: {parses as default 7-day window}
@@ -608,6 +617,7 @@ Agent: {parses as default 7-day window}
 ```
 
 **Time-Constrained** (natural language):
+
 ```
 User: "Status report for last 24 hours"
 Agent: {parses "last 24 hours" → "-24h"}
@@ -616,6 +626,7 @@ Agent: {parses "last 24 hours" → "-24h"}
 ```
 
 **Multi-Source** (full context):
+
 ```
 Agent gathers:
   - Graphite stack (3 branches, 3 PRs)
@@ -632,6 +643,7 @@ Agent presents:
 ```
 
 **Graceful Degradation** (limited sources):
+
 ```
 Agent detects:
   - git available (no Graphite)

@@ -108,6 +108,7 @@ Use TodoWrite to track optimization process:
 ## TypeScript/Bun
 
 **Built-in timing:**
+
 ```typescript
 console.time('operation')
 // ... code to measure
@@ -121,6 +122,7 @@ console.log(`Took ${elapsed / 1_000_000}ms`)
 ```
 
 **Performance API:**
+
 ```typescript
 const mark1 = performance.mark('start')
 // ... code to measure
@@ -143,6 +145,7 @@ console.log(`Duration: ${measure.duration}ms`)
 ## Rust
 
 **Benchmarking:**
+
 ```rust
 #[cfg(test)]
 mod benches {
@@ -168,6 +171,7 @@ mod benches {
 - `heaptrack` — memory profiling
 
 **Instrumentation:**
+
 ```rust
 use std::time::Instant;
 
@@ -197,6 +201,7 @@ println!("Took: {:?}", duration);
 ## Memory Optimization
 
 **Reduce allocations:**
+
 ```typescript
 // Bad: creates new array each iteration
 for (const item of items) {

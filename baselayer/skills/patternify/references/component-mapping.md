@@ -170,30 +170,35 @@ COMMANDs orchestrated by SKILL:
 ## Common Mistakes
 
 **Creating AGENT for non-expert work**
+
 ```text
 ✗ file-organizer-agent
 ✓ COMMAND for organization, SKILL for strategy
 ```
 
 **Using SKILL when COMMAND suffices**
+
 ```text
 ✗ run-prettier-skill (no guidance needed)
 ✓ COMMAND /format
 ```
 
 **Creating HOOK for user-driven action**
+
 ```text
 ✗ on-user-request hook
 ✓ COMMAND or SKILL
 ```
 
 **Encoding expertise in COMMAND**
+
 ```text
 ✗ grep-based security check
 ✓ AGENT for real review, or external scanning tool
 ```
 
 **Over-compositing**
+
 ```text
 ✗ SKILL + COMMAND + HOOK + AGENT for simple linting
 ✓ COMMAND, optionally HOOK for pre-commit

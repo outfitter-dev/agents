@@ -724,6 +724,7 @@ async fn test_user_registration_flow() {
 ### Test Smell: Setup Longer Than Test
 
 ❌ Bad:
+
 ```typescript
 test('processes order', () => {
   const user = { id: '1', email: 'test@example.com', role: 'user', /* 10 more fields */ }
@@ -737,6 +738,7 @@ test('processes order', () => {
 ```
 
 ✓ Good:
+
 ```typescript
 test('processes order', () => {
   const order = new OrderBuilder().withQuantity(2).withPrice(100).build()
@@ -749,6 +751,7 @@ test('processes order', () => {
 ### Test Smell: Multiple Unrelated Assertions
 
 ❌ Bad:
+
 ```typescript
 test('user management', () => {
   expect(createUser('test@example.com')).toBeDefined()
@@ -758,6 +761,7 @@ test('user management', () => {
 ```
 
 ✓ Good:
+
 ```typescript
 test('creates user with valid email', () => {
   expect(createUser('test@example.com')).toBeDefined()
@@ -775,6 +779,7 @@ test('deletes user successfully', () => {
 ### Test Smell: Testing Implementation Details
 
 ❌ Bad:
+
 ```typescript
 test('caches results internally', () => {
   const service = new UserService()
@@ -785,6 +790,7 @@ test('caches results internally', () => {
 ```
 
 ✓ Good:
+
 ```typescript
 test('returns cached user on second fetch', async () => {
   const service = new UserService()

@@ -33,6 +33,7 @@ Track with TodoWrite. Phases advance through RED-GREEN-REFACTOR cycle.
 | Verify | Refactor complete | "Verifying implementation" |
 
 TodoWrite format:
+
 ```text
 - Write failing test for { feature }
 - Implement { feature } to pass tests
@@ -89,6 +90,7 @@ Guidelines:
 - Descriptive test names forming sentences
 
 TypeScript pattern:
+
 ```typescript
 import { describe, test, expect } from 'bun:test'
 
@@ -122,6 +124,7 @@ describe('UserAuthentication', () => {
 ```
 
 Rust pattern:
+
 ```rust
 #[cfg(test)]
 mod tests {
@@ -169,6 +172,7 @@ Guidelines:
 - Run tests frequently to verify progress
 
 TypeScript pattern:
+
 ```typescript
 type AuthResult =
   | { type: 'success'; user: User }
@@ -201,6 +205,7 @@ async function authenticate(credentials: {
 ```
 
 Rust pattern:
+
 ```rust
 #[derive(Debug, PartialEq)]
 pub enum AuthResult {
@@ -233,6 +238,7 @@ pub fn authenticate(credentials: &Credentials) -> Result<AuthResult, AuthError> 
 ```
 
 Verify:
+
 ```bash
 # TypeScript
 bun test
@@ -260,6 +266,7 @@ Guidelines:
 - Consider mutation testing to verify test quality
 
 TypeScript refactoring pattern:
+
 ```typescript
 // Extract validation
 function validateCredentials(credentials: {
@@ -302,6 +309,7 @@ async function authenticate(credentials: {
 ```
 
 Rust refactoring pattern:
+
 ```rust
 // Extract validation
 fn validate_credentials(credentials: &Credentials) -> Result<(), AuthError> {
@@ -342,6 +350,7 @@ pub fn authenticate(credentials: &Credentials) -> Result<AuthResult, AuthError> 
 ```
 
 Verify refactoring:
+
 ```bash
 # TypeScript - run tests and check mutation score
 bun test
@@ -365,6 +374,7 @@ Final verification: Run full test suite with coverage and mutation testing. Mark
 Modern TypeScript patterns:
 
 Discriminated unions for test scenarios:
+
 ```typescript
 type TestScenario =
   | { type: 'success'; data: User }
@@ -381,6 +391,7 @@ test.each<TestScenario>([
 ```
 
 Type-safe test builders:
+
 ```typescript
 class TestUserBuilder {
   private user: Partial<User> = {}
@@ -402,6 +413,7 @@ class TestUserBuilder {
 ```
 
 Const assertions for test data:
+
 ```typescript
 const testCases = [
   { input: 'hello', expected: 'HELLO' },
@@ -416,6 +428,7 @@ test.each(testCases)('transforms $input to $expected', ({ input, expected }) => 
 Bun speed patterns:
 
 Focused tests during development:
+
 ```typescript
 test.only('current feature under development', () => {
   // Fast feedback on current work
@@ -427,12 +440,14 @@ test.skip('slow integration test', () => {
 ```
 
 Watch mode:
+
 ```bash
 bun test --watch
 bun test --watch user.service.test.ts
 ```
 
 Parallel execution:
+
 ```typescript
 describe.concurrent('Independent Operations', () => {
   test('operation 1', async () => {
@@ -444,6 +459,7 @@ describe.concurrent('Independent Operations', () => {
 Rust test patterns:
 
 Property-based testing:
+
 ```rust
 use proptest::prelude::*;
 
@@ -458,6 +474,7 @@ proptest! {
 ```
 
 Async testing:
+
 ```rust
 #[tokio::test]
 async fn authenticates_user_async() {
@@ -472,6 +489,7 @@ async fn authenticates_user_async() {
 ```
 
 Documentation as tests:
+
 ```rust
 /// Authenticates a user with credentials.
 ///
@@ -499,6 +517,7 @@ pub fn authenticate(credentials: &Credentials) -> Result<AuthResult, AuthError> 
 Follow project conventions, defaulting to:
 
 TypeScript/Bun:
+
 ```
 src/
 ├── user/
@@ -514,6 +533,7 @@ tests/
 ```
 
 Rust:
+
 ```
 src/
 ├── user/
@@ -558,6 +578,7 @@ Test smells to avoid:
 Verify test quality with mutation testing.
 
 TypeScript:
+
 ```bash
 # Install Stryker
 bun add -d @stryker-mutator/core @stryker-mutator/typescript-checker
@@ -567,6 +588,7 @@ bun x stryker run
 ```
 
 Configuration (`stryker.conf.json`):
+
 ```json
 {
   "mutate": ["src/**/*.ts", "!src/**/*.test.ts"],
@@ -581,6 +603,7 @@ Configuration (`stryker.conf.json`):
 ```
 
 Rust:
+
 ```bash
 # Install cargo-mutants
 cargo install cargo-mutants
@@ -601,6 +624,7 @@ Mutation testing identifies:
 Async operations:
 
 TypeScript:
+
 ```typescript
 test('handles async errors gracefully', async () => {
   const promise = fetchUserData('invalid-id')
@@ -609,6 +633,7 @@ test('handles async errors gracefully', async () => {
 ```
 
 Rust:
+
 ```rust
 #[tokio::test]
 async fn handles_async_errors() {
@@ -620,6 +645,7 @@ async fn handles_async_errors() {
 Mocking dependencies:
 
 TypeScript:
+
 ```typescript
 import { mock } from 'bun:test'
 
@@ -634,6 +660,7 @@ test('handles empty database', async () => {
 ```
 
 Rust:
+
 ```rust
 #[cfg(test)]
 mod tests {
@@ -660,6 +687,7 @@ mod tests {
 Error path testing:
 
 TypeScript:
+
 ```typescript
 describe('Error Handling', () => {
   test('throws specific error for invalid input', () => {
@@ -670,6 +698,7 @@ describe('Error Handling', () => {
 ```
 
 Rust:
+
 ```rust
 #[test]
 fn returns_error_for_invalid_input() {
@@ -681,6 +710,7 @@ fn returns_error_for_invalid_input() {
 Parameterized tests:
 
 TypeScript:
+
 ```typescript
 test.each([
   { input: 5, expected: 25 },
@@ -692,6 +722,7 @@ test.each([
 ```
 
 Rust:
+
 ```rust
 #[test]
 fn test_square() {
@@ -718,6 +749,7 @@ TDD workflow for bug fixes:
 7. Final verification (Mark "Verify" as `completed` after confirming all tests pass)
 
 Example:
+
 ```typescript
 // 1. Write failing test
 test('handles division by zero gracefully', () => {

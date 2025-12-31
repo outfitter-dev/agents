@@ -1,94 +1,141 @@
-# Subagent Patterns
+# Subagent Usage
 
-## Frontmatter
+## Authoring
 
-```yaml
----
-name: agent-name
-version: 1.0.0
-description: |
-  One-line purpose. Second line expands.
+To create or edit subagents, use the **agent-kit:claude-agent-authoring** skill.
 
-  <example>
-  Context: When this applies
-  user: "User message"
-  assistant: "Response explaining agent delegation"
-  </example>
----
+## Philosophy: Proactive Delegation
+
+**Use subagents aggressively to preserve main conversation context.**
+
+The main agent's context is precious. Every file read, search result, and intermediate reasoning consumes tokens. Subagents run in isolated contexts—when they complete, only their final output returns to the main conversation.
+
+**Default stance**: If a task can be delegated, delegate it.
+
+## When to Delegate
+
+```
+Task arrives
+├── Exploration/research? → Explore agent (always)
+├── Specialized expertise? → Domain agent
+├── Multi-file analysis? → Subagent (saves context)
+├── Independent subtask? → Background agent
+└── Simple, focused work? → Main agent (maybe)
 ```
 
-3-4 examples covering: typical use, edge case, verb triggers.
+**Delegate when:**
+- Reading/analyzing more than 2-3 files
+- Task requires specialized knowledge (security, performance, testing)
+- Work is independent and can run in parallel
+- You need to preserve main context for user interaction
 
-## Core Sections
+**Keep in main when:**
+- Direct user Q&A requiring conversation history
+- Single-file, simple operations
+- Tasks requiring immediate back-and-forth
 
-```markdown
-# {Agent Name} Agent
+## Background Invocation
 
-One paragraph identity statement.
+Run agents asynchronously to parallelize work:
 
-## Core Identity
-
-**Role**: What this agent does
-**Scope**: Boundaries of responsibility
-**Philosophy**: Guiding principle
-
-## Skill Loading Hierarchy
-
-1. User preferences (CLAUDE.md, rules/) — ALWAYS override
-2. Project context (existing patterns)
-3. Skill defaults as fallback
-
-## Available Skills
-
-List skills agent can load with:
-- **When to load**: trigger conditions
-- **What it provides**: capability
-- **Output format**: expected deliverable
-
-## Routing / Decision Tree
-
-```text
-User asks about X → Load skill Y
-User wants to Z → Load skill W
+```json
+{
+  "description": "Security audit of auth module",
+  "prompt": "Review src/auth/ for vulnerabilities",
+  "subagent_type": "security-reviewer",
+  "run_in_background": true
+}
 ```
 
-## Responsibilities
+**Retrieve results with TaskOutput:**
 
-Numbered steps or categorized duties.
-
-## Quality Checklist
-
-Verification before delivery.
-
-## Communication
-
-Starting/during/completing patterns.
-
-## Edge Cases
-
-How to handle ambiguity, conflicts, missing context.
+```json
+{
+  "task_id": "agent-abc123",
+  "block": true
+}
 ```
+
+**Parallel execution pattern:**
+
+```
+Main agent receives complex task
+  ├─ Launch security-reviewer (background)
+  ├─ Launch performance-analyzer (background)
+  ├─ Launch test-coverage (background)
+  └─ Continue other work...
+
+Later: TaskOutput to collect results
+  └─ Synthesize and report to user
+```
+
+## Invocation Parameters
+
+| Parameter | Purpose |
+|-----------|---------|
+| `description` | Short summary (3-5 words) |
+| `prompt` | Detailed instructions |
+| `subagent_type` | Agent identifier |
+| `run_in_background` | Async execution |
+| `resume` | Continue previous agent session |
+| `model` | Override model (haiku/sonnet/opus) |
+
+## Context-Saving Patterns
+
+### Research Delegation
+
+```json
+{
+  "description": "Find auth implementation",
+  "prompt": "Locate all authentication-related files and summarize the auth flow",
+  "subagent_type": "Explore"
+}
+```
+
+Main agent receives summary, not 50 file contents.
+
+### Parallel Review
+
+```json
+// Launch all in single message with run_in_background: true
+{ "subagent_type": "security-reviewer", "run_in_background": true, ... }
+{ "subagent_type": "performance-analyzer", "run_in_background": true, ... }
+{ "subagent_type": "code-quality", "run_in_background": true, ... }
+```
+
+Three reviews run in parallel. Main agent stays responsive.
+
+### Resumable Sessions
+
+```json
+{
+  "description": "Continue security analysis",
+  "prompt": "Now check the session management",
+  "subagent_type": "security-reviewer",
+  "resume": "abc123"
+}
+```
+
+Long analysis across multiple invocations without losing agent context.
+
+## Built-in Agents
+
+| Agent | Model | Purpose |
+|-------|-------|---------|
+| **Explore** | haiku | Fast read-only codebase exploration |
+| **general-purpose** | sonnet | Complex multi-step tasks |
+| **Plan** | sonnet | Research during plan mode |
 
 ## Design Principles
 
 **Generalist over specialist**: Few agents (5-7) loading many skills
 **Router pattern**: Agents detect task type, load appropriate skill
 **Skill holds methodology**: Agent orchestrates, skill executes
-**User prefs win**: Hierarchy always checked before skill defaults
-
-## Our Agents
-
-| Agent | Verbs | Loads |
-|-------|-------|-------|
-| developer | build, fix, implement, refactor | tdd, type-safety, debugging |
-| reviewer | review, critique, check, audit | code-review, expertise-* |
-| analyst | investigate, research, explore | research-and-report, pathfinding, patternify |
-| specialist | deploy, configure, CI/CD | domain-specific skills |
-| tester | test, validate, verify, prove | scenario-testing, tdd |
+**Context preservation**: Main agent stays lean, subagents do heavy lifting
 
 ## Anti-Patterns
 
-- Embedding methodology in agent (put in skill instead)
-- One agent per skill (use generalist + dynamic loading)
-- Skipping user preference check
-- Hardcoding tool/model constraints (inherit instead)
+- Reading 10+ files in main agent (delegate to Explore)
+- Sequential agent calls that could be parallel
+- Keeping research results in main context (let subagent summarize)
+- Not using `run_in_background` for independent tasks

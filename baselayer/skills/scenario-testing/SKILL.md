@@ -51,6 +51,7 @@ Successful scenario patterns documented as JSONL. One scenario per line, each a 
 Purpose: capture proven patterns, regression indicators, reusable test cases.
 
 Structure:
+
 ```jsonl
 {"name":"auth-login-success","description":"User logs in with valid credentials","setup":"Create test user with known password","steps":["POST /auth/login with credentials","Receive JWT token","GET /auth/me with token"],"expected":"User profile returned with correct data","tags":["auth","jwt","happy-path"]}
 {"name":"auth-login-invalid","description":"Login fails with wrong password","setup":"Test user exists","steps":["POST /auth/login with wrong password"],"expected":"401 Unauthorized, no token issued","tags":["auth","error-handling"]}

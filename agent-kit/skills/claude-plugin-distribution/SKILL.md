@@ -225,6 +225,7 @@ Follow semver (MAJOR.MINOR.PATCH):
 ### Updating Version
 
 1. **Update plugin.json**
+
    ```json
    {
      "version": "1.1.0"
@@ -235,12 +236,14 @@ Follow semver (MAJOR.MINOR.PATCH):
    Add entry for new version
 
 3. **Commit changes**
+
    ```bash
    git add plugin.json CHANGELOG.md
    git commit -m "chore: bump version to 1.1.0"
    ```
 
 4. **Create git tag**
+
    ```bash
    git tag v1.1.0
    git push origin main --tags
@@ -253,6 +256,7 @@ Follow semver (MAJOR.MINOR.PATCH):
 Create a ZIP file with proper structure:
 
 **Correct structure:**
+
 ```
 my-plugin.zip
 └── my-plugin/           # Plugin folder is root
@@ -262,6 +266,7 @@ my-plugin.zip
 ```
 
 **Incorrect structure:**
+
 ```
 my-plugin.zip            # Files directly in root
 ├── plugin.json
@@ -296,6 +301,7 @@ test/
 ```
 
 Create package script:
+
 ```bash
 #!/bin/bash
 zip -r my-plugin.zip my-plugin/ -x "*.git*" "*.DS_Store" "node_modules/*" "__pycache__/*"
@@ -306,16 +312,19 @@ zip -r my-plugin.zip my-plugin/ -x "*.git*" "*.DS_Store" "node_modules/*" "__pyc
 ### Repository Setup
 
 1. **Create repository**
+
    ```bash
    gh repo create my-plugin --public
    ```
 
 2. **Add remote**
+
    ```bash
    git remote add origin https://github.com/username/my-plugin.git
    ```
 
 3. **Push code**
+
    ```bash
    git push -u origin main
    ```
@@ -323,6 +332,7 @@ zip -r my-plugin.zip my-plugin/ -x "*.git*" "*.DS_Store" "node_modules/*" "__pyc
 ### Creating Releases
 
 **Manual release:**
+
 ```bash
 # Create and push tag
 git tag v1.0.0
@@ -335,6 +345,7 @@ gh release create v1.0.0 \
 ```
 
 **With ZIP artifact:**
+
 ```bash
 # Create package
 zip -r my-plugin-v1.0.0.zip my-plugin/
@@ -357,6 +368,7 @@ gh release create v1.0.0 \
 - Free hosting
 
 **Setup:**
+
 ```bash
 # Users install with:
 /plugin marketplace add username/my-plugin
@@ -502,6 +514,7 @@ jobs:
 ### For End Users
 
 **GitHub installation:**
+
 ```bash
 # Add marketplace
 /plugin marketplace add username/plugin-repo
@@ -511,6 +524,7 @@ jobs:
 ```
 
 **Local installation:**
+
 ```bash
 # Add local directory
 /plugin marketplace add ./path/to/plugin
@@ -543,6 +557,7 @@ Add entry to marketplace.json:
 ## Best Practices
 
 ### Documentation
+
 - Keep README concise and clear
 - Provide installation examples
 - Document all configuration options
@@ -550,12 +565,14 @@ Add entry to marketplace.json:
 - Add screenshots/demos if helpful
 
 ### Versioning
+
 - Follow semantic versioning
 - Update CHANGELOG for each release
 - Tag releases in Git
 - Never delete or modify existing tags
 
 ### Package Quality
+
 - Validate all files before release
 - Test installation process
 - Check cross-platform compatibility
@@ -563,6 +580,7 @@ Add entry to marketplace.json:
 - Exclude development files
 
 ### Maintenance
+
 - Respond to issues promptly
 - Keep dependencies updated
 - Test with latest Claude Code
@@ -572,18 +590,21 @@ Add entry to marketplace.json:
 ## Troubleshooting Distribution
 
 **Issue: Plugin structure invalid**
+
 ```bash
 # Verify structure
 unzip -l plugin.zip
 ```
 
 **Issue: Missing files in package**
+
 ```bash
 # Check .gitignore doesn't exclude required files
 # Verify all files committed to Git
 ```
 
 **Issue: Version conflicts**
+
 ```bash
 # Ensure version in plugin.json matches Git tag
 # Check marketplace entry has correct version

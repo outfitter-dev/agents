@@ -103,6 +103,7 @@ All five quality checks must pass before codifying.
 6. Implement: Create the component(s)
 
 TodoWrite phases:
+
 ```text
 - Identify { pattern description }
 - Classify { pattern type }

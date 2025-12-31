@@ -15,21 +15,22 @@ type: workflow
 description: Red-Green-Refactor cycle
 
 phases:
-  - name: Red
+- name: Red
     actions: [understand requirement, write failing test, confirm failure]
     exit_criteria: test fails with clear assertion
 
-  - name: Green
+- name: Green
     actions: [write minimal implementation, run until pass]
     exit_criteria: test passes
 
-  - name: Refactor
+- name: Refactor
     actions: [improve quality, extract duplicates, re-run tests]
     exit_criteria: clean code, all tests pass
 
 triggers:
-  - implementing new feature
-  - fixing bug with test coverage
+- implementing new feature
+- fixing bug with test coverage
+
 ```
 
 Component: Skill (requires judgment on test design)
@@ -76,25 +77,26 @@ type: workflow
 description: Comprehensive PR review process
 
 phases:
-  - name: Context
+- name: Context
     actions: [read description, understand problem, review discussion]
     exit_criteria: clear understanding of intent
 
-  - name: Code Review
+- name: Code Review
     actions: [check correctness, verify tests, assess readability]
     exit_criteria: quality assessment
 
-  - name: Testing
+- name: Testing
     actions: [checkout locally, run tests, manual testing]
     exit_criteria: confidence in implementation
 
-  - name: Feedback
+- name: Feedback
     actions: [specific comments, highlight positives, approve/request changes]
     exit_criteria: review decision
 
 triggers:
-  - PR ready for review
-  - review requested
+- PR ready for review
+- review requested
+
 ```
 
 Component: Skill (requires judgment on code quality)
@@ -113,6 +115,7 @@ steps:
 ```
 
 Too vague:
+
 ```yaml
 # BAD
 steps:
@@ -122,6 +125,7 @@ steps:
 ```
 
 Tool-specific instead of outcome-focused:
+
 ```yaml
 # BAD
 steps:
@@ -174,11 +178,11 @@ type: orchestration
 description: Deploy services with dependency ordering
 
 tools:
-  - tool: Docker
+- tool: Docker
     role: container management
-  - tool: Kubernetes
+- tool: Kubernetes
     role: orchestration
-  - tool: Health endpoints
+- tool: Health endpoints
     role: verification
 
 sequence:
@@ -192,6 +196,7 @@ sequence:
   8. Verify end-to-end
 
 rollback: Revert in reverse dependency order
+
 ```
 
 Component: Skill (manual with judgment) or Command (if automated)
@@ -232,24 +237,25 @@ type: orchestration
 description: Run tests in parallel, aggregate results
 
 tools:
-  - tool: Bash
+- tool: Bash
     role: process management
-  - tool: Test runner
+- tool: Test runner
     role: execution
-  - tool: JSON parser
+- tool: JSON parser
     role: result aggregation
 
 coordination:
-  - Split tests into groups
-  - Execute in parallel
-  - Monitor for failures
-  - Aggregate coverage
-  - Generate unified report
+- Split tests into groups
+- Execute in parallel
+- Monitor for failures
+- Aggregate coverage
+- Generate unified report
 
 parallelization:
-  - Group by file/module
-  - Limit to CPU count
-  - Kill all on fast-fail
+- Group by file/module
+- Limit to CPU count
+- Kill all on fast-fail
+
 ```
 
 Component: Command (automated with standard inputs)
@@ -267,6 +273,7 @@ coordination:
 ```
 
 Tight coupling:
+
 ```yaml
 # BAD
 url: https://api.example.com/v1/users
@@ -276,6 +283,7 @@ url: ${API_BASE_URL}/users
 ```
 
 Missing rollback:
+
 ```yaml
 # BAD
 steps:
@@ -341,19 +349,20 @@ thresholds:
   must_split: 500+ LOC
 
 exceptions:
-  - Mechanical changes (formatting, renames)
-  - Lockfile updates
-  - Batch refactoring with clear pattern
+- Mechanical changes (formatting, renames)
+- Lockfile updates
+- Batch refactoring with clear pattern
 
 rules:
-  - condition: LOC < 100
+- condition: LOC < 100
     action: Consider if PR is complete
-  - condition: LOC 100-250
+- condition: LOC 100-250
     action: Ideal, proceed
-  - condition: LOC 300-500
+- condition: LOC 300-500
     action: Strongly recommend splitting
-  - condition: LOC > 500
+- condition: LOC > 500
     action: Must split unless mechanical
+
 ```
 
 Component: Hook (pre-push check) + Skill (splitting guidance)
@@ -430,6 +439,7 @@ recovery:
   fallback: Optional enhancement unavailable
   compensate: Partial success, undo completed steps
   propagate: Caller has better context
+
 ```
 
 Component: Skill (embedded guidance)
@@ -446,6 +456,7 @@ action: Must split
 ```
 
 Cargo cult:
+
 ```yaml
 # BAD
 condition: Writing React
@@ -454,6 +465,7 @@ rationale: "Hooks are modern"
 ```
 
 Contradictory:
+
 ```yaml
 # BAD
 - condition: Code is complex

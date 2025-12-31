@@ -46,6 +46,7 @@ Manages configuration files for Claude Desktop and Claude Code, including MCP se
 ### Adding an MCP Server
 
 **Python Server:**
+
 ```json
 {
   "mcpServers": {
@@ -63,6 +64,7 @@ Manages configuration files for Claude Desktop and Claude Code, including MCP se
 ```
 
 **Node.js Server:**
+
 ```json
 {
   "mcpServers": {
@@ -79,6 +81,7 @@ Manages configuration files for Claude Desktop and Claude Code, including MCP se
 ```
 
 **With Environment Variables:**
+
 ```json
 {
   "mcpServers": {
@@ -147,6 +150,7 @@ Automatically install marketplaces when team members trust the folder:
 ### Enable Chrome DevTools
 
 **macOS:**
+
 ```bash
 echo '{"allowDevTools": true}' > ~/Library/Application\ Support/Claude/developer_settings.json
 ```
@@ -154,6 +158,7 @@ echo '{"allowDevTools": true}' > ~/Library/Application\ Support/Claude/developer
 Open DevTools: `Command-Option-Shift-i`
 
 **Windows:**
+
 ```powershell
 echo '{"allowDevTools": true}' > "$env:APPDATA\Claude\developer_settings.json"
 ```
@@ -314,6 +319,7 @@ tail -f ~/Library/Logs/Claude/mcp.log
 ### Adding a New MCP Server
 
 1. **Install server** (if needed)
+
    ```bash
    npm install -g @modelcontextprotocol/server-filesystem
    # or
@@ -321,12 +327,14 @@ tail -f ~/Library/Logs/Claude/mcp.log
    ```
 
 2. **Get full paths**
+
    ```bash
    which npx  # /usr/local/bin/npx
    pwd        # /Users/name/my-server
    ```
 
 3. **Add to config**
+
    ```json
    {
      "mcpServers": {
@@ -341,6 +349,7 @@ tail -f ~/Library/Logs/Claude/mcp.log
 4. **Restart Claude Desktop**
 
 5. **Verify in logs**
+
    ```bash
    tail -f ~/Library/Logs/Claude/mcp-server-my-server.log
    ```
@@ -348,11 +357,13 @@ tail -f ~/Library/Logs/Claude/mcp.log
 ### Setting Up Team Project
 
 1. **Create settings file**
+
    ```bash
    mkdir -p .claude
    ```
 
 2. **Add marketplaces**
+
    ```json
    {
      "extraKnownMarketplaces": {
@@ -367,6 +378,7 @@ tail -f ~/Library/Logs/Claude/mcp.log
    ```
 
 3. **Commit to repository**
+
    ```bash
    git add .claude/settings.json
    git commit -m "feat: add Claude Code team configuration"
@@ -378,18 +390,21 @@ tail -f ~/Library/Logs/Claude/mcp.log
 ## Best Practices
 
 ### Security
+
 - Never commit credentials to config files
 - Use environment variables for secrets
 - Set minimal permissions for MCP servers
 - Review third-party servers before adding
 
 ### Organization
+
 - Group related servers logically
 - Use descriptive server names
 - Document required environment variables
 - Maintain separate configs for different environments
 
 ### Maintenance
+
 - Regularly update MCP servers
 - Review logs for errors
 - Test servers after updates

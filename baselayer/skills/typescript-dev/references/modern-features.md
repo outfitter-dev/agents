@@ -457,6 +457,7 @@ function processArray(arr: number[]) {
    ```
 
 2. **Better Control Flow Analysis**
+
    ```typescript
    // Some previously allowed code may now error
    let value: string | null = null;
@@ -479,6 +480,7 @@ function processArray(arr: number[]) {
    ```
 
 2. **`noUncheckedSideEffectImports` May Break Existing Code**
+
    ```typescript
    // Now requires explicit side-effect imports
    import './styles.css';  // Must keep for side effects
@@ -496,6 +498,7 @@ function processArray(arr: number[]) {
    ```
 
 2. **Stricter Readonly Initialization**
+
    ```typescript
    // Must initialize all readonly properties
    class Example {

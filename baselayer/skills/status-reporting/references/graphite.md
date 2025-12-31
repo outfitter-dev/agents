@@ -23,6 +23,7 @@ gt log
 ```
 
 **Example Output**:
+
 ```
 ◆ feature/auth-refactor (3) - #123 ✓ Ready to merge
 ├─ feature/add-jwt (2) - #122 ⏳ In progress

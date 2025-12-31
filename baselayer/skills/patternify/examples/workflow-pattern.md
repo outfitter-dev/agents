@@ -142,6 +142,7 @@ skills/
 4. Prevent: Add regression test, document learnings
 
 **Hypothesis Documentation**:
+
 ```text
 Hypothesis: Password reset uses bcrypt, login uses SHA-256,
 causing hashes to never match.
@@ -155,6 +156,7 @@ Test: Change login to use bcrypt.compare()
 ```
 
 **Regression Test**:
+
 ```typescript
 it('allows login with new password after reset', async () => {
   const user = await createTestUser('test@example.com');

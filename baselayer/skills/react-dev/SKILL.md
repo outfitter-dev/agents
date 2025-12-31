@@ -27,6 +27,7 @@ NOT for: non-React TypeScript, vanilla JS React, general TypeScript patterns
 React 19 simplifies TypeScript patterns — breaking changes require migration:
 
 **ref as prop** — forwardRef deprecated:
+
 ```typescript
 // ✅ React 19 - ref as regular prop
 type ButtonProps = {
@@ -46,6 +47,7 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
 ```
 
 **useActionState** — replaces useFormState:
+
 ```typescript
 // ✅ React 19
 import { useActionState } from 'react';
@@ -71,6 +73,7 @@ import { useFormState, useFormStatus } from 'react-dom';
 ```
 
 **use()** — unwraps promises/context:
+
 ```typescript
 // ✅ React 19 - use() for promises
 function UserProfile({ userPromise }: { userPromise: Promise<User> }) {
@@ -86,6 +89,7 @@ function Component() {
 ```
 
 **Server Components** — async by default:
+
 ```typescript
 // ✅ React 19 Server Component
 async function UserPage({ params }: { params: { id: string } }) {
@@ -128,6 +132,7 @@ function Button({ variant, children, ...props }: ButtonProps) {
 ```
 
 **Children typing**:
+
 ```typescript
 // ✅ Specific types
 type Props = {
@@ -144,6 +149,7 @@ type Props = {
 ```
 
 **Optional props**:
+
 ```typescript
 // ✅ Clear optionality
 type Props = {
@@ -163,6 +169,7 @@ function Component({
 ```
 
 **Discriminated unions** — type-safe variants:
+
 ```typescript
 type ButtonProps =
   | { variant: 'link'; href: string }
@@ -214,6 +221,7 @@ function handleFocus(event: React.FocusEvent<HTMLInputElement>) {
 ```
 
 **Generic event handlers**:
+
 ```typescript
 // ✅ Reusable handler
 function createHandler<T extends HTMLElement>(
@@ -370,6 +378,7 @@ function useUser() {
 Generic components → type inference from props → no manual type annotations at call site.
 
 **Generic Table**:
+
 ```typescript
 type Column<T> = {
   key: keyof T;
@@ -421,6 +430,7 @@ type User = { id: number; name: string; email: string };
 ```
 
 **Generic Select**:
+
 ```typescript
 type SelectProps<T> = {
   options: T[];
@@ -460,6 +470,7 @@ type Country = { code: string; name: string };
 ```
 
 **Constrained generics**:
+
 ```typescript
 // ✅ Constraint ensures required properties
 type HasId = { id: string | number };
@@ -489,6 +500,7 @@ See [generic-components.md](examples/generic-components.md)
 React 19 Server Components — async by default, run on server.
 
 **Async Server Component**:
+
 ```typescript
 // app/users/[id]/page.tsx
 type Props = {
@@ -508,6 +520,7 @@ export default async function UserPage({ params, searchParams }: Props) {
 ```
 
 **Server Actions** — 'use server' directive:
+
 ```typescript
 // actions/user.ts
 'use server';
@@ -530,6 +543,7 @@ export async function updateUser(
 ```
 
 **Client Component with Server Action**:
+
 ```typescript
 // components/UserForm.tsx
 'use client';
@@ -558,6 +572,7 @@ export function UserForm({ userId }: { userId: string }) {
 ```
 
 **use() with promises**:
+
 ```typescript
 // Server Component passes promise to Client Component
 async function Page() {
@@ -582,6 +597,7 @@ See [server-components.md](examples/server-components.md)
 TanStack Router — type-safe routing with loader data, search params validation.
 
 **Route definition**:
+
 ```typescript
 import { createRoute } from '@tanstack/react-router';
 import { z } from 'zod';
@@ -601,6 +617,7 @@ const userRoute = createRoute({
 ```
 
 **Using typed route data**:
+
 ```typescript
 import { useLoaderData, useSearch, useParams } from '@tanstack/react-router';
 
@@ -620,6 +637,7 @@ function UserPage() {
 ```
 
 **Type-safe navigation**:
+
 ```typescript
 import { useNavigate } from '@tanstack/react-router';
 
@@ -637,6 +655,7 @@ function Component() {
 ```
 
 **Search params with defaults**:
+
 ```typescript
 const listRoute = createRoute({
   path: '/products',

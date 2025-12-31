@@ -72,6 +72,7 @@ Prevent problematic bash commands:
 ```
 
 **validate-bash.sh**:
+
 ```bash
 #!/usr/bin/env bash
 set -euo pipefail
@@ -116,6 +117,7 @@ exit 0
 ### Location
 
 **Project hooks** (`.claude/settings.json`):
+
 ```json
 {
   "hooks": {
@@ -125,6 +127,7 @@ exit 0
 ```
 
 **Personal hooks** (`~/.claude/settings.json`):
+
 ```json
 {
   "hooks": {
@@ -134,6 +137,7 @@ exit 0
 ```
 
 **Plugin hooks** (`plugin/hooks/hooks.json` or `plugin/.claude-plugin/plugin.json`):
+
 ```json
 {
   "hooks": {

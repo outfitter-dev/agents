@@ -50,6 +50,7 @@ export type AppType = typeof app; // Full route types!
 ```
 
 **❌ NEVER break the chain:**
+
 ```typescript
 const app = new Hono();
 app.get('/users', handler1);  // Types LOST!
@@ -57,6 +58,7 @@ app.post('/users', handler2);
 ```
 
 **Path parameters** — typed automatically:
+
 ```typescript
 .get('/posts/:id/comments/:commentId', (c) => {
   const { id, commentId } = c.req.param(); // Both string
@@ -65,6 +67,7 @@ app.post('/users', handler2);
 ```
 
 **Query parameters** — use Zod for validation:
+
 ```typescript
 import { zValidator } from '@hono/zod-validator';
 import { z } from 'zod';
@@ -82,6 +85,7 @@ const app = new Hono()
 ```
 
 **Middleware in chain:**
+
 ```typescript
 const app = new Hono()
   .use('*', logger())
@@ -139,6 +143,7 @@ export type AppType = typeof app;
 ```
 
 **Multi-module structure:**
+
 ```typescript
 // routes/users.ts
 export const usersRoute = factory.createApp()
@@ -447,7 +452,7 @@ const requestId = factory.createMiddleware(async (c, next) => {
 - [middleware.md](references/middleware.md) — Auth, logging, CORS patterns
 
 **External:**
-- Hono: https://hono.dev
-- @hono/zod-openapi: https://github.com/honojs/middleware/tree/main/packages/zod-openapi
+- Hono: <https://hono.dev>
+- @hono/zod-openapi: <https://github.com/honojs/middleware/tree/main/packages/zod-openapi>
 
 </references>

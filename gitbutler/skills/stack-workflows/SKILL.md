@@ -51,6 +51,7 @@ but branch new grandchild-feature --anchor child-feature
 **Result:** `base-feature` ← `child-feature` ← `grandchild-feature`
 
 **Short form:** `-a` instead of `--anchor`
+
 ```bash
 but branch new child -a parent
 ```
@@ -254,16 +255,19 @@ but branch delete child --force
 ## Best Practices
 
 ### Planning
+
 - Start simple: 2-3 levels max initially
 - Single responsibility per level
 - Only stack when there's a real dependency
 
 ### Maintenance
+
 - Run `but log` regularly to verify structure
 - Commit to correct branches immediately
 - Clean up empty branches
 
 ### Communication
+
 - Clear commit messages explaining why stack level exists
 - Descriptive names indicating stack relationship
 - Share `but status` when coordinating

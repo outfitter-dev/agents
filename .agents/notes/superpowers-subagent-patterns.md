@@ -129,7 +129,7 @@ If we want to incorporate these patterns:
    - Add dot diagrams for complex flows
    - Enhance anti-patterns with specific "never" items
 
-4. **Consider**: Should we have a separate `plan-execution` skill (like superpowers' subagent-driven-development) vs our routing-focused `subagent-coordination`? Different purposes.
+4. **Consider**: Should we have a separate `plan-execution` skill (like superpowers' subagent-driven-development) vs our routing-focused **subagent-coordination**? Different purposes.
 
 ## Notes
 

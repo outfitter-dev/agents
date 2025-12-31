@@ -7,6 +7,7 @@ Extended details, examples, and severity guidance for each checklist category.
 ### What to Check
 
 **No `any` types without justification:**
+
 ```typescript
 // ◆◆ Severe
 function process(data: any) { ... }
@@ -22,6 +23,7 @@ function process(data: unknown) {
 ```
 
 **Null/undefined handling:**
+
 ```typescript
 // ◆ Moderate
 const user = users.find(u => u.id === id);
@@ -33,6 +35,7 @@ return user?.name ?? 'Unknown';
 ```
 
 **Type guards for unions:**
+
 ```typescript
 // ◆ Moderate
 type Result = Success | Error;
@@ -55,6 +58,7 @@ function handle(result: Result) {
 ```
 
 **Generic constraints:**
+
 ```typescript
 // ◇ Minor
 function getProperty<T>(obj: T, key: string) {
@@ -68,6 +72,7 @@ function getProperty<T, K extends keyof T>(obj: T, key: K): T[K] {
 ```
 
 **Return types on public functions:**
+
 ```typescript
 // ◇ Minor
 export function calculate(x: number, y: number) {
@@ -93,6 +98,7 @@ export function calculate(x: number, y: number): number {
 ### What to Check
 
 **All error paths handled:**
+
 ```typescript
 // ◆◆ Severe - silent failure
 async function saveUser(user: User) {
@@ -112,6 +118,7 @@ async function saveUser(user: User): Promise<Result<void, DbError>> {
 ```
 
 **Meaningful error messages:**
+
 ```typescript
 // ◆ Moderate
 if (!user) throw new Error('Invalid');
@@ -123,6 +130,7 @@ if (!user) {
 ```
 
 **Promise rejection handling:**
+
 ```typescript
 // ◆◆ Severe
 fetchData().then(process); // Unhandled rejection
@@ -146,6 +154,7 @@ try {
 ```
 
 **Resource cleanup:**
+
 ```typescript
 // ◆ Moderate
 const file = await fs.open('data.txt');
@@ -174,6 +183,7 @@ try {
 ### What to Check
 
 **Input validation:**
+
 ```typescript
 // ◆◆ Severe
 app.get('/user/:id', (req, res) => {
@@ -193,6 +203,7 @@ app.get('/user/:id', (req, res) => {
 ```
 
 **No hardcoded secrets:**
+
 ```typescript
 // ◆◆ Severe
 const API_KEY = 'sk_live_abc123xyz789';
@@ -203,6 +214,7 @@ if (!API_KEY) throw new Error('API_KEY not configured');
 ```
 
 **Authentication checks:**
+
 ```typescript
 // ◆◆ Severe
 app.delete('/admin/users/:id', (req, res) => {
@@ -218,6 +230,7 @@ app.delete('/admin/users/:id', requireAuth, requireAdmin, (req, res) => {
 ```
 
 **XSS prevention:**
+
 ```typescript
 // ◆◆ Severe
 function displayMessage(msg: string) {
@@ -235,6 +248,7 @@ element.innerHTML = DOMPurify.sanitize(msg);
 ```
 
 **Password handling:**
+
 ```typescript
 // ◆◆ Severe
 if (user.password === inputPassword) { ... }
@@ -257,6 +271,7 @@ if (await bcrypt.compare(inputPassword, user.passwordHash)) { ... }
 ### What to Check
 
 **Tests exist:**
+
 ```typescript
 // ◆ Moderate - new function, no tests
 export function calculateDiscount(price: number, tier: string): number {
@@ -267,6 +282,7 @@ export function calculateDiscount(price: number, tier: string): number {
 ```
 
 **Edge cases covered:**
+
 ```typescript
 // ◆ Moderate - only happy path tested
 test('calculateDiscount applies premium discount', () => {
@@ -284,6 +300,7 @@ test('calculateDiscount handles edge cases', () => {
 ```
 
 **Actual assertions:**
+
 ```typescript
 // ◆ Moderate - test doesn't verify behavior
 test('user creation', async () => {
@@ -302,6 +319,7 @@ test('user creation', async () => {
 ```
 
 **No test pollution:**
+
 ```typescript
 // ◆ Moderate
 test('first test', () => {
@@ -334,6 +352,7 @@ test('second test', () => {
 ```
 
 **Error scenarios tested:**
+
 ```typescript
 // ◆ Moderate - only success path tested
 test('fetchUser retrieves user', async () => {
@@ -365,6 +384,7 @@ test('fetchUser handles network errors', async () => {
 ### What to Check
 
 **Names reveal intent:**
+
 ```typescript
 // ◇ Minor
 function proc(d: Data): number {
@@ -381,6 +401,7 @@ function calculateActiveItemsWithSurcharge(data: Data): number {
 ```
 
 **Single responsibility:**
+
 ```typescript
 // ◆ Moderate - doing too much
 function processUserRequest(userId: string, action: string, data: any) {
@@ -419,6 +440,7 @@ function deleteUser(userId: string): void {
 ```
 
 **No magic numbers:**
+
 ```typescript
 // ◇ Minor
 if (user.age > 65) { ... }
@@ -433,6 +455,7 @@ setTimeout(doWork, ONE_DAY_MS);
 ```
 
 **DRY violations:**
+
 ```typescript
 // ◆ Moderate
 function validateEmail(email: string): boolean {
@@ -456,6 +479,7 @@ function validateAdminEmail(email: string): boolean {
 ```
 
 **Nested conditionals:**
+
 ```typescript
 // ◆ Moderate - 4 levels deep
 function process(user: User) {
@@ -483,6 +507,7 @@ function process(user: User) {
 ```
 
 **Dead code:**
+
 ```typescript
 // ◇ Minor
 function calculate(x: number): number {
@@ -505,6 +530,7 @@ function calculate(x: number): number {
 ### What to Check
 
 **Public APIs documented:**
+
 ```typescript
 // ◆ Moderate - exported, no docs
 export function transformData(input: RawData, options: Options): ProcessedData {
@@ -532,6 +558,7 @@ export function transformData(input: RawData, options: Options): ProcessedData {
 ```
 
 **Complex algorithms explained:**
+
 ```typescript
 // ◆ Moderate - unclear why
 function score(items: Item[]): number {
@@ -560,6 +587,7 @@ function score(items: Item[]): number {
 ```
 
 **Non-obvious decisions:**
+
 ```typescript
 // ◆ Moderate - unclear why setTimeout
 async function syncData() {
@@ -579,6 +607,7 @@ async function syncData() {
 ```
 
 **Breaking changes noted:**
+
 ```typescript
 // ◆ Moderate
 export function getUsers(): Promise<User[]> {
@@ -600,6 +629,7 @@ export function getUsers(): Promise<User[]> {
 ```
 
 **TODOs with context:**
+
 ```typescript
 // ◇ Minor
 // TODO: optimize this
@@ -622,6 +652,7 @@ export function getUsers(): Promise<User[]> {
 ### What to Check
 
 **N+1 queries:**
+
 ```typescript
 // ◆ Moderate
 async function getUsersWithPosts(userIds: string[]) {
@@ -650,6 +681,7 @@ async function getUsersWithPosts(userIds: string[]) {
 ```
 
 **Appropriate data structures:**
+
 ```typescript
 // ◆ Moderate - O(n) lookup
 const activeUsers = users.filter(u => u.active);
@@ -665,6 +697,7 @@ function isActive(userId: string): boolean {
 ```
 
 **Unnecessary allocations:**
+
 ```typescript
 // ◇ Minor
 function processItems(items: Item[]) {
@@ -683,6 +716,7 @@ function processItems(items: Item[]) {
 ```
 
 **Async operations:**
+
 ```typescript
 // ◆ Moderate - sequential, slow
 async function loadData() {
@@ -716,6 +750,7 @@ async function loadData() {
 ### What to Check
 
 **Result over panic:**
+
 ```rust
 // ◆◆ Severe
 pub fn divide(a: i32, b: i32) -> i32 {
@@ -733,6 +768,7 @@ pub fn divide(a: i32, b: i32) -> Result<i32, &'static str> {
 ```
 
 **No unwrap outside tests:**
+
 ```rust
 // ◆ Moderate
 pub fn get_config() -> Config {
@@ -751,6 +787,7 @@ pub fn get_config() -> Result<Config, ConfigError> {
 ```
 
 **Ownership/borrowing:**
+
 ```rust
 // ◆ Moderate - unnecessary clone
 fn process_data(data: Vec<u8>) -> Vec<u8> {
@@ -770,6 +807,7 @@ fn process_data(data: &[u8]) -> Vec<u8> {
 ```
 
 **Unsafe justification:**
+
 ```rust
 // ◆◆ Severe - unjustified unsafe
 pub fn get_value(ptr: *const u8) -> u8 {
@@ -805,6 +843,7 @@ pub fn get_value(slice: &[u8], index: usize) -> Option<u8> {
 ## Severity Summary
 
 ### ◆◆ Severe (blocking)
+
 Ship with these → security incidents, runtime failures, data loss.
 
 Examples:
@@ -818,6 +857,7 @@ Examples:
 **Action:** Must fix before merge.
 
 ### ◆ Moderate (should fix)
+
 Ship with these → maintenance burden, degraded quality, potential bugs.
 
 Examples:
@@ -831,6 +871,7 @@ Examples:
 **Action:** Fix before merge unless explicitly accepted as tech debt with tracking issue.
 
 ### ◇ Minor (consider addressing)
+
 Ship with these → code could be better, but functional and safe.
 
 Examples:
@@ -882,6 +923,7 @@ Flag for senior review if:
 ## Checklist Efficiency
 
 ### Full Review (default)
+
 Run all categories for:
 - Pre-merge reviews
 - Critical path changes
@@ -889,6 +931,7 @@ Run all categories for:
 - Public API changes
 
 ### Targeted Review
+
 Focus specific categories for:
 - **Refactors** → Code Quality, Tests
 - **Bug fixes** → Error Handling, Tests, Type Safety
@@ -897,4 +940,5 @@ Focus specific categories for:
 - **Docs** → Documentation
 
 ### Quick Sanity Check (not Fresh Eyes)
+
 For trivial changes (typos, formatting), skip formal review. Don't invoke Fresh Eyes skill — use judgment.

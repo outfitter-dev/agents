@@ -291,6 +291,7 @@ Executes **before** a tool runs. Can block or modify execution.
 - Log tool invocations
 
 **Example**:
+
 ```json
 {
   "hooks": {
@@ -333,6 +334,7 @@ Executes **after** a tool completes successfully.
 - Update indexes
 
 **Example**:
+
 ```json
 {
   "hooks": {
@@ -370,6 +372,7 @@ Executes when user submits a prompt to Claude.
 - Add project context
 
 **Example**:
+
 ```json
 {
   "hooks": {
@@ -407,6 +410,7 @@ Executes when Claude Code sends a notification.
 - Archive important messages
 
 **Example**:
+
 ```json
 {
   "hooks": {
@@ -444,6 +448,7 @@ Executes when main Claude agent finishes responding.
 - Archive conversation
 
 **Example**:
+
 ```json
 {
   "hooks": {
@@ -481,6 +486,7 @@ Executes when a subagent (Task tool) finishes.
 - Debug subagent behavior
 
 **Example**:
+
 ```json
 {
   "hooks": {
@@ -520,6 +526,7 @@ Executes before conversation compacts.
 - Prepare for reset
 
 **Example**:
+
 ```json
 {
   "hooks": {
@@ -561,6 +568,7 @@ Executes when session starts or resumes.
 - Initialize resources
 
 **Example**:
+
 ```json
 {
   "hooks": {
@@ -602,6 +610,7 @@ Executes when session ends.
 - Archive transcripts
 
 **Example**:
+
 ```json
 {
   "hooks": {
@@ -652,6 +661,7 @@ Use `|` for OR logic:
 - `$` - End of string
 
 **Examples:**
+
 ```json
 {"matcher": "^Write$"}        // Exactly "Write", no prefix/suffix
 {"matcher": ".*Edit.*"}       // Contains "Edit" anywhere
@@ -689,6 +699,7 @@ Match tools with specific file patterns:
 - `**/*.ext` - Recursive file match
 
 **Examples:**
+
 ```json
 {"matcher": "Write(*.tsx)"}            // React components
 {"matcher": "Write|Edit(*.rs)"}        // Rust files
@@ -710,6 +721,7 @@ Match MCP server tools:
 **MCP tool naming**: `mcp__<server-name>__<tool-name>`
 
 **Examples:**
+
 ```json
 // Match all memory operations
 {"matcher": "mcp__memory__.*"}
@@ -1067,6 +1079,8 @@ exit 0
 ```
 
 ## Environment Variables
+
+> **See also:** [Environment Variables Reference](../../shared/rules/ENV-VARS.md) for comprehensive documentation on `${CLAUDE_PLUGIN_ROOT}` vs `$CLAUDE_PROJECT_DIR`.
 
 ### Available Variables
 

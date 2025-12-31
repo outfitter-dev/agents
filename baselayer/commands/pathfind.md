@@ -7,25 +7,20 @@ argument-hint: [topic, problem, or feature to explore]
 
 Adaptive Q&A workflow to clarify requirements and build confidence before delivering.
 
-## How It Works
+## Steps
 
-1. Assess clarity and set initial confidence (0–5)
-2. Ask one question at a time using EnterPlanMode
-3. Restate answer, update confidence, surface concerns
-4. At level 5 (Ready), deliver the artifact
-5. Below level 5, include `△ Caveats`
+1. **Load** — Use the Skill tool to load the **baselayer:pathfinding** skill
+2. **Consider** — Assess the context below and recent conversation. Ultrathink.
+3. **Execute** — Begin the pathfinding workflow per the skill
 
-## When to Use
+## Guidance
 
-- Ambiguous or incomplete requirements
-- Complex features needing exploration
-- Greenfield projects with open questions
-- Collaborative brainstorming or problem solving
+- This may be greenfield exploration — help shape the idea, not just refine it
+- Use EnterPlanMode for questions (enables keyboard selection)
+- Ask about literally anything: scope, constraints, tradeoffs, UX, technical approach, concerns
+- Make sure questions are non-obvious — don't re-ask what's already clear from context
+- Be persistent — continue until confidence level 5 or user requests early delivery
 
-## Initial Request
+## Context
 
 $ARGUMENTS
-
----
-
-Load the pathfinding skill and begin. Assess clarity of the request — if clear (level 4–5), fast-track to delivery. If vague (level 0–2), start with foundational questions about scope, goals, or context.

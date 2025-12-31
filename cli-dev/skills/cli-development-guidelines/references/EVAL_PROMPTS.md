@@ -3,6 +3,7 @@
 Use these to verify an agent is applying CLI best practices (not just "making something that runs").
 
 ## Scoring rubric
+
 - *Pass*:
   - Produces a clear CLI contract (commands, flags, IO, exit codes, examples).
   - Explicitly addresses stdout/stderr, exit codes, help behavior, and interactivity.
@@ -14,6 +15,7 @@ Use these to verify an agent is applying CLI best practices (not just "making so
   - Provides ready-to-ship help output and error message patterns.
 
 ## Prompt: design a new CLI
+
 - Task:
   - "Design a CLI called `logship` that tails logs from multiple sources (local files and HTTP endpoints), filters by regex, and outputs either human-friendly colored logs or machine-readable JSON."
 - Must include:
@@ -26,6 +28,7 @@ Use these to verify an agent is applying CLI best practices (not just "making so
   - Exit codes
 
 ## Prompt: review a flawed CLI help output
+
 - Task:
   - "Here's the current `--help` output for `acmectl`. It's 200 lines of flags, no examples, and no description. Rewrite it to be discoverable."
 - Must include:
@@ -35,6 +38,7 @@ Use these to verify an agent is applying CLI best practices (not just "making so
   - Support path / docs link
 
 ## Prompt: fix stdout/stderr separation
+
 - Task:
   - "This command prints progress bars to stdout and the JSON result to stderr. Fix the output contract."
 - Must include:
@@ -43,6 +47,7 @@ Use these to verify an agent is applying CLI best practices (not just "making so
   - Behavior when piped/captured (no animations)
 
 ## Prompt: safe destructive action
+
 - Task:
   - "Add a `delete` command that can delete remote projects. Make it safe for humans but scriptable."
 - Must include:
@@ -52,6 +57,7 @@ Use these to verify an agent is applying CLI best practices (not just "making so
   - `--no-input` behavior
 
 ## Prompt: secret handling
+
 - Task:
   - "Add auth to the CLI. It currently accepts `--token <secret>` and reads `MYAPP_TOKEN` env var. Fix the design."
 - Must include:
@@ -60,6 +66,7 @@ Use these to verify an agent is applying CLI best practices (not just "making so
   - Explain why flags/env are unsafe
 
 ## Prompt: run the audit script
+
 - Task:
   - "Run `scripts/cli_audit.py` against `./mycli` and address the FAIL/WARN items."
 - Must include:

@@ -54,6 +54,18 @@ Keep content inside tags terse. Sacrifice grammar for concision where meaning is
 </rules>
 ```
 
+## Markdown Tables
+
+Use markdown tables for structured data. Ensure the table is properly formatted with the correct number of columns and rows.
+
+```markdown
+| Column 1 | Column 2 | Column 3 |
+| -------- | -------- | -------- |
+| Data 1   | Data 2   | Data 3   |
+```
+
+Ensure pipes are properly aligned with spaces surrounding text or hyphens, at least between the header and separator rows. If pipes are used within a cell, ensure they are properly escaped.
+
 ## Indicators
 
 Prefer ASCII/Unicode over emoji for terminal output (Claude Code, CLI, interactive sessions). Emoji acceptable in docs or user-facing content where rendering is reliable.
@@ -85,6 +97,7 @@ Escalating:
 - `✓` — completed/decided (U+2713)
 - Use for "Decisions Made:" lists, completed items, confirmed choices
 - Example:
+
   ```text
   Decisions Made:
   ✓ /simplify offers two modes: quick (skill) vs deep (agent)
@@ -130,18 +143,19 @@ Give todos friendly, context-specific descriptions instead of generic phase name
 **Prefer**:
 
 ```text
-- Prep auth system requirements (in_progress)
-- Explore authentication approaches (pending)
-- Clarify platform and fallback needs (pending)
-- Deliver implementation plan (pending)
+- [x] Consider skills to load
+- [ ] Prep auth system requirements
+- [ ] Explore authentication approaches
+- [ ] Clarify platform and fallback needs
+- [ ] Deliver implementation plan
 ```
 
 **Avoid**:
 
 ```text
-- Gather Context (in_progress)
-- Synthesize Requirements (pending)
-- Provide Deliverables (pending)
+- [ ] Gather Context
+- [ ] Synthesize Requirements
+- [ ] Provide Deliverables
 ```
 
 ## Markdown Links

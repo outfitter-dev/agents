@@ -7,6 +7,7 @@ TDD workflow for fixing a production bug with test reproduction first.
 **Issue**: Division by zero crashes calculator service
 **Reporter**: User reported 500 error when calculating percentage with zero total
 **Stack Trace**:
+
 ```
 Error: Division by zero
   at calculatePercentage (calculator.ts:45)
@@ -88,6 +89,7 @@ Bug reproduced successfully — test fails as expected.
 **Commit**: `test: add failing test for division by zero bug`
 
 **TodoWrite Update**:
+
 ```text
 1. Write failing test reproducing bug [completed]
 2. Fix bug with minimal code [in_progress]
@@ -136,6 +138,7 @@ No other tests broken — safe fix.
 **Commit**: `fix: handle division by zero in percentage calculation`
 
 **TodoWrite Update**:
+
 ```text
 1. Write failing test reproducing bug [completed]
 2. Fix bug with minimal code [completed]
@@ -256,6 +259,7 @@ No regressions — refactor successful.
 **Commit**: `refactor: use Result type for percentage calculation errors`
 
 **TodoWrite Update**:
+
 ```text
 1. Write failing test reproducing bug [completed]
 2. Fix bug with minimal code [completed]
@@ -325,6 +329,7 @@ All integration tests passing
 ```
 
 **TodoWrite Update**:
+
 ```text
 1. Write failing test reproducing bug [completed]
 2. Fix bug with minimal code [completed]
@@ -369,6 +374,7 @@ All integration tests passing
 ## Anti-patterns Avoided
 
 Avoided jumping straight to fix without test:
+
 ```typescript
 // ❌ Wrong approach
 // 1. See bug report
@@ -385,6 +391,7 @@ Avoided jumping straight to fix without test:
 ```
 
 Avoided over-engineering initial fix:
+
 ```typescript
 // ❌ Too complex for first fix
 if (total === 0 || total < 0 || !isFinite(total) || isNaN(total)) {

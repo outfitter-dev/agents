@@ -27,6 +27,7 @@ NOT for: Node.js-only patterns, cross-runtime libraries, non-Bun projects
 <runtime_basics>
 
 **Package management**:
+
 ```bash
 bun install          # Install dependencies (faster than npm/yarn)
 bun add zod          # Add package
@@ -35,6 +36,7 @@ bun update           # Update all dependencies
 ```
 
 **Script execution**:
+
 ```bash
 bun run dev          # Run script from package.json
 bun run src/index.ts # Execute TypeScript directly
@@ -42,6 +44,7 @@ bun --watch index.ts # Watch mode with auto-reload
 ```
 
 **Testing**:
+
 ```bash
 bun test             # Run all tests
 bun test src/        # Run tests in directory
@@ -50,6 +53,7 @@ bun test --coverage  # With coverage
 ```
 
 **Building**:
+
 ```bash
 bun build ./index.ts --outfile dist/bundle.js
 bun build ./index.ts --compile --outfile myapp  # Standalone executable
@@ -181,6 +185,7 @@ if (!isValid) {
 ```
 
 **In auth flow**:
+
 ```typescript
 app.post('/auth/register', zValidator('json', RegisterSchema), async (c) => {
   const { email, password } = c.req.valid('json');
@@ -233,6 +238,7 @@ console.log('Server running on http://localhost:3000');
 ```
 
 **With Hono** (recommended for complex APIs):
+
 ```typescript
 import { Hono } from 'hono';
 
@@ -373,6 +379,7 @@ describe('feature', () => {
 ```
 
 **Run tests**:
+
 ```bash
 bun test                    # All tests
 bun test src/api.test.ts    # Specific file
@@ -406,6 +413,7 @@ export default env;
 ```
 
 Bun automatically loads `.env` files:
+
 ```bash
 # .env
 DATABASE_URL=sqlite://app.db

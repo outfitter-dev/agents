@@ -107,6 +107,7 @@ Makes ownership immediately visible in `but status` and `but log`.
 - Parallel agent execution with branch isolation
 
 **2. Lifecycle Hooks**
+
 ```json
 {
   "hooks": {
@@ -118,6 +119,7 @@ Makes ownership immediately visible in `but status` and `but log`.
 ```
 
 **3. MCP Server**
+
 ```bash
 but mcp  # Enables programmatic agent integration
 ```
@@ -134,6 +136,7 @@ Let GitButler manage commits via hooks or MCP.
 ## Coordination Protocols
 
 **Status Broadcasting:**
+
 ```bash
 # File-based coordination
 but status > /tmp/agent-$(whoami)-status.txt
@@ -143,6 +146,7 @@ but status > /tmp/agent-$(whoami)-status.txt
 ```
 
 **Snapshot Cadence:**
+
 ```bash
 # Before risky operations
 but snapshot --message "Before merging conflicting branches"

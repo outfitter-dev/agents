@@ -55,6 +55,7 @@ Based on discovery, recommend an archetype:
 | **simple** | Basic skill without scripts | Quick reference, style guide |
 
 **Present options to user:**
+
 ```
 Based on your description, I recommend the [archetype] pattern because [reasoning].
 
@@ -172,7 +173,7 @@ When all phases complete:
 
 **Assistant:**
 1. Asks clarifying questions about GitHub issues skill
-2. Recommends `api-wrapper` archetype
+2. Recommends **api-wrapper** archetype
 3. Runs init-skill.ts with api-wrapper template
 4. Guides through customizing for GitHub API
 5. Validates the result

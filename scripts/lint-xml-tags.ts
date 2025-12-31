@@ -15,10 +15,13 @@
  * Examples:
  *   bun scripts/lint-xml-tags.ts                    # Lint all .md files
  *   bun scripts/lint-xml-tags.ts baselayer/         # Lint specific directory
+ *   bun scripts/lint-xml-tags.ts path/to/file.md    # Lint single file
  *   bun scripts/lint-xml-tags.ts --fix              # Auto-fix all issues
+ *   bun scripts/lint-xml-tags.ts --fix file.md      # Fix single file
  */
 
 import { Glob } from "bun";
+import { statSync } from "fs";
 
 interface Violation {
   file: string;
@@ -269,23 +272,34 @@ async function main() {
   const paths = args.filter((arg) => !arg.startsWith("--"));
   const searchPath = paths[0] || ".";
 
-  const glob = new Glob("**/*.md");
-  const files: string[] = [];
+  // Check if searchPath is a file or directory
+  let files: string[] = [];
 
-  for await (const file of glob.scan({
-    cwd: searchPath,
-    absolute: true,
-    onlyFiles: true,
-  })) {
-    // Skip node_modules and other common excludes
-    if (
-      file.includes("node_modules") ||
-      file.includes(".git") ||
-      file.includes(".beads")
-    ) {
-      continue;
+  try {
+    const stat = statSync(searchPath);
+    if (stat.isFile()) {
+      files = [searchPath];
+    } else {
+      const glob = new Glob("**/*.md");
+      for await (const file of glob.scan({
+        cwd: searchPath,
+        absolute: true,
+        onlyFiles: true,
+      })) {
+        // Skip node_modules and other common excludes
+        if (
+          file.includes("node_modules") ||
+          file.includes(".git") ||
+          file.includes(".beads")
+        ) {
+          continue;
+        }
+        files.push(file);
+      }
     }
-    files.push(file);
+  } catch {
+    console.error(`Error: Path not found: ${searchPath}`);
+    process.exit(1);
   }
 
   let totalViolations = 0;

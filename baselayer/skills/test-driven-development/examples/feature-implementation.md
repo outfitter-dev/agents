@@ -12,6 +12,7 @@ Complete TDD session implementing user authentication feature from scratch.
 ## TodoWrite State Tracking
 
 Initial todos:
+
 ```text
 1. Write failing test for user authentication [in_progress]
 2. Implement authentication to pass tests [pending]
@@ -89,6 +90,7 @@ Tests fail as expected — no implementation exists yet.
 **Commit**: `test: add failing tests for user authentication`
 
 **TodoWrite Update**:
+
 ```text
 1. Write failing test for user authentication [completed]
 2. Implement authentication to pass tests [in_progress]
@@ -180,6 +182,7 @@ All tests pass — implementation complete.
 **Commit**: `feat: implement user authentication to pass tests`
 
 **TodoWrite Update**:
+
 ```text
 1. Write failing test for user authentication [completed]
 2. Implement authentication to pass tests [completed]
@@ -294,6 +297,7 @@ Tests still pass — refactoring successful.
 **Commit**: `refactor: extract validation and password verification`
 
 **TodoWrite Update**:
+
 ```text
 1. Write failing test for user authentication [completed]
 2. Implement authentication to pass tests [completed]
@@ -326,6 +330,7 @@ Coverage:
 Coverage ≥80% — quality standards met.
 
 **TodoWrite Update**:
+
 ```text
 1. Write failing test for user authentication [completed]
 2. Implement authentication to pass tests [completed]
@@ -338,6 +343,7 @@ Coverage ≥80% — quality standards met.
 Starting new cycle for email validation edge cases.
 
 **TodoWrite Update**:
+
 ```text
 1. Write failing test for email validation [in_progress]
 2. Implement email validation to pass tests [pending]

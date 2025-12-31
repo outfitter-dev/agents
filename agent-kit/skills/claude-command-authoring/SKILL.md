@@ -90,16 +90,19 @@ Provide a detailed comparison focusing on architecture, performance, and maintai
 ## Command Scopes
 
 ### Project Commands (`.claude/commands/`)
+
 - Shared with your team via git
 - Show "(project)" in `/help`
 - Team-specific workflows
 
 ### Personal Commands (`~/.claude/commands/`)
+
 - Available across all your projects
 - Show "(user)" in `/help`
 - Individual preferences
 
 ### Plugin Commands (`plugin/commands/`)
+
 - Bundled with plugins
 - Show "(plugin-name)" in `/help`
 - Distributed via marketplaces
@@ -117,21 +120,27 @@ Provide a detailed comparison focusing on architecture, performance, and maintai
 ## Argument Handling
 
 ### All Arguments (`$ARGUMENTS`)
+
 ```markdown
 Fix issues: $ARGUMENTS
 ```
+
 Usage: `/fix-issues 123 456 789` → `$ARGUMENTS = "123 456 789"`
 
 ### Individual Arguments (`$1`, `$2`, `$3`, ...)
+
 ```markdown
 Review PR #$1 with priority $2 and assign to $3
 ```
+
 Usage: `/review-pr 456 high alice` → `$1="456"`, `$2="high"`, `$3="alice"`
 
 ### Combining Arguments with Files
+
 ```markdown
 Compare @$1 with @$2 and summarize differences
 ```
+
 Usage: `/compare src/old.ts src/new.ts`
 
 ## Bash Execution with `!`
@@ -213,6 +222,7 @@ Claude can only use specified tools without asking permission.
 ## Best Practices
 
 ### 1. Clear Descriptions
+
 ```markdown
 ---
 # ❌ Too vague
@@ -224,6 +234,7 @@ description: Deploy to staging with health checks and Slack notification
 ```
 
 ### 2. Helpful Argument Hints
+
 ```markdown
 ---
 # ❌ Not helpful
@@ -235,6 +246,7 @@ argument-hint: <environment> [--skip-tests] [--no-notify]
 ```
 
 ### 3. Context Before Instructions
+
 ```markdown
 ---
 description: Create feature branch from issue
@@ -251,6 +263,7 @@ Issue: $1
 ```
 
 ### 4. Use Tool Restrictions
+
 ```markdown
 ---
 description: Security audit (read-only)
@@ -259,6 +272,7 @@ allowed-tools: Read, Grep, Glob, Bash(find:*)
 ```
 
 ### 5. Document Complex Commands
+
 ```markdown
 ---
 description: Full deployment pipeline with validation
@@ -317,6 +331,7 @@ This command runs the complete deployment process:
 ## Common Patterns
 
 ### Code Review
+
 ```markdown
 ---
 description: Review code changes with security focus
@@ -334,6 +349,7 @@ Focus on:
 ```
 
 ### Issue Handling
+
 ```markdown
 ---
 description: Create feature branch and link issue
@@ -348,6 +364,7 @@ Issue #$1 details: !`gh issue view $1`
 ```
 
 ### Testing Workflow
+
 ```markdown
 ---
 description: Run tests and analyze failures
@@ -360,6 +377,7 @@ Analyze any failures and suggest fixes.
 ```
 
 ### Documentation Generation
+
 ```markdown
 ---
 description: Generate API docs from code
@@ -379,26 +397,31 @@ Generate comprehensive API documentation including:
 ## Troubleshooting
 
 ### Command Not Found
+
 - Verify file location: `.claude/commands/your-command.md`
 - Check filename: no spaces, lowercase, `.md` extension
 - Restart Claude Code if needed
 
 ### Arguments Not Working
+
 - Use `$1`, `$2`, not `{1}`, `{2}`
 - Use `$ARGUMENTS` for all arguments
 - Quote arguments if they contain spaces
 
 ### Bash Commands Failing
+
 - Use `!` prefix before backticks: `!\`command\``
 - Verify command works in terminal first
 - Check command output length (<15k chars)
 
 ### File References Not Working
+
 - Use `@` prefix: `@path/to/file.ts`
 - Verify file paths are relative to project root
 - Combine with arguments: `@$1`
 
 ### Tool Restrictions Not Applied
+
 - Verify frontmatter syntax (YAML format)
 - Check tool names match exactly: `Read`, not `read`
 - Use wildcards for bash: `Bash(git *)`

@@ -26,11 +26,13 @@ This skill provides [CORE_CAPABILITY]:
 ### Common Patterns
 
 1. **Pattern 1**: [Description]
+
    ```[language]
    [CODE_EXAMPLE]
    ```
 
 2. **Pattern 2**: [Description]
+
    ```[language]
    [CODE_EXAMPLE]
    ```
@@ -88,9 +90,9 @@ Common issues and solutions:
 This skill requires:
 - [Dependency 1]: [Version or details]
 - [Dependency 2]: [Version or details]
-- [Environment requirement]: [Details]
 
 Installation:
+
 ```bash
 [INSTALLATION_COMMANDS]
 ```

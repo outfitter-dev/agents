@@ -194,6 +194,7 @@ Three integration methods:
 - Parallel agent execution with branch isolation
 
 **2. Lifecycle Hooks**
+
 ```json
 {
   "hooks": {
@@ -205,6 +206,7 @@ Three integration methods:
 ```
 
 **3. MCP Server**
+
 ```bash
 but mcp  # Start MCP server for agent integration
 ```
@@ -228,6 +230,7 @@ NEVER:
 - Push `gitbutler/integration` to remote — it's local-only
 - Mix Graphite and GitButler in same repo — incompatible models
 - Pipe `but status` directly — causes panic; capture output first:
+
   ```bash
   status_output=$(but status)
   echo "$status_output" | head -5

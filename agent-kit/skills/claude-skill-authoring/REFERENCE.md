@@ -130,6 +130,7 @@ description: >
 ```
 
 **Formula:**
+
 ```
 [Action verbs] + [Specific capabilities] + "Use when" + [Context] +
 [Optional: Triggered by] + [Keywords]
@@ -323,6 +324,7 @@ dependencies: [jq, yq, git]
 - Quote strings with special characters
 
 **Valid:**
+
 ```yaml
 ---
 name: my-skill
@@ -332,11 +334,12 @@ allowed-tools: Read, Write
 ```
 
 **Invalid:**
+
 ```yaml
 ---
 name: my-skill
 description: This is a description
-	allowed-tools: Read, Write  # Tab instead of spaces
+ allowed-tools: Read, Write  # Tab instead of spaces
 ---
 ```
 
@@ -485,6 +488,7 @@ Keep `SKILL.md` focused and under 500 lines by referencing supporting files for 
 ### Pattern: Main + Reference
 
 **SKILL.md** (~300 lines):
+
 ```markdown
 # Quick Start
 Basic usage instructions
@@ -500,6 +504,7 @@ See [REFERENCE.md](REFERENCE.md) for:
 ```
 
 **REFERENCE.md** (~800 lines):
+
 ```markdown
 # Complete API Reference
 All functions, options, configurations
@@ -514,6 +519,7 @@ Integration with other tools
 ### Pattern: Main + Examples
 
 **SKILL.md** (~250 lines):
+
 ```markdown
 # Basic Example
 Simple usage case
@@ -529,6 +535,7 @@ See [EXAMPLES.md](EXAMPLES.md) for:
 ```
 
 **EXAMPLES.md** (~600 lines):
+
 ```markdown
 # Simple Examples
 10-15 basic examples
@@ -543,6 +550,7 @@ Actual project implementations
 ### Pattern: Main + Scripts
 
 **SKILL.md** (~200 lines):
+
 ```markdown
 # Usage
 Basic instructions
@@ -562,6 +570,7 @@ Run utility scripts:
 ```
 
 See [scripts/README.md](scripts/README.md) for script documentation.
+
 ```
 
 **scripts/README.md** (~400 lines):
@@ -660,6 +669,7 @@ description: >
 ### Testing Discovery
 
 **Method 1: Natural Language**
+
 ```
 # Say to Claude:
 "Can you help me process this PDF file?"
@@ -668,6 +678,7 @@ description: >
 ```
 
 **Method 2: Debug Mode**
+
 ```bash
 claude --debug
 
@@ -677,6 +688,7 @@ claude --debug
 ```
 
 **Method 3: Explicit Mention**
+
 ```
 # Say to Claude:
 "Use the PDF processing skill to extract text"
@@ -709,6 +721,7 @@ allowed-tools: Read, Grep, Glob
 - Quality checks
 
 **Example:**
+
 ```yaml
 ---
 name: code-reviewer
@@ -768,6 +781,7 @@ allowed-tools: Read, Edit, Write, Bash(git *), Bash(bun *), Bash(npm *)
 ### Bash Pattern Syntax
 
 **Wildcards:**
+
 ```yaml
 # Allow all git commands
 Bash(git *)
@@ -780,6 +794,7 @@ Bash(git *), Bash(npm *), Bash(bun *)
 ```
 
 **Specific Commands:**
+
 ```yaml
 # Allow specific git operations
 Bash(git add:*), Bash(git commit:*), Bash(git push:*)
@@ -789,6 +804,7 @@ Bash(npm run build:*), Bash(npm run test:*)
 ```
 
 **Restrictive Patterns:**
+
 ```yaml
 # Only read-only git commands
 Bash(git status:*), Bash(git log:*), Bash(git diff:*)
@@ -810,6 +826,7 @@ Bash(cat:*), Bash(head:*), Bash(tail:*)
 - `WebSearch` - Search the web
 
 **MCP Tools:**
+
 ```yaml
 # Format: mcp__servername__toolname
 allowed-tools: mcp__memory__store, mcp__memory__retrieve
@@ -837,6 +854,7 @@ Skills can be referenced or triggered from slash commands:
 **Method 1: Reference Skill Expertise**
 
 `.claude/commands/analyze-pdf.md`:
+
 ```markdown
 ---
 description: Analyze PDF file using PDF processing skill
@@ -899,6 +917,7 @@ When a slash command is complex enough, Claude may automatically activate releva
 **Example:**
 
 `.claude/commands/test-api.md`:
+
 ```markdown
 ---
 description: Test API endpoint
@@ -911,6 +930,7 @@ Use the api-testing skill to perform comprehensive testing.
 ```
 
 `.claude/skills/api-testing/SKILL.md`:
+
 ```yaml
 ---
 name: api-testing
@@ -932,6 +952,7 @@ Hooks can trigger skill usage or benefit from skill capabilities:
 **PostToolUse Hook Example:**
 
 `.claude/settings.json`:
+
 ```json
 {
   "hooks": {
@@ -993,6 +1014,7 @@ Design hooks that work well with skills:
 - Experimental skills
 
 **Example:**
+
 ```
 ~/.claude/skills/
 ├── my-code-style/
@@ -1016,6 +1038,7 @@ Design hooks that work well with skills:
 - CI/CD integration
 
 **Example:**
+
 ```
 .claude/skills/
 ├── project-testing/
@@ -1025,6 +1048,7 @@ Design hooks that work well with skills:
 ```
 
 **Git Integration:**
+
 ```bash
 # Commit project skills
 git add .claude/skills/
@@ -1047,6 +1071,7 @@ git push
 - Third-party integrations
 
 **Structure:**
+
 ```
 my-plugin/
 ├── .claude-plugin/
@@ -1071,6 +1096,7 @@ my-plugin/
 - Explicit namespacing: Use unique, descriptive names
 
 **Best practice:**
+
 ```
 # Personal: my-code-style
 # Project: team-code-style
@@ -1208,22 +1234,29 @@ Extract data from source:
 ```
 
 ## Stage 2: Transformation
+
 Transform data:
+
 ```bash
 ./scripts/transform.py raw-data.json transformed-data.json
 ```
 
 ## Stage 3: Validation
+
 Validate transformed data:
+
 ```bash
 ./scripts/validate.sh transformed-data.json
 ```
 
 ## Stage 4: Loading
+
 Load into destination:
+
 ```bash
 ./scripts/load.sh transformed-data.json
 ```
+
 ```
 
 ## Performance Optimization
@@ -1238,10 +1271,12 @@ Load into destination:
 
 **Token usage:**
 ```
+
 SKILL.md (300 lines) ≈ 2,000 tokens
 SKILL.md (1,500 lines) ≈ 10,000 tokens
 
 Difference: 8,000 tokens saved per skill activation
+
 ```
 
 ### Description Optimization
@@ -1274,9 +1309,11 @@ description: >
 - More interruptions
 
 **With restrictions:**
+
 ```yaml
 allowed-tools: Read, Grep, Glob
 ```
+
 - No permission prompts for listed tools
 - Faster execution
 - Smoother workflow
@@ -1290,6 +1327,7 @@ allowed-tools: Read, Grep, Glob
 - Update trigger: File modification
 
 **Force reload:**
+
 ```bash
 # Clear session to reload skills
 /clear
@@ -1314,6 +1352,7 @@ claude --debug
 #### Skill Not Loading
 
 **Check 1: File location**
+
 ```bash
 # Personal
 ls -la ~/.claude/skills/my-skill/SKILL.md
@@ -1323,6 +1362,7 @@ ls -la .claude/skills/my-skill/SKILL.md
 ```
 
 **Check 2: YAML syntax**
+
 ```bash
 # Must have opening ---
 # Must have closing ---
@@ -1331,6 +1371,7 @@ ls -la .claude/skills/my-skill/SKILL.md
 ```
 
 **Check 3: File permissions**
+
 ```bash
 # SKILL.md should be readable
 chmod 644 .claude/skills/my-skill/SKILL.md
@@ -1344,6 +1385,7 @@ chmod +x .claude/skills/my-skill/scripts/*.sh
 **Problem**: Claude doesn't use skill when expected
 
 **Solution 1: Improve description**
+
 ```yaml
 # Before
 description: Helper for files
@@ -1353,6 +1395,7 @@ description: Parse and validate JSON files including schema validation. Use when
 ```
 
 **Solution 2: Add trigger keywords**
+
 ```yaml
 description: >
   [What it does]. Use when [context]. Triggered by mentions of
@@ -1360,6 +1403,7 @@ description: >
 ```
 
 **Solution 3: Explicit mention**
+
 ```
 # Instead of:
 "Process this JSON file"
@@ -1373,6 +1417,7 @@ description: >
 **Problem**: Skill can't use required tools
 
 **Check 1: Tool names (case-sensitive)**
+
 ```yaml
 # ✅ Correct
 allowed-tools: Read, Grep, Glob
@@ -1382,6 +1427,7 @@ allowed-tools: read, grep, glob
 ```
 
 **Check 2: Bash patterns**
+
 ```yaml
 # ✅ Correct
 allowed-tools: Bash(git *)
@@ -1391,6 +1437,7 @@ allowed-tools: Bash(git)
 ```
 
 **Check 3: MCP tool names**
+
 ```yaml
 # ✅ Correct
 allowed-tools: mcp__memory__store
@@ -1404,11 +1451,13 @@ allowed-tools: mcp_memory_store
 **Problem**: Scripts don't run
 
 **Check 1: Executable permission**
+
 ```bash
 chmod +x .claude/skills/my-skill/scripts/*.sh
 ```
 
 **Check 2: Script paths**
+
 ```markdown
 # ✅ Correct (relative to skill directory)
 ./scripts/process.sh
@@ -1418,6 +1467,7 @@ chmod +x .claude/skills/my-skill/scripts/*.sh
 ```
 
 **Check 3: Script shebang**
+
 ```bash
 #!/usr/bin/env bash  # ✅ Portable
 #!/bin/bash          # ✅ Works on most systems
@@ -1430,11 +1480,13 @@ chmod +x .claude/skills/my-skill/scripts/*.sh
 ### Validation Tools
 
 **Use validation script:**
+
 ```bash
 ./scripts/validate-skill.sh .claude/skills/my-skill
 ```
 
 **Manual validation:**
+
 ```bash
 # Check YAML syntax
 python3 -c "import yaml; yaml.safe_load(open('.claude/skills/my-skill/SKILL.md').read().split('---')[1])"

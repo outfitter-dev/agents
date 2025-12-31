@@ -208,6 +208,7 @@ Suggested split points:
 ## Splitting Example
 
 **Before** (487 LOC):
+
 ```text
 feat: add user authentication
   - Add user model and schema
@@ -217,6 +218,7 @@ feat: add user authentication
 ```
 
 **After** (stacked PRs):
+
 ```text
 PR #1: feat: add user model (123 LOC)
 PR #2: feat: add auth endpoints (108 LOC) ← based on #1
@@ -225,6 +227,7 @@ PR #4: feat: add login UI (124 LOC) ← based on #3
 ```
 
 Using Graphite:
+
 ```bash
 gt create -m "feat: add user model"
 gt create -m "feat: add auth endpoints"

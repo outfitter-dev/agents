@@ -5,12 +5,14 @@ Complete copy-paste ready templates for all Claude Code component types, created
 ## What's Included
 
 ### ✅ Slash Commands (4 templates)
+
 - `simple.md` - Basic command with no arguments
 - `with-args.md` - Command with `$1`, `$2`, `$ARGUMENTS` support
 - `with-bash.md` - Command with bash execution using `!` prefix
 - `with-files.md` - Command with file references using `@` prefix
 
 ### ✅ Hooks (4 complete examples)
+
 - `post-tool-use-formatter/` - Auto-format files after Write/Edit (Bash)
 - `pre-tool-use-validator/` - Validate file operations before execution (Bash)
 - `user-prompt-context/` - Add context to every user prompt (Bash)
@@ -23,6 +25,7 @@ Each hook includes:
 - Executable permissions set correctly
 
 ### ✅ Skills (3 templates)
+
 - `simple-skill/` - Single-file skill template
 - `multi-file-skill/` - Complex skill with REFERENCE.md and EXAMPLES.md
 - `skill-with-scripts/` - Skill with helper scripts
@@ -34,6 +37,7 @@ All skills include:
 - Progressive disclosure patterns
 
 ### ✅ Agents (3 specialists)
+
 - `code-reviewer.md` - Security, performance, and quality review specialist
 - `test-specialist.md` - TDD and comprehensive testing specialist
 - `documentation-generator.md` - Technical documentation specialist

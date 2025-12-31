@@ -496,6 +496,7 @@ Prefer team UUID over name:
 - UUIDs are more efficient for API queries
 
 Get team UUID:
+
 ```typescript
 // Via Linear MCP search or list teams
 const teams = await mcp__linear__list_teams();

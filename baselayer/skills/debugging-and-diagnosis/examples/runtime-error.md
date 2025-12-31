@@ -56,6 +56,7 @@ export function formatUserDisplay(user: User): string {
 ```
 
 Output:
+
 ```
 [DEBUG] formatUserDisplay input: {"id":"user-incomplete-123","name":"Test User"}
 TypeError: Cannot read property 'email' of undefined
@@ -73,6 +74,7 @@ const display = formatUserDisplay(profile.user);
 ```
 
 Check profile.user:
+
 ```typescript
 console.log('[DEBUG] profile object:', JSON.stringify(profile));
 // Output: {"id":"prof-123","user":{"id":"user-incomplete-123","name":"Test User"}}
@@ -89,6 +91,7 @@ User object from API is missing email field.
 ### Find Working Examples
 
 Check working user profile:
+
 ```typescript
 // user-complete-456 returns:
 {"id":"user-complete-456","name":"Complete User","email":"user@example.com"}
@@ -130,12 +133,14 @@ Broken code:
 ### Understand Dependencies
 
 Recent optimization commit changed from:
+
 ```typescript
 // Old: Fetched full user details
 const user = await fetchFullUser(userId);
 ```
 
 To:
+
 ```typescript
 // New: Uses cached profile data
 const user = profile.user; // May be incomplete

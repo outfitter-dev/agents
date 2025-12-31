@@ -192,6 +192,7 @@ Prioritize review:
 ## Input Validation
 
 **SQL Injection**:
+
 ```typescript
 // VULNERABLE
 const query = `SELECT * FROM users WHERE email = '${userEmail}'`;
@@ -202,6 +203,7 @@ db.execute(query, [userEmail]);
 ```
 
 **XSS (Cross-Site Scripting)**:
+
 ```typescript
 // VULNERABLE — direct HTML insertion
 element.innerHTML = userInput;
@@ -213,6 +215,7 @@ element.innerHTML = DOMPurify.sanitize(userInput);
 ```
 
 **Command Injection**:
+
 ```typescript
 // VULNERABLE
 exec(`convert ${userFilename} output.png`);
@@ -222,6 +225,7 @@ execFile('convert', [userFilename, 'output.png']);
 ```
 
 **Path Traversal**:
+
 ```typescript
 // VULNERABLE
 const filePath = `/uploads/${userFileName}`;
@@ -235,6 +239,7 @@ if (!filePath.startsWith('/uploads/')) {
 ```
 
 **XML External Entity (XXE)**:
+
 ```typescript
 // VULNERABLE
 const parser = new DOMParser();
@@ -252,6 +257,7 @@ const parser = new DOMParser({
 ## Authentication & Sessions
 
 **Password Storage**:
+
 ```typescript
 // VULNERABLE — plain text or weak hash
 const hash = md5(password);
@@ -261,6 +267,7 @@ const hash = await bcrypt.hash(password, 12);
 ```
 
 **Session Management**:
+
 ```typescript
 // VULNERABLE — predictable session IDs
 const sessionId = userId + Date.now();
@@ -278,6 +285,7 @@ res.cookie('session', sessionId, {
 ```
 
 **JWT Handling**:
+
 ```typescript
 // VULNERABLE — no signature verification
 const payload = JSON.parse(atob(token.split('.')[1]));
@@ -291,6 +299,7 @@ const payload = jwt.verify(token, SECRET_KEY, {
 ```
 
 **Password Reset**:
+
 ```typescript
 // VULNERABLE — predictable tokens
 const resetToken = userId + '-' + Date.now();
@@ -306,6 +315,7 @@ await db.execute(
 ## Authorization
 
 **Broken Access Control**:
+
 ```typescript
 // VULNERABLE — client-side only check
 if (user.isAdmin) {
@@ -323,6 +333,7 @@ app.get('/admin/users', requireAdmin, (req, res) => {
 ```
 
 **Insecure Direct Object Reference (IDOR)**:
+
 ```typescript
 // VULNERABLE — no ownership check
 app.get('/api/documents/:id', async (req, res) => {
@@ -341,6 +352,7 @@ app.get('/api/documents/:id', async (req, res) => {
 ```
 
 **Privilege Escalation**:
+
 ```typescript
 // VULNERABLE — role from client input
 app.post('/api/users', async (req, res) => {
@@ -363,6 +375,7 @@ app.post('/api/users', async (req, res) => {
 ## Cryptography
 
 **Weak Algorithms**:
+
 ```typescript
 // VULNERABLE — deprecated algorithms
 const hash = crypto.createHash('md5').update(data).digest('hex');
@@ -374,6 +387,7 @@ const cipher = crypto.createCipheriv('aes-256-gcm', key, iv);
 ```
 
 **Hardcoded Secrets**:
+
 ```typescript
 // VULNERABLE
 const API_KEY = 'sk-1234567890abcdef';
@@ -389,6 +403,7 @@ if (!API_KEY || !DB_PASSWORD) {
 ```
 
 **Insufficient Randomness**:
+
 ```typescript
 // VULNERABLE — predictable
 const token = Math.random().toString(36);
@@ -400,6 +415,7 @@ const token = crypto.randomBytes(32).toString('hex');
 ## Data Exposure
 
 **Sensitive Data in Logs**:
+
 ```typescript
 // VULNERABLE
 logger.info('User login', { email, password, ssn });
@@ -413,6 +429,7 @@ logger.info('User login', {
 ```
 
 **Error Message Disclosure**:
+
 ```typescript
 // VULNERABLE — exposes internals
 catch (err) {
@@ -427,6 +444,7 @@ catch (err) {
 ```
 
 **Timing Attacks**:
+
 ```typescript
 // VULNERABLE — early exit leaks info
 if (user.password !== inputPassword) {

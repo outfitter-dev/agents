@@ -79,6 +79,7 @@ Located in `hooks/`:
 - Error handling patterns
 
 **Installing a hook**:
+
 ```bash
 # 1. Copy script to project
 cp -r templates/hooks/post-tool-use-formatter/ .claude/hooks/
@@ -123,6 +124,7 @@ Located in `skills/`:
 - Helper scripts (for advanced template)
 
 **Creating a skill**:
+
 ```bash
 # 1. Choose template
 cp -r templates/skills/simple-skill/ .claude/skills/my-skill/
@@ -154,6 +156,7 @@ Located in `agents/`:
 - Tool restrictions
 
 **Using an agent template**:
+
 ```bash
 # 1. Copy to project
 cp templates/agents/code-reviewer.md .claude/agents/
@@ -253,6 +256,7 @@ expect(result).toBe(30);
 #### 4. Security in Hooks
 
 Always include:
+
 ```bash
 set -euo pipefail  # Fail on errors, undefined vars, pipe failures
 
@@ -381,6 +385,7 @@ my-skill/
 ```
 
 In `SKILL.md`:
+
 ```markdown
 ## Quick Start
 [Essential info here]
@@ -426,6 +431,7 @@ See [EXAMPLES.md](EXAMPLES.md) for real-world examples.
 **Problem**: Permission denied when running scripts
 
 **Solutions**:
+
 ```bash
 # Make executable
 chmod +x .claude/hooks/*.sh

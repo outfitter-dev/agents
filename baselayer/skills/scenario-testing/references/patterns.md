@@ -43,6 +43,7 @@ testLoginSuccess().catch(console.error)
 ```
 
 scenarios.jsonl entry:
+
 ```jsonl
 {"name":"auth-login-success","description":"User logs in with valid credentials","setup":"Create test user in database with hashed password","steps":["POST /auth/login with email and password","Receive 200 response","Extract JWT token from response","Verify user data in response"],"expected":"200 OK with JWT token and user object","tags":["auth","jwt","happy-path"],"duration_ms":150}
 ```
@@ -83,6 +84,7 @@ testLoginFailure().catch(console.error)
 ```
 
 scenarios.jsonl entry:
+
 ```jsonl
 {"name":"auth-login-invalid","description":"Login fails with incorrect password","setup":"Create test user with known password","steps":["POST /auth/login with wrong password"],"expected":"401 Unauthorized, no token issued, error message present","tags":["auth","error-handling","security"],"duration_ms":100}
 ```
@@ -136,6 +138,7 @@ testTokenValidation().catch(console.error)
 ```
 
 scenarios.jsonl entry:
+
 ```jsonl
 {"name":"auth-token-validation","description":"JWT token validation for protected endpoints","setup":"Create user and obtain valid JWT token","steps":["GET /auth/me with valid token","GET /auth/me with invalid token","GET /auth/me without token"],"expected":"Valid token: 200 + user data. Invalid: 401. Missing: 401.","tags":["auth","jwt","authorization"],"duration_ms":200}
 ```
@@ -186,6 +189,7 @@ testCreateResource().catch(console.error)
 ```
 
 scenarios.jsonl entry:
+
 ```jsonl
 {"name":"crud-create-success","description":"Create new resource via API","setup":"Authenticated user","steps":["POST /api/posts with resource data","Receive 201 Created","Verify resource in database"],"expected":"201 Created with resource ID, resource persisted in database","tags":["crud","create","api"],"duration_ms":120}
 ```
@@ -227,6 +231,7 @@ testReadResource().catch(console.error)
 ```
 
 scenarios.jsonl entry:
+
 ```jsonl
 {"name":"crud-read-success","description":"Retrieve existing resource","setup":"Resource exists in database","steps":["GET /api/posts/{id}"],"expected":"200 OK with complete resource data including relations","tags":["crud","read","api"],"duration_ms":80}
 ```
@@ -277,6 +282,7 @@ testUpdateResource().catch(console.error)
 ```
 
 scenarios.jsonl entry:
+
 ```jsonl
 {"name":"crud-update-success","description":"Update existing resource","setup":"Resource owned by authenticated user","steps":["PUT /api/posts/{id} with updated fields","Verify response data","Verify database persistence"],"expected":"200 OK with updated data, changes persisted in database","tags":["crud","update","api"],"duration_ms":130}
 ```
@@ -324,6 +330,7 @@ testDeleteResource().catch(console.error)
 ```
 
 scenarios.jsonl entry:
+
 ```jsonl
 {"name":"crud-delete-success","description":"Delete owned resource","setup":"Resource owned by authenticated user","steps":["DELETE /api/posts/{id}","Verify 204 response","Verify removal from database","Verify 404 on subsequent read"],"expected":"204 No Content, resource removed, subsequent reads return 404","tags":["crud","delete","api"],"duration_ms":140}
 ```
@@ -377,6 +384,7 @@ testStripeCustomerCreation().catch(console.error)
 ```
 
 scenarios.jsonl entry:
+
 ```jsonl
 {"name":"stripe-customer-create","description":"Create Stripe customer for new user","setup":"Test user in database, Stripe test mode API keys","steps":["Call stripe.customers.create()","Store customer ID in database","Verify linkage"],"expected":"Customer created in Stripe, ID stored in database, metadata linked","tags":["integration","stripe","api"],"env":"test","duration_ms":450}
 ```
@@ -435,6 +443,7 @@ testStripeWebhook().catch(console.error)
 ```
 
 scenarios.jsonl entry:
+
 ```jsonl
 {"name":"stripe-webhook-subscription-created","description":"Process subscription created webhook","setup":"Stripe customer exists, webhook endpoint configured","steps":["Create subscription.created event","POST to /webhooks/stripe","Verify signature","Process event","Update database"],"expected":"200 OK response, user subscription status updated","tags":["integration","stripe","webhook"],"env":"test","duration_ms":600}
 ```
@@ -473,6 +482,7 @@ testRateLimiting().catch(console.error)
 ```
 
 scenarios.jsonl entry:
+
 ```jsonl
 {"name":"rate-limit-ip-burst","description":"IP-based rate limiting under burst load","setup":"Clean rate limit state","steps":["Send 15 requests from same IP","Track response codes"],"expected":"First 10 requests: 200 OK. Remaining 5: 429 Too Many Requests","tags":["rate-limiting","security","api"],"duration_ms":250}
 ```
@@ -525,6 +535,7 @@ testValidationErrors().catch(console.error)
 ```
 
 scenarios.jsonl entry:
+
 ```jsonl
 {"name":"validation-multiple-errors","description":"Multiple validation errors returned","setup":"Authenticated user","steps":["POST /api/posts with multiple invalid fields"],"expected":"400 Bad Request with errors array listing all validation failures, no resource created","tags":["validation","error-handling","api"],"duration_ms":90}
 ```
@@ -559,6 +570,7 @@ test{FeatureScenario}().catch(console.error)
 ```
 
 scenarios.jsonl template:
+
 ```jsonl
 {"name":"feature-scenario","description":"Human-readable summary","setup":"Prerequisites and state","steps":["Action 1","Action 2","Action 3"],"expected":"Success criteria","tags":["category","subcategory"],"env":"test","duration_ms":100}
 ```

@@ -26,6 +26,7 @@ User proposes using Redux + Redux Saga for managing a 3-field contact form (name
 > Here are simpler alternatives that meet the requirements:
 
 **Option 1: React useState (Recommended)**
+
 ```typescript
 function ContactForm() {
   const [form, setForm] = useState({ name: '', email: '', message: '' })
@@ -56,6 +57,7 @@ function ContactForm() {
 ```
 
 **Option 2: React Hook Form (If validation is complex)**
+
 ```typescript
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -80,6 +82,7 @@ function ContactForm() {
 ```
 
 **Comparison**:
+
 | Approach | LOC | Dependencies | Learning Curve | Maintenance |
 |----------|-----|--------------|----------------|-------------|
 | Redux + Saga | ~150 | 2 libraries | High | High |
@@ -125,6 +128,7 @@ function ContactForm() {
 ### DOCUMENT: Record Decision
 
 **If proceeding with Redux** (unlikely after questioning):
+
 ```markdown
 ## ADR: Redux for Contact Form
 
@@ -141,6 +145,7 @@ function ContactForm() {
 ```
 
 **If proceeding with useState** (likely outcome):
+
 ```typescript
 // ContactForm.tsx
 // Using useState for simplicity - form state is local and doesn't need sharing.

@@ -1856,7 +1856,7 @@ Scripts that console.log prose instead of JSON.
 
 ---
 
-## rules/skill-md.yml
+## `rules/`skill-md.yml
 
 ```yaml
 # ast-grep rules for SKILL.md linting
@@ -1883,7 +1883,7 @@ rules:
 
 ---
 
-## rules/scripts-ts.yml
+## `rules/`scripts-ts.yml
 
 ```yaml
 # ast-grep rules for TypeScript script linting

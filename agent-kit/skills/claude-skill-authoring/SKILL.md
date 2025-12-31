@@ -92,16 +92,19 @@ my-skill/
 ## Skill Scopes
 
 ### Personal Skills (`~/.claude/skills/`)
+
 - Available across all your projects
 - Individual workflows and preferences
 - Not shared with team
 
 ### Project Skills (`.claude/skills/`)
+
 - Shared with your team via git
 - Team-specific workflows
 - Project conventions
 
 ### Plugin Skills (`plugin/skills/`)
+
 - Bundled with plugins
 - Distributed via marketplaces
 - Automatically available when plugin installed
@@ -152,11 +155,13 @@ See [EXAMPLES.md](EXAMPLES.md) for more examples
 **The description field is essential for skill discovery.**
 
 ### Poor Description
+
 ```yaml
 description: Helps with documents
 ```
 
 ### Good Description
+
 ```yaml
 description: Extract text and tables from PDF files, fill forms, merge documents. Use when working with PDF files or when the user mentions PDFs, forms, or document extraction.
 ```
@@ -171,16 +176,19 @@ description: Extract text and tables from PDF files, fill forms, merge documents
 ### Examples
 
 **Excel Analysis:**
+
 ```yaml
 description: Analyze Excel spreadsheets, create pivot tables, generate charts. Use when working with Excel files, spreadsheets, or analyzing tabular data in .xlsx format.
 ```
 
 **Git Workflows:**
+
 ```yaml
 description: Automate git workflows including branch management, commit formatting, and PR creation. Use when managing git repositories, creating branches, or handling commits.
 ```
 
 **API Testing:**
+
 ```yaml
 description: Test REST APIs with validation and reporting. Use when testing APIs, endpoints, or HTTP services, or when user mentions API testing or endpoint validation.
 ```
@@ -246,6 +254,7 @@ Run helper scripts:
 ./scripts/analyze.sh input.txt
 ./scripts/format-output.py results.json
 ```
+
 ```
 
 ## Supporting Files
@@ -279,16 +288,20 @@ Run helper scripts:
 
 **Good: Focused**
 ```
+
 ✅ pdf-form-filling
 ✅ excel-pivot-tables
 ✅ api-endpoint-testing
+
 ```
 
 **Bad: Too Broad**
 ```
+
 ❌ document-processing
 ❌ data-analysis
 ❌ testing
+
 ```
 
 ### 2. Clear Descriptions
@@ -339,6 +352,7 @@ version: 1.2.0  # Semantic versioning
 ```
 
 Add changelog in SKILL.md content:
+
 ```markdown
 ## Version History
 
@@ -455,6 +469,7 @@ Generate comprehensive test suites.
 ### Skill Not Loading
 
 **Check file location:**
+
 ```bash
 # Personal skill
 ls ~/.claude/skills/my-skill/SKILL.md
@@ -464,6 +479,7 @@ ls .claude/skills/my-skill/SKILL.md
 ```
 
 **Validate YAML frontmatter:**
+
 ```bash
 # Must have opening ---
 # Must have closing ---
@@ -474,6 +490,7 @@ ls .claude/skills/my-skill/SKILL.md
 ### Claude Doesn't Use Skill
 
 **Improve description specificity:**
+
 ```yaml
 # Before: Too vague
 description: Process files
@@ -490,6 +507,7 @@ description: Parse and validate JSON files, including schema validation and form
 ### Tool Permissions Issues
 
 **Verify tool names (case-sensitive):**
+
 ```yaml
 # ✅ Correct
 allowed-tools: Read, Grep, Glob
@@ -499,6 +517,7 @@ allowed-tools: read, grep, glob
 ```
 
 **Check bash patterns:**
+
 ```yaml
 # ✅ Correct
 allowed-tools: Bash(git *), Bash(npm *)
@@ -510,6 +529,7 @@ allowed-tools: Bash(git), Bash(npm)
 ### Skill Errors
 
 **Enable debug mode:**
+
 ```bash
 claude --debug
 # Shows skill loading errors and issues

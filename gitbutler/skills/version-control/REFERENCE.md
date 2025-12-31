@@ -18,6 +18,7 @@ Global Options (must come BEFORE subcommand):
 ```
 
 **Critical**: Global flags come first:
+
 ```bash
 ✓ but --json status
 ✗ but status --json  # Error: unexpected argument
@@ -35,6 +36,7 @@ Global Options (must come BEFORE subcommand):
 | `but .` or `but /path` | Open GitButler GUI for repository |
 
 **Status Output Example:**
+
 ```
 ╭┄00 [Unassigned Changes]
 │   m6 A test-file.md
@@ -140,6 +142,7 @@ but rub <source> <target>
 ### AI Integration Commands
 
 **Claude Code Hooks:**
+
 | Command | Purpose |
 |---------|---------|
 | `but claude pre-tool` | Run before code generation/editing |
@@ -147,12 +150,14 @@ but rub <source> <target>
 | `but claude stop` | Run when agent session ends |
 
 **Cursor Hooks:**
+
 | Command | Purpose |
 |---------|---------|
 | `but cursor after-edit` | Triggered when Cursor edits files |
 | `but cursor stop` | Triggered when task completes |
 
 **MCP Server:**
+
 | Command | Purpose |
 |---------|---------|
 | `but mcp` | Start MCP server for agent integration |
@@ -183,6 +188,7 @@ Key fields:
 - `parentIds` — Parent commits (useful for finding stacks)
 
 **Useful jq patterns:**
+
 ```bash
 # Get all branch names
 but --json log | jq '.[0].branchDetails[] | .name'
@@ -307,6 +313,7 @@ but commit <branch> -o -m "message"
 **Cause:** `gitbutler/workspace` branch modified or deleted outside GitButler.
 
 **Recovery:**
+
 ```bash
 # Return to integration branch
 git checkout gitbutler/integration
@@ -349,6 +356,7 @@ but init
 #### Recovering from Mixed Git/But Commands
 
 **If you committed with `git commit`:**
+
 ```bash
 # Work is still in working directory
 # Find orphaned commit
@@ -362,6 +370,7 @@ git checkout gitbutler/integration
 ```
 
 **If you checked out another branch:**
+
 ```bash
 # Return to GitButler
 git checkout gitbutler/integration
@@ -408,6 +417,7 @@ git archive $LATEST index/ | tar -x -C recovered-uncommitted/
 **Location:** `.git/gitbutler/operations-log.toml`
 
 **Snapshot contents:**
+
 ```
 <snapshot-commit>
 ├── virtual_branches.toml     # Branch metadata
@@ -427,6 +437,7 @@ git archive $LATEST index/ | tar -x -C recovered-uncommitted/
 - `SquashCommit` — Squashed commits
 
 **Manual inspection:**
+
 ```bash
 # Find oplog head
 OPLOG_HEAD=$(cat .git/gitbutler/operations-log.toml | grep head_sha | awk '{print $3}' | tr -d '"')
@@ -450,6 +461,7 @@ git show <snapshot-sha>:index/path/to/file.txt
 4. **Don't mix GitButler and stock Git commands** — choose one workflow
 
 **Before risky operations:**
+
 ```bash
 but snapshot --message "Before major reorganization"
 ```

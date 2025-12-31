@@ -30,11 +30,13 @@ my-plugin/
 ### Creating Your First Plugin
 
 **Step 1: Create plugin directory**
+
 ```bash
 mkdir my-plugin && cd my-plugin
 ```
 
 **Step 2: Create plugin.json**
+
 ```json
 {
   "name": "my-plugin",
@@ -55,6 +57,7 @@ mkdir my-plugin && cd my-plugin
 - MCP servers in plugin.json
 
 **Step 4: Test locally**
+
 ```bash
 /plugin marketplace add ./path/to/my-plugin
 /plugin install my-plugin@my-plugin
@@ -78,6 +81,7 @@ The metadata file that defines your plugin:
 - `repository`: Source code URL
 
 **Example:**
+
 ```json
 {
   "name": "dev-tools",
@@ -99,6 +103,7 @@ The metadata file that defines your plugin:
 Create custom commands in `commands/` directory. Each command is a markdown file.
 
 **File: commands/review-pr.md**
+
 ```markdown
 ---
 description: "Review a pull request with comprehensive analysis"
@@ -116,6 +121,7 @@ Provide specific, actionable feedback.
 ```
 
 **Usage:**
+
 ```bash
 /review-pr 123
 ```
@@ -125,6 +131,7 @@ Provide specific, actionable feedback.
 Define specialized agents in `agents/` directory.
 
 **File: agents/security-reviewer.md**
+
 ```markdown
 ---
 name: security-reviewer
@@ -199,11 +206,17 @@ Integrate MCP servers directly in plugin.json:
 }
 ```
 
-**Note:** `${CLAUDE_PLUGIN_ROOT}` automatically resolves to plugin installation directory.
+**Note:** Two path variables are available:
+
+- `${CLAUDE_PLUGIN_ROOT}` - Plugin installation directory (use in plugin.json)
+- `$CLAUDE_PROJECT_DIR` - User's project root (use in hook scripts at runtime)
+
+See [Environment Variables Reference](../../shared/rules/ENV-VARS.md) for details.
 
 ## Plugin Development Workflow
 
 1. **Initialize plugin structure**
+
    ```bash
    mkdir my-plugin
    cd my-plugin
@@ -221,6 +234,7 @@ Integrate MCP servers directly in plugin.json:
    - Configure MCP servers
 
 4. **Test locally**
+
    ```bash
    /plugin marketplace add .
    /plugin install my-plugin@my-plugin
@@ -241,12 +255,14 @@ Integrate MCP servers directly in plugin.json:
 ## Best Practices
 
 ### Naming Conventions
+
 - **Plugin name**: kebab-case (e.g., `dev-tools`)
 - **Commands**: kebab-case (e.g., `review-pr`)
 - **Agents**: kebab-case (e.g., `security-reviewer`)
 - **Scripts**: kebab-case with extension (e.g., `validate-changes.sh`)
 
 ### Directory Organization
+
 ```
 my-plugin/
 ├── plugin.json
@@ -265,12 +281,14 @@ my-plugin/
 ```
 
 ### Documentation
+
 - **README.md**: Overview, installation, usage examples
 - **CHANGELOG.md**: Version history and changes
 - **Command files**: Clear description in frontmatter
 - **Agent files**: Detailed instructions and context
 
 ### Testing
+
 - Test all slash commands with various inputs
 - Verify hooks don't interfere with normal workflow
 - Check MCP servers connect properly
@@ -278,6 +296,7 @@ my-plugin/
 - Validate cross-platform compatibility
 
 ### Security
+
 - Never hardcode secrets in plugin files
 - Use environment variables for sensitive data
 - Validate all user inputs in hooks
@@ -287,6 +306,7 @@ my-plugin/
 ## Common Patterns
 
 ### 1. Command with Parameters
+
 ```markdown
 ---
 description: "Deploy application to environment"
@@ -303,6 +323,7 @@ Steps:
 ```
 
 ### 2. Agent with Tool Restrictions
+
 ```markdown
 ---
 name: read-only-analyzer
@@ -314,6 +335,7 @@ You are a code analyzer that never modifies files. Analyze the codebase and prov
 ```
 
 ### 3. Conditional Hook
+
 ```json
 {
   "hooks": {

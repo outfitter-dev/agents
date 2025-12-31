@@ -32,6 +32,7 @@ Access control enforces policy such that users cannot act outside of their inten
 ### Vulnerability Patterns
 
 **IDOR (Insecure Direct Object Reference)**:
+
 ```typescript
 // VULNERABLE — sequential IDs, no ownership check
 GET /api/invoices/1001
@@ -48,6 +49,7 @@ GET /api/invoices/1004
 ```
 
 **Remediation**:
+
 ```typescript
 // SECURE — verify ownership before returning
 app.get('/api/invoices/:id', authenticate, async (req, res) => {
@@ -70,6 +72,7 @@ const invoiceId = crypto.randomUUID(); // Non-guessable
 ```
 
 **Missing Function Level Access Control**:
+
 ```typescript
 // VULNERABLE — client-side check only
 function AdminPanel() {
@@ -84,6 +87,7 @@ fetch('/api/admin/users').then(r => r.json())  // No server-side check!
 ```
 
 **Remediation**:
+
 ```typescript
 // SECURE — enforce on server
 app.get('/api/admin/users', authenticate, requireAdmin, async (req, res) => {
@@ -106,6 +110,7 @@ function requireAdmin(req, res, next) {
 ```
 
 **CORS Misconfiguration**:
+
 ```typescript
 // VULNERABLE — allows all origins
 app.use(cors({
@@ -115,6 +120,7 @@ app.use(cors({
 ```
 
 **Remediation**:
+
 ```typescript
 // SECURE — explicit allowlist
 const allowedOrigins = [
@@ -158,6 +164,7 @@ Previously known as Sensitive Data Exposure. Focuses on failures related to cryp
 ### Vulnerability Patterns
 
 **Weak Hashing Algorithm**:
+
 ```typescript
 // VULNERABLE — MD5 is broken
 const hash = crypto.createHash('md5').update(password).digest('hex');
@@ -170,6 +177,7 @@ const hash = crypto.createHash('sha256').update(password).digest('hex');
 ```
 
 **Remediation**:
+
 ```typescript
 // SECURE — bcrypt with sufficient cost
 import bcrypt from 'bcrypt';
@@ -192,6 +200,7 @@ const hash = await argon2.hash(password, {
 ```
 
 **Hardcoded Secrets**:
+
 ```typescript
 // VULNERABLE — secrets in code
 const API_KEY = 'sk-1234567890abcdef';
@@ -202,6 +211,7 @@ const JWT_SECRET = 'mysecret';
 ```
 
 **Remediation**:
+
 ```typescript
 // SECURE — environment variables
 const API_KEY = process.env.API_KEY;
@@ -225,6 +235,7 @@ JWT_SECRET=your_jwt_secret_here
 ```
 
 **Weak Encryption Algorithm**:
+
 ```typescript
 // VULNERABLE — DES is broken
 const cipher = crypto.createCipher('des', key);
@@ -237,6 +248,7 @@ const cipher = crypto.createCipheriv('aes-256-cbc', key, iv);
 ```
 
 **Remediation**:
+
 ```typescript
 // SECURE — AES-256-GCM (authenticated encryption)
 const algorithm = 'aes-256-gcm';
@@ -259,6 +271,7 @@ decrypted += decipher.final('utf8');
 ```
 
 **Insufficient Entropy**:
+
 ```typescript
 // VULNERABLE — predictable
 const sessionId = Math.random().toString(36);
@@ -267,6 +280,7 @@ const apiKey = userId + '-' + Math.floor(Math.random() * 1000000);
 ```
 
 **Remediation**:
+
 ```typescript
 // SECURE — cryptographically secure random
 const sessionId = crypto.randomBytes(32).toString('hex');  // 64 hex chars
@@ -315,6 +329,7 @@ Application is vulnerable to injection when user-supplied data is not validated,
 ### Vulnerability Patterns
 
 **SQL Injection**:
+
 ```sql
 -- VULNERABLE — string concatenation
 const query = `SELECT * FROM users WHERE email = '${userEmail}' AND password = '${userPassword}'`;
@@ -335,6 +350,7 @@ userEmail: ' OR 1=1--
 ```
 
 **Remediation**:
+
 ```typescript
 // SECURE — parameterized queries (prepared statements)
 const query = 'SELECT * FROM users WHERE email = ? AND password = ?';
@@ -356,6 +372,7 @@ const user = await User.findOne({
 ```
 
 **NoSQL Injection**:
+
 ```javascript
 // VULNERABLE — object injection
 app.post('/login', async (req, res) => {
@@ -378,6 +395,7 @@ POST /login
 ```
 
 **Remediation**:
+
 ```typescript
 // SECURE — type validation
 app.post('/login', async (req, res) => {
@@ -414,6 +432,7 @@ app.post('/login', async (req, res) => {
 ```
 
 **OS Command Injection**:
+
 ```typescript
 // VULNERABLE — user input in shell command
 const filename = req.query.file;
@@ -430,6 +449,7 @@ convert ; rm -rf / output.png
 ```
 
 **Remediation**:
+
 ```typescript
 // SECURE — use parameterized API
 import { execFile } from 'child_process';
@@ -457,6 +477,7 @@ await sharp(filename).toFile('output.png');
 ```
 
 **XSS (Cross-Site Scripting)**:
+
 ```html
 <!-- VULNERABLE — direct HTML insertion -->
 <div id="greeting"></div>
@@ -474,6 +495,7 @@ await sharp(filename).toFile('output.png');
 ```
 
 **Remediation**:
+
 ```html
 <!-- SECURE — use textContent -->
 <div id="greeting"></div>
@@ -529,6 +551,7 @@ New category focusing on risks related to design and architectural flaws. Requir
 ### Vulnerability Patterns
 
 **Missing Rate Limiting**:
+
 ```typescript
 // VULNERABLE — no rate limiting
 app.post('/api/login', async (req, res) => {
@@ -547,6 +570,7 @@ app.post('/api/login', async (req, res) => {
 ```
 
 **Remediation**:
+
 ```typescript
 // SECURE — rate limiting with exponential backoff
 import rateLimit from 'express-rate-limit';
@@ -610,6 +634,7 @@ app.post('/api/login', async (req, res) => {
 ```
 
 **Business Logic Flaw — Race Condition**:
+
 ```typescript
 // VULNERABLE — time-of-check to time-of-use
 app.post('/api/transfer', async (req, res) => {
@@ -633,6 +658,7 @@ app.post('/api/transfer', async (req, res) => {
 ```
 
 **Remediation**:
+
 ```typescript
 // SECURE — atomic transaction
 app.post('/api/transfer', async (req, res) => {
@@ -702,6 +728,7 @@ ALTER TABLE accounts ADD CONSTRAINT positive_balance CHECK (balance >= 0);
 ### Remediation
 
 **Security Headers**:
+
 ```typescript
 import helmet from 'helmet';
 
@@ -832,6 +859,7 @@ See main SKILL.md for authentication patterns.
 ### Vulnerability Pattern
 
 **Insecure Deserialization**:
+
 ```typescript
 // VULNERABLE — deserialize untrusted data
 const userData = JSON.parse(req.cookies.user);
@@ -839,6 +867,7 @@ const obj = deserialize(req.body.data);  // Arbitrary code execution!
 ```
 
 **Remediation**:
+
 ```typescript
 // SECURE — validate structure
 import { z } from 'zod';
@@ -939,6 +968,7 @@ app.get('/api/fetch', async (req, res) => {
 ```
 
 **Remediation**:
+
 ```typescript
 // SECURE — allowlist of domains
 const ALLOWED_DOMAINS = ['api.example.com', 'cdn.example.com'];

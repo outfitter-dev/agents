@@ -1,1 +1,3 @@
-@baselayer/shared/rules/FORMATTING.md
+# Formatting Conventions
+
+@../../baselayer/shared/`rules/`FORMATTING.md

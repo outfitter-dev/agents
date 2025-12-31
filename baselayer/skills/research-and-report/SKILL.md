@@ -32,6 +32,7 @@ Track with TodoWrite. Phases advance only, never regress.
 | Compile Report | Synthesis complete | "Compiling report" |
 
 TodoWrite format:
+
 ```text
 - Analyze Request → { scope definition }
 - Discover Sources → { multi-source strategy }
@@ -106,6 +107,7 @@ Source authority hierarchy:
 **4. Comparison Phase** — Systematic tradeoff analysis
 
 Comparison matrix:
+
 ```
 | Criterion   | Option A | Option B | Option C |
 |-------------|----------|----------|----------|
@@ -183,6 +185,7 @@ Multi-source orchestration:
 - Optimize: Use `onlyMainContent=true`, `maxAge` for caching
 
 Parallel execution pattern:
+
 ```javascript
 await Promise.all([
   context7.resolve(name),
@@ -192,6 +195,7 @@ await Promise.all([
 ```
 
 Fallback chain:
+
 ```
 context7 fails → octocode issues → firecrawl alternatives
 Empty docs → broader topic → web search
@@ -234,6 +238,7 @@ Rate limit → alternate MCP → manual search guidance
 Two output modes based on research type:
 
 **Evaluation Mode** (claims and recommendations):
+
 ```
 Finding: { assertion or claim }
 Source: { authoritative source with link }
@@ -242,6 +247,7 @@ Verify: { how to validate this finding }
 ```
 
 **Discovery Mode** (searching and gathering):
+
 ```
 Found: { what was discovered }
 Source: { where it came from with link }
@@ -344,6 +350,7 @@ Always consider:
 When detecting common patterns:
 
 **Outdated Patterns**
+
 ```
 User mentions deprecated approach
 → Flag deprecation
@@ -352,6 +359,7 @@ User mentions deprecated approach
 ```
 
 **Missing Prerequisites**
+
 ```
 Feature requires setup
 → Include prerequisite steps
@@ -360,6 +368,7 @@ Feature requires setup
 ```
 
 **Common Pitfalls**
+
 ```
 Topic has known gotchas
 → Add prevention notes
@@ -368,6 +377,7 @@ Topic has known gotchas
 ```
 
 **Related Tools**
+
 ```
 Solution has complementary tools
 → Mention related libraries

@@ -26,6 +26,7 @@ Manages configuration files for OpenAI Codex CLI, including model settings, sand
 ### CLI Config Override
 
 Override any config value at runtime:
+
 ```bash
 codex -c model="o3"
 codex -c 'sandbox_permissions=["disk-full-read-access"]'
@@ -85,6 +86,7 @@ model_reasoning_effort = "high"
 ```
 
 **Usage:**
+
 ```bash
 codex -p max "complex refactoring task"
 codex -p fast "quick fix"
@@ -152,6 +154,7 @@ skills = true
 ```
 
 **CLI toggle:**
+
 ```bash
 codex --enable skills
 codex --disable remote_compaction
@@ -182,6 +185,7 @@ API_KEY = "your-key"
 ### Common MCP Servers
 
 **Context7 (documentation):**
+
 ```toml
 [mcp_servers.context7]
 command = "npx"
@@ -189,6 +193,7 @@ args = ["-y", "@upstash/context7-mcp", "--api-key", "YOUR_KEY"]
 ```
 
 **Firecrawl (web scraping):**
+
 ```toml
 [mcp_servers.firecrawl]
 command = "npx"
@@ -199,6 +204,7 @@ FIRECRAWL_API_KEY = "YOUR_KEY"
 ```
 
 **Graphite (stacked PRs):**
+
 ```toml
 [mcp_servers.graphite]
 command = "gt"
@@ -206,6 +212,7 @@ args = ["mcp"]
 ```
 
 **Linear (project management):**
+
 ```toml
 [mcp_servers.linear]
 command = "npx"
@@ -327,17 +334,20 @@ codex sandbox <command>
 ## Best Practices
 
 ### Security
+
 - Use `workspace-write` sandbox for most work
 - Set `approval_policy = "on-failure"` as baseline
 - Only use `danger-full-access` when necessary
 - Review project trust levels periodically
 
 ### Performance
+
 - Use profiles for different task types
 - Set appropriate `exec_timeout_ms`
 - Configure `tool_output_token_limit` for large outputs
 
 ### Organization
+
 - Keep user-level skills in `~/.codex/skills/`
 - Use project-level skills for team sharing
 - Document custom MCP server configurations

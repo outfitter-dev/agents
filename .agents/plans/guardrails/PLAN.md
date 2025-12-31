@@ -174,15 +174,15 @@ Use the structured logger from `@/lib/logger` instead.
 | `action` | Yes | `warn` (allow) \| `block` (prevent) |
 | `paths.include` | No | Glob patterns for files to check |
 | `paths.exclude` | No | Glob patterns to skip |
-| `simple` | No* | Regex-based matching config |
+| **simple** | No* | Regex-based matching config |
 | `ast-grep` | No* | Structural matching config |
 
-*At least one of `simple` or `ast-grep` required.
+*At least one of **simple** or `ast-grep` required.
 
 #### Guard Resolution Order
 
 1. If ast-grep is available AND `ast-grep` section exists → use ast-grep
-2. Otherwise → use `simple` regex matching
+2. Otherwise → use **simple** regex matching
 3. If neither → guard is invalid
 
 **Why Markdown:**
@@ -466,7 +466,7 @@ Guided workflow for authoring new guards:
 
 1. Clarify intent (what pattern to catch, why)
 2. Collect examples (positive/negative from codebase)
-3. Draft minimal guard with both `simple` and `ast-grep` sections
+3. Draft minimal guard with both **simple** and `ast-grep` sections
 4. Run `guardrails:test` to validate
 5. Refine until FP/FN are acceptable
 6. Save to `.guardrails/guards/`

@@ -78,17 +78,18 @@ model: opus     # Complex reasoning, high-stakes decisions
 - `inherit` — Recommended default. Adapts to parent's model context
 - `haiku` — Fast exploration, simple pattern matching, low-latency responses
 - `sonnet` — Good default for most agents. Balanced cost/capability
-- `opus` — Reserve for high-stakes work where mistakes are costly
+- `opus` — Deeper reasoning, higher quality output, complex analysis
 
 **When to use `opus`:**
-- Security auditors (missing vulnerabilities has real consequences)
-- Architecture reviewers (bad decisions compound across codebase)
-- Complex refactoring agents (reasoning about many interacting changes)
-- Agents making irreversible decisions (database migrations, API contracts)
-- Code review for critical paths (auth, payments, data handling)
+- Tasks requiring nuanced judgment or multi-step reasoning
+- Security auditors (subtle vulnerabilities, threat modeling)
+- Architecture reviewers (system-wide implications, tradeoff analysis)
+- Complex refactoring (reasoning about many interacting changes)
+- Agents making irreversible decisions (migrations, API contracts)
+- When output quality matters more than speed/cost
 
 **When `sonnet` is fine:**
-- Most implementation tasks
+- Straightforward implementation tasks
 - Standard code review
 - Test generation
 - Documentation and formatting
@@ -472,7 +473,7 @@ From the main conversation, Claude uses the Task tool:
 ```json
 {
   "description": "Generate auth service tests",
-  "prompt": "Generate unit tests for the authentication service. Focus on edge cases and error handling. Use existing test patterns from tests/auth/. Target 90% coverage.",
+  "prompt": "Generate unit tests for the authentication service. Focus on edge cases and error handling. Use existing test patterns from `tests/auth/`. Target 90% coverage.",
   "subagent_type": "testing-specialist"
 }
 ```
@@ -501,7 +502,7 @@ Each agent execution returns an `agentId`. Use this ID with the `resume` paramet
 
 ```bash
 # 1. Create agent file
-# agents/test-agent.md
+# `agents/test-agent.md`
 
 # 2. In Claude Code main conversation
 "Can you use the test-agent to analyze this code?"
@@ -516,8 +517,8 @@ Each agent execution returns an `agentId`. Use this ID with the `resume` paramet
 
 ```bash
 # Agents are loaded from:
-# - ~/.claude/agents/ (personal)
-# - ./agents/ (project)
+# - `~/.claude/agents/` (personal)
+# - `./agents/` (project)
 # - Plugins (installed)
 
 # Check debug output

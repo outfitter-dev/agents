@@ -206,6 +206,7 @@ my-marketplace/
 ```
 
 **marketplace.json:**
+
 ```json
 {
   "name": "my-marketplace",
@@ -809,6 +810,7 @@ Efficient update management:
 ### From Manual Installation to Marketplace
 
 **Before:**
+
 ```bash
 # Users manually install each plugin
 /plugin install ./path/to/plugin-a
@@ -816,6 +818,7 @@ Efficient update management:
 ```
 
 **After:**
+
 ```bash
 # Add marketplace once
 /plugin marketplace add company/plugins
@@ -828,6 +831,7 @@ Efficient update management:
 ### From Single Marketplace to Multiple
 
 **Split by concern:**
+
 ```json
 // Before: one large marketplace
 {"name": "all-tools", "plugins": [...50 plugins...]}
@@ -843,9 +847,11 @@ Efficient update management:
 ### Common Issues
 
 **Issue: Marketplace not found**
+
 ```
 Error: Could not find marketplace at <url>
 ```
+
 **Solution:**
 - Verify URL is correct
 - Check `.claude-plugin/marketplace.json` exists at root
@@ -853,9 +859,11 @@ Error: Could not find marketplace at <url>
 - For private repos, check authentication
 
 **Issue: Plugin source not found**
+
 ```
 Error: Could not fetch plugin from <source>
 ```
+
 **Solution:**
 - Verify source path/URL is correct
 - For relative paths, check `pluginRoot` configuration
@@ -863,9 +871,11 @@ Error: Could not fetch plugin from <source>
 - Check branch/ref is correct
 
 **Issue: Invalid marketplace JSON**
+
 ```
 Error: Failed to parse marketplace.json
 ```
+
 **Solution:**
 - Validate JSON syntax: `jq empty marketplace.json`
 - Check for trailing commas
@@ -873,9 +883,11 @@ Error: Failed to parse marketplace.json
 - Ensure proper nesting
 
 **Issue: Plugin won't install**
+
 ```
 Error: Plugin installation failed
 ```
+
 **Solution:**
 - Check plugin has required structure
 - Verify plugin.json exists (if strict=true)

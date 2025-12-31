@@ -75,8 +75,8 @@ When updating plugins:
 ### Reporting Issues
 
 Found a security issue? Please report it:
-- **Email**: team@outfitter.dev
-- **GitHub**: Open a private security advisory at https://github.com/outfitter-dev/agents/security
+- **Email**: <team@outfitter.dev>
+- **GitHub**: Open a private security advisory at <https://github.com/outfitter-dev/agents/security>
 
 ## Plugin Development Guidelines
 

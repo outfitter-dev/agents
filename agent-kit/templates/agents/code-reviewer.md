@@ -246,12 +246,14 @@ User input is directly interpolated into SQL query, allowing SQL injection attac
 **Impact**: Attacker could extract all database data, modify records, or delete tables.
 
 **Fix**:
+
 ```typescript
 const query = 'SELECT * FROM users WHERE id = ?';
 const results = await db.query(query, [userId]);
 ```
 
 Use parameterized queries to prevent injection.
+
 ```
 
 ### Example 2: Performance Issue
@@ -276,6 +278,7 @@ This creates N+1 database queries (1 for orders + N for users).
 **Performance Impact**: With 1000 orders, this makes 1001 database calls.
 
 **Fix**:
+
 ```typescript
 const userIds = orders.map(o => o.userId);
 const users = await db.users.findByIds(userIds);
@@ -284,6 +287,7 @@ orders.forEach(o => o.user = userMap.get(o.userId));
 ```
 
 Single query for all users (2 queries total).
+
 ```
 
 ## Remember

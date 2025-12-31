@@ -230,6 +230,7 @@ function linkPRToBeads(prTitle: string, beadsIssues: BeadsIssue[]) {
 ### With Linear Issues
 
 Beads `external_ref` field can store Linear issue URL:
+
 ```bash
 bd update AG-123 --external-ref="https://linear.app/team/issue/TEAM-456"
 ```
@@ -317,6 +318,7 @@ try {
 ## Troubleshooting
 
 **"Beads not initialized"**
+
 ```bash
 bd init                           # Initialize in project root
 bd init --prefix=PROJ             # Custom prefix (e.g., PROJ-1)
@@ -327,6 +329,7 @@ bd init --prefix=PROJ             # Custom prefix (e.g., PROJ-1)
 - Verify `.beads/` exists in expected location
 
 **"Wrong project context"**
+
 ```bash
 bd set-context /path/to/project   # Set correct workspace
 ```

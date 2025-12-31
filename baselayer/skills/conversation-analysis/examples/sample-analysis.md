@@ -9,50 +9,59 @@ This conversation shows a user working with an AI agent to implement authenticat
 ---
 
 **Message 1** (User, 2025-11-28 09:00:00)
+
 ```
 I need to add authentication to the app. Use JWT tokens and make sure to hash passwords with bcrypt.
 ```
 
 **Message 2** (Agent, 2025-11-28 09:01:30)
+
 ```
 I'll implement JWT authentication with bcrypt password hashing. Let me create the auth middleware and user model.
 [Agent implements using npm and plain JavaScript]
 ```
 
 **Message 3** (User, 2025-11-28 09:05:00)
+
 ```
 No, use Bun not npm. And I prefer TypeScript over JavaScript for all new code.
 ```
 
 **Message 4** (Agent, 2025-11-28 09:06:00)
+
 ```
 I'll switch to Bun and TypeScript. Let me recreate the implementation.
 [Agent reimplements with Bun and TypeScript]
 ```
 
 **Message 5** (User, 2025-11-28 09:10:00)
+
 ```
 Good, but you forgot to add input validation. Always validate user input before processing.
 ```
 
 **Message 6** (Agent, 2025-11-28 09:11:00)
+
 ```
 Adding input validation for email and password fields.
 [Agent adds validation]
 ```
 
 **Message 7** (User, 2025-11-28 09:15:00)
+
 ```
 Perfect! Now apply this same pattern to the password reset endpoint.
 ```
 
 **Message 8** (Agent, 2025-11-28 09:16:00)
+
 ```
 I'll implement password reset using the same auth pattern with JWT and validation.
 [Agent implements password reset]
 ```
 
 **Message 9** (User, 2025-11-28 09:20:00)
+
 ```
 Excellent work. This is exactly what I needed. Let's move on to the API rate limiting next.
 ```

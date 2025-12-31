@@ -19,11 +19,13 @@ Real-world examples and use cases for [YOUR_SKILL_NAME].
 **Scenario**: [Description of the problem this solves]
 
 **Solution**:
+
 ```[language]
 [CODE_EXAMPLE_WITH_DETAILED_COMMENTS]
 ```
 
 **Output**:
+
 ```
 [EXPECTED_OUTPUT]
 ```
@@ -39,11 +41,13 @@ Real-world examples and use cases for [YOUR_SKILL_NAME].
 **Scenario**: [Description]
 
 **Solution**:
+
 ```[language]
 [CODE_EXAMPLE]
 ```
 
 **Output**:
+
 ```
 [EXPECTED_OUTPUT]
 ```
@@ -57,21 +61,25 @@ Real-world examples and use cases for [YOUR_SKILL_NAME].
 **Scenario**: [Description of a more complex problem]
 
 **Step 1: Setup**
+
 ```[language]
 [SETUP_CODE]
 ```
 
 **Step 2: Implementation**
+
 ```[language]
 [IMPLEMENTATION_CODE]
 ```
 
 **Step 3: Usage**
+
 ```[language]
 [USAGE_CODE]
 ```
 
 **Complete Example**:
+
 ```[language]
 [FULL_CODE_WITH_COMMENTS]
 ```
@@ -82,6 +90,7 @@ Real-world examples and use cases for [YOUR_SKILL_NAME].
 3. [Explanation of step 3]
 
 **Output**:
+
 ```
 [EXPECTED_OUTPUT]
 ```
@@ -93,11 +102,13 @@ Real-world examples and use cases for [YOUR_SKILL_NAME].
 **Scenario**: [Description including potential errors]
 
 **Solution**:
+
 ```[language]
 [CODE_WITH_ERROR_HANDLING]
 ```
 
 **Testing the Error Handling**:
+
 ```[language]
 [TEST_CODE_FOR_ERRORS]
 ```
@@ -115,6 +126,7 @@ Real-world examples and use cases for [YOUR_SKILL_NAME].
 **Scenario**: [Detailed description of a production use case]
 
 **Architecture Overview**:
+
 ```
 [ASCII_DIAGRAM_OR_DESCRIPTION]
 ```
@@ -122,26 +134,31 @@ Real-world examples and use cases for [YOUR_SKILL_NAME].
 **Implementation**:
 
 **File 1**: `[filename]`
+
 ```[language]
 [CODE_FOR_FILE_1]
 ```
 
 **File 2**: `[filename]`
+
 ```[language]
 [CODE_FOR_FILE_2]
 ```
 
 **File 3**: `[filename]`
+
 ```[language]
 [CODE_FOR_FILE_3]
 ```
 
 **Configuration**: `[config-file]`
+
 ```[format]
 [CONFIGURATION]
 ```
 
 **Running the Example**:
+
 ```bash
 [COMMANDS_TO_RUN]
 ```
@@ -161,15 +178,19 @@ Real-world examples and use cases for [YOUR_SKILL_NAME].
 **Scenario**: [Description of performance-critical use case]
 
 **Naive Implementation** (slower):
+
 ```[language]
 [NAIVE_CODE]
 ```
+
 *Performance*: [Benchmark]
 
 **Optimized Implementation** (faster):
+
 ```[language]
 [OPTIMIZED_CODE]
 ```
+
 *Performance*: [Benchmark]
 
 **Explanation of Optimizations**:
@@ -186,21 +207,25 @@ Real-world examples and use cases for [YOUR_SKILL_NAME].
 **Scenario**: [Description of integration need]
 
 **Setup**:
+
 ```bash
 [SETUP_COMMANDS]
 ```
 
 **Implementation**:
+
 ```[language]
 [INTEGRATION_CODE]
 ```
 
 **Usage**:
+
 ```[language]
 [USAGE_EXAMPLE]
 ```
 
 **Testing**:
+
 ```[language]
 [TEST_CODE]
 ```
@@ -212,6 +237,7 @@ Real-world examples and use cases for [YOUR_SKILL_NAME].
 **Scenario**: Automating [task] in CI/CD pipeline
 
 **GitHub Actions Workflow**:
+
 ```yaml
 name: [Workflow Name]
 
@@ -233,6 +259,7 @@ jobs:
 ```
 
 **GitLab CI**:
+
 ```yaml
 [GITLAB_CI_EXAMPLE]
 ```
@@ -246,6 +273,7 @@ jobs:
 **Problem**: [Description]
 
 **Solution**:
+
 ```[language]
 [SOLUTION_CODE]
 ```
@@ -260,15 +288,19 @@ jobs:
 **Problem**: [Description]
 
 **Wrong Approach** ❌:
+
 ```[language]
 [WRONG_CODE]
 ```
+
 *Why this is wrong*: [Explanation]
 
 **Correct Approach** ✅:
+
 ```[language]
 [CORRECT_CODE]
 ```
+
 *Why this is better*: [Explanation]
 
 ---
@@ -278,11 +310,13 @@ jobs:
 **Problem**: Migrating from [old approach] to [new approach]
 
 **Before** (old way):
+
 ```[language]
 [OLD_CODE]
 ```
 
 **After** (new way):
+
 ```[language]
 [NEW_CODE]
 ```
@@ -317,15 +351,19 @@ jobs:
 ### Troubleshooting Examples
 
 **Issue**: [Common error message]
+
 ```
 [ERROR_OUTPUT]
 ```
+
 **Solution**: [Fix with code example]
 
 **Issue**: [Another common error]
+
 ```
 [ERROR_OUTPUT]
 ```
+
 **Solution**: [Fix with code example]
 
 ---

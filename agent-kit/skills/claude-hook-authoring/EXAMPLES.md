@@ -22,6 +22,7 @@ Real-world examples of Claude Code event hooks for automation, validation, and w
 Auto-format TypeScript files after writing or editing.
 
 **Configuration** (`.claude/settings.json`):
+
 ```json
 {
   "hooks": {
@@ -48,6 +49,7 @@ Auto-format TypeScript files after writing or editing.
 Auto-format Python files with Black.
 
 **Configuration**:
+
 ```json
 {
   "hooks": {
@@ -68,6 +70,7 @@ Auto-format Python files with Black.
 ```
 
 **Advanced version with multiple formatters**:
+
 ```json
 {
   "hooks": {
@@ -97,6 +100,7 @@ Auto-format Python files with Black.
 Auto-format Rust code.
 
 **Configuration**:
+
 ```json
 {
   "hooks": {
@@ -121,6 +125,7 @@ Auto-format Rust code.
 Format multiple languages with appropriate tools.
 
 **Script** (`.claude/hooks/format-code.sh`):
+
 ```bash
 #!/usr/bin/env bash
 set -euo pipefail
@@ -166,6 +171,7 @@ exit 0
 ```
 
 **Configuration**:
+
 ```json
 {
   "hooks": {
@@ -192,6 +198,7 @@ exit 0
 Validate bash commands before execution.
 
 **Script** (`.claude/hooks/validate-bash.sh`):
+
 ```bash
 #!/usr/bin/env bash
 set -euo pipefail
@@ -251,6 +258,7 @@ exit 0
 ```
 
 **Configuration**:
+
 ```json
 {
   "hooks": {
@@ -275,6 +283,7 @@ exit 0
 Prevent path traversal and sensitive file access.
 
 **Script** (`.claude/hooks/validate-paths.sh`):
+
 ```bash
 #!/usr/bin/env bash
 set -euo pipefail
@@ -351,6 +360,7 @@ exit 0
 ```
 
 **Configuration**:
+
 ```json
 {
   "hooks": {
@@ -375,6 +385,7 @@ exit 0
 Validate JSON files against schemas.
 
 **Script** (`.claude/hooks/validate-json.sh`):
+
 ```bash
 #!/usr/bin/env bash
 set -euo pipefail
@@ -425,6 +436,7 @@ exit 0
 ```
 
 **Configuration**:
+
 ```json
 {
   "hooks": {
@@ -451,6 +463,7 @@ exit 0
 Trigger build when specific files are modified.
 
 **Script** (`.claude/hooks/trigger-build.sh`):
+
 ```bash
 #!/usr/bin/env bash
 set -euo pipefail
@@ -479,6 +492,7 @@ exit 0
 ```
 
 **Configuration**:
+
 ```json
 {
   "hooks": {
@@ -503,6 +517,7 @@ exit 0
 Automatically run tests when code changes.
 
 **Script** (`.claude/hooks/run-tests.sh`):
+
 ```bash
 #!/usr/bin/env bash
 set -euo pipefail
@@ -555,6 +570,7 @@ exit 0
 ```
 
 **Configuration**:
+
 ```json
 {
   "hooks": {
@@ -579,6 +595,7 @@ exit 0
 Auto-update docs when code changes.
 
 **Script** (`.claude/hooks/update-docs.sh`):
+
 ```bash
 #!/usr/bin/env bash
 set -euo pipefail
@@ -613,6 +630,7 @@ exit 0
 ```
 
 **Configuration**:
+
 ```json
 {
   "hooks": {
@@ -639,6 +657,7 @@ exit 0
 Send notifications to Slack.
 
 **Script** (`.claude/hooks/notify-slack.sh`):
+
 ```bash
 #!/usr/bin/env bash
 set -euo pipefail
@@ -677,6 +696,7 @@ exit 0
 ```
 
 **Configuration**:
+
 ```json
 {
   "hooks": {
@@ -704,6 +724,7 @@ Send email for important events.
 > succeed even if the email is undeliverable, so verify your mail server setup.
 
 **Script** (`.claude/hooks/send-email.sh`):
+
 ```bash
 #!/usr/bin/env bash
 set -euo pipefail
@@ -737,6 +758,7 @@ exit 0
 ```
 
 **Configuration**:
+
 ```json
 {
   "hooks": {
@@ -761,6 +783,7 @@ exit 0
 Comprehensive logging of all operations.
 
 **Script** (`.claude/hooks/log-operations.sh`):
+
 ```bash
 #!/usr/bin/env bash
 set -euo pipefail
@@ -794,6 +817,7 @@ exit 0
 ```
 
 **Configuration**:
+
 ```json
 {
   "hooks": {
@@ -820,6 +844,7 @@ exit 0
 Add current timestamp to every prompt.
 
 **Script** (`.claude/hooks/add-timestamp.sh`):
+
 ```bash
 #!/usr/bin/env bash
 set -euo pipefail
@@ -835,6 +860,7 @@ exit 0
 ```
 
 **Configuration**:
+
 ```json
 {
   "hooks": {
@@ -859,6 +885,7 @@ exit 0
 Inject git status into prompt context.
 
 **Script** (`.claude/hooks/git-context.sh`):
+
 ```bash
 #!/usr/bin/env bash
 set -euo pipefail
@@ -881,6 +908,7 @@ exit 0
 ```
 
 **Configuration**:
+
 ```json
 {
   "hooks": {
@@ -905,6 +933,7 @@ exit 0
 Inject environment and system information.
 
 **Script** (`.claude/hooks/env-context.sh`):
+
 ```bash
 #!/usr/bin/env bash
 set -euo pipefail
@@ -928,6 +957,7 @@ exit 0
 ```
 
 **Configuration**:
+
 ```json
 {
   "hooks": {
@@ -954,6 +984,7 @@ exit 0
 Prevent operations on sensitive files.
 
 **Script** (`.claude/hooks/block-sensitive.sh`):
+
 ```bash
 #!/usr/bin/env bash
 set -euo pipefail
@@ -1001,6 +1032,7 @@ exit 0
 ```
 
 **Configuration**:
+
 ```json
 {
   "hooks": {
@@ -1025,6 +1057,7 @@ exit 0
 Ensure proper file permissions.
 
 **Script** (`.claude/hooks/enforce-permissions.sh`):
+
 ```bash
 #!/usr/bin/env bash
 set -euo pipefail
@@ -1054,6 +1087,7 @@ exit 0
 ```
 
 **Configuration**:
+
 ```json
 {
   "hooks": {
@@ -1078,6 +1112,7 @@ exit 0
 Create audit trail of all operations.
 
 **Script** (`.claude/hooks/audit-trail.sh`):
+
 ```bash
 #!/usr/bin/env bash
 set -euo pipefail
@@ -1120,6 +1155,7 @@ exit 0
 ```
 
 **Configuration**:
+
 ```json
 {
   "hooks": {
@@ -1146,6 +1182,7 @@ exit 0
 Format, type-check, lint, and test TypeScript files.
 
 **Configuration**:
+
 ```json
 {
   "hooks": {
@@ -1180,6 +1217,7 @@ Format, type-check, lint, and test TypeScript files.
 Format, type-check, lint, and test Python files.
 
 **Configuration**:
+
 ```json
 {
   "hooks": {
@@ -1219,6 +1257,7 @@ Format, type-check, lint, and test Python files.
 Validate before allowing write operations.
 
 **Configuration**:
+
 ```json
 {
   "hooks": {
@@ -1267,6 +1306,7 @@ Validate before allowing write operations.
 Team-wide formatting and validation.
 
 **Project** (`.claude/settings.json`):
+
 ```json
 {
   "hooks": {
@@ -1313,6 +1353,7 @@ Team-wide formatting and validation.
 Personal preferences that extend team hooks.
 
 **Personal** (`~/.claude/settings.json`):
+
 ```json
 {
   "hooks": {
@@ -1351,6 +1392,7 @@ Personal preferences that extend team hooks.
 Track MCP memory tool usage.
 
 **Script** (`.claude/hooks/log-memory.sh`):
+
 ```bash
 #!/usr/bin/env bash
 set -euo pipefail
@@ -1373,6 +1415,7 @@ exit 0
 ```
 
 **Configuration**:
+
 ```json
 {
   "hooks": {
@@ -1397,6 +1440,7 @@ exit 0
 Validate GitHub MCP operations.
 
 **Script** (`.claude/hooks/validate-github.sh`):
+
 ```bash
 #!/usr/bin/env bash
 set -euo pipefail
@@ -1418,6 +1462,7 @@ exit 0
 ```
 
 **Configuration**:
+
 ```json
 {
   "hooks": {
@@ -1444,6 +1489,7 @@ exit 0
 Execute hooks only under certain conditions.
 
 **Script** (`.claude/hooks/conditional-format.sh`):
+
 ```bash
 #!/usr/bin/env bash
 set -euo pipefail
@@ -1476,6 +1522,7 @@ exit 0
 Track state across hook invocations.
 
 **Script** (`.claude/hooks/track-changes.sh`):
+
 ```bash
 #!/usr/bin/env bash
 set -euo pipefail
@@ -1511,6 +1558,7 @@ exit 0
 Run expensive operations asynchronously.
 
 **Script** (`.claude/hooks/async-index.sh`):
+
 ```bash
 #!/usr/bin/env bash
 set -euo pipefail
@@ -1537,6 +1585,7 @@ exit 0
 Track hook performance.
 
 **Script** (`.claude/hooks/perf-monitor.sh`):
+
 ```bash
 #!/usr/bin/env bash
 set -euo pipefail
@@ -1570,6 +1619,7 @@ exit 0
 Robust error handling with recovery.
 
 **Script** (`.claude/hooks/robust-format.sh`):
+
 ```bash
 #!/usr/bin/env bash
 set -euo pipefail

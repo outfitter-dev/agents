@@ -32,6 +32,7 @@ Track with TodoWrite when applying framework to non-trivial proposals:
 | Document | Recording decision | "Documenting decision" |
 
 TodoWrite format:
+
 ```text
 - Identify { complexity type } smell
 - Propose alternatives to { specific approach }
@@ -141,6 +142,7 @@ Watch for these justifications — reframe with specific questions:
 Guide toward simpler alternatives with concrete examples:
 
 **Feature Flags over Plugin Architecture**
+
 ```typescript
 // Complex
 interface Plugin { transform(data: Data): Data }
@@ -156,6 +158,7 @@ if (features.transformB) { result = transformB(result) }
 ```
 
 **Direct over Generic**
+
 ```typescript
 // Complex (premature abstraction)
 interface DataStore<T> { get(id: string): Promise<T> }
@@ -169,6 +172,7 @@ async function getUser(id: string): Promise<User> {
 ```
 
 **Standard Library over Framework**
+
 ```typescript
 // Complex
 import _ from 'lodash'
@@ -181,6 +185,7 @@ const mapped = array.map(fn)
 ```
 
 **Composition over Configuration**
+
 ```typescript
 // Complex
 const pipeline = new Pipeline({

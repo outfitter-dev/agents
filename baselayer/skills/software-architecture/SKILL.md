@@ -42,6 +42,7 @@ Edge cases:
 - Iteration: Review & Refinement may repeat
 
 TodoWrite format:
+
 ```text
 - Discovery { problem domain }
 - Analyze { codebase area }
@@ -154,6 +155,7 @@ Decision factors:
    - Multi-region? Consider distributed databases
 
 Decision matrix:
+
 ```
 ACID + complex queries + proven? → PostgreSQL
 Flexibility + horizontal scaling + managed? → DynamoDB
@@ -376,6 +378,7 @@ Web services:
 - Error handling: `thiserror` for libraries, `anyhow` for applications
 
 Project structure:
+
 ```
 my-service/
 ├── Cargo.toml          # Workspace manifest
@@ -394,6 +397,7 @@ Operational considerations:
 - Cross-compilation more complex
 
 Tradeoffs vs TypeScript:
+
 ```
 Rust:
 ✓ 5–10x lower memory usage

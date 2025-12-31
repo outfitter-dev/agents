@@ -111,6 +111,7 @@
 Commands are markdown files with YAML frontmatter in the `commands/` directory.
 
 **Basic Command:**
+
 ```markdown
 ---
 description: "Brief description of what this command does"
@@ -121,6 +122,7 @@ Use {{0}}, {{1}}, etc. for parameters.
 ```
 
 **Command with Multiple Parameters:**
+
 ```markdown
 ---
 description: "Deploy application to specified environment"
@@ -157,6 +159,7 @@ Post-deployment:
 ### Command Organization
 
 **Flat Structure:**
+
 ```
 commands/
 ├── deploy.md
@@ -165,6 +168,7 @@ commands/
 ```
 
 **Organized Structure:**
+
 ```
 commands/
 ├── core/
@@ -179,6 +183,7 @@ commands/
 ```
 
 **Custom Paths in plugin.json:**
+
 ```json
 {
   "commands": [
@@ -196,6 +201,7 @@ commands/
 Agents are markdown files with YAML frontmatter in the `agents/` directory.
 
 **Basic Agent:**
+
 ```markdown
 ---
 name: agent-name
@@ -217,6 +223,7 @@ Always provide [expected output format].
 ```
 
 **Agent with Tool Restrictions:**
+
 ```markdown
 ---
 name: read-only-analyzer
@@ -257,6 +264,7 @@ Your analysis should be thorough but never make changes.
 ### Agent Organization
 
 **Custom Paths in plugin.json:**
+
 ```json
 {
   "agents": [
@@ -281,6 +289,7 @@ Your analysis should be thorough but never make changes.
 ### Hook Configuration
 
 **Basic Hook:**
+
 ```json
 {
   "hooks": {
@@ -300,6 +309,7 @@ Your analysis should be thorough but never make changes.
 ```
 
 **Multiple Matchers:**
+
 ```json
 {
   "hooks": {
@@ -319,6 +329,7 @@ Your analysis should be thorough but never make changes.
 ```
 
 **Regex Matchers:**
+
 ```json
 {
   "hooks": {
@@ -349,6 +360,7 @@ Your analysis should be thorough but never make changes.
 ### Hook Script Interface
 
 **Input:** Hook scripts receive JSON via stdin:
+
 ```json
 {
   "tool": "Write",
@@ -362,6 +374,7 @@ Your analysis should be thorough but never make changes.
 **Output:** Hook scripts should output JSON:
 
 **Success (allow):**
+
 ```json
 {
   "allowed": true
@@ -369,6 +382,7 @@ Your analysis should be thorough but never make changes.
 ```
 
 **Block with message:**
+
 ```json
 {
   "allowed": false,
@@ -377,6 +391,7 @@ Your analysis should be thorough but never make changes.
 ```
 
 **Modify parameters:**
+
 ```json
 {
   "allowed": true,
@@ -389,6 +404,7 @@ Your analysis should be thorough but never make changes.
 ### Example Hook Scripts
 
 **TypeScript Validation Hook:**
+
 ```bash
 #!/usr/bin/env bash
 
@@ -421,6 +437,7 @@ rm "$temp_file"
 ```
 
 **Secret Detection Hook:**
+
 ```bash
 #!/usr/bin/env bash
 
@@ -440,6 +457,7 @@ fi
 ### Server Configuration
 
 **Basic Server:**
+
 ```json
 {
   "mcpServers": {
@@ -452,6 +470,7 @@ fi
 ```
 
 **Server with Environment Variables:**
+
 ```json
 {
   "mcpServers": {
@@ -469,6 +488,7 @@ fi
 ```
 
 **Python Server:**
+
 ```json
 {
   "mcpServers": {
@@ -489,6 +509,7 @@ fi
 ```
 
 **Node.js Server:**
+
 ```json
 {
   "mcpServers": {
@@ -512,6 +533,7 @@ fi
 | `${VAR_NAME}` | Environment variable | External configuration |
 
 **Example:**
+
 ```json
 {
   "command": "${CLAUDE_PLUGIN_ROOT}/servers/my-server",
@@ -522,6 +544,8 @@ fi
 }
 ```
 
+> **See also:** [Environment Variables Reference](../../../shared/rules/ENV-VARS.md) for the full guide on `${CLAUDE_PLUGIN_ROOT}` vs `$CLAUDE_PROJECT_DIR`.
+
 ### MCP Server Development
 
 See Claude Code documentation for creating MCP servers:
@@ -529,6 +553,7 @@ See Claude Code documentation for creating MCP servers:
 - TypeScript: Use `@modelcontextprotocol/sdk`
 
 **Basic Python MCP Server:**
+
 ```python
 from mcp.server.fastmcp import FastMCP
 
@@ -608,16 +633,19 @@ done
 ## Platform-Specific Considerations
 
 ### macOS
+
 - Config location: `~/Library/Application Support/Claude/`
 - Logs location: `~/Library/Logs/Claude/`
 - Use absolute paths for all commands
 
 ### Windows
+
 - Config location: `%APPDATA%\Claude\`
 - Use forward slashes or double backslashes in paths
 - Ensure scripts have `.bat` or `.ps1` extensions
 
 ### Linux
+
 - Config location: `~/.config/claude/`
 - Ensure scripts have proper shebangs
 - Check execute permissions
@@ -625,24 +653,28 @@ done
 ## Security Best Practices
 
 ### Secrets Management
+
 - Never hardcode secrets in plugin files
 - Use environment variables for sensitive data
 - Document required environment variables
 - Provide `.env.example` template
 
 ### Input Validation
+
 - Validate all user inputs in hooks
 - Sanitize parameters in commands
 - Check file paths for traversal attacks
 - Validate regex patterns in matchers
 
 ### Permission Model
+
 - Request minimum necessary permissions
 - Use tool restrictions for agents when appropriate
 - Implement approval workflows for sensitive operations
 - Document security requirements clearly
 
 ### Audit and Logging
+
 - Log security-relevant events
 - Don't log sensitive data
 - Implement audit trails for critical operations
@@ -651,18 +683,21 @@ done
 ## Performance Considerations
 
 ### Hook Performance
+
 - Keep hooks fast (< 100ms when possible)
 - Avoid blocking operations
 - Cache validation results when appropriate
 - Use async operations where supported
 
 ### MCP Server Performance
+
 - Optimize server startup time
 - Cache frequently accessed data
 - Use connection pooling for databases
 - Monitor server resource usage
 
 ### Command Performance
+
 - Avoid expensive operations in command templates
 - Defer heavy processing to hooks or agents
 - Provide progress feedback for long operations
@@ -723,6 +758,7 @@ Follow semver (MAJOR.MINOR.PATCH):
 - **PATCH**: Bug fixes
 
 **Example:**
+
 ```json
 {
   "version": "2.1.3"
@@ -765,6 +801,7 @@ Follow semver (MAJOR.MINOR.PATCH):
 ### Required Files
 
 **README.md:**
+
 ```markdown
 # Plugin Name
 
@@ -807,6 +844,7 @@ MIT License - see LICENSE file
 **LICENSE:** Include appropriate license file
 
 **.gitignore:**
+
 ```
 node_modules/
 *.log

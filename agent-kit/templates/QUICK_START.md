@@ -58,6 +58,7 @@ chmod +x .claude/hooks/bash/validate-bash.ts
 ```
 
 **Then add to** `.claude/settings.json`:
+
 ```json
 {
   "hooks": {
@@ -194,6 +195,7 @@ Replace these in templates:
 ## Testing
 
 ### Test a Command
+
 ```bash
 claude
 /help                    # Should see your command
@@ -202,6 +204,7 @@ claude
 ```
 
 ### Test a Hook
+
 ```bash
 # Test script manually first
 echo '{"tool_name":"Write","tool_input":{"file_path":"test.ts"}}' | ./.claude/hooks/your-hook.sh
@@ -212,6 +215,7 @@ claude --debug  # See hook execution
 ```
 
 ### Test a Skill
+
 ```bash
 # Check it loads
 claude --debug  # Look for skill loading messages
@@ -224,21 +228,25 @@ claude
 ## Troubleshooting
 
 ### Command not found
+
 - Check: `.claude/commands/name.md` (correct location?)
 - Check: Lowercase filename, `.md` extension
 - Fix: Restart Claude
 
 ### Hook not firing
+
 - Check: Matcher syntax in settings.json
 - Check: Script is executable (`chmod +x`)
 - Fix: Test script manually, enable debug mode
 
 ### Skill not activating
+
 - Check: Description has specific trigger keywords
 - Check: YAML frontmatter valid (no tabs!)
 - Fix: Use trigger keywords explicitly in prompt
 
 ### Permission denied
+
 ```bash
 # Make all scripts executable
 find .claude/hooks -name "*.sh" -exec chmod +x {} \;

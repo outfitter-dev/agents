@@ -162,6 +162,7 @@ Process file $1 with config $2 and output to $3
 - Missing args: Empty string
 
 **Example:**
+
 ```bash
 /deploy staging --skip-tests
 # $1 = "staging"
@@ -181,6 +182,7 @@ Process all items: $ARGUMENTS
 - Empty if no arguments provided
 
 **Example:**
+
 ```bash
 /fix-issues 123 456 789 "urgent bug"
 # $ARGUMENTS = "123 456 789 \"urgent bug\""
@@ -341,6 +343,7 @@ export SLASH_COMMAND_TOOL_CHAR_BUDGET=30000
 **Exceeding budget:**
 - Output truncated with warning
 - Consider limiting output:
+
   ```markdown
   Recent commits (limited):
   !`git log --oneline -20`
@@ -349,6 +352,7 @@ export SLASH_COMMAND_TOOL_CHAR_BUDGET=30000
 ### Error Handling
 
 **Command failure:**
+
 ```markdown
 # This captures errors
 Files changed: !`git diff --stat 2>&1 || echo "Error getting diff"`
@@ -359,6 +363,7 @@ Files changed: !`git diff --stat`
 ```
 
 **Quoting:**
+
 ```markdown
 # ✅ Correct
 !`echo "Hello $USER"`
@@ -505,21 +510,25 @@ Review the codebase for issues without making changes.
 ### Common Patterns
 
 **Read-only commands:**
+
 ```yaml
 allowed-tools: Read, Grep, Glob, Bash(git show:*), Bash(git diff:*)
 ```
 
 **Git workflow commands:**
+
 ```yaml
 allowed-tools: Bash(git *), Read, Write
 ```
 
 **Safe analysis:**
+
 ```yaml
 allowed-tools: Read, Grep, Glob, Bash(find:*), Bash(wc:*)
 ```
 
 **File modifications:**
+
 ```yaml
 allowed-tools: Read, Edit, Write, Bash(bun run format:*)
 ```
@@ -527,6 +536,7 @@ allowed-tools: Read, Edit, Write, Bash(bun run format:*)
 ### Wildcards
 
 **Bash patterns:**
+
 ```yaml
 # Allow all git commands
 Bash(git *)
@@ -633,6 +643,11 @@ All standard environment variables plus:
 - `CLAUDE_PROJECT_DIR` - Project root
 - Custom variables from `.claude/settings.json`
 
+**For plugin commands:**
+- `${CLAUDE_PLUGIN_ROOT}` - Plugin installation directory (in command files)
+
+See [Environment Variables Reference](../../shared/rules/ENV-VARS.md) for the full guide.
+
 ### Using in Bash
 
 ```markdown
@@ -647,6 +662,7 @@ Check environment:
 ### Setting Variables
 
 **In settings.json:**
+
 ```json
 {
   "env": {
@@ -657,6 +673,7 @@ Check environment:
 ```
 
 **In command:**
+
 ```markdown
 ---
 description: Deploy using environment config
@@ -684,6 +701,7 @@ Proceed with deployment...
 - Personal commands: `/command` (fallback)
 
 **Namespacing:**
+
 ```
 .claude/commands/frontend/component.md
 → /component (namespace: frontend)
@@ -698,6 +716,7 @@ Commands are loaded when:
 - Files modified (automatic reload)
 
 **Force reload:**
+
 ```bash
 # Clear session
 /clear
@@ -708,11 +727,13 @@ Commands are loaded when:
 ### Discovery
 
 **List all commands:**
+
 ```bash
 /help
 ```
 
 **Check specific command:**
+
 ```bash
 /help command-name
 ```
@@ -842,6 +863,7 @@ export function $1({ }: ${1}Props) {
 ```
 
 **Test**: `src/components/$1.test.tsx`
+
 ```typescript
 import { describe, it, expect } from 'bun:test';
 import { $1 } from './$1';
@@ -854,6 +876,7 @@ describe('$1', () => {
 ```
 
 Create both files and open them for editing.
+
 ```
 
 ### Integration with Hooks

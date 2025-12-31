@@ -428,6 +428,7 @@ describe('parseEmail', () => {
 Many TypeScript libraries use brands internally:
 
 **Effect**: Refined types with brands
+
 ```typescript
 import { Brand } from 'effect';
 
@@ -440,6 +441,7 @@ const PositiveInt = Brand.refined<PositiveInt>(
 ```
 
 **io-ts**: Runtime type validation
+
 ```typescript
 import * as t from 'io-ts';
 
@@ -553,6 +555,7 @@ Runtime validation only happens in smart constructors, which you control.
 ## Limitations
 
 **Can be circumvented**: Type assertions bypass brands
+
 ```typescript
 // ❌ Don't do this
 const fakeId = 'invalid' as UserId;
@@ -561,6 +564,7 @@ const fakeId = 'invalid' as UserId;
 **Solution**: Use linting rules, code review, smart constructors as single entry point
 
 **Verbose**: Every usage needs smart constructor
+
 ```typescript
 // Can feel repetitive
 const id1 = createUserId('user-1');

@@ -54,7 +54,7 @@ And separately, **ast-grep**:
 * Core CLI:
 
   * `ast-grep scan` — run all rules
-  * `ast-grep new rule` / `ast-grep new test` — scaffold rules/tests ([ast-grep.github.io][6])
+  * `ast-grep new rule` / `ast-grep new test` — scaffold `rules/`tests ([ast-grep.github.io][6])
 * Lint rule YAML structure (simplified):
 
   ````yaml

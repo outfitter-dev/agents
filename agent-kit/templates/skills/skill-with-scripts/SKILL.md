@@ -38,6 +38,7 @@ The main script is located at `scripts/[script-name].sh`:
 
 **Steps**:
 1. Run the helper script:
+
    ```bash
    bun run ./scripts/[script-name].sh [args]
    ```
@@ -48,11 +49,13 @@ The main script is located at `scripts/[script-name].sh`:
    - [Action 3]
 
 3. Verify the result:
+
    ```bash
    [VERIFICATION_COMMAND]
    ```
 
 **Example**:
+
 ```bash
 # Full example workflow
 [COMPLETE_EXAMPLE]
@@ -72,6 +75,7 @@ The main script is located at `scripts/[script-name].sh`:
 **Purpose**: [Description of what the script does]
 
 **Usage**:
+
 ```bash
 ./scripts/[script-name].sh <arg1> [optional-arg2]
 ```
@@ -81,11 +85,13 @@ The main script is located at `scripts/[script-name].sh`:
 - `arg2` (optional): [Description]
 
 **Example**:
+
 ```bash
 ./scripts/[script-name].sh example-arg
 ```
 
 **Output**:
+
 ```
 [EXPECTED_OUTPUT]
 ```
@@ -95,6 +101,7 @@ The main script is located at `scripts/[script-name].sh`:
 **Purpose**: [Description]
 
 **Usage**:
+
 ```bash
 ./scripts/[another-script].sh [options]
 ```
@@ -161,6 +168,7 @@ Scripts may use these environment variables:
 - `VAR_3`: [Description]
 
 Set them in `.env` or pass inline:
+
 ```bash
 VAR_1=value ./scripts/[script-name].sh
 ```
@@ -172,6 +180,7 @@ VAR_1=value ./scripts/[script-name].sh
 **Scenario**: [Description]
 
 **Commands**:
+
 ```bash
 # Step 1: [Description]
 ./scripts/[script-name].sh arg1
@@ -184,6 +193,7 @@ VAR_1=value ./scripts/[script-name].sh
 ```
 
 **Expected Output**:
+
 ```
 [OUTPUT_EXAMPLE]
 ```
@@ -193,6 +203,7 @@ VAR_1=value ./scripts/[script-name].sh
 **Scenario**: [Description]
 
 **Commands**:
+
 ```bash
 [COMMAND_SEQUENCE]
 ```
@@ -247,12 +258,14 @@ direnv allow
 - [Requirement 2]
 
 **Dependencies**:
+
 ```bash
 # Install dependencies
 [INSTALLATION_COMMANDS]
 ```
 
 **File Structure**:
+
 ```
 skill-directory/
 ├── SKILL.md

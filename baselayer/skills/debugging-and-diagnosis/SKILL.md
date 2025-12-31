@@ -521,6 +521,7 @@ function processUser(userId: string): User {
 4. Prevention: How to avoid in future
 
 Example:
+
 ```typescript
 /**
  * Processes user data from API.

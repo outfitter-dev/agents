@@ -17,12 +17,14 @@ Goal: Smallest possible code that demonstrates the bug.
 ### Example
 
 **Initial failing case** (500 lines):
+
 ```typescript
 // Complex app with many features
 // Bug: Login fails
 ```
 
 **Minimal reproduction** (15 lines):
+
 ```typescript
 import { authenticate } from './auth';
 
@@ -124,6 +126,7 @@ Convert manual steps to automated test.
 4. Observe crash
 
 **Automated test**:
+
 ```typescript
 describe('getUserDisplay', () => {
   it('reproduces crash with null email', () => {
@@ -143,6 +146,7 @@ describe('getUserDisplay', () => {
 ```
 
 After fix:
+
 ```typescript
 expect(() => getUserDisplay(userWithNullEmail)).toThrow(
   'User email is required'
@@ -154,6 +158,7 @@ expect(() => getUserDisplay(userWithNullEmail)).toThrow(
 ### Runtime Errors
 
 Focus on input values:
+
 ```typescript
 // Reproduce with specific input that triggers error
 const problematicInput = {
@@ -167,6 +172,7 @@ expect(() => process(problematicInput)).toThrow(TypeError);
 ### Logic Bugs
 
 Focus on edge cases:
+
 ```typescript
 // Reproduce with boundary conditions
 expect(calculateTotal([])).toBe(0); // Empty array
@@ -178,6 +184,7 @@ expect(calculateTotal([0.1, 0.2])).toBe(0.3); // Floating point
 ### Integration Failures
 
 Mock external dependencies:
+
 ```typescript
 // Reproduce API failure
 const mockApi = {
@@ -194,6 +201,7 @@ await expect(
 ### Intermittent Issues
 
 Add timing/concurrency:
+
 ```typescript
 // Reproduce race condition
 const results = await Promise.all([
@@ -208,6 +216,7 @@ expect(results.filter(r => r.success)).toHaveLength(1);
 ### Performance Issues
 
 Reproduce with scale:
+
 ```typescript
 // Reproduce performance degradation
 const largeDataset = Array.from(
@@ -230,6 +239,7 @@ When test sometimes passes, sometimes fails:
 ### Techniques
 
 **Run multiple times**:
+
 ```bash
 # Run test 100 times to find pattern
 for i in {1..100}; do
@@ -238,6 +248,7 @@ done
 ```
 
 **Add delays to expose timing**:
+
 ```typescript
 // If suspected race condition
 await new Promise(resolve => setTimeout(resolve, 100));
@@ -245,6 +256,7 @@ await new Promise(resolve => setTimeout(resolve, 100));
 ```
 
 **Check for shared state**:
+
 ```typescript
 // Isolate test with fresh setup
 beforeEach(() => {
@@ -256,6 +268,7 @@ beforeEach(() => {
 ```
 
 **Log timing information**:
+
 ```typescript
 console.log(`[${new Date().toISOString()}] Step 1 completed`);
 console.log(`[${new Date().toISOString()}] Step 2 completed`);

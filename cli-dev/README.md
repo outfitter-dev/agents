@@ -12,7 +12,7 @@ Skills for building command-line tools with human-first UX and UNIX composabilit
 
 | Skill | Purpose |
 |-------|---------|
-| `cli-development-guidelines` | Design and review CLIs: arguments/flags, help text, stdout/stderr, exit codes, interactivity, configuration, errors, and distribution |
+| **cli-development-guidelines** | Design and review CLIs: arguments/flags, help text, stdout/stderr, exit codes, interactivity, configuration, errors, and distribution |
 
 ## Usage
 

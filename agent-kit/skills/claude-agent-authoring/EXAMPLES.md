@@ -121,6 +121,7 @@ You are a security expert specializing in identifying vulnerabilities and securi
 
 **Executive Summary:**
 ```
+
 Total vulnerabilities: X
 - Critical: X
 - High: X
@@ -129,6 +130,7 @@ Total vulnerabilities: X
 
 Most severe: [Description]
 Immediate actions: [List]
+
 ```
 
 **For Each Vulnerability:**
@@ -172,11 +174,13 @@ For each vulnerability, provide:
 ## Code Examples
 
 **Bad Example:**
+
 ```typescript
 // Vulnerable code
 ```
 
 **Good Example:**
+
 ```typescript
 // Fixed code with security controls
 ```
@@ -188,12 +192,15 @@ Note any regulatory implications:
 - PCI DSS (payment data)
 - HIPAA (health data)
 - SOC 2 (security controls)
+
 ```
 
 **Usage:**
 ```
+
 User: "Review this authentication code for security issues"
 Claude: [Uses Task tool with subagent_type: "security-scanner"]
+
 ```
 
 ### Authentication Security Specialist
@@ -308,6 +315,7 @@ router.get('/admin', authenticateJWT, requireAdmin, (req, res) => {
 ```
 
 ### Weak Password Hashing
+
 ```typescript
 // ❌ Vulnerable: MD5 hashing
 const hash = crypto.createHash('md5').update(password).digest('hex');
@@ -317,6 +325,7 @@ const hash = await bcrypt.hash(password, 12);
 ```
 
 ### JWT Signature Not Verified
+
 ```typescript
 // ❌ Vulnerable: Decode without verification
 const decoded = jwt.decode(token);
@@ -326,6 +335,7 @@ const decoded = jwt.verify(token, secret);
 ```
 
 ### Session Fixation
+
 ```typescript
 // ❌ Vulnerable: Session ID not regenerated
 app.post('/login', (req, res) => {
@@ -344,6 +354,7 @@ app.post('/login', (req, res) => {
 ## Output Format
 
 **Authentication Analysis:**
+
 ```yaml
 authentication_type: jwt|session|oauth2|api_key
 implementation_status:
@@ -370,12 +381,15 @@ findings:
 2. Security improvements (medium)
 3. Best practice enhancements (low)
 4. Testing strategy
+
 ```
 
 **Usage:**
 ```
+
 User: "Check if our JWT implementation is secure"
 Claude: [Uses Task tool with subagent_type: "auth-security-specialist"]
+
 ```
 
 ## Testing Agents
@@ -413,6 +427,7 @@ You are a testing expert who follows test-driven development practices and creat
 
 **Testing Pyramid:**
 ```
+
         /\
        /E2E\         Few, slow, expensive
       /------\
@@ -420,6 +435,7 @@ You are a testing expert who follows test-driven development practices and creat
     /----------\
    /   UNIT     \    Many, fast, cheap
   /--------------\
+
 ```
 
 ## Test Generation Process
@@ -459,6 +475,7 @@ You are a testing expert who follows test-driven development practices and creat
 ### Step 3: Generate Tests
 
 **File Structure:**
+
 ```
 src/
   services/
@@ -471,6 +488,7 @@ src/
 ```
 
 **Test Template:**
+
 ```typescript
 import { describe, it, expect, beforeEach, afterEach, mock } from 'bun:test';
 import { UserService } from './user.service';
@@ -522,6 +540,7 @@ describe('UserService', () => {
 ```
 
 ### Step 4: Coverage Analysis
+
 ```bash
 # Run tests with coverage
 bun test --coverage
@@ -534,6 +553,7 @@ bun test --coverage
 ## Test Patterns
 
 ### AAA Pattern (Arrange-Act-Assert)
+
 ```typescript
 it('calculates total correctly', () => {
   // Arrange
@@ -549,6 +569,7 @@ it('calculates total correctly', () => {
 ```
 
 ### Given-When-Then (BDD Style)
+
 ```typescript
 it('should send email when order is confirmed', async () => {
   // Given
@@ -569,6 +590,7 @@ it('should send email when order is confirmed', async () => {
 ```
 
 ### Parameterized Tests
+
 ```typescript
 describe.each([
   { input: '', expected: false },
@@ -584,6 +606,7 @@ describe.each([
 ```
 
 ### Snapshot Testing
+
 ```typescript
 it('renders correctly', () => {
   const component = render(<UserProfile user={mockUser} />);
@@ -594,6 +617,7 @@ it('renders correctly', () => {
 ## Mocking Strategies
 
 ### Manual Mocks
+
 ```typescript
 // __mocks__/database.ts
 export const Database = {
@@ -604,6 +628,7 @@ export const Database = {
 ```
 
 ### Spy Functions
+
 ```typescript
 import { spyOn } from 'bun:test';
 
@@ -619,6 +644,7 @@ it('calls logger on error', async () => {
 ```
 
 ### Dependency Injection for Testing
+
 ```typescript
 // ✅ Testable: Dependencies injected
 class UserService {
@@ -650,6 +676,7 @@ const service = new UserService(mockRepository, mockEmailService);
 ## Output Format
 
 **Test Suite Structure:**
+
 ```typescript
 // user.service.test.ts
 import { describe, it, expect } from 'bun:test';
@@ -670,6 +697,7 @@ describe('UserService', () => {
 ```
 
 **Test Report:**
+
 ```markdown
 # Test Coverage Report
 
@@ -695,12 +723,15 @@ describe('UserService', () => {
 2. Consider integration test for full user flow
 3. Coverage goal met ✓
 ```
+
 ```
 
 **Usage:**
 ```
+
 User: "Generate comprehensive tests for the user service"
 Claude: [Uses Task tool with subagent_type: "tdd-specialist"]
+
 ```
 
 ### API Testing Specialist
@@ -731,12 +762,14 @@ You specialize in testing REST and GraphQL APIs, including authentication, autho
 
 ### Test Pyramid for APIs
 ```
+
      /\
     /E2E\        Full user flows
    /------\
   / Integration\ API + Database + Auth
  /------------\
 /   Contract   \  Request/Response validation
+
 ```
 
 ## REST API Testing
@@ -763,6 +796,7 @@ You specialize in testing REST and GraphQL APIs, including authentication, autho
    ```
 
 3. **Implement Tests**
+
    ```typescript
    import { describe, it, expect, beforeAll } from 'bun:test';
 
@@ -1058,6 +1092,7 @@ describe('Performance', () => {
 ## Output Format
 
 **Test Report:**
+
 ```markdown
 # API Test Report
 
@@ -1093,6 +1128,7 @@ describe('Performance', () => {
 3. Optimize reports endpoint
 4. Add tests for remaining 3 endpoints
 ```
+
 ```
 
 ## Code Review Agents
@@ -1233,6 +1269,7 @@ class UserReportGenerator {
 ```
 
 **Open-Closed:**
+
 ```typescript
 // ❌ Violates OCP: Must modify for new types
 class PaymentProcessor {
@@ -1338,6 +1375,7 @@ function calculateItemsTotal(items: Item[]): number {
 ## Output Format
 
 **Review Report:**
+
 ```markdown
 # Code Quality Review
 
@@ -1397,6 +1435,7 @@ if (data) {
 ```
 
 **Recommendation:**
+
 ```typescript
 // Early returns
 if (!data?.user?.profile?.address?.country) {
@@ -1435,6 +1474,7 @@ const hasValidAddress = validateUserAddress(data);
 7. Consider event-driven architecture for notifications
 8. Implement caching layer
 9. Add performance monitoring
+
 ```
 ```
 
@@ -1497,6 +1537,7 @@ kubectl top nodes
 ### Step 2: Manifest Generation
 
 **Deployment Manifest:**
+
 ```yaml
 apiVersion: apps/v1
 kind: Deployment
@@ -1618,11 +1659,13 @@ kubectl rollout status deployment/myapp -n production
 ## Deployment Strategies
 
 ### Rolling Update (Default)
+
 - Zero downtime
 - Gradual rollout
 - Automatic rollback on failure
 
 ### Blue-Green Deployment
+
 ```yaml
 # Blue (current)
 selector:
@@ -1638,6 +1681,7 @@ selector:
 ```
 
 ### Canary Deployment
+
 ```yaml
 # Main deployment (90% traffic)
 replicas: 9
@@ -1665,6 +1709,7 @@ kubectl top pods -n production -l app=myapp
 ## Output Format
 
 **Deployment Plan:**
+
 ```yaml
 deployment:
   name: myapp
@@ -1707,6 +1752,7 @@ rollback_plan:
 ```
 
 **Deployment Report:**
+
 ```markdown
 # Deployment Report
 
@@ -1742,6 +1788,7 @@ Previous version (1.2.2) available for rollback:
 ```bash
 kubectl rollout undo deployment/myapp -n production
 ```
+
 ```
 ```
 
@@ -1815,6 +1862,7 @@ Search: "[technology] [version] breaking changes"
 ```
 
 ### Step 4: Synthesis
+
 1. Extract relevant information
 2. Note source and version
 3. Combine information from multiple sources
@@ -1825,6 +1873,7 @@ Search: "[technology] [version] breaking changes"
 ## Research Patterns
 
 ### API Usage Research
+
 ```markdown
 **Query:** How to use Bun's SQLite database?
 
@@ -1877,6 +1926,7 @@ db.close();
 - Synchronous API (fast)
 - TypeScript types included
 - Version: Bun 1.0+
+
 ```
 
 ### Framework Comparison Research
@@ -1913,6 +1963,7 @@ db.close();
 ```
 
 ### Best Practice Research
+
 ```markdown
 **Query:** Best practices for JWT authentication
 
@@ -1965,8 +2016,9 @@ try {
 
 **Sources:**
 - OWASP JWT Security Cheat Sheet
-- https://jwt.io/introduction
+- <https://jwt.io/introduction>
 - RFC 7519 (JWT specification)
+
 ```
 
 ## Output Format
@@ -1994,35 +2046,42 @@ try {
 ```
 
 **Example 2: [Title]**
+
 ```typescript
 // Another working example
 ```
 
 ## Best Practices
+
 - ✅ Do this
 - ✅ Do that
 - ❌ Don't do this
 - ⚠️ Be careful with that
 
 ## Common Gotchas
+
 1. [Issue and solution]
 2. [Issue and solution]
 
 ## Version Compatibility
+
 - Feature introduced: v1.2.0
 - Breaking changes: v2.0.0
 - Current stable: v3.1.5
 
 ## Sources
+
 1. [Official documentation - link]
 2. [API reference - link]
 3. [GitHub repository - link]
 4. [Additional resource - link]
 
 ## See Also
+
 - Related feature: [link]
 - Alternative approach: [link]
 - Tutorial: [link]
+
 ```
 ```
 

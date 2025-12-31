@@ -2,7 +2,7 @@
 name: claude-agent-validation
 version: 1.0.0
 description: Validates and reviews Claude Code agents against best practices. Checks YAML syntax, naming conventions, description quality, system prompt effectiveness, and tool configuration. Provides improvement suggestions and optionally applies fixes. Use when validating agents, reviewing agent quality, checking agents before commit, or when `--validate-agent` is mentioned.
-allowed-tools: Read Edit Grep Glob TodoWrite
+tools: Read, Edit, Grep, Glob, Skill, TodoWrite
 ---
 
 # Claude Agent Validation
@@ -36,7 +36,37 @@ Use Read to examine:
 
 ### Step 2: Create Validation Checklist
 
-Use TodoWrite to track validation and review items.
+Use TodoWrite to track validation phases. Expand as you discover issues.
+
+<initial_todo_template>
+
+- [ ] Locate and read agent file
+- [ ] Validate YAML frontmatter syntax
+- [ ] Check naming conventions
+- [ ] Evaluate description quality
+- [ ] Review system prompt effectiveness
+- [ ] Validate tool configuration
+- [ ] Check model configuration
+- [ ] { expand: per-issue todos as discovered }
+- [ ] Generate validation report
+- [ ] Propose fixes for critical issues
+
+</initial_todo_template>
+
+**Todo discipline**: Mark `in_progress` as you start each check. Mark `completed` immediately when done. Add specific issue todos as you find problems (e.g., "Fix missing trigger keywords in description").
+
+### Step 2b: Load Related Skills (Optional)
+
+For comprehensive validation, load the authoring skill for reference patterns:
+
+```
+Skill tool: agent-kit:claude-agent-authoring
+```
+
+This provides detailed guidance on frontmatter schema, tool patterns, and description quality. See especially:
+- `references/frontmatter.md` - Field requirements
+- `references/tools.md` - Tool configuration patterns
+- `references/todowrite.md` - TodoWrite usage patterns
 
 ### Step 3: Run Validation Checks
 
@@ -110,15 +140,48 @@ Use TodoWrite to track validation and review items.
 
 #### E. Tool Configuration
 
-**If `tools` field present**:
-- [ ] All tools are valid Claude Code tools
-- [ ] Tool names correctly spelled (case-sensitive)
+**Field syntax**:
+- [ ] Field name is `tools:` (not `allowed-tools:` or other variants)
+- [ ] Comma-separated list of tool names
+- [ ] Tool names case-sensitive and correctly spelled
+
+**Valid tool formats**:
+
+```yaml
+# Basic tools
+tools: Read, Write, Edit, Bash, Glob, Grep, Skill, Task, TodoWrite
+
+# Pattern restrictions (command family)
+tools: Bash(git *), Bash(npm *)
+
+# Pattern restrictions (specific subcommand)
+tools: Bash(git status:*), Bash(git diff:*)
+
+# File path patterns
+tools: Write(tests/**), Write(src/**/*.ts)
+
+# MCP tools
+tools: mcp__server__tool, mcp__github__*
+```
+
+**Validation checks**:
+- [ ] All tool names are valid Claude Code tools
+- [ ] Pattern syntax is correct: `Tool(pattern)`
+- [ ] Patterns use valid glob syntax
 - [ ] Tools appropriate for agent's purpose
 
 **Common patterns**:
-- Read-only analyst: `Read, Grep, Glob, Bash`
+- Read-only: `Glob, Grep, Read, Skill, Task, TodoWrite`
+- Read-only + git: `Glob, Grep, Read, Skill, Task, TodoWrite, Bash(git show:*), Bash(git diff:*)`
 - Full access: (omit field to inherit all)
-- Specialized: `Read, Write, Bash`
+- Research: `Glob, Grep, Read, Skill, Task, TodoWrite, WebSearch, WebFetch`
+
+**Anti-patterns**:
+- `allowed-tools:` — wrong field name
+- Missing baseline tools (Skill, Task, TodoWrite)
+- Over-restricting without reason
+
+See **agent-kit:claude-agent-authoring** `references/tools.md` for detailed patterns.
 
 #### F. Model Configuration
 
@@ -131,16 +194,19 @@ Use TodoWrite to track validation and review items.
 After validation passes, review for improvements:
 
 #### Effectiveness
+
 - Is the agent's purpose crystal clear?
 - Would it be invoked at the right times?
 - Does the prompt guide behavior effectively?
 
 #### Conciseness
+
 - Is the system prompt focused?
 - Could instructions be clearer with fewer words?
 - Are there redundant sections?
 
 #### Clarity
+
 - Are instructions step-by-step and actionable?
 - Are examples concrete and helpful?
 - Would another person understand the agent's role?
@@ -199,6 +265,7 @@ For each issue:
 #### Example Fix: Vague Description
 
 **Current**:
+
 ```yaml
 description: Helps with debugging
 ```
@@ -206,6 +273,7 @@ description: Helps with debugging
 **Problem**: Too vague, no trigger keywords
 
 **Fix**:
+
 ```yaml
 description: Debugging specialist for errors, test failures, and unexpected behavior. Use proactively when encountering any issues.
 ```
@@ -215,6 +283,7 @@ description: Debugging specialist for errors, test failures, and unexpected beha
 #### Example Fix: Vague System Prompt
 
 **Current**:
+
 ```markdown
 You are a helpful debugging assistant.
 ```
@@ -222,6 +291,7 @@ You are a helpful debugging assistant.
 **Problem**: No process, no specifics
 
 **Fix**:
+
 ```markdown
 You are an expert debugger specializing in root cause analysis.
 
@@ -294,11 +364,18 @@ head -n 20 ~/.claude/agents/agent-name.md
 ## Integration
 
 **After creating an agent**:
+
 ```
-claude-agent-authoring → claude-agent-validation → iterate until passing
+agent-kit:claude-agent-authoring → agent-kit:claude-agent-validation → iterate until passing
 ```
 
 **Before committing**:
+
 ```
-claude-agent-validation → fix critical issues → commit
+agent-kit:claude-agent-validation → fix critical issues → commit
 ```
+
+## Related Skills
+
+- **agent-kit:claude-agent-authoring** — Create agents (use before validation)
+- **agent-kit:claude-skill-authoring** — Create skills (different from agents)

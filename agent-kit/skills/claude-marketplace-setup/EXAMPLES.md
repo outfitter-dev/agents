@@ -570,11 +570,13 @@ EOF
 ### Step 3: Add First Plugin
 
 Create plugin directory:
+
 ```bash
 mkdir -p plugins/hello-world
 ```
 
 Create plugin.json:
+
 ```bash
 cat > plugins/hello-world/plugin.json << 'EOF'
 {
@@ -586,6 +588,7 @@ EOF
 ```
 
 Create command:
+
 ```bash
 mkdir -p plugins/hello-world/commands
 cat > plugins/hello-world/commands/hello.md << 'EOF'
@@ -634,6 +637,7 @@ git push -u origin main
 ### Step 7: Share
 
 Others can now use your marketplace:
+
 ```bash
 /plugin marketplace add yourusername/my-marketplace
 /plugin install hello-world@my-marketplace
@@ -681,6 +685,7 @@ echo "Added plugin: $PLUGIN_NAME"
 ```
 
 Usage:
+
 ```bash
 ./add-plugin-to-marketplace.sh \
   "my-plugin" \

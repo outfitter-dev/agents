@@ -198,6 +198,7 @@ See [CONTRIBUTING.md](CONTRIBUTING.md)
 ## License
 
 [License Name](LICENSE)
+
 ```
 
 ### User Guide Structure
@@ -279,6 +280,7 @@ Before starting, you need:
 
 - [Related guide 1]
 - [Related guide 2]
+
 ```
 
 ### Architecture Documentation
@@ -291,6 +293,7 @@ Before starting, you need:
 [High-level description of the system and its place in the larger ecosystem]
 
 ```
+
 ┌─────────────────────────────────────────┐
 │           External Systems              │
 │  ┌─────────┐  ┌─────────┐  ┌─────────┐ │
@@ -303,6 +306,7 @@ Before starting, you need:
 │              │  System   │              │
 │              └───────────┘              │
 └─────────────────────────────────────────┘
+
 ```
 
 ## Components
@@ -334,9 +338,11 @@ Before starting, you need:
 5. Response returns
 
 ```
+
 User → Gateway → Service → Database
                      ↓
                  Response
+
 ```
 
 ## Design Decisions
@@ -403,6 +409,7 @@ client.getData()
 ```
 
 **New**:
+
 ```typescript
 client.fetchData()
 ```
@@ -415,6 +422,7 @@ client.fetchData()
 ### 2. Configuration Format Changed
 
 **Old**:
+
 ```json
 {
   "apiKey": "xxx"
@@ -422,6 +430,7 @@ client.fetchData()
 ```
 
 **New**:
+
 ```json
 {
   "auth": {
@@ -474,6 +483,7 @@ bun add package@1.x
 
 - [Link to Discord/Slack]
 - [Link to GitHub Issues]
+
 ```
 
 ## Writing Best Practices
@@ -492,6 +502,7 @@ const numbers = [1, 2, 3];
 const doubled = numbers.map(n => n * 2);
 console.log(doubled); // [2, 4, 6]
 ```
+
 ```
 
 ### 2. Show Both Right and Wrong Ways
@@ -506,10 +517,12 @@ const data = fs.readFileSync('huge-file.txt');
 ```
 
 ✅ **Do** this instead:
+
 ```typescript
 // Good: Async file reading doesn't block
 const data = await fs.readFile('huge-file.txt');
 ```
+
 ```
 
 ### 3. Use Visual Hierarchy

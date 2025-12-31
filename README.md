@@ -160,6 +160,7 @@ Plugins are code. Review what you install. See [SECURITY.md](SECURITY.md) for th
 Want to add your own plugin to the marketplace?
 
 1. **Install agent-kit**: Get the plugin authoring skills
+
    ```bash
    /plugin install agent-kit@outfitter
    ```
@@ -172,8 +173,8 @@ See [agent-kit/README.md](agent-kit/README.md) for detailed guidance.
 
 ## Links
 
-- **Outfitter**: https://github.com/outfitter-dev
-- **Issues**: https://github.com/outfitter-dev/agents/issues
+- **Outfitter**: <https://github.com/outfitter-dev>
+- **Issues**: <https://github.com/outfitter-dev/agents/issues>
 
 ## License
 

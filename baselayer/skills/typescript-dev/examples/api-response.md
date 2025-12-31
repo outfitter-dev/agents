@@ -419,18 +419,21 @@ describe('fetchUser', () => {
 ## Common Pitfalls
 
 **DON'T** trust type assertions:
+
 ```typescript
 // ❌ Dangerous - no validation
 const user = (await response.json()) as User;
 ```
 
 **DON'T** use `any`:
+
 ```typescript
 // ❌ Loses all type safety
 const data: any = await response.json();
 ```
 
 **DON'T** throw errors for expected failures:
+
 ```typescript
 // ❌ Error not visible in return type
 if (!response.ok) {

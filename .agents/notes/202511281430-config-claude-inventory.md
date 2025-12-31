@@ -16,6 +16,7 @@
 ## Skills Inventory
 
 ### Agent & Skill Authoring (5 skills)
+
 - **subagent-authoring** (291 lines) - Creates/updates agents with YAML frontmatter
 - **agent-skill-authoring** (292 lines) - Creates/updates skills with progressive disclosure
 - **agent-skill-validation** (375 lines) - Validates against best practices, YAML schema
@@ -23,6 +24,7 @@
 - **agent-validation** (305 lines) - Validates agents against best practices
 
 ### Development & Workflow (6 skills)
+
 - **brainstorming** (146 lines) - Adaptive Q&A with confidence tracking → **REPLACED BY JAM**
 - **scenario-testing** (305 lines) - E2E testing instead of unit tests
 - **find-skills** (285 lines) - Skill discovery across sources → **MIGRATE AS discover-skills**
@@ -31,17 +33,20 @@
 - **config-coderabbit** (257 lines) - CodeRabbit YAML config
 
 ### Version Control & Git (5 skills) → **MIGRATE AS gitbutler PLUGIN**
+
 - **gitbutler-version-control** (483 lines) - Virtual branches for parallel work
 - **gitbutler-stack-workflows** (509 lines) - Stack creation and reorganization
 - **gitbutler-complete-branch** (620 lines) - Branch completion with safety checks
 - **gitbutler-multi-agent** (420 lines) - Multi-agent collaboration via virtual branches
 
 ### Pairing & Collaboration (3 skills)
+
 - **codex-pairing** - OpenAI Codex CLI pair programming
 - **oracle-pairing** - Oracle CLI collaboration
 - **repoprompt-pairing** - RepoPrompt MCP orchestration
 
 ### Project Integration (3 skills)
+
 - **implement-linear-issue** (488 lines) - End-to-end Linear issue workflow
 - **implement-pr-feedback** (529 lines) - PR feedback across Graphite stacks
 - **sitrep** - Multi-source status reports (Graphite, GitHub, Linear)
@@ -85,6 +90,7 @@
 | **gitbutler-ops** | GitButler virtual branches | GitButler CLI |
 
 ### Not Ready
+
 - **test** - empty placeholder (delete)
 
 ---

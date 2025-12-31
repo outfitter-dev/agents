@@ -88,7 +88,7 @@ Updated README to:
 
 ### 4. Deprecated Agentish
 
-Updated `agentish` repo README and CLAUDE.md:
+Updated `agentish` repo README and `CLAUDE.md`:
 - Clear deprecation notice
 - Redirect to `outfitter-dev/agents`
 - Installation instructions for new location

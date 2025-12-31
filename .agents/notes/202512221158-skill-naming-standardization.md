@@ -50,6 +50,6 @@ Each rename included updates to all files referencing the old name:
 
 ## Notes
 
-- `test-driven-development` keeps "tdd" in description for discoverability
+- **test-driven-development** keeps "tdd" in description for discoverability
 - `subagent-*` naming aligns with Claude Code terminology (subagents vs agents)
 - `skills-*` plural form distinguishes from singular skill references

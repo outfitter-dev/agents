@@ -30,6 +30,7 @@ Complete API documentation and advanced patterns for [YOUR_SKILL_NAME].
 **Returns**: ([type]) [Description]
 
 **Example**:
+
 ```[language]
 [USAGE_EXAMPLE]
 ```
@@ -47,6 +48,7 @@ Complete API documentation and advanced patterns for [YOUR_SKILL_NAME].
 **Returns**: ([type]) [Description]
 
 **Example**:
+
 ```[language]
 [USAGE_EXAMPLE]
 ```
@@ -90,6 +92,7 @@ Create a config file at `[path/to/config]`:
 **Use case**: [Description]
 
 **Implementation**:
+
 ```[language]
 [DETAILED_CODE_EXAMPLE]
 ```
@@ -108,6 +111,7 @@ Create a config file at `[path/to/config]`:
 **Use case**: [Description]
 
 **Implementation**:
+
 ```[language]
 [DETAILED_CODE_EXAMPLE]
 ```
@@ -183,11 +187,13 @@ Create a config file at `[path/to/config]`:
 ### Integration with [System 1]
 
 **Setup**:
+
 ```[language]
 [INTEGRATION_CODE]
 ```
 
 **Configuration**:
+
 ```[format]
 [INTEGRATION_CONFIG]
 ```
@@ -195,11 +201,13 @@ Create a config file at `[path/to/config]`:
 ### Integration with [System 2]
 
 **Setup**:
+
 ```[language]
 [INTEGRATION_CODE]
 ```
 
 **Configuration**:
+
 ```[format]
 [INTEGRATION_CONFIG]
 ```
@@ -207,6 +215,7 @@ Create a config file at `[path/to/config]`:
 ### CI/CD Integration
 
 **GitHub Actions**:
+
 ```yaml
 [GITHUB_ACTIONS_EXAMPLE]
 ```

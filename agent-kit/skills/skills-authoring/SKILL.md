@@ -24,7 +24,7 @@ Create skills that follow the [Agent Skills specification](https://agentskills.i
    - `research-synthesizer/` - Research and synthesis workflow
 
 3. **Generate name**
-   - Pattern: lowercase, hyphens only (e.g., `pdf-processing`, `code-review`)
+   - Pattern: lowercase, hyphens only (e.g., `pdf-processing`, **code-review**)
    - Gerund form recommended: `processing-pdfs`, `analyzing-data`
    - Must match directory name
 
@@ -40,7 +40,7 @@ Create skills that follow the [Agent Skills specification](https://agentskills.i
    - `assets/` - templates, data files
 
 6. **Validate**
-   - Use `skills-ref validate ./my-skill` or `skill-validation`
+   - Use `skills-ref validate ./my-skill` or **skill-validation**
 
 ## Directory Structure
 
@@ -96,14 +96,17 @@ Refer to the [Agent Skills Specification](https://agentskills.io/specification) 
 ## Core Principles
 
 ### Concise is key
+
 The context window is shared. Only include what the agent doesn't already know. Challenge each paragraph—does it justify its token cost?
 
 ### Third-person descriptions
+
 Descriptions inject into system prompt. Use third person:
 - ✓ "Extracts text from PDFs"
 - ✗ "I can help you extract text from PDFs"
 
 ### Progressive disclosure
+
 Keep SKILL.md under 500 lines. Move details to:
 - `references/` - Detailed docs, API references
 - `scripts/` - Executable utilities (code never enters context)
@@ -166,7 +169,7 @@ Use the official [skills-ref](https://github.com/agentskills/agentskills/tree/ma
 skills-ref validate ./my-skill
 ```
 
-Or use `skill-validation` for integrated validation and review.
+Or use **skill-validation** for integrated validation and review.
 
 ### Quick Self-Check
 
@@ -185,7 +188,7 @@ Before finalizing, verify:
 - ❌ "You can use this to..." → Wrong voice (second-person)
 - ❌ No "Use when..." → Missing triggers
 
-Use the `skill-validation` skill to validate your skill before finalizing.
+Use the **skill-validation** skill to validate your skill before finalizing.
 
 ## Best Practices
 
@@ -199,7 +202,7 @@ Use the `skill-validation` skill to validate your skill before finalizing.
 
 ## After Creation
 
-1. **Check**: Run `skill-validation` to validate and review
+1. **Check**: Run **skill-validation** to validate and review
 2. **Test**: Ask a question that should trigger it
 3. **Iterate**: Fix issues and re-check until passing
 4. **Share**: Commit to git or distribute via plugin

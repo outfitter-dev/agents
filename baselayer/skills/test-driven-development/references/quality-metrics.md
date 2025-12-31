@@ -11,6 +11,7 @@ Percentage of code lines executed during test runs.
 **Target**: ≥80% overall, ≥90% for critical paths
 
 **TypeScript/Bun**:
+
 ```bash
 bun test --coverage
 
@@ -23,6 +24,7 @@ Coverage Summary:
 ```
 
 **Rust**:
+
 ```bash
 # Using cargo-tarpaulin
 cargo tarpaulin --out Html --output-dir coverage/
@@ -134,11 +136,13 @@ Mutation Score = (Killed Mutants / Total Mutants) × 100%
 Using Stryker:
 
 **Install**:
+
 ```bash
 bun add -d @stryker-mutator/core @stryker-mutator/typescript-checker
 ```
 
 **Configuration** (`stryker.conf.json`):
+
 ```json
 {
   "mutator": "typescript",
@@ -160,6 +164,7 @@ bun add -d @stryker-mutator/core @stryker-mutator/typescript-checker
 ```
 
 **Run**:
+
 ```bash
 bun x stryker run
 
@@ -224,11 +229,13 @@ test('no discount for regular users', () => {
 Using `cargo-mutants`:
 
 **Install**:
+
 ```bash
 cargo install cargo-mutants
 ```
 
 **Run**:
+
 ```bash
 cargo mutants
 
@@ -315,6 +322,7 @@ test('processes order', () => {
 ```
 
 **Solution**:
+
 ```typescript
 // ✓ Strong - verifies result
 test('processes order', () => {
@@ -385,6 +393,7 @@ test.each([5, 10, 100])('validates positive number %i', (num) => {
 ### CI/CD Integration
 
 **TypeScript**:
+
 ```yaml
 # .github/workflows/test.yml
 - name: Run tests with coverage
@@ -404,6 +413,7 @@ test.each([5, 10, 100])('validates positive number %i', (num) => {
 ```
 
 **Rust**:
+
 ```yaml
 # .github/workflows/test.yml
 - name: Run tests with coverage

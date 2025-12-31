@@ -35,8 +35,8 @@ This document provides a step-by-step plan to migrate seven existing user skills
 ## Phase 1: Core Skill Lifecycle
 
 ### Skills to Migrate
-1. `skills-authoring` (was `agent-skills-authoring`)
-2. `skill-validation` (was `agent-skill-validation`)
+1. **skills-authoring** (was `agent-skills-authoring`)
+2. **skill-validation** (was `agent-skill-validation`)
 3. `skill-review` (was `agent-skill-review`)
 
 ### Directory Structure
@@ -104,7 +104,7 @@ cp ~/.config/claude/skills/agent-skills-authoring/validation/best-practices-chec
 
 ---
 
-#### Step 1.2: Migrate `skills-authoring`
+#### Step 1.2: Migrate **skills-authoring**
 
 **Source**: `~/.config/claude/skills/agent-skills-authoring/`
 
@@ -187,7 +187,7 @@ bash plugins/toolkit/skills/skills-authoring/scripts/audit-skill-flags.sh --json
 
 ---
 
-#### Step 1.3: Migrate `skill-validation`
+#### Step 1.3: Migrate **skill-validation**
 
 **Source**: `~/.config/claude/skills/agent-skill-validation/`
 

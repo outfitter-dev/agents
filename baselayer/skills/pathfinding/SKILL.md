@@ -177,6 +177,7 @@ Before finalizing — you have {N} caveats. Want to run skeptic for a sanity che
 - ◆◆ Hazard escalation triggered during session
 
 When auto-invoking:
+
 ```text
 [Auto-invoking skeptic — {REASON}]
 ```
@@ -202,7 +203,7 @@ After delivering, ask where to persist (if applicable):
 
 ```text
 [EnterPlanMode]
-1. { discovered path } [★] — { source: CLAUDE.md preference | existing directory | convention }
+1. { discovered path } [★] — { source: `CLAUDE.md` preference | existing directory | convention }
 2. Create issue — { Linear/GitHub/Beads based on project context }
 3. ADR — { if architectural decision }
 4. Don't persist — keep in conversation only
@@ -210,7 +211,7 @@ After delivering, ask where to persist (if applicable):
 ```
 
 Discovery order for option 1:
-1. CLAUDE.md or project instructions with explicit plan storage preference
+1. `CLAUDE.md` or project instructions with explicit plan storage preference
 2. Existing `.agents/plans/` directory
 3. Existing `docs/plans/` directory
 4. Fall back to `.agents/plans/` if nothing found
@@ -255,7 +256,7 @@ NEVER:
 - [confidence.md](references/confidence.md) — confidence deep dive
 - [questions.md](references/questions.md) — question crafting
 - [examples/](examples/) — session examples
-- [FORMATTING.md](../../shared/rules/FORMATTING.md) — formatting conventions
+- [FORMATTING.md](../../shared/`rules/`FORMATTING.md) — formatting conventions
 - skeptic agent (outfitter:skeptic) — complexity sanity checks
 
 </references>

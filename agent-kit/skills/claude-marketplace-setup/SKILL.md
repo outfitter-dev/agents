@@ -41,11 +41,13 @@ A marketplace is a catalog of Claude Code plugins defined in a `.claude-plugin/m
 ### Creating Your First Marketplace
 
 **Step 1: Create marketplace directory**
+
 ```bash
 mkdir -p .claude-plugin
 ```
 
 **Step 2: Create marketplace.json**
+
 ```bash
 cat > .claude-plugin/marketplace.json << 'EOF'
 {
@@ -63,6 +65,7 @@ EOF
 Add plugin entries to the `plugins` array (see Plugin Entry Schema below)
 
 **Step 4: Test locally**
+
 ```bash
 /plugin marketplace add .
 /plugin
@@ -190,6 +193,7 @@ For plugins in the same repository:
 ```
 
 With `pluginRoot`:
+
 ```json
 {
   "metadata": {
@@ -219,6 +223,7 @@ For plugins in GitHub repos:
 ```
 
 With specific branch:
+
 ```json
 {
   "source": {
@@ -244,6 +249,7 @@ For plugins in other Git hosting:
 ```
 
 With specific branch:
+
 ```json
 {
   "source": {
@@ -434,6 +440,7 @@ Different marketplaces for different environments:
 ### Creating a New Marketplace
 
 1. **Initialize structure**
+
    ```bash
    mkdir -p .claude-plugin
    ```
@@ -447,12 +454,14 @@ Different marketplaces for different environments:
    - Include descriptions and versions
 
 4. **Test locally**
+
    ```bash
    /plugin marketplace add .
    /plugin
    ```
 
 5. **Commit to version control**
+
    ```bash
    git add .claude-plugin/marketplace.json
    git commit -m "feat: add plugin marketplace"
@@ -461,6 +470,7 @@ Different marketplaces for different environments:
 ### Adding a Plugin to Marketplace
 
 1. **Create plugin entry**
+
    ```json
    {
      "name": "new-plugin",
@@ -474,16 +484,19 @@ Different marketplaces for different environments:
    Edit marketplace.json and add entry
 
 3. **Validate JSON**
+
    ```bash
    jq empty .claude-plugin/marketplace.json
    ```
 
 4. **Update marketplace**
+
    ```bash
    /plugin marketplace update marketplace-name
    ```
 
 5. **Install plugin**
+
    ```bash
    /plugin install new-plugin@marketplace-name
    ```
@@ -508,6 +521,7 @@ Different marketplaces for different environments:
 ### GitLab/Bitbucket
 
 **Works with any Git hosting:**
+
 ```bash
 /plugin marketplace add https://gitlab.com/company/plugins.git
 ```
@@ -520,6 +534,7 @@ Different marketplaces for different environments:
 ### Local Development
 
 **For testing and development:**
+
 ```bash
 /plugin marketplace add ./my-local-marketplace
 /plugin install test-plugin@my-local-marketplace
@@ -564,30 +579,35 @@ done
 ## Best Practices
 
 ### Organization
+
 - Group related plugins together
 - Use categories for better discovery
 - Maintain consistent naming
 - Document plugin purposes clearly
 
 ### Versioning
+
 - Use semantic versioning for marketplace
 - Track plugin versions
 - Maintain CHANGELOG.md
 - Tag releases in Git
 
 ### Documentation
+
 - Include README.md in marketplace repo
 - Document installation process
 - Provide usage examples
 - Link to plugin documentation
 
 ### Security
+
 - Review plugins before adding
 - Verify plugin sources
 - Document security requirements
 - Use private repos for sensitive tools
 
 ### Maintenance
+
 - Keep plugin versions updated
 - Remove deprecated plugins
 - Test plugins after updates

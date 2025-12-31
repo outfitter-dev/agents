@@ -59,6 +59,7 @@ Track with TodoWrite. Phases advance only, never regress.
 | Synthesize Report | Patterns detected | "Synthesizing report" |
 
 TodoWrite format:
+
 ```text
 - Parse Input { scope description }
 - Extract Signals { from N messages }

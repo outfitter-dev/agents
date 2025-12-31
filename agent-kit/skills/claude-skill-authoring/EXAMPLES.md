@@ -21,6 +21,7 @@ Real-world examples of Agent Skills across various domains and complexity levels
 ### Example 1: Commit Message Generator
 
 `.claude/skills/commit-message-generator/SKILL.md`:
+
 ```markdown
 ---
 name: commit-message-generator
@@ -61,6 +62,7 @@ Generate clear, conventional commit messages following the format: `type(scope):
 ## Example Output
 
 ```
+
 feat(auth): add OAuth2 login support
 
 Implement OAuth2 authentication flow for GitHub and Google providers.
@@ -68,12 +70,14 @@ Users can now log in using their existing accounts instead of creating
 new credentials.
 
 Closes #456
+
 ```
 ```
 
 ### Example 2: JSON Validator
 
 `.claude/skills/json-validator/SKILL.md`:
+
 ```markdown
 ---
 name: json-validator
@@ -128,6 +132,7 @@ jq . file.json > formatted.json
 
 # Validate against schema (with external tool)
 ```
+
 ```
 
 ### Example 3: Environment Variable Manager
@@ -188,6 +193,7 @@ API_SECRET=your_api_secret_here
 PORT=3000
 NODE_ENV=development
 ```
+
 ```
 
 ## Read-Only Analysis Skills
@@ -262,6 +268,7 @@ For each issue, provide:
 - **Why**: Impact on maintainability
 - **How**: Concrete refactoring approach
 - **Example**: Before/after code snippet
+
 ```
 
 ### Example 5: Security Audit
@@ -337,23 +344,29 @@ Comprehensive security analysis without modifying code.
   ```typescript
   const query = `SELECT * FROM users WHERE id = ${userId}`;
   ```
+
 - **Impact**: Attacker can execute arbitrary SQL
 - **Fix**: Use parameterized queries
+
   ```typescript
   const query = sql`SELECT * FROM users WHERE id = ${sql.param(userId)}`;
   ```
 
 ### High Priority Issues
+
 [Similar format for high priority items]
 
 ### Medium Priority Issues
+
 [Similar format for medium priority items]
 
 ### Recommendations
+
 1. Implement input validation library
 2. Add security headers middleware
 3. Enable SQL query logging
 4. Set up automated security scanning
+
 ```
 
 ## Security Best Practices
@@ -370,6 +383,7 @@ Comprehensive security analysis without modifying code.
 ### Example 6: Performance Profiler
 
 `.claude/skills/performance-profiler/SKILL.md`:
+
 ```markdown
 ---
 name: performance-profiler
@@ -437,16 +451,21 @@ Identify and analyze performance issues in code.
     const posts = await db.query('SELECT * FROM posts WHERE user_id = ?', user.id);
   });
   ```
+
 - **Impact**: 1 + N queries instead of 2
 - **Optimization**:
+
   ```typescript
   const posts = await db.query('SELECT * FROM posts WHERE user_id IN (?)', userIds);
   // Group by user_id
   ```
+
 - **Expected Improvement**: 500ms → 50ms (10x faster)
 
 ### Optimization Opportunities
+
 [Similar format for other optimizations]
+
 ```
 
 ## Performance Metrics
@@ -463,6 +482,7 @@ For each issue, estimate:
 ### Example 7: Code Formatter
 
 `.claude/skills/code-formatter/SKILL.md`:
+
 ```markdown
 ---
 name: code-formatter
@@ -543,6 +563,7 @@ Suggest setting up pre-commit hooks for automatic formatting:
 bun run format
 git add -u
 ```
+
 ```
 
 ### Example 8: Import Organizer
@@ -592,12 +613,14 @@ import type { User } from '@/types';
 ## Rust
 
 ### Organization Order
+
 1. Standard library (`std::`)
 2. External crates
 3. Internal modules (`crate::`)
 4. Super and self references
 
 ### Example
+
 ```rust
 // 1. Standard library
 use std::collections::HashMap;
@@ -619,11 +642,13 @@ use self::utils;
 ## Python
 
 ### Organization Order (PEP 8)
+
 1. Standard library
 2. Third-party packages
 3. Local application imports
 
 ### Example
+
 ```python
 # 1. Standard library
 import os
@@ -654,6 +679,7 @@ from app.models import User
 3. Sort within categories
 4. Rewrite file with organized imports
 5. Verify code still compiles
+
 ```
 
 ### Example 9: Refactoring Assistant
@@ -714,6 +740,7 @@ function validateUser(user: User) {
 ```
 
 ### 2. Rename Symbol
+
 Rename variable, function, or class safely.
 
 **Process:**
@@ -724,6 +751,7 @@ Rename variable, function, or class safely.
 5. Update tests
 
 ### 3. Move File
+
 Move file to new location and update imports.
 
 **Process:**
@@ -734,6 +762,7 @@ Move file to new location and update imports.
 5. Verify no broken imports
 
 ### 4. Extract Interface/Type
+
 Create type/interface from usage.
 
 **Process:**
@@ -744,6 +773,7 @@ Create type/interface from usage.
 5. Remove redundant type annotations
 
 ### 5. Inline Function
+
 Replace function call with function body (when appropriate).
 
 ## Safety Checks
@@ -772,6 +802,7 @@ bun test
 # Check linting
 bun run lint
 ```
+
 ```
 
 ## Git Workflow Skills
@@ -805,6 +836,7 @@ gh issue comment 123 --body "Working on feature/123-add-user-auth"
 ```
 
 ### 2. Clean Stale Branches
+
 ```bash
 # List merged branches
 git branch --merged main | grep -v main
@@ -817,6 +849,7 @@ git remote prune origin
 ```
 
 ### 3. Synchronize with Main
+
 ```bash
 # Rebase on main
 git checkout feature/my-branch
@@ -828,6 +861,7 @@ git merge origin/main
 ```
 
 ### 4. Branch Status Check
+
 ```bash
 # List all branches with status
 git branch -vv
@@ -856,22 +890,26 @@ git for-each-ref --format='%(refname:short) %(upstream:track)' refs/heads
 ## Workflow Integration
 
 ### Before Creating Branch
+
 1. Check current status: `git status`
 2. Ensure on main: `git checkout main`
 3. Pull latest: `git pull origin main`
 4. Create branch: `git checkout -b feature/name`
 
 ### Before Merging
+
 1. Sync with main: `git rebase origin/main`
 2. Run tests: `bun test`
 3. Push branch: `git push -u origin feature/name`
 4. Create PR: `gh pr create`
 
 ### After Merge
+
 1. Switch to main: `git checkout main`
 2. Pull changes: `git pull origin main`
 3. Delete local branch: `git branch -d feature/name`
 4. Delete remote branch: `git push origin --delete feature/name`
+
 ```
 
 ### Example 11: Pull Request Workflow
@@ -907,6 +945,7 @@ git diff main...HEAD
 ```
 
 ### Step 2: PR Creation
+
 ```bash
 # Create PR with template
 gh pr create \
@@ -920,6 +959,7 @@ gh pr create
 ```
 
 ### Step 3: PR Description Template
+
 ```markdown
 ## Summary
 Brief description of changes
@@ -992,6 +1032,7 @@ Closes #123
 - [ ] CHANGELOG entry added
 
 ### Review Commands
+
 ```bash
 # Checkout PR locally
 gh pr checkout 123
@@ -1012,6 +1053,7 @@ gh pr review 123 --approve
 ## Merging Pull Requests
 
 ### Pre-merge Checks
+
 ```bash
 # Ensure CI passing
 gh pr checks 123
@@ -1027,30 +1069,37 @@ git log HEAD..origin/main --oneline
 ### Merge Strategies
 
 **1. Merge Commit** (default)
+
 ```bash
 gh pr merge 123 --merge
 ```
+
 - Preserves full history
 - Creates merge commit
 - Use for: Feature branches
 
 **2. Squash and Merge**
+
 ```bash
 gh pr merge 123 --squash
 ```
+
 - Combines all commits into one
 - Cleaner history
 - Use for: Multiple small commits
 
 **3. Rebase and Merge**
+
 ```bash
 gh pr merge 123 --rebase
 ```
+
 - Linear history
 - No merge commit
 - Use for: Single commits, clean history
 
 ### Post-merge Actions
+
 ```bash
 # Delete branch
 gh pr merge 123 --delete-branch
@@ -1062,6 +1111,7 @@ git pull origin main
 # Clean up local branches
 git branch --merged main | grep -v main | xargs git branch -d
 ```
+
 ```
 
 ## Testing Skills
@@ -1133,6 +1183,7 @@ describe('add', () => {
 ```
 
 **Edge Cases:**
+
 ```typescript
 describe('add edge cases', () => {
   it('should handle very large numbers', () => {
@@ -1147,6 +1198,7 @@ describe('add edge cases', () => {
 ```
 
 **Error Cases:**
+
 ```typescript
 describe('add error handling', () => {
   it('should throw on non-number input', () => {
@@ -1162,6 +1214,7 @@ describe('add error handling', () => {
 ### 3. Mocks and Fixtures
 
 **Mock external dependencies:**
+
 ```typescript
 import { mock } from 'bun:test';
 
@@ -1212,6 +1265,7 @@ describe('ComponentName', () => {
   });
 });
 ```
+
 ```
 
 ### Example 13: Test Runner and Reporter
@@ -1244,6 +1298,7 @@ pytest
 ```
 
 ### Specific Tests
+
 ```bash
 # Single file
 bun test src/math.test.ts
@@ -1256,6 +1311,7 @@ bun test --watch
 ```
 
 ### With Coverage
+
 ```bash
 # Bun with coverage
 bun test --coverage
@@ -1270,6 +1326,7 @@ pytest --cov=src --cov-report=html
 ## Test Analysis
 
 ### Parse Test Results
+
 1. Count: passed, failed, skipped
 2. Duration: total and per-test
 3. Coverage: lines, branches, functions
@@ -1278,6 +1335,7 @@ pytest --cov=src --cov-report=html
 ### Failure Analysis
 
 **For each failure:**
+
 ```markdown
 ### Test: `should validate email format`
 **File**: src/validation.test.ts:45
@@ -1287,8 +1345,10 @@ pytest --cov=src --cov-report=html
 
 **Stack Trace**:
 ```
+
 at validateEmail (src/validation.ts:23)
 at Test (src/validation.test.ts:47)
+
 ```
 
 **Suggested Fix**:
@@ -1298,6 +1358,7 @@ const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 ```
 
 **Related Tests**: This may affect other email validation tests
+
 ```
 
 ### Coverage Report
@@ -1332,6 +1393,7 @@ const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 ## CI/CD Integration
 
 ### GitHub Actions Example
+
 ```yaml
 name: Tests
 on: [push, pull_request]
@@ -1351,6 +1413,7 @@ jobs:
 ## Performance Tracking
 
 Track test execution times:
+
 ```bash
 # Identify slow tests
 bun test --reporter=verbose | grep -E "^\s+✓.*[0-9]{3,}ms"
@@ -1358,6 +1421,7 @@ bun test --reporter=verbose | grep -E "^\s+✓.*[0-9]{3,}ms"
 # Run only fast tests
 bun test --test-name-pattern="^(?!.*slow)"
 ```
+
 ```
 
 ## Documentation Skills
@@ -1408,6 +1472,7 @@ async function createUser(userData: CreateUserInput): Promise<User> {
 ```
 
 ### 2. Markdown Documentation
+
 ```markdown
 ## API Reference
 
@@ -1456,6 +1521,7 @@ Content-Type: application/json
 ```
 
 Response:
+
 ```json
 {
   "id": "user-123",
@@ -1465,6 +1531,7 @@ Response:
   "createdAt": "2025-10-20T12:00:00Z"
 }
 ```
+
 ```
 
 ### 3. OpenAPI Specification
@@ -1546,6 +1613,7 @@ components:
 - Usage examples
 - Edge cases and limitations
 - Related endpoints/functions
+
 ```
 
 (Continued in next part due to length...)

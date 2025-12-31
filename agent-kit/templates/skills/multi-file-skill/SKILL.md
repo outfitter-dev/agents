@@ -108,17 +108,14 @@ Why these restrictions?
 ## Requirements
 
 **Dependencies**:
-- [Package 1]: `[version]`
-- [Package 2]: `[version]`
 
 **Installation**:
+
 ```bash
 [INSTALL_COMMANDS]
 ```
 
 **Environment**:
-- [Requirement 1]: [Details]
-- [Requirement 2]: [Details]
 
 ## Progressive Disclosure
 

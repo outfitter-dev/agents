@@ -73,6 +73,7 @@ Rigorous performance measurement techniques for reliable optimization decisions.
 ### Measure Variance
 
 **Report distribution, not just mean:**
+
 ```text
 Operation: parse_json
 Runs: 50
@@ -101,6 +102,7 @@ Range: 38.1ms - 54.3ms
 ### TypeScript/Bun
 
 **microbench (recommended):**
+
 ```typescript
 import { bench, run } from 'mitata'
 
@@ -116,6 +118,7 @@ await run()
 ```
 
 **Benchmark.js:**
+
 ```typescript
 import Benchmark from 'benchmark'
 
@@ -134,6 +137,7 @@ suite
 ### Rust
 
 **criterion (recommended):**
+
 ```rust
 use criterion::{black_box, criterion_group, criterion_main, Criterion, BenchmarkId};
 
@@ -168,6 +172,7 @@ criterion_main!(benches);
 ### Before/After Comparison
 
 **Document baseline:**
+
 ```text
 Baseline (commit abc123):
   Operation: process_batch
@@ -177,6 +182,7 @@ Baseline (commit abc123):
 ```
 
 **Measure improvement:**
+
 ```text
 Optimized (commit def456):
   Operation: process_batch
@@ -196,6 +202,7 @@ Statistical significance: p < 0.001
 - Report relative performance
 
 **Example output:**
+
 ```text
 Implementation A vs B (1000 runs each):
 
@@ -209,6 +216,7 @@ Implementation A vs B (1000 runs each):
 ### Scaling Analysis
 
 **Test multiple input sizes:**
+
 ```text
 Input Size | Time (ms) | Ops/sec
 -----------|-----------|--------
@@ -226,6 +234,7 @@ Slope: 0.12ms per item
 ### Dead Code Elimination
 
 **Optimizer removes unused results:**
+
 ```typescript
 // Bad: result never used, might be optimized away
 bench('compute', () => {
@@ -316,6 +325,7 @@ Std:    {X}ms
 ```
 
 ### Optimized (commit {SHA})
+
 ```text
 Mean:   {X}ms (-{X}%)
 Median: {X}ms (-{X}%)
@@ -325,16 +335,20 @@ Std:    {X}ms
 ```
 
 ### Statistical Analysis
+
 - t-test: p < {VALUE}
 - Effect size: {COHENS_D}
 - Conclusion: {SIGNIFICANT/NOT_SIGNIFICANT}
 
 ### Tradeoffs
+
 - {TRADEOFF_1}
 - {TRADEOFF_2}
 
 ### Recommendation
+
 {ACCEPT/REJECT} optimization based on {CRITERIA}
+
 ```
 
 ## Resources

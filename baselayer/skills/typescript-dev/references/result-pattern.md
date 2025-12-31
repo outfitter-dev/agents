@@ -575,6 +575,7 @@ But:
 1. **Start with new code**: Use Result for all new error-prone functions
 
 2. **Wrap existing APIs**:
+
    ```typescript
    function safeGetUser(id: string): Promise<Result<User, Error>> {
      return getUser(id)

@@ -26,7 +26,7 @@ NOT for: mechanical tasks, clear-cut decisions, following explicit instructions
 Core engineering judgment framework.
 
 **User preferences trump defaults**
-CLAUDE.md, project rules, existing patterns always override skill suggestions. Read them first.
+`CLAUDE.md`, project rules, existing patterns always override skill suggestions. Read them first.
 
 **Simplest thing that works**
 Start with straightforward solution. Add complexity only when requirements demand it.
@@ -130,6 +130,7 @@ When making non-obvious decisions:
 - Flag assumptions made
 
 Example:
+
 ```typescript
 // Using simple polling instead of WebSocket because:
 // - Simpler to implement and maintain
@@ -175,6 +176,7 @@ Standards that separate good from professional code.
 
 **Type safety**
 Make illegal states unrepresentable:
+
 ```typescript
 // Bad: stringly-typed state
 type Status = string;
@@ -191,6 +193,7 @@ type Request =
 
 **Error handling**
 Every error path needs handling:
+
 ```typescript
 // Bad: ignoring errors
 await saveUser(user);
@@ -220,6 +223,7 @@ Single responsibility, focused scope:
 
 **Comments**
 Explain why, not what:
+
 ```typescript
 // Bad
 // Set user active to true
@@ -259,6 +263,7 @@ When and how to improve existing code.
 - Don't change behavior
 
 Separate commits:
+
 ```bash
 # Good: refactor separate from feature
 git commit -m "refactor: extract user validation logic"
@@ -470,7 +475,7 @@ dev-* skills provide the "how" for specific technologies.
 <rules>
 
 ALWAYS:
-- Read CLAUDE.md and project rules first
+- Read `CLAUDE.md` and project rules first
 - Follow existing codebase patterns
 - Make small, focused changes
 - Validate external input
@@ -510,6 +515,6 @@ Complements other baselayer skills:
 - [type-patterns.md](references/type-patterns.md) — language-agnostic type patterns
 
 **Standards:**
-- [FORMATTING.md](../../shared/rules/FORMATTING.md) — formatting conventions
+- [FORMATTING.md](../../shared/`rules/`FORMATTING.md) — formatting conventions
 
 </references>

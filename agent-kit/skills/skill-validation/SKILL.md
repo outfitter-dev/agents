@@ -104,16 +104,19 @@ Use TodoWrite to track validation and review items. This ensures thorough covera
 After validation passes, review for improvements:
 
 #### Discoverability
+
 - Is description maximally discoverable?
 - Are trigger keywords comprehensive?
 - Would Claude know when to activate?
 
 #### Conciseness
+
 - Does each paragraph justify its token cost?
 - Could details move to supporting files?
 - Is there over-explanation of common concepts?
 
 #### Clarity
+
 - Are instructions step-by-step and actionable?
 - Are examples concrete and runnable?
 - Is the structure logical and scannable?
@@ -169,6 +172,7 @@ For each issue, show:
 #### Example Fix: Vague Description
 
 **Current**:
+
 ```yaml
 description: Helps with PDF files
 ```
@@ -176,6 +180,7 @@ description: Helps with PDF files
 **Problem**: Too vague, no triggers, missing capabilities
 
 **Fix**:
+
 ```yaml
 description: Extracts text and tables from PDF files, fills forms, merges documents. Use when working with PDF files or when the user mentions PDFs, forms, or document extraction.
 ```
@@ -185,6 +190,7 @@ description: Extracts text and tables from PDF files, fills forms, merges docume
 #### Example Fix: Wrong Voice
 
 **Current**:
+
 ```yaml
 description: I can help you process data files and convert formats
 ```
@@ -192,6 +198,7 @@ description: I can help you process data files and convert formats
 **Problem**: First-person voice; descriptions inject into system prompt
 
 **Fix**:
+
 ```yaml
 description: Processes data files and converts between formats (CSV, JSON, XML). Use when working with data files or format conversion.
 ```
@@ -259,11 +266,13 @@ head -n 15 SKILL.md
 ## Integration
 
 **After creating a skill**:
+
 ```
 skills-authoring → skill-validation → iterate until passing
 ```
 
 **Before committing**:
+
 ```
 skill-validation → fix critical issues → commit
 ```

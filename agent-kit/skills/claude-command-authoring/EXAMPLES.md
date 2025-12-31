@@ -18,6 +18,7 @@ Real-world examples of Claude Code slash commands for various workflows.
 ### Create Feature Branch
 
 `.claude/commands/git/feature.md`:
+
 ```markdown
 ---
 description: Create feature branch from issue number
@@ -49,6 +50,7 @@ Proceed with branch creation and link it to issue #$1.
 ### Commit Staged Changes
 
 `.claude/commands/git/commit.md`:
+
 ```markdown
 ---
 description: Create commit from staged changes with conventional format
@@ -85,6 +87,7 @@ Generate the commit message and execute the commit.
 ### Interactive Rebase
 
 `.claude/commands/git/rebase-interactive.md`:
+
 ```markdown
 ---
 description: Interactive rebase with commit selection
@@ -126,6 +129,7 @@ What would you like to do with these commits?
 ### Run Test Suite
 
 `.claude/commands/test/run-all.md`:
+
 ```markdown
 ---
 description: Run complete test suite with coverage
@@ -160,6 +164,7 @@ What would you like me to help with?
 ### Debug Failing Test
 
 `.claude/commands/test/debug.md`:
+
 ```markdown
 ---
 description: Debug specific failing test
@@ -195,6 +200,7 @@ Would you like me to implement the fix?
 ### Test Coverage Report
 
 `.claude/commands/test/coverage.md`:
+
 ```markdown
 ---
 description: Generate and analyze test coverage report
@@ -229,6 +235,7 @@ Shall I help write tests for uncovered code?
 ### Deploy to Environment
 
 `.claude/commands/deploy/to-env.md`:
+
 ```markdown
 ---
 description: Deploy to specified environment with validation
@@ -279,6 +286,7 @@ Type "approved" to continue with deployment.
 ### Rollback Deployment
 
 `.claude/commands/deploy/rollback.md`:
+
 ```markdown
 ---
 description: Rollback to previous deployment
@@ -320,6 +328,7 @@ Are you sure you want to rollback $1?
 ### Review PR
 
 `.claude/commands/review/pr.md`:
+
 ```markdown
 ---
 description: Comprehensive PR review with checklist
@@ -392,6 +401,7 @@ Provide summary of findings and recommendation (approve/request changes/comment)
 ### Security Audit
 
 `.claude/commands/review/security.md`:
+
 ```markdown
 ---
 description: Security-focused code review
@@ -467,6 +477,7 @@ Provide executive summary with risk assessment.
 ### Generate API Docs
 
 `.claude/commands/docs/api.md`:
+
 ```markdown
 ---
 description: Generate API documentation from code
@@ -514,6 +525,7 @@ const result = functionName(arg1, arg2);
 ---
 
 Generate comprehensive API documentation for all public interfaces.
+
 ```
 
 ### Update README
@@ -564,6 +576,7 @@ Generate updated README maintaining existing style.
 ### Sprint Summary
 
 `.claude/commands/project/sprint-summary.md`:
+
 ```markdown
 ---
 description: Generate sprint summary from git and issue tracker
@@ -614,6 +627,7 @@ Format for team meeting presentation.
 ### Create Issue from Bug
 
 `.claude/commands/project/bug-report.md`:
+
 ```markdown
 ---
 description: Create detailed bug report issue
@@ -674,6 +688,7 @@ Review template and create issue with appropriate labels (bug, priority).
 ### New Feature Setup
 
 `.claude/commands/dev/new-feature.md`:
+
 ```markdown
 ---
 description: Set up complete feature development workflow
@@ -716,6 +731,7 @@ Generate initial file structure with TODOs?
 ### Refactor Code
 
 `.claude/commands/dev/refactor.md`:
+
 ```markdown
 ---
 description: Safe refactoring with tests
@@ -763,6 +779,7 @@ Proceed with analysis and refactoring plan?
 ### Onboarding Checklist
 
 `.claude/commands/team/onboard.md`:
+
 ```markdown
 ---
 description: Generate onboarding checklist for new team member
@@ -821,6 +838,7 @@ Generate personalized onboarding plan?
 ### Pair Programming Session
 
 `.claude/commands/team/pair.md`:
+
 ```markdown
 ---
 description: Start pair programming session with context

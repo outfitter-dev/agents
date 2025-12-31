@@ -171,13 +171,13 @@ Validates Claude Code agents:
 ## Development
 
 Source available at:
-https://github.com/outfitter-dev/agents/tree/main/agent-kit
+<https://github.com/outfitter-dev/agents/tree/main/agent-kit>
 
 ## Contributing
 
 Found an issue or want to improve these skills?
-- Report issues: https://github.com/outfitter-dev/agents/issues
-- Submit PRs: https://github.com/outfitter-dev/agents/pulls
+- Report issues: <https://github.com/outfitter-dev/agents/issues>
+- Submit PRs: <https://github.com/outfitter-dev/agents/pulls>
 
 ## License
 

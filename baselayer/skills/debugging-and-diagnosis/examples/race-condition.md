@@ -25,6 +25,7 @@ Initial attempts fail — bug is intermittent:
 - No obvious pattern
 
 Run test 100 times to find pattern:
+
 ```bash
 for i in {1..100}; do
   npm test -- --grep "cache update" > /dev/null || echo "Failed: $i"
@@ -121,6 +122,7 @@ Difference: No separate invalidation step, single atomic operation.
 The optimization commit (f8d3c21):
 
 **Before** (synchronous, blocking):
+
 ```typescript
 export function updateCache(key: string, value: any): void {
   cache.set(key, value);        // Synchronous
@@ -130,6 +132,7 @@ export function updateCache(key: string, value: any): void {
 ```
 
 **After** (async, non-blocking):
+
 ```typescript
 export async function updateCache(key: string, value: any): Promise<void> {
   await cache.set(key, value);      // Async - completes
@@ -202,6 +205,7 @@ export async function updateCache(key: string, value: any): Promise<void> {
 ### Execute Test
 
 Run test 100 times with widened race window:
+
 ```bash
 for i in {1..100}; do
   npm test -- --grep "cache update" > /dev/null || echo "Failed: $i"
@@ -231,6 +235,7 @@ export async function updateCache(key: string, value: any): Promise<void> {
 ```
 
 Run 100 times:
+
 ```bash
 # Results: 0 failures (0%)
 ```

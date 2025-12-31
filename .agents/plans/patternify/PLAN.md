@@ -71,7 +71,7 @@ User invokes /patternify [optional hint]
 
 ## Components to Create
 
-### 1. Skill: `conversation-analysis`
+### 1. Skill: **conversation-analysis**
 
 **Purpose:** Base capability for analyzing conversation signals
 

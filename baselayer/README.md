@@ -64,24 +64,28 @@ Use the reviewer agent to check this code
 ### Common Workflows
 
 **Test-Driven Development:**
+
 ```
 "Implement user authentication using TDD"
 → Loads tdd skill → Red-Green-Refactor cycle
 ```
 
 **Debugging:**
+
 ```
 "This API returns 500 errors intermittently"
 → Loads debugging skill → Root cause investigation
 ```
 
 **Architecture Design:**
+
 ```
 "Design a notification system for 100k users"
 → Loads software-architecture skill → Options with tradeoffs
 ```
 
 **Research:**
+
 ```
 "What's the best approach for rate limiting?"
 → Loads research-and-report skill → Multi-source analysis with citations

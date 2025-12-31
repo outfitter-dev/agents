@@ -251,13 +251,13 @@ find-skills              → discover-skills        (more descriptive verb)
 ### Recommended Approach: Migrate Existing Skills
 
 **Phase 1: Core Skills (Priority 1)**
-1. `skills-authoring` (was `agent-skills-authoring`)
+1. **skills-authoring** (was `agent-skills-authoring`)
    - Move to `plugins/toolkit/skills/skills-authoring/`
    - Update internal references to new naming
    - Keep all validation references
    - Include audit-skill-flags.sh script
 
-2. `skill-validation` (was `agent-skill-validation`)
+2. **skill-validation** (was `agent-skill-validation`)
    - Move to `plugins/toolkit/skills/skill-validation/`
    - Read-only validation orchestrator
    - Reference skills-authoring's validation docs
@@ -422,7 +422,7 @@ plugins/toolkit/scripts/
 - [ ] Verify cross-references resolve correctly
 - [ ] Test flag discovery across skills
 - [ ] Validate integration with discover-skills
-- [ ] Update CLAUDE.md if needed
+- [ ] Update `CLAUDE.md` if needed
 - [ ] Create backward compatibility notes
 
 ---

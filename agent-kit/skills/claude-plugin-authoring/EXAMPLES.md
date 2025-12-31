@@ -201,12 +201,14 @@ For each issue found:
 
 **Example:**
 ```
+
 Issue: SQL Injection vulnerability in user query
 Severity: Critical
 Location: src/database.ts:42
 Impact: Attacker could execute arbitrary SQL queries
 Recommendation: Use parameterized queries instead of string concatenation
 Reference: OWASP A03:2021 - Injection
+
 ```
 
 ## Guidelines
@@ -562,6 +564,7 @@ Or add to `.env` file in your project root.
 ## License
 
 MIT License
+
 ```
 
 ---
@@ -573,6 +576,7 @@ A comprehensive plugin for team development workflows.
 ### Directory Structure
 
 ```
+
 team-workflow/
 ├── plugin.json
 ├── README.md
@@ -593,6 +597,7 @@ team-workflow/
 └── hooks/
     ├── pre-commit-check.sh
     └── post-deploy-notify.sh
+
 ```
 
 ### plugin.json
