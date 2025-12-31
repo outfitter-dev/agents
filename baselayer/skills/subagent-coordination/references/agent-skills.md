@@ -1,8 +1,8 @@
 # Agent-Skill Mappings
 
-Detailed breakdown of which skills each agent can load and when.
+Detailed breakdown of which skills each agent can load and when. Agents are grouped by their coordination role.
 
-## developer
+## senior-dev (coding role)
 
 **Identity**: Builder, implementer, fixer.
 
@@ -16,11 +16,11 @@ Detailed breakdown of which skills each agent can load and when.
 | ai-sdk | AI features, streaming, tools |
 
 **Typical combos**:
-- `software-engineering` + `test-driven-development` (standard feature)
-- `software-engineering` + `react-dev` (frontend work)
-- `software-engineering` + `hono-dev` + `ai-sdk` (AI API endpoint)
+- **software-engineering** + **test-driven-development** (standard feature)
+- **software-engineering** + **react-dev** (frontend work)
+- **software-engineering** + **hono-dev** + **ai-sdk** (AI API endpoint)
 
-## reviewer
+## ranger (reviewing role)
 
 **Identity**: Evaluator, quality guardian.
 
@@ -29,13 +29,15 @@ Detailed breakdown of which skills each agent can load and when.
 | code-review | PR reviews, code audits |
 | performance-engineering | Performance concerns, optimization |
 | software-architecture | Architecture decisions, structural changes |
+| security-engineering | Security audits, auth review |
 
 **Typical combos**:
-- `code-review` (standard PR review)
-- `code-review` + `software-architecture` (significant refactor)
-- `code-review` + `performance-engineering` (performance-critical code)
+- **code-review** (standard PR review)
+- **code-review** + **software-architecture** (significant refactor)
+- **code-review** + **performance-engineering** (performance-critical code)
+- **code-review** + **security-engineering** (auth or sensitive code)
 
-## analyst
+## analyst (research role)
 
 **Identity**: Investigator, researcher.
 
@@ -48,11 +50,11 @@ Detailed breakdown of which skills each agent can load and when.
 | report-findings | Structuring analysis output |
 
 **Typical combos**:
-- `codebase-analysis` + `report-findings` (codebase exploration)
-- `research-and-report` (technology comparison)
-- `pathfinding` (requirements clarification)
+- **codebase-analysis** + **report-findings** (codebase exploration)
+- **research-and-report** (technology comparison)
+- **pathfinding** (requirements clarification)
 
-## debugger
+## debugger (debugging role)
 
 **Identity**: Problem solver, root cause finder.
 
@@ -62,10 +64,10 @@ Detailed breakdown of which skills each agent can load and when.
 | codebase-analysis | Understanding surrounding code |
 
 **Typical combos**:
-- `debugging-and-diagnosis` (standard debugging)
-- `debugging-and-diagnosis` + `codebase-analysis` (unfamiliar codebase)
+- **debugging-and-diagnosis** (standard debugging)
+- **debugging-and-diagnosis** + **codebase-analysis** (unfamiliar codebase)
 
-## tester
+## tester (testing role)
 
 **Identity**: Validator, proof provider.
 
@@ -75,10 +77,10 @@ Detailed breakdown of which skills each agent can load and when.
 | test-driven-development | TDD workflow, test-first approach |
 
 **Typical combos**:
-- `scenario-testing` (feature validation)
-- `test-driven-development` (TDD implementation)
+- **scenario-testing** (feature validation)
+- **test-driven-development** (TDD implementation)
 
-## skeptic
+## skeptic (challenging role)
 
 **Identity**: Complexity challenger, assumption questioner.
 
@@ -87,9 +89,9 @@ Detailed breakdown of which skills each agent can load and when.
 | complexity-analysis | Always (core methodology) |
 
 **Typical combos**:
-- `complexity-analysis` (challenge proposals)
+- **complexity-analysis** (challenge proposals)
 
-## specialist
+## specialist (specialist role)
 
 **Identity**: Domain expert, infrastructure handler.
 
@@ -99,12 +101,13 @@ Detailed breakdown of which skills each agent can load and when.
 
 **Examples**:
 - CI/CD configuration → loads relevant CI patterns
+- Design review → loads design/UX patterns
+- Accessibility audit → loads a11y patterns
 - Deployment → loads infrastructure patterns
-- Security audit → loads security patterns
 
-Specialist loads skills dynamically based on detected domain.
+Specialist loads skills dynamically based on detected domain. Other specialist agents (e.g., `cicd-expert`, `design-agent`, `bun-expert`) may be preferred when available.
 
-## pattern-analyzer
+## pattern-analyzer (patterns role)
 
 **Identity**: Pattern extractor, workflow capturer.
 
@@ -115,29 +118,34 @@ Specialist loads skills dynamically based on detected domain.
 | conversation-analysis | Mining conversation for patterns |
 
 **Typical combos**:
-- `patternify` + `conversation-analysis` (capture workflow from session)
-- `pattern-analysis` (analyze codebase patterns)
+- **patternify** + **conversation-analysis** (capture workflow from session)
+- **pattern-analysis** (analyze codebase patterns)
 
 ## Skill Categories
 
 ### Core Methodology
+
 Always relevant for the agent's identity:
-- developer: software-engineering
+- senior-dev: software-engineering
 - debugger: debugging-and-diagnosis
 - skeptic: complexity-analysis
 
 ### Domain-Specific
+
 Load based on technology in use:
 - bun-dev, react-dev, hono-dev, ai-sdk
 
 ### Process-Oriented
+
 Load based on workflow phase:
 - test-driven-development, code-review, scenario-testing
 
 ### Analysis-Oriented
+
 Load for investigation and research:
 - codebase-analysis, research-and-report, pathfinding
 
 ### Output-Oriented
+
 Load for structuring deliverables:
 - report-findings, status-reporting
