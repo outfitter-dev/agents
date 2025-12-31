@@ -12,14 +12,14 @@ Create specialized subagents that extend Claude Code with focused expertise and 
 
 **Agents vs Skills**: This is critical to understand:
 
-| Aspect | Agents (This Skill) | Skills |
-|--------|---------------------|---------|
-| **Purpose** | Specialized subagents with focused expertise | Capability packages with instructions |
-| **Invocation** | Task tool (`subagent_type` parameter) | Automatic (model-triggered by context) |
-| **Location** | `agents/` directory | `skills/` directory |
-| **Structure** | Single `.md` file with frontmatter | Directory with `SKILL.md` + resources |
-| **Scope** | Narrow, specialized tasks | Broad capabilities |
-| **Use case** | "Ask security expert to audit", "Use tester agent" | "Work with PDFs", "Review code" |
+| Aspect         | Agents (This Skill)                                | Skills                                 |
+| -------------- | -------------------------------------------------- | -------------------------------------- |
+| **Purpose**    | Specialized subagents with focused expertise       | Capability packages with instructions  |
+| **Invocation** | Task tool (`subagent_type` parameter)              | Automatic (model-triggered by context) |
+| **Location**   | `agents/` directory                                | `skills/` directory                    |
+| **Structure**  | Single `.md` file with frontmatter                 | Directory with `SKILL.md` + resources  |
+| **Scope**      | Narrow, specialized tasks                          | Broad capabilities                     |
+| **Use case**   | "Ask security expert to audit", "Use tester agent" | "Work with PDFs", "Review code"        |
 
 **Key distinction**: Agents are invoked explicitly through the Task tool, Skills are discovered and used automatically.
 
@@ -102,13 +102,13 @@ Agents are invoked through the Task tool:
 
 ### Frontmatter
 
-| Field | Required | Purpose | Example |
-|-------|----------|---------|---------|
-| `name` | Yes | Agent identifier (matches filename) | `security-reviewer` |
-| `description` | Yes | When to use + examples (see format below) | See examples |
-| `tools` | Optional | Restrict tool usage | `Read, Grep, Glob` |
-| `model` | Optional | Use `inherit` (preferred) or specific model | `inherit` |
-| `color` | Optional | Status line color | `orange` |
+| Field         | Required | Purpose                                     | Example             |
+| ------------- | -------- | ------------------------------------------- | ------------------- |
+| `name`        | Yes      | Agent identifier (matches filename)         | `security-reviewer` |
+| `description` | Yes      | When to use + examples (see format below)   | See examples        |
+| `tools`       | Optional | Restrict tool usage                         | `Read, Grep, Glob`  |
+| `model`       | Optional | Use `inherit` (preferred) or specific model | `inherit`           |
+| `color`       | Optional | Status line color                           | `orange`            |
 
 ### Description Format
 
@@ -775,17 +775,17 @@ Note: Prefer `model: inherit` to use parent's tool access. Only specify `tools:`
 
 Deep-dive documentation in `references/`:
 
-| Reference | Content |
-|-----------|---------|
-| [agent-vs-skill.md](references/agent-vs-skill.md) | Critical distinction between agents and skills |
-| [frontmatter.md](references/frontmatter.md) | YAML schema, fields, description format |
-| [tools.md](references/tools.md) | Tool configuration and restriction patterns |
-| [task-tool.md](references/task-tool.md) | Task tool integration and context passing |
-| [discovery.md](references/discovery.md) | How agents are found and loaded |
-| [agent-types.md](references/agent-types.md) | Archetypes: analysis, implementation, review, etc. |
-| [patterns.md](references/patterns.md) | Best practices and multi-agent patterns |
-| [performance.md](references/performance.md) | Optimization and efficiency |
-| [todowrite.md](references/todowrite.md) | TodoWrite patterns for agent visibility |
+| Reference                                         | Content                                            |
+| ------------------------------------------------- | -------------------------------------------------- |
+| [agent-vs-skill.md](references/agent-vs-skill.md) | Critical distinction between agents and skills     |
+| [frontmatter.md](references/frontmatter.md)       | YAML schema, fields, description format            |
+| [tools.md](references/tools.md)                   | Tool configuration and restriction patterns        |
+| [task-tool.md](references/task-tool.md)           | Task tool integration and context passing          |
+| [discovery.md](references/discovery.md)           | How agents are found and loaded                    |
+| [agent-types.md](references/agent-types.md)       | Archetypes: analysis, implementation, review, etc. |
+| [patterns.md](references/patterns.md)             | Best practices and multi-agent patterns            |
+| [performance.md](references/performance.md)       | Optimization and efficiency                        |
+| [todowrite.md](references/todowrite.md)           | TodoWrite patterns for agent visibility            |
 
 See [EXAMPLES.md](EXAMPLES.md) for complete real-world agent examples.
 
