@@ -23,16 +23,18 @@ Real-world examples of specialized Claude Code agents for various workflows.
 
 ```markdown
 ---
-description: Security vulnerability scanner specializing in OWASP Top 10 detection and secure coding practices
-capabilities:
-  - SQL injection detection
-  - XSS vulnerability identification
-  - CSRF protection validation
-  - Authentication bypass prevention
-  - Authorization check validation
-  - Insecure deserialization detection
-  - Security misconfiguration identification
-allowed-tools: Read, Grep, Glob, Bash(git diff:*), Bash(git show:*)
+name: security-scanner
+description: |
+  Security vulnerability scanner specializing in OWASP Top 10 detection and secure
+  coding practices. Triggers on security review, vulnerability scan, or injection detection.
+
+  <example>
+  Context: User wants security review
+  user: "Check this code for security vulnerabilities"
+  assistant: "I'll use the security-scanner agent to analyze for OWASP Top 10 issues."
+  </example>
+tools: Glob, Grep, Read, Skill, Task, TodoWrite, Bash
+model: inherit
 ---
 
 # Security Vulnerability Scanner
@@ -200,15 +202,18 @@ Claude: [Uses Task tool with subagent_type: "security-scanner"]
 
 ```markdown
 ---
-description: Authentication and authorization security specialist focusing on identity and access management
-capabilities:
-  - OAuth 2.0 and OIDC implementation review
-  - JWT token security validation
-  - Session management analysis
-  - Password policy enforcement check
-  - MFA implementation review
-  - API authentication review
-allowed-tools: Read, Grep, Glob
+name: auth-security-specialist
+description: |
+  Authentication and authorization security specialist focusing on identity and access management.
+  Triggers on OAuth review, JWT validation, session management, or password policy checks.
+
+  <example>
+  Context: User wants auth review
+  user: "Review our JWT implementation"
+  assistant: "I'll use the auth-security-specialist agent to validate the token security."
+  </example>
+tools: Glob, Grep, Read, Skill, Task, TodoWrite
+model: inherit
 ---
 
 # Authentication Security Specialist
@@ -381,16 +386,18 @@ Claude: [Uses Task tool with subagent_type: "auth-security-specialist"]
 
 ```markdown
 ---
-description: Test-driven development specialist creating comprehensive test suites with high coverage
-capabilities:
-  - Unit test generation
-  - Integration test design
-  - Test coverage analysis
-  - Edge case identification
-  - Mock and stub creation
-  - Fixture generation
-  - Test-first development guidance
-allowed-tools: Read, Write, Edit, Bash(bun test:*), Bash(npm test:*)
+name: tdd-specialist
+description: |
+  Test-driven development specialist creating comprehensive test suites with high coverage.
+  Triggers on test creation, coverage analysis, TDD guidance, or test-first development.
+
+  <example>
+  Context: User wants to implement with TDD
+  user: "Write tests for the user authentication module"
+  assistant: "I'll use the tdd-specialist agent to create a test suite."
+  </example>
+tools: Glob, Grep, Read, Skill, Task, TodoWrite, Edit, Write, Bash
+model: inherit
 ---
 
 # TDD Specialist
@@ -702,15 +709,18 @@ Claude: [Uses Task tool with subagent_type: "tdd-specialist"]
 
 ```markdown
 ---
-description: API testing specialist for REST and GraphQL endpoints with authentication flow testing
-capabilities:
-  - REST API endpoint testing
-  - GraphQL query and mutation testing
-  - Authentication flow validation
-  - Rate limiting verification
-  - API contract validation
-  - Response schema validation
-allowed-tools: Read, Write, Bash(curl:*), Bash(bun *), Bash(npm *)
+name: api-testing-specialist
+description: |
+  API testing specialist for REST and GraphQL endpoints with authentication flow testing.
+  Triggers on endpoint testing, API contract validation, or authentication flow verification.
+
+  <example>
+  Context: User wants API tests
+  user: "Test the GraphQL authentication endpoints"
+  assistant: "I'll use the api-testing-specialist agent to validate the endpoints."
+  </example>
+tools: Glob, Grep, Read, Skill, Task, TodoWrite, Edit, Write, Bash
+model: inherit
 ---
 
 # API Testing Specialist
@@ -1093,16 +1103,18 @@ describe('Performance', () => {
 
 ```markdown
 ---
-description: Code quality reviewer focusing on maintainability, SOLID principles, and design patterns
-capabilities:
-  - Code smell detection
-  - Complexity analysis
-  - DRY principle compliance
-  - SOLID principle review
-  - Design pattern identification
-  - Naming convention validation
-  - Code structure analysis
-allowed-tools: Read, Grep, Glob
+name: code-quality-reviewer
+description: |
+  Code quality reviewer focusing on maintainability, SOLID principles, and design patterns.
+  Triggers on code review, quality audit, complexity analysis, or refactoring suggestions.
+
+  <example>
+  Context: User wants code review
+  user: "Review this module for code quality issues"
+  assistant: "I'll use the code-quality-reviewer agent to analyze maintainability."
+  </example>
+tools: Glob, Grep, Read, Skill, Task, TodoWrite
+model: inherit
 ---
 
 # Code Quality Reviewer
@@ -1434,15 +1446,18 @@ const hasValidAddress = validateUserAddress(data);
 
 ```markdown
 ---
-description: Kubernetes deployment specialist for orchestrating container deployments with health checks and rollback capability
-capabilities:
-  - Kubernetes manifest generation
-  - Deployment orchestration
-  - Health check validation
-  - Rollback execution
-  - Resource scaling
-  - ConfigMap and Secret management
-allowed-tools: Bash(kubectl *), Bash(docker *), Bash(git *), Read, Write
+name: kubernetes-deployment
+description: |
+  Kubernetes deployment specialist for orchestrating container deployments with health
+  checks and rollback capability. Triggers on k8s deployment, manifest generation, or rollback.
+
+  <example>
+  Context: User wants to deploy to kubernetes
+  user: "Deploy the new version to the staging cluster"
+  assistant: "I'll use the kubernetes-deployment agent to orchestrate the deployment."
+  </example>
+tools: Glob, Grep, Read, Skill, Task, TodoWrite, Edit, Write, Bash
+model: inherit
 ---
 
 # Kubernetes Deployment Specialist
@@ -1738,15 +1753,19 @@ kubectl rollout undo deployment/myapp -n production
 
 ```markdown
 ---
-description: Documentation researcher finding answers in official docs and synthesizing information from multiple sources
-capabilities:
-  - Documentation search and retrieval
-  - API reference lookup
-  - Example code extraction
-  - Best practice identification
-  - Version compatibility checking
-  - Tutorial and guide discovery
-allowed-tools: WebSearch, WebFetch, Read, Grep
+name: docs-researcher
+description: |
+  Documentation researcher finding answers in official docs and synthesizing
+  information from multiple sources. Triggers on documentation lookup, API reference,
+  or best practice research.
+
+  <example>
+  Context: User needs documentation
+  user: "Find the official docs on React Server Components"
+  assistant: "I'll use the docs-researcher agent to find and synthesize the documentation."
+  </example>
+tools: Glob, Grep, Read, Skill, Task, TodoWrite, WebSearch, WebFetch
+model: inherit
 ---
 
 # Documentation Researcher

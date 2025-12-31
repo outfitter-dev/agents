@@ -93,14 +93,9 @@ agents/security-reviewer.md
 
 ```markdown
 ---
-# YAML frontmatter
-description: Brief description of agent specialization
-capabilities:
-  - Capability 1
-  - Capability 2
-  - Capability 3
-allowed-tools: Tool1, Tool2, Tool3
-model: model-identifier
+name: agent-name
+description: Use this agent when [trigger conditions]. Triggers on [keywords].\n\n<example>\nContext: When this applies.\nuser: "User message"\nassistant: "Response explaining agent delegation"\n</example>
+model: inherit
 ---
 
 # Agent Name
@@ -108,11 +103,14 @@ model: model-identifier
 Agent instructions and context.
 
 ## Sections
-- Expertise
-- Process
+- Core Identity
+- Skill Loading (if router agent)
+- Process / Workflow
 - Output format
-- Constraints
+- Constraints / Edge Cases
 ```
+
+**Note**: Most agents should NOT specify `tools` — they inherit from parent. Only specify when restricting access.
 
 ### File Naming
 
@@ -155,222 +153,120 @@ agents/performance-tester.md    → subagent_type: "performance-tester"
 
 ## Frontmatter Schema
 
-All frontmatter fields are optional except `description`.
+### Required Fields
 
-### `description`
+#### `name`
 
 **Type**: `string`
 **Required**: Yes
-**Purpose**: Brief explanation of agent's specialization
+**Purpose**: Agent identifier (should match filename without `.md`)
 
 ```yaml
-description: Security expert specializing in OWASP Top 10 vulnerability detection
+name: security-reviewer
 ```
 
-**Best Practices:**
-- Start with role/specialty: "Security expert", "Testing specialist"
-- Include specific focus: "OWASP Top 10", "React components"
-- Keep under 100 characters
-- Use keywords that trigger invocation
+#### `description`
 
-**Examples:**
+**Type**: `string`
+**Required**: Yes
+**Purpose**: When to use this agent + examples
+
+The description should include:
+1. Trigger conditions ("Use this agent when...")
+2. Keywords that invoke the agent
+3. 3-4 examples showing user → assistant delegation
+
+**Format options:**
 
 ```yaml
-# ✅ Good: Specific and clear
-description: TypeScript migration specialist converting JavaScript to TypeScript with proper types
+# Escaped newlines (compact)
+description: Use this agent when reviewing code for security vulnerabilities.\n\n<example>\nContext: User wants security review.\nuser: "Check this auth code"\nassistant: "I'll use the security-reviewer agent."\n</example>
 
-# ✅ Good: Shows expertise area
-description: Database performance optimizer for PostgreSQL query optimization
+# YAML multiline (readable)
+description: |
+  Use this agent when reviewing code for security vulnerabilities.
 
-# ❌ Too vague
-description: Helper agent
-
-# ❌ Too generic
-description: Code reviewer
-
-# ✅ Better: Add specialization
-description: Code quality reviewer focusing on SOLID principles and design patterns
+  <example>
+  Context: User wants security review.
+  user: "Check this auth code"
+  assistant: "I'll use the security-reviewer agent."
+  </example>
 ```
 
-### `capabilities`
+### Optional Fields
 
-**Type**: `array` of `string`
-**Required**: Recommended
-**Purpose**: List specific capabilities to aid invocation decision
+#### `model`
+
+**Type**: `string`
+**Required**: Optional
+**Default**: Inherits from parent
+**Purpose**: Override model selection
 
 ```yaml
-capabilities:
-  - SQL injection detection
-  - XSS vulnerability identification
-  - Authentication flow review
-  - Authorization check validation
-  - Secure session management review
+# Preferred: inherit from parent conversation
+model: inherit
+
+# Or specify when needed:
+model: haiku   # Fast, simple tasks
+model: sonnet  # Balanced (default)
+model: opus    # Complex reasoning
 ```
 
-**Guidelines:**
-- 5-10 capabilities per agent
-- Be specific: "JWT token validation" not "security"
-- Action-oriented: "Generate test cases" not "testing"
-- Match user language: "API testing" not "HTTP request validation"
-- Cover agent's full scope
+**Best practice**: Use `model: inherit` unless you have a specific reason to override.
 
-**Format Patterns:**
-
-```yaml
-# Task-oriented (recommended)
-capabilities:
-  - Unit test generation
-  - Integration test design
-  - Test coverage analysis
-
-# Feature-oriented
-capabilities:
-  - React component creation
-  - TypeScript interface design
-  - Component testing
-
-# Domain-oriented
-capabilities:
-  - PostgreSQL query optimization
-  - Index design
-  - Query plan analysis
-```
-
-**Bad Examples:**
-
-```yaml
-# ❌ Too generic
-capabilities:
-  - Coding
-  - Testing
-  - Debugging
-
-# ❌ Too granular
-capabilities:
-  - Check if function has return type
-  - Verify variable naming
-  - Count lines of code
-
-# ✅ Right level of detail
-capabilities:
-  - TypeScript type annotation
-  - Code style compliance
-  - Complexity analysis
-```
-
-### `allowed-tools`
+#### `tools`
 
 **Type**: `string` (comma-separated)
 **Required**: Optional
-**Default**: Inherits from main conversation
+**Default**: Inherits from parent (full access)
 **Purpose**: Restrict which tools the agent can use
 
+**Philosophy**: Don't over-restrict. Only specify when there's a safety reason.
+
+**Baseline tools** (include when restricting):
 ```yaml
-# Single tool
-allowed-tools: Read
-
-# Multiple tools
-allowed-tools: Read, Grep, Glob
-
-# Bash with wildcards
-allowed-tools: Bash(git *), Read, Write
-
-# Bash with specific commands
-allowed-tools: Bash(git status:*), Bash(git diff:*), Read
+tools: Glob, Grep, Read, Skill, Task, TodoWrite
 ```
 
-**Tool Name Format:**
+**Common patterns:**
 
 ```yaml
-# Exact tool name
-Read, Write, Edit, Grep, Glob, WebSearch, WebFetch
+# Standard agent — DON'T specify tools, inherit full access
 
-# Bash with wildcard (any git command)
+# Read-only analysis
+tools: Glob, Grep, Read, Skill, Task, TodoWrite
+
+# Read-only with git history
+tools: Glob, Grep, Read, Skill, Task, TodoWrite, Bash(git show:*), Bash(git diff:*)
+
+# Research agent
+tools: Glob, Grep, Read, Skill, Task, TodoWrite, WebSearch, WebFetch
+```
+
+**Tool restriction syntax:**
+
+```yaml
+# Full tool access
+Bash
+
+# Restrict to command family
 Bash(git *)
 
-# Bash with specific subcommand
+# Restrict to specific subcommand
 Bash(git status:*)
-
-# Bash with multiple patterns
-Bash(git *), Bash(npm *), Bash(bun *)
 
 # File pattern restrictions
 Write(tests/**), Write(*.test.ts)
 ```
 
-**Common Patterns:**
-
-```yaml
-# Read-only analysis
-allowed-tools: Read, Grep, Glob
-
-# Read-only with git history
-allowed-tools: Read, Grep, Glob, Bash(git show:*), Bash(git diff:*)
-
-# Testing agent
-allowed-tools: Read, Write, Bash(bun test:*), Bash(npm test:*)
-
-# Documentation agent
-allowed-tools: Read, Grep, Write(docs/**), Write(*.md)
-
-# Deployment agent
-allowed-tools: Bash(kubectl *), Bash(docker *), Read
-
-# Full access (default behavior)
-# Don't specify allowed-tools field
-```
-
-**Security Implications:**
-
-```yaml
-# ⚠️ Dangerous: Full bash access
-allowed-tools: Bash(*)
-
-# ✅ Safer: Limited bash access
-allowed-tools: Bash(git *), Bash(npm test:*)
-
-# ✅ Safest: No bash
-allowed-tools: Read, Grep, Glob
-
-# ⚠️ Be careful with Write
-allowed-tools: Write  # Can modify any file
-
-# ✅ Better: Restrict write patterns
-allowed-tools: Write(tests/**), Write(__tests__/**)
-```
-
-### `model`
+#### `color`
 
 **Type**: `string`
 **Required**: Optional
-**Default**: Inherits from main conversation
-**Purpose**: Use specific model for this agent
+**Purpose**: Status line color for this agent
 
 ```yaml
-# Use faster model for simple tasks
-model: claude-3-5-haiku-20241022
-
-# Use specific version
-model: claude-sonnet-4-5-20250929
-
-# Use most capable model
-model: claude-opus-4-20250514
-```
-
-**When to Use:**
-
-```yaml
-# Simple analysis → Haiku (faster, cheaper)
-model: claude-3-5-haiku-20241022
-# Use for: linting, formatting, simple validation
-
-# Standard tasks → Sonnet (balanced)
-model: claude-sonnet-4-5-20250929
-# Use for: code review, testing, refactoring
-
-# Complex reasoning → Opus (most capable)
-model: claude-opus-4-20250514
-# Use for: architecture design, complex debugging
+color: orange
 ```
 
 ## Agent Configuration
@@ -379,7 +275,9 @@ model: claude-opus-4-20250514
 
 ```markdown
 ---
-description: Simple code formatter
+name: code-formatter
+description: Use this agent for code formatting tasks.\n\n<example>\nContext: User wants code formatted.\nuser: "Format the utils module"\nassistant: "I'll use the code-formatter agent."\n</example>
+model: inherit
 ---
 
 # Code Formatter
@@ -395,13 +293,9 @@ Run formatter on provided files and report results.
 
 ```markdown
 ---
-description: Security reviewer for authentication flows
-capabilities:
-  - Authentication mechanism review
-  - Session management validation
-  - Token security analysis
-  - Password policy checking
-allowed-tools: Read, Grep, Glob
+name: auth-security-reviewer
+description: Use this agent when reviewing authentication implementations for security issues. Triggers on auth flow review, token security analysis, or session management validation.\n\n<example>\nContext: User wants auth code reviewed.\nuser: "Review the login flow for security issues"\nassistant: "I'll use the auth-security-reviewer agent to analyze the authentication implementation."\n</example>\n\n<example>\nContext: User mentions specific auth concern.\nuser: "Check our JWT token handling"\nassistant: "I'll delegate to the auth-security-reviewer agent for token security analysis."\n</example>
+model: inherit
 ---
 
 # Authentication Security Reviewer
@@ -434,15 +328,9 @@ Review authentication implementations for security issues.
 
 ```markdown
 ---
-description: Database migration specialist with rollback capability
-capabilities:
-  - Forward migration generation
-  - Rollback script creation
-  - Data integrity validation
-  - Migration testing
-  - Schema versioning
-allowed-tools: Read, Write, Bash(psql:*), Bash(git *)
-model: claude-sonnet-4-5-20250929
+name: db-migration
+description: Use this agent for database schema migrations with rollback capability. Triggers on migration generation, rollback script creation, or schema versioning.\n\n<example>\nContext: User needs database migration.\nuser: "Create a migration to add user preferences table"\nassistant: "I'll use the db-migration agent to generate forward and rollback scripts."\n</example>\n\n<example>\nContext: User needs rollback.\nuser: "Roll back the last migration"\nassistant: "I'll delegate to the db-migration agent to execute the rollback safely."\n</example>
+model: inherit
 ---
 
 # Database Migration Agent
@@ -547,252 +435,136 @@ If migration fails:
 
 **When to use:** Agents requiring complex workflows or safety protocols.
 
-## Capabilities
+## Description Examples
 
-### Purpose
+The description field drives agent invocation. Good examples help Claude understand when to use the agent.
 
-Capabilities help Claude decide when to invoke an agent. They should be:
-- **Specific**: Clear, focused capabilities
-- **Discoverable**: Match user language
-- **Complete**: Cover agent's full scope
-- **Distinct**: Different from other agents
+### Example Format
 
-### Writing Good Capabilities
-
-**Pattern: Action + Domain + Detail**
+Each example should have:
+- **Context**: Brief situation description
+- **user**: What the user says
+- **assistant**: How Claude explains the delegation
 
 ```yaml
-# Good: Specific action in specific domain
-capabilities:
-  - React component generation with TypeScript
-  - Component unit test creation
-  - Storybook story generation
-  - Accessibility compliance checking
+description: |
+  Use this agent when [trigger conditions].
 
-# Bad: Too vague
-capabilities:
-  - React stuff
-  - Frontend work
+  <example>
+  Context: [Situation]
+  user: "[User message]"
+  assistant: "[Claude's delegation response]"
+  </example>
 ```
 
-**Pattern: Problem-Oriented**
+### Example Coverage
+
+Include 3-4 examples covering:
+1. **Typical use case** — most common invocation
+2. **Specific trigger** — keyword-based invocation
+3. **Edge case** — less obvious but valid use
+4. **Verb trigger** — action words that invoke agent
 
 ```yaml
-# Good: Describes what problems are solved
-capabilities:
-  - SQL injection vulnerability detection
-  - XSS attack prevention review
-  - CSRF protection validation
-  - Authentication bypass prevention
+description: |
+  Use this agent for security vulnerability detection in code.
 
-# Bad: Too technical
-capabilities:
-  - Input sanitization
-  - Output encoding
+  <example>
+  Context: User wants security review.
+  user: "Review this auth code for vulnerabilities"
+  assistant: "I'll use the security-reviewer agent to analyze for security issues."
+  </example>
+
+  <example>
+  Context: User mentions specific vulnerability type.
+  user: "Check for SQL injection in the user service"
+  assistant: "I'll delegate to the security-reviewer agent for SQL injection analysis."
+  </example>
+
+  <example>
+  Context: User uses audit verb.
+  user: "Audit the payment module"
+  assistant: "I'll use the security-reviewer agent to audit the payment code."
+  </example>
 ```
 
-**Pattern: Task-Oriented**
+### Trigger Keywords
 
-```yaml
-# Good: Describes concrete tasks
-capabilities:
-  - Generate API endpoint tests
-  - Create integration test suites
-  - Mock external service dependencies
-  - Validate error handling paths
+Include terms users naturally say in your description:
+- Action verbs: "review", "check", "audit", "analyze", "test"
+- Domain terms: "security", "performance", "auth", "API"
+- Specific technologies: "GraphQL", "JWT", "PostgreSQL"
 
-# Bad: Too abstract
-capabilities:
-  - Testing
-  - Quality assurance
-```
+## Tool Configuration
 
-### Capability Scope
+### Default: Inherit from Parent
 
-**Narrow Scope** (5-7 capabilities):
-```yaml
-# Specialized agent: GraphQL Testing
-capabilities:
-  - GraphQL query validation
-  - Mutation testing
-  - Subscription testing
-  - Schema validation
-  - Resolver testing
-```
-
-**Medium Scope** (7-10 capabilities):
-```yaml
-# Balanced agent: API Testing
-capabilities:
-  - REST endpoint testing
-  - GraphQL query testing
-  - Authentication flow validation
-  - Rate limiting verification
-  - Error response validation
-  - Request/response schema validation
-  - Mock server configuration
-  - Integration test generation
-```
-
-**Avoid Broad Scope** (>10 capabilities):
-```yaml
-# ❌ Too broad: Split into multiple agents
-capabilities:
-  - API testing
-  - Unit testing
-  - Integration testing
-  - E2E testing
-  - Performance testing
-  - Security testing
-  - Load testing
-  - Accessibility testing
-  - Visual regression testing
-  - Database testing
-  - # ... too many!
-```
-
-### Capability Keywords
-
-**Effective Keywords:**
-
-Include terms users might naturally use:
-
-```yaml
-# User says: "test my API"
-capabilities:
-  - API testing
-  - API endpoint validation
-  - REST API testing
-
-# User says: "check security"
-capabilities:
-  - Security vulnerability detection
-  - Security audit
-  - Security review
-
-# User says: "optimize database"
-capabilities:
-  - Database optimization
-  - Query performance tuning
-  - Database query optimization
-```
-
-### Capability Anti-Patterns
-
-```yaml
-# ❌ Too granular (merge related items)
-capabilities:
-  - Check variable names
-  - Check function names
-  - Check class names
-  - Check constant names
-# ✅ Better
-capabilities:
-  - Code naming convention validation
-
-# ❌ Overlapping (remove duplicates)
-capabilities:
-  - Test generation
-  - Create tests
-  - Write tests
-# ✅ Better
-capabilities:
-  - Test generation
-
-# ❌ Implementation details (focus on outcomes)
-capabilities:
-  - Uses Jest framework
-  - Runs npm test
-  - Generates coverage reports
-# ✅ Better
-capabilities:
-  - Unit test creation
-  - Test coverage analysis
-```
-
-## Tool Restrictions
-
-### Inheritance Model
+Most agents should NOT specify `tools`. They inherit full access from the parent conversation.
 
 ```markdown
-# Agent with no tool restrictions
 ---
-description: Code reviewer
+name: code-reviewer
+description: ...
+model: inherit
 ---
-# Inherits tools from main conversation
-# Can request additional tools with permission
-
-# Agent with tool restrictions
----
-description: Read-only code analyzer
-allowed-tools: Read, Grep, Glob
----
-# Can only use specified tools without permission
-# Other tools blocked or require permission
+# No tools field — inherits full access
 ```
 
-### Restriction Strategies
+### When to Restrict Tools
 
-**Full Restriction** (safest):
+Only restrict when:
+- Agent's purpose is explicitly read-only
+- There's a specific safety concern
+- You want to prevent accidental modifications
+
+### Baseline Tools
+
+When restricting, always include these baseline tools:
 ```yaml
-allowed-tools: Read, Grep, Glob
+tools: Glob, Grep, Read, Skill, Task, TodoWrite
 ```
-- Cannot modify anything
-- Cannot run commands
-- Pure analysis only
 
-**Read + Git** (safe historical analysis):
-```yaml
-allowed-tools: Read, Grep, Glob, Bash(git show:*), Bash(git diff:*)
-```
-- Can read files
-- Can check git history
-- Cannot modify anything
+These enable: file discovery, searching, reading, skill loading, sub-agent delegation, and task tracking.
 
-**Read + Write Limited** (targeted modifications):
-```yaml
-allowed-tools: Read, Grep, Write(tests/**), Write(__tests__/**)
-```
-- Can read any file
-- Can only write to test directories
+### Common Patterns
 
-**Read + Test Commands** (test creation):
+**Read-only analysis:**
 ```yaml
-allowed-tools: Read, Write, Bash(bun test:*), Bash(npm test:*)
+tools: Glob, Grep, Read, Skill, Task, TodoWrite
 ```
-- Can read and write
-- Can run tests only
-- Cannot run arbitrary commands
 
-**Deployment Tools** (infrastructure):
+**Read-only with git history:**
 ```yaml
-allowed-tools: Bash(kubectl *), Bash(docker *), Bash(git *), Read
+tools: Glob, Grep, Read, Skill, Task, TodoWrite, Bash(git show:*), Bash(git diff:*)
 ```
-- Can manage infrastructure
-- Can read configs
-- Cannot modify code
+
+**Research agent:**
+```yaml
+tools: Glob, Grep, Read, Skill, Task, TodoWrite, WebSearch, WebFetch
+```
+
+**Implementation agent:**
+```yaml
+tools: Glob, Grep, Read, Write, Edit, Bash, Skill, Task, TodoWrite
+```
 
 ### Pattern Matching
 
 Tool restrictions support patterns:
 
 ```yaml
-# Exact match
-allowed-tools: Read
+# Full tool access
+Bash
 
-# Wildcard match (any subcommand)
+# Restrict to command family
 Bash(git *)
 
-# Specific subcommand
+# Restrict to specific subcommand
 Bash(git status:*)
-
-# Multiple patterns
-Bash(git *), Bash(npm test:*), Bash(bun *)
 
 # File path patterns
 Write(tests/**/*.ts)
 Write(__tests__/**/*)
-Write(*.test.ts)
 
 # MCP tools
 mcp__server__tool
@@ -802,11 +574,13 @@ mcp__server__*
 ### Testing Tool Restrictions
 
 ```markdown
-# Create test agent
+# Create test agent with restricted tools
 cat > agents/test-readonly.md << 'EOF'
 ---
-description: Test read-only agent
-allowed-tools: Read
+name: test-readonly
+description: Test read-only agent.\n\n<example>\nContext: Testing.\nuser: "Test"\nassistant: "Testing read-only agent."\n</example>
+tools: Glob, Grep, Read, Skill, Task, TodoWrite
+model: inherit
 ---
 Try to write a file - should fail or ask permission.
 EOF
@@ -1011,29 +785,25 @@ Main Claude (implementation)
 ### Naming for Discovery
 
 ```yaml
-# ✅ Good: Includes keywords in description
-description: React testing specialist using Jest and React Testing Library
+# ✅ Good: Keywords + examples in description
+description: |
+  React testing specialist using Jest and React Testing Library.
+  Triggers on component testing, Jest test creation, or RTL usage.
 
-# Keywords: react, testing, jest, react testing library
-# Triggers: "test react component", "jest tests", "RTL"
+  <example>
+  Context: User wants to test a React component
+  user: "Write tests for the UserProfile component"
+  assistant: "I'll use the react-tester agent to create tests."
+  </example>
 
-# ❌ Bad: Vague description
+# Keywords embedded: react, testing, jest, react testing library
+# Clear triggers: "test react component", "jest tests", "RTL"
+
+# ❌ Bad: Vague description, no examples
 description: Testing helper
 
 # Keywords: testing (too generic)
-# Hard to trigger specifically
-
-# ✅ Good: Specific capabilities
-capabilities:
-  - React component testing
-  - Jest test creation
-  - React Testing Library usage
-  - Component snapshot testing
-
-# ❌ Bad: Generic capabilities
-capabilities:
-  - Testing
-  - Quality
+# No examples = hard to trigger specifically
 ```
 
 ### Debug Discovery
@@ -1044,7 +814,7 @@ claude --debug
 
 # Look for agent loading messages:
 # "Loading agent: security-reviewer"
-# "Agent capabilities: [...]"
+# "Agent description parsed"
 # "Agent match score: X"
 
 # Check agent invocation:
@@ -1070,13 +840,9 @@ claude --debug
 
 ```markdown
 ---
-description: Performance bottleneck identifier and analyzer
-capabilities:
-  - Performance profiling analysis
-  - Bundle size analysis
-  - Memory leak detection
-  - Rendering performance review
-allowed-tools: Read, Grep, Glob, Bash(*)
+name: performance-analyzer
+description: Use this agent for performance bottleneck identification and analysis. Triggers on profiling, bundle size analysis, or memory leak detection.\n\n<example>\nContext: User reports performance issue.\nuser: "The app is slow"\nassistant: "I'll use the performance-analyzer agent to identify bottlenecks."\n</example>
+model: inherit
 ---
 
 **Characteristics:**
@@ -1097,13 +863,9 @@ allowed-tools: Read, Grep, Glob, Bash(*)
 
 ```markdown
 ---
-description: React component builder following design system
-capabilities:
-  - React component generation
-  - TypeScript interface design
-  - Component styling
-  - Prop validation
-allowed-tools: Read, Write, Edit
+name: component-builder
+description: Use this agent for React component creation following design system. Triggers on component generation or TypeScript interface design.\n\n<example>\nContext: User wants a new component.\nuser: "Create a modal dialog component"\nassistant: "I'll use the component-builder agent to create the modal."\n</example>
+model: inherit
 ---
 
 **Characteristics:**
@@ -1124,13 +886,9 @@ allowed-tools: Read, Write, Edit
 
 ```markdown
 ---
-description: Code quality reviewer with focus on maintainability
-capabilities:
-  - Code smell detection
-  - Complexity analysis
-  - SOLID principles review
-  - Naming convention check
-allowed-tools: Read, Grep, Glob
+name: quality-reviewer
+description: Use this agent for code quality review with focus on maintainability. Triggers on code smell detection, complexity analysis, or SOLID principles review.\n\n<example>\nContext: User wants code reviewed.\nuser: "Review this PR"\nassistant: "I'll use the quality-reviewer agent to evaluate the code."\n</example>
+model: inherit
 ---
 
 **Characteristics:**
@@ -1151,13 +909,9 @@ allowed-tools: Read, Grep, Glob
 
 ```markdown
 ---
-description: Test suite generator with TDD focus
-capabilities:
-  - Unit test generation
-  - Integration test design
-  - Test coverage improvement
-  - Edge case identification
-allowed-tools: Read, Write, Bash(bun test:*), Bash(npm test:*)
+name: tdd-specialist
+description: Use this agent for test suite generation with TDD focus. Triggers on unit test generation, coverage improvement, or edge case identification.\n\n<example>\nContext: User needs tests.\nuser: "Create tests for the auth service"\nassistant: "I'll use the tdd-specialist agent to generate tests."\n</example>
+model: inherit
 ---
 
 **Characteristics:**
@@ -1178,13 +932,9 @@ allowed-tools: Read, Write, Bash(bun test:*), Bash(npm test:*)
 
 ```markdown
 ---
-description: JavaScript to TypeScript migration specialist
-capabilities:
-  - Type annotation addition
-  - Interface generation
-  - Generic type implementation
-  - Type error resolution
-allowed-tools: Read, Write, Edit
+name: ts-migrator
+description: Use this agent for JavaScript to TypeScript migration. Triggers on type annotation, interface generation, or type error resolution.\n\n<example>\nContext: User wants to add types.\nuser: "Migrate this module to TypeScript"\nassistant: "I'll use the ts-migrator agent to add type annotations."\n</example>
+model: inherit
 ---
 
 **Characteristics:**
@@ -1205,13 +955,10 @@ allowed-tools: Read, Write, Edit
 
 ```markdown
 ---
-description: Kubernetes deployment specialist
-capabilities:
-  - Kubernetes manifest creation
-  - Deployment orchestration
-  - Health check validation
-  - Rollback execution
-allowed-tools: Bash(kubectl *), Bash(docker *), Read
+name: k8s-deployer
+description: Use this agent for Kubernetes deployment tasks. Triggers on manifest creation, deployment orchestration, or rollback execution.\n\n<example>\nContext: User wants to deploy.\nuser: "Deploy to staging"\nassistant: "I'll use the k8s-deployer agent to handle the deployment."\n</example>
+tools: Glob, Grep, Read, Skill, Task, TodoWrite, Bash(kubectl *), Bash(docker *)
+model: inherit
 ---
 
 **Characteristics:**
@@ -1232,13 +979,10 @@ allowed-tools: Bash(kubectl *), Bash(docker *), Read
 
 ```markdown
 ---
-description: Documentation researcher and synthesizer
-capabilities:
-  - Documentation search
-  - API reference lookup
-  - Example code extraction
-  - Best practice identification
-allowed-tools: WebSearch, WebFetch, Read
+name: doc-researcher
+description: Use this agent for documentation research and synthesis. Triggers on documentation search, API reference lookup, or best practice identification.\n\n<example>\nContext: User needs documentation.\nuser: "Find docs on React hooks"\nassistant: "I'll use the doc-researcher agent to find documentation."\n</example>
+tools: Glob, Grep, Read, Skill, Task, TodoWrite, WebSearch, WebFetch
+model: inherit
 ---
 
 **Characteristics:**
@@ -1411,25 +1155,27 @@ model: claude-opus-4-20250514
 model: claude-3-5-haiku-20241022
 ```
 
-2. **Restrict tools:**
+2. **Tool philosophy:**
 ```yaml
-# ❌ Unlimited bash access
-allowed-tools: Bash(*)
+# Default: inherit from parent (don't over-restrict)
+model: inherit
 
-# ✅ Limited to necessary commands
-allowed-tools: Bash(git status:*), Bash(git diff:*)
+# If agent needs specific tools, use baseline + extras
+tools: Glob, Grep, Read, Skill, Task, TodoWrite, WebSearch
+
+# Full bash when needed (prefer over Bash(*))
+tools: Glob, Grep, Read, Skill, Task, TodoWrite, Bash
 ```
 
-3. **Focused capabilities:**
+3. **Focused description:**
 ```yaml
-# ❌ Too many capabilities (15+)
-capabilities: [long list]
+# ❌ Too many triggers (hard to invoke correctly)
+description: Does everything related to code...
 
-# ✅ Focused list (5-7)
-capabilities:
-  - Core capability 1
-  - Core capability 2
-  - Core capability 3
+# ✅ Focused description (clear when to invoke)
+description: |
+  SQL injection vulnerability detector. Triggers on
+  SQL security review, injection detection, or query validation.
 ```
 
 ### Context Size

@@ -32,13 +32,9 @@ Create specialized subagents that extend Claude Code with focused expertise and 
 mkdir -p agents
 cat > agents/security-reviewer.md << 'EOF'
 ---
-description: Security expert specializing in vulnerability detection and secure coding practices
-capabilities:
-  - Security vulnerability analysis
-  - Authentication and authorization review
-  - Input validation and sanitization checks
-  - Dependency vulnerability scanning
-  - OWASP Top 10 compliance review
+name: security-reviewer
+description: Use this agent when reviewing code for security vulnerabilities, authentication issues, or secure coding practices. Triggers on security audits, vulnerability scans, or when users mention OWASP, injection, XSS, or authentication review.\n\n<example>\nContext: User wants security review of authentication code.\nuser: "Can you check this auth code for security issues?"\nassistant: "I'll use the security-reviewer agent to analyze the authentication implementation for vulnerabilities."\n</example>\n\n<example>\nContext: User mentions specific vulnerability concerns.\nuser: "Check for SQL injection in the user service"\nassistant: "I'll delegate to the security-reviewer agent to scan for SQL injection vulnerabilities."\n</example>
+model: inherit
 ---
 
 # Security Reviewer Agent
@@ -76,12 +72,10 @@ EOF
 
 ```markdown
 ---
-description: Read-only code analyst for safe analysis without modifications
-capabilities:
-  - Code analysis
-  - Pattern detection
-  - Dependency review
-allowed-tools: Read, Grep, Glob, Bash(git show:*), Bash(git diff:*)
+name: code-analyst
+description: Use this agent for read-only code analysis without modifications. Triggers on code exploration, pattern detection, or dependency review requests.\n\n<example>\nContext: User wants to understand code structure.\nuser: "Analyze the architecture of the auth module"\nassistant: "I'll use the code-analyst agent to examine the auth module structure."\n</example>
+tools: Glob, Grep, Read, Skill, Task, TodoWrite, Bash(git show:*), Bash(git diff:*)
+model: inherit
 ---
 
 # Code Analyst Agent
@@ -110,48 +104,49 @@ Agents are invoked through the Task tool:
 
 | Field | Required | Purpose | Example |
 |-------|----------|---------|---------|
-| `description` | Yes | What the agent specializes in | `"Security expert for vulnerability detection"` |
-| `capabilities` | Recommended | List of specific skills | `["SQL injection detection", "XSS prevention"]` |
-| `allowed-tools` | Optional | Restrict tool usage | `"Read, Grep, Glob"` |
-| `model` | Optional | Specific model to use | `"claude-3-5-haiku-20241022"` |
+| `name` | Yes | Agent identifier (matches filename) | `security-reviewer` |
+| `description` | Yes | When to use + examples (see format below) | See examples |
+| `tools` | Optional | Restrict tool usage | `Read, Grep, Glob` |
+| `model` | Optional | Use `inherit` (preferred) or specific model | `inherit` |
+| `color` | Optional | Status line color | `orange` |
 
-### Description Best Practices
+### Description Format
 
-```markdown
----
-# ❌ Too vague
-description: Helps with testing
+Descriptions should include:
+1. **When to use**: Trigger conditions and keywords
+2. **Examples**: 3-4 examples showing user request → assistant delegation
 
-# ✅ Specific and clear
-description: Testing specialist focused on unit tests, integration tests, and test coverage analysis
-
-# ❌ Missing specialization
-description: Code reviewer
-
-# ✅ Shows expertise
-description: Performance-focused code reviewer specializing in identifying bottlenecks, memory leaks, and optimization opportunities
----
-```
-
-### Capabilities List
-
-List specific capabilities to help Claude understand when to invoke the agent:
+**Format**: Use escaped newlines (`\n\n`) with `<example>` tags:
 
 ```yaml
-capabilities:
-  - Unit test generation
-  - Integration test design
-  - Test coverage analysis
-  - Mock and stub creation
-  - Test-driven development guidance
-  - Flaky test identification
+---
+name: testing-specialist
+description: Use this agent for test creation, coverage analysis, and TDD guidance. Triggers on test generation, coverage improvement, or when users mention unit tests, integration tests, or mocking.\n\n<example>\nContext: User wants to add tests to existing code.\nuser: "Add unit tests for the user service"\nassistant: "I'll use the testing-specialist agent to generate comprehensive unit tests."\n</example>\n\n<example>\nContext: User mentions coverage goals.\nuser: "We need 90% test coverage on the auth module"\nassistant: "I'll delegate to the testing-specialist agent to analyze gaps and generate tests."\n</example>
+model: inherit
+---
 ```
 
-**Guidelines**:
-- Be specific: "SQL injection detection" not "security"
-- Action-oriented: "Generate API docs" not "documentation"
-- 5-10 capabilities per agent
-- Focus on expertise, not generic tasks
+**Alternative**: Use YAML multiline (`|`) for readability:
+
+```yaml
+---
+name: testing-specialist
+description: |
+  Use this agent for test creation, coverage analysis, and TDD guidance.
+
+  <example>
+  Context: User wants to add tests.
+  user: "Add unit tests for the user service"
+  assistant: "I'll use the testing-specialist agent to generate comprehensive unit tests."
+  </example>
+model: inherit
+---
+```
+
+**Description Guidelines**:
+- Start with "Use this agent when..." or trigger conditions
+- Include 3-4 examples covering: typical use, edge case, verb triggers
+- Mention specific keywords users might say
 
 ## Agent Scopes
 
@@ -176,13 +171,9 @@ capabilities:
 
 ```markdown
 ---
-description: API testing specialist for REST and GraphQL endpoints
-capabilities:
-  - REST API endpoint testing
-  - GraphQL query validation
-  - Authentication flow testing
-  - Rate limiting verification
-  - API contract validation
+name: api-tester
+description: Use this agent for API testing of REST and GraphQL endpoints. Triggers on API validation, endpoint testing, or when users mention REST, GraphQL, authentication flows, or rate limiting.\n\n<example>\nContext: User wants API endpoint validation.\nuser: "Test the user API endpoints"\nassistant: "I'll use the api-tester agent to validate the REST endpoints."\n</example>\n\n<example>\nContext: User mentions GraphQL testing.\nuser: "Validate our GraphQL queries"\nassistant: "I'll delegate to the api-tester agent for GraphQL validation."\n</example>
+model: inherit
 ---
 
 # API Testing Agent
@@ -302,50 +293,67 @@ rollback_plan: [...]
 - Foreign keys: Add after data migration
 ```
 
-## Tool Restrictions
+## Tool Configuration
 
-Limit agent capabilities for safety:
+### Default Philosophy
+
+**Don't over-restrict tools.** Agents work best with appropriate access. Only restrict when there's a specific safety reason.
+
+**Baseline tools** (generally always allow):
+```yaml
+tools: Glob, Grep, Read, Skill, Task, TodoWrite
+```
+
+These enable: file discovery, searching, reading, skill loading, sub-agent delegation, and task tracking.
+
+**Layer in as needed:**
+- `Write`, `Edit` — for agents that modify code
+- `Bash` — for agents that run commands (no need for `Bash(*)`, just `Bash`)
+- `Bash(git *)` — restrict to specific command families only when warranted
+- `WebSearch`, `WebFetch` — for research agents
+
+### When to Restrict Tools
+
+**Only restrict when:**
+- Agent's purpose is explicitly read-only analysis
+- There's a specific safety concern (e.g., audit trail requirements)
+- You want to prevent accidental modifications
+
+**Don't restrict when:**
+- The agent needs flexibility to complete its task
+- You're just being "cautious" without specific reason
+
+### Example: Read-Only Analysis Agent
 
 ```markdown
 ---
-description: Security auditor for read-only security analysis
-allowed-tools: Read, Grep, Glob, Bash(git *)
+name: security-auditor
+description: Use this agent for read-only security analysis. Triggers on security audits, vulnerability scanning, or code security review.\n\n<example>\nContext: User wants security review without changes.\nuser: "Audit the auth code for vulnerabilities"\nassistant: "I'll use the security-auditor agent to analyze security without modifications."\n</example>
+tools: Glob, Grep, Read, Skill, Task, TodoWrite, Bash(git diff:*), Bash(git log:*)
+model: inherit
 ---
-
-# Security Auditor
-
-You perform security analysis without making any code changes.
-
-**Tool Access:**
-- ✅ Read: Review code
-- ✅ Grep: Search patterns
-- ✅ Glob: Find files
-- ✅ Git: Check history
-- ❌ Write: No file modifications
-- ❌ Edit: No code changes
-- ❌ Bash (general): Limited to git only
 ```
 
-### Common Tool Restriction Patterns
+### Common Tool Patterns
+
+**Standard agent (most cases):**
+```yaml
+# Don't specify tools — inherits full access from parent
+```
+
+**Implementation agent:**
+```yaml
+tools: Glob, Grep, Read, Write, Edit, Bash, Skill, Task, TodoWrite
+```
 
 **Read-only analysis:**
 ```yaml
-allowed-tools: Read, Grep, Glob, Bash(git show:*), Bash(git diff:*)
+tools: Glob, Grep, Read, Skill, Task, TodoWrite
 ```
 
-**Testing agents:**
+**Research agent:**
 ```yaml
-allowed-tools: Read, Bash(bun test:*), Bash(npm test:*), Write(__tests__/**)
-```
-
-**Documentation agents:**
-```yaml
-allowed-tools: Read, Grep, Glob, Write(docs/**), Write(*.md)
-```
-
-**Deployment agents:**
-```yaml
-allowed-tools: Bash(kubectl *), Bash(docker *), Bash(git *), Read
+tools: Glob, Grep, Read, Skill, Task, TodoWrite, WebSearch, WebFetch
 ```
 
 ## Agent Types and Patterns
@@ -356,14 +364,9 @@ Focus on examination without modification:
 
 ```markdown
 ---
-description: Performance analyzer identifying bottlenecks and optimization opportunities
-capabilities:
-  - Performance profiling
-  - Memory leak detection
-  - Bundle size analysis
-  - Database query optimization
-  - Rendering performance analysis
-allowed-tools: Read, Grep, Glob, Bash(*)
+name: performance-analyzer
+description: Use this agent for performance analysis, bottleneck identification, and optimization recommendations. Triggers on performance profiling, memory leak detection, or bundle size analysis.\n\n<example>\nContext: User reports slow application.\nuser: "The app is running slow, find out why"\nassistant: "I'll use the performance-analyzer agent to identify bottlenecks."\n</example>
+model: inherit
 ---
 
 # Performance Analyzer
@@ -379,14 +382,9 @@ Specialized in building specific features:
 
 ```markdown
 ---
-description: React component builder following team design system
-capabilities:
-  - React component generation
-  - TypeScript interface design
-  - Component testing
-  - Storybook documentation
-  - Accessibility compliance
-allowed-tools: Read, Write, Edit, Bash(bun *)
+name: component-builder
+description: Use this agent for React component creation following team design system. Triggers on component generation, TypeScript interface design, or Storybook documentation.\n\n<example>\nContext: User wants a new UI component.\nuser: "Create a modal dialog component"\nassistant: "I'll use the component-builder agent to create the modal following our design system."\n</example>
+model: inherit
 ---
 
 # Component Builder
@@ -402,14 +400,9 @@ Provide focused feedback:
 
 ```markdown
 ---
-description: Code quality reviewer focusing on maintainability and best practices
-capabilities:
-  - Code smell detection
-  - Complexity analysis
-  - DRY principle compliance
-  - SOLID principle review
-  - Naming convention check
-allowed-tools: Read, Grep, Glob
+name: quality-reviewer
+description: Use this agent for code quality review focusing on maintainability and best practices. Triggers on code smell detection, complexity analysis, or SOLID principles review.\n\n<example>\nContext: User wants code quality feedback.\nuser: "Review this module for code smells"\nassistant: "I'll use the quality-reviewer agent to analyze code quality issues."\n</example>
+model: inherit
 ---
 
 # Code Quality Reviewer
@@ -425,14 +418,9 @@ Specialized in test creation:
 
 ```markdown
 ---
-description: Test-driven development specialist creating comprehensive test suites
-capabilities:
-  - Unit test generation
-  - Integration test design
-  - Test coverage improvement
-  - Edge case identification
-  - Mock object creation
-allowed-tools: Read, Write, Edit, Bash(bun test:*)
+name: tdd-specialist
+description: Use this agent for test-driven development and comprehensive test suite creation. Triggers on unit test generation, coverage improvement, or edge case identification.\n\n<example>\nContext: User needs tests for existing code.\nuser: "Create tests for the payment service"\nassistant: "I'll use the tdd-specialist agent to generate comprehensive tests."\n</example>
+model: inherit
 ---
 
 # TDD Specialist
@@ -512,13 +500,13 @@ From the main conversation, Claude uses the Task tool:
 claude --debug
 ```
 
-### Test Tool Restrictions
+### Test Tool Access
 
 ```bash
-# 1. Create agent with allowed-tools
+# 1. Create agent with tools field
 # 2. Ask Claude to use the agent
-# 3. Verify agent requests permission for restricted tools
-# 4. Check that allowed tools don't require permission
+# 3. Verify agent has access to specified tools
+# 4. Check that tool inheritance works correctly
 ```
 
 ## Best Practices
@@ -537,15 +525,18 @@ description: Security expert handling all security issues
 
 ### 2. Clear Invocation Triggers
 
-Include specific keywords in description and capabilities:
+Include specific keywords and examples in description:
 
 ```yaml
-description: GraphQL schema validator and query analyzer
-capabilities:
-  - GraphQL schema validation
-  - Query complexity analysis
-  - Resolver performance review
-  - GraphQL subscription testing
+description: |
+  GraphQL schema validator and query analyzer. Triggers on schema validation,
+  query complexity analysis, resolver performance, or subscription testing.
+
+  <example>
+  Context: User has GraphQL schema concerns
+  user: "Can you validate my GraphQL schema?"
+  assistant: "I'll use the graphql-validator agent to check the schema."
+  </example>
 ```
 
 **Why**: Helps Claude decide when to invoke this agent vs others.
@@ -586,11 +577,17 @@ capabilities:
 
 ```markdown
 ---
-description: TypeScript migration specialist (v2.1)
-capabilities:
-  - JavaScript to TypeScript conversion
-  - Type definition generation
-  - Generic type implementation
+name: ts-migration
+description: |
+  TypeScript migration specialist (v2.1). Handles JavaScript to TypeScript
+  conversion, type definition generation, and generic type implementation.
+
+  <example>
+  Context: User wants to migrate JS to TS
+  user: "Convert this file to TypeScript"
+  assistant: "I'll use the ts-migration agent to convert the file."
+  </example>
+model: inherit
 ---
 
 # TypeScript Migration Agent v2.1
@@ -609,13 +606,18 @@ capabilities:
 
 ```markdown
 ---
-description: Documentation researcher finding answers in official docs
-capabilities:
-  - Documentation search
-  - API reference lookup
-  - Example code extraction
-  - Version compatibility checking
-allowed-tools: WebSearch, WebFetch, Read
+name: doc-researcher
+description: |
+  Documentation researcher finding answers in official docs. Triggers on
+  documentation search, API reference lookup, or version compatibility questions.
+
+  <example>
+  Context: User needs API documentation
+  user: "How do I use the fetch API with streaming?"
+  assistant: "I'll use the doc-researcher agent to find the documentation."
+  </example>
+tools: Glob, Grep, Read, Skill, Task, TodoWrite, WebSearch, WebFetch
+model: inherit
 ---
 
 # Documentation Researcher
@@ -635,13 +637,18 @@ Find answers in official documentation and reliable sources.
 
 ```markdown
 ---
-description: Configuration validator checking settings and schemas
-capabilities:
-  - JSON/YAML validation
-  - Schema compliance checking
-  - Environment variable verification
-  - Dependency compatibility checking
-allowed-tools: Read, Bash(*)
+name: config-validator
+description: |
+  Configuration validator checking settings and schemas. Triggers on
+  JSON/YAML validation, schema checking, or environment verification.
+
+  <example>
+  Context: User wants config validation
+  user: "Validate my tsconfig.json"
+  assistant: "I'll use the config-validator agent to check the configuration."
+  </example>
+tools: Glob, Grep, Read, Skill, Task, TodoWrite, Bash
+model: inherit
 ---
 
 # Configuration Validator
@@ -661,13 +668,18 @@ Validate configuration files and settings.
 
 ```markdown
 ---
-description: Database migration specialist for safe schema changes
-capabilities:
-  - Migration script generation
-  - Rollback script creation
-  - Data integrity verification
-  - Migration testing
-allowed-tools: Read, Write, Bash(*)
+name: db-migration
+description: |
+  Database migration specialist for safe schema changes. Triggers on
+  migration script generation, rollback creation, or schema change requests.
+
+  <example>
+  Context: User needs a database migration
+  user: "Create a migration to add a users table"
+  assistant: "I'll use the db-migration agent to generate the migration."
+  </example>
+tools: Glob, Grep, Read, Skill, Task, TodoWrite, Edit, Write, Bash
+model: inherit
 ---
 
 # Migration Agent
@@ -690,24 +702,26 @@ Handle database migrations safely.
 **Check:**
 1. Agent file location: `agents/agent-name.md`
 2. Frontmatter syntax: Valid YAML
-3. Description: Specific and clear
-4. Capabilities: Relevant to task
+3. Description: Specific with trigger keywords
+4. Examples: Clear use cases in description
 
 **Fix:**
-- Make description more specific
-- Add relevant capabilities
+- Make description more specific with trigger verbs
+- Add example conversations in description
 - Use clear task language when requesting
 
 ### Agent Has Wrong Tools
 
-**Issue:** Agent asks for tools it shouldn't use
+**Issue:** Agent needs different tool access
 
 **Fix:**
 ```markdown
 ---
-allowed-tools: Read, Grep, Glob
+tools: Glob, Grep, Read, Skill, Task, TodoWrite
 ---
 ```
+
+Note: Prefer `model: inherit` to use parent's tool access. Only specify `tools:` when agent needs different access.
 
 ### Agent Scope Too Broad
 
@@ -715,7 +729,7 @@ allowed-tools: Read, Grep, Glob
 
 **Fix:**
 - Split into multiple specialized agents
-- Narrow capabilities list
+- Focus description on specific triggers
 - Be specific about what agent does/doesn't do
 
 ### Agent Not Found

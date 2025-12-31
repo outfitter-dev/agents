@@ -25,9 +25,8 @@ Options:
   -t, --type         Template type: analyzer, implementer, reviewer, tester, migrator, deployer, researcher (default: simple)
   -o, --output       Output directory (default: agents)
   -p, --personal     Create in personal agents (~/.claude/agents)
-  -m, --model        Specific model to use (e.g., claude-3-5-haiku-20241022)
-  --tools            Comma-separated list of allowed tools
-  --capabilities     Comma-separated list of capabilities
+  -m, --model        Specific model (default: inherit from parent)
+  --tools            Comma-separated list of tools (default: type-appropriate baseline)
   -h, --help         Show this help
 
 Examples:
@@ -37,11 +36,8 @@ Examples:
   # Analyzer agent with description
   $(basename "$0") performance-analyzer -t analyzer -d "Performance bottleneck detection"
 
-  # Personal agent with tool restrictions
-  $(basename "$0") code-quality -p --tools "Read, Grep, Glob"
-
-  # Tester agent with capabilities
-  $(basename "$0") api-tester -t tester --capabilities "API testing, Authentication testing"
+  # Personal agent with specific tools
+  $(basename "$0") code-quality -p --tools "Glob, Grep, Read, Skill, Task, TodoWrite"
 
   # Agent with specific model
   $(basename "$0") quick-formatter -m claude-3-5-haiku-20241022
@@ -55,6 +51,10 @@ Template Types:
   deployer     - Deployment specialist agent
   researcher   - Documentation/research agent
   simple       - Basic agent template (default)
+
+Note: Agents use 'model: inherit' by default. Baseline tools include:
+  Glob, Grep, Read, Skill, Task, TodoWrite
+Additional tools are added based on template type.
 EOF
 }
 
@@ -63,9 +63,8 @@ AGENT_NAME=""
 DESCRIPTION=""
 TEMPLATE_TYPE="simple"
 OUTPUT_DIR="agents"
-MODEL=""
+MODEL="inherit"
 TOOLS=""
-CAPABILITIES=""
 
 while [[ $# -gt 0 ]]; do
   case $1 in
@@ -95,10 +94,6 @@ while [[ $# -gt 0 ]]; do
       ;;
     --tools)
       TOOLS="$2"
-      shift 2
-      ;;
-    --capabilities)
-      CAPABILITIES="$2"
       shift 2
       ;;
     -*)
@@ -148,25 +143,16 @@ if [[ -z "$DESCRIPTION" ]]; then
   fi
 fi
 
-# Prompt for capabilities if not provided
-if [[ -z "$CAPABILITIES" ]]; then
-  echo
-  echo -e "${BLUE}Enter capabilities (comma-separated, e.g., 'Security analysis, Vulnerability detection'):${NC}"
-  read -r CAPABILITIES
+# Prompt for example trigger
+echo
+echo -e "${BLUE}Enter an example user message that should trigger this agent:${NC}"
+read -r EXAMPLE_TRIGGER
+if [[ -z "$EXAMPLE_TRIGGER" ]]; then
+  EXAMPLE_TRIGGER="Help me with ${AGENT_NAME//-/ }"
 fi
 
-# Convert capabilities to YAML array
-CAPABILITIES_YAML=""
-if [[ -n "$CAPABILITIES" ]]; then
-  CAPABILITIES_YAML="capabilities:"
-  IFS=',' read -ra CAP_ARRAY <<< "$CAPABILITIES"
-  for cap in "${CAP_ARRAY[@]}"; do
-    # Trim whitespace
-    cap=$(echo "$cap" | sed 's/^[[:space:]]*//;s/[[:space:]]*$//')
-    CAPABILITIES_YAML="$CAPABILITIES_YAML
-  - $cap"
-  done
-fi
+# Build the description with example (single line with \n escapes)
+FULL_DESCRIPTION="${DESCRIPTION}. Triggers on related requests.\\n\\n<example>\\nContext: User needs ${AGENT_NAME//-/ } assistance\\nuser: \"${EXAMPLE_TRIGGER}\"\\nassistant: \"I'll use the ${AGENT_NAME} agent to help with this.\"\\n</example>"
 
 # Determine output path
 FILE_PATH="$OUTPUT_DIR/$AGENT_NAME.md"
@@ -186,15 +172,45 @@ if [[ -f "$FILE_PATH" ]]; then
   fi
 fi
 
+# Set default tools based on template type
+if [[ -z "$TOOLS" ]]; then
+  case "$TEMPLATE_TYPE" in
+    analyzer)
+      TOOLS="Glob, Grep, Read, Skill, Task, TodoWrite, Bash"
+      ;;
+    implementer)
+      TOOLS="Glob, Grep, Read, Skill, Task, TodoWrite, Edit, Write, Bash"
+      ;;
+    reviewer)
+      TOOLS="Glob, Grep, Read, Skill, Task, TodoWrite"
+      ;;
+    tester)
+      TOOLS="Glob, Grep, Read, Skill, Task, TodoWrite, Edit, Write, Bash"
+      ;;
+    migrator)
+      TOOLS="Glob, Grep, Read, Skill, Task, TodoWrite, Edit, Write, Bash"
+      ;;
+    deployer)
+      TOOLS="Glob, Grep, Read, Skill, Task, TodoWrite, Edit, Write, Bash"
+      ;;
+    researcher)
+      TOOLS="Glob, Grep, Read, Skill, Task, TodoWrite, WebSearch, WebFetch"
+      ;;
+    simple|*)
+      TOOLS="Glob, Grep, Read, Skill, Task, TodoWrite"
+      ;;
+  esac
+fi
+
 # Generate agent based on template type
 case "$TEMPLATE_TYPE" in
   analyzer)
     cat > "$FILE_PATH" << EOF
 ---
-description: ${DESCRIPTION}
-${CAPABILITIES_YAML}
-allowed-tools: Read, Grep, Glob, Bash(git show:*), Bash(git diff:*)
-${MODEL:+model: $MODEL}
+name: ${AGENT_NAME}
+description: ${FULL_DESCRIPTION}
+tools: ${TOOLS}
+model: ${MODEL}
 ---
 
 # ${AGENT_NAME}
@@ -253,10 +269,10 @@ EOF
   implementer)
     cat > "$FILE_PATH" << EOF
 ---
-description: ${DESCRIPTION}
-${CAPABILITIES_YAML}
-allowed-tools: Read, Write, Edit, Bash(*)
-${MODEL:+model: $MODEL}
+name: ${AGENT_NAME}
+description: ${FULL_DESCRIPTION}
+tools: ${TOOLS}
+model: ${MODEL}
 ---
 
 # ${AGENT_NAME}
@@ -330,10 +346,10 @@ EOF
   reviewer)
     cat > "$FILE_PATH" << EOF
 ---
-description: ${DESCRIPTION}
-${CAPABILITIES_YAML}
-allowed-tools: Read, Grep, Glob
-${MODEL:+model: $MODEL}
+name: ${AGENT_NAME}
+description: ${FULL_DESCRIPTION}
+tools: ${TOOLS}
+model: ${MODEL}
 ---
 
 # ${AGENT_NAME}
@@ -412,10 +428,10 @@ EOF
   tester)
     cat > "$FILE_PATH" << EOF
 ---
-description: ${DESCRIPTION}
-${CAPABILITIES_YAML}
-allowed-tools: Read, Write, Edit, Bash(bun test:*), Bash(npm test:*)
-${MODEL:+model: $MODEL}
+name: ${AGENT_NAME}
+description: ${FULL_DESCRIPTION}
+tools: ${TOOLS}
+model: ${MODEL}
 ---
 
 # ${AGENT_NAME}
@@ -525,10 +541,10 @@ EOF
   migrator)
     cat > "$FILE_PATH" << EOF
 ---
-description: ${DESCRIPTION}
-${CAPABILITIES_YAML}
-allowed-tools: Read, Write, Edit, Bash(git *)
-${MODEL:+model: $MODEL}
+name: ${AGENT_NAME}
+description: ${FULL_DESCRIPTION}
+tools: ${TOOLS}
+model: ${MODEL}
 ---
 
 # ${AGENT_NAME}
@@ -614,10 +630,10 @@ EOF
   deployer)
     cat > "$FILE_PATH" << EOF
 ---
-description: ${DESCRIPTION}
-${CAPABILITIES_YAML}
-allowed-tools: Bash(kubectl *), Bash(docker *), Bash(git *), Read
-${MODEL:+model: $MODEL}
+name: ${AGENT_NAME}
+description: ${FULL_DESCRIPTION}
+tools: ${TOOLS}
+model: ${MODEL}
 ---
 
 # ${AGENT_NAME}
@@ -711,10 +727,10 @@ EOF
   researcher)
     cat > "$FILE_PATH" << EOF
 ---
-description: ${DESCRIPTION}
-${CAPABILITIES_YAML}
-allowed-tools: WebSearch, WebFetch, Read, Grep
-${MODEL:+model: $MODEL}
+name: ${AGENT_NAME}
+description: ${FULL_DESCRIPTION}
+tools: ${TOOLS}
+model: ${MODEL}
 ---
 
 # ${AGENT_NAME}
@@ -805,10 +821,10 @@ EOF
   simple)
     cat > "$FILE_PATH" << EOF
 ---
-description: ${DESCRIPTION}
-${CAPABILITIES_YAML}
-${TOOLS:+allowed-tools: $TOOLS}
-${MODEL:+model: $MODEL}
+name: ${AGENT_NAME}
+description: ${FULL_DESCRIPTION}
+tools: ${TOOLS}
+model: ${MODEL}
 ---
 
 # ${AGENT_NAME}
