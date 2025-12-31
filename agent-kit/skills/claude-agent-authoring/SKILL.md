@@ -167,15 +167,17 @@ model: inherit
 
 ## Writing Effective Agents
 
-**Use TodoWrite while authoring.** Creating an agent involves multiple steps—use TodoWrite to track progress:
+**Use TodoWrite while authoring.** Creating an agent involves multiple steps—use TodoWrite to track progress.
 
-```
+<initial_todo_template>
+
 - [ ] Define agent purpose and expertise
 - [ ] Write frontmatter (name, description with examples, tools, model)
 - [ ] Write agent body (identity, instructions, output format)
 - [ ] Validate with claude-agent-validation skill
 - [ ] Test invocation via Task tool
-```
+
+</initial_todo_template>
 
 This keeps you on track and ensures you don't skip steps like validation.
 
