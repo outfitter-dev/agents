@@ -1,6 +1,6 @@
 ---
 name: claude-agent-authoring
-description: Creates specialized subagents for Claude Code with proper configuration, capabilities, tool restrictions, and Task tool integration. Use when building specialized agents, creating subagents for specific tasks, or when users mention agent development, subagent configuration, or Task tool usage. Different from Skills - agents are invoked via Task tool.
+description: Creates specialized subagents for Claude Code with proper configuration, capabilities, tool restrictions, and Task tool integration. Use when building specialized agents, editing agent files, creating subagents for specific tasks, or when users mention agent development, subagent configuration, or Task tool usage. Different from Skills - agents are invoked via Task tool.
 version: 1.0.0
 ---
 
@@ -740,20 +740,23 @@ Note: Prefer `model: inherit` to use parent's tool access. Only specify `tools:`
 3. No typos in filename
 4. Frontmatter is valid
 
-## Advanced Patterns
+## References
 
-See [REFERENCE.md](REFERENCE.md) for:
-- Agent frontmatter schema details
-- Task tool integration patterns
-- Tool restriction patterns
-- Agent discovery mechanics
-- Performance considerations
+Deep-dive documentation in `references/`:
 
-See [EXAMPLES.md](EXAMPLES.md) for:
-- Complete real-world agents
-- Specialized agent examples
-- Multi-agent workflows
-- Team collaboration patterns
+| Reference | Content |
+|-----------|---------|
+| [agent-vs-skill.md](references/agent-vs-skill.md) | Critical distinction between agents and skills |
+| [frontmatter.md](references/frontmatter.md) | YAML schema, fields, description format |
+| [tools.md](references/tools.md) | Tool configuration and restriction patterns |
+| [task-tool.md](references/task-tool.md) | Task tool integration and context passing |
+| [discovery.md](references/discovery.md) | How agents are found and loaded |
+| [agent-types.md](references/agent-types.md) | Archetypes: analysis, implementation, review, etc. |
+| [patterns.md](references/patterns.md) | Best practices and multi-agent patterns |
+| [performance.md](references/performance.md) | Optimization and efficiency |
+| [todowrite.md](references/todowrite.md) | TodoWrite patterns for agent visibility |
+
+See [EXAMPLES.md](EXAMPLES.md) for complete real-world agent examples.
 
 ## Quick Reference
 
