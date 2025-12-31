@@ -1,6 +1,6 @@
 ---
 name: subagent-coordination
-version: 2.0.0
+version: 2.1.0
 description: |
   Orchestrate baselayer subagents for complex tasks. Defines available agents, their skills, and workflows for multi-agent scenarios. Load when coordinating work across agents, delegating tasks, or deciding which agent handles what.
 triggers:
@@ -267,6 +267,33 @@ Override model for specific needs:
 3. **Skill loading**: Agent loads only needed skills
 4. **User prefs first**: Check `CLAUDE.md` before applying defaults
 5. **Minimal agents**: Don't parallelize what can be sequential
+
+## Decision Framework
+
+When agents face implementation choices:
+
+1. **Favor existing patterns** — Match what's already in the codebase
+2. **Prefer simplicity** — Cleverness is a liability; simple is maintainable
+3. **Optimize for maintainability** — Next developer (or agent) must understand it
+4. **Consider backward compatibility** — Breaking changes require explicit approval
+5. **Document trade-offs** — When choosing between options, record why
+
+These principles apply across all roles. Agents should surface decisions to the orchestrator when trade-offs are significant.
+
+## Communication Style
+
+Orchestrators and agents should:
+
+- **Report progress** at each major step (don't go silent)
+- **Flag blockers immediately** — don't spin on unsolvable problems
+- **Provide clear summaries** of delegated work (what was done, what remains)
+- **Include file paths and line numbers** when referencing code
+
+Progress format:
+```
+░░░░░░░░░░ [1/5] research: Exploring auth patterns
+▓▓▓▓░░░░░░ [2/5] coding: Implementing refresh token flow
+```
 
 ## When to Escalate
 
