@@ -275,31 +275,33 @@ firecrawl_extract(
 
 Lead with actionable information:
 
-```markdown
-## {Library/Topic}
+<output_template>
 
-{One-line summary}
+## { Library/Topic }
+
+{ One-line summary }
 
 ### Quick Start
 
-\`\`\`{language}
-{Working code - max 10 lines}
-\`\`\`
+```{ language }
+{ Working code - max 10 lines }
+```
 
 ### Key Information
 
-- **Version**: {current stable}
-- **Install**: `{command}`
-- **Prerequisites**: {if any}
+- **Version**: { current stable }
+- **Install**: `{ command }`
+- **Prerequisites**: { if any }
 
 ### Details
 
-{Configuration, gotchas, alternatives - only if needed}
+{ Configuration, gotchas, alternatives - only if needed }
 
 ### Sources
 
-- {URLs used}
-```
+- { URLs used }
+
+</output_template>
 
 ## Tips
 
