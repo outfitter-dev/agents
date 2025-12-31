@@ -509,6 +509,23 @@ claude --debug
 # 4. Check that tool inheritance works correctly
 ```
 
+### Validate New Agents
+
+After creating a new agent from scratch, load the **claude-agent-validation** skill to verify the agent follows correct conventions:
+
+```
+# Load validation skill after creating agent
+"Validate the new security-reviewer agent I just created"
+```
+
+The validation skill checks:
+- Frontmatter schema (required fields, valid YAML)
+- Description format (trigger conditions, examples)
+- Tool configuration (appropriate restrictions)
+- Agent body structure (clear expertise, instructions)
+
+**Always validate before committing new agents to the repository.**
+
 ## Best Practices
 
 ### 1. Single Responsibility
