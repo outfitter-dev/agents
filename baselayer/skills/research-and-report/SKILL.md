@@ -132,33 +132,15 @@ Structure:
 
 </methodology>
 
-<compression>
+<quality_control>
 
-Target 70–85% token reduction while maintaining accuracy.
-
-| Query Type | Budget | Reduction |
-|------------|--------|-----------|
-| Quick Reference | 800 | 85% |
-| Installation | 1200 | 80% |
-| Troubleshooting | 1500 | 75% |
-| Comprehensive | 2000 | 70% |
-
-Techniques:
-1. Semantic extraction → query-relevant only
-2. Code prioritization → working code over verbose explanations
-3. Hierarchy enforcement → essential > important > nice-to-have
-4. Deduplication → merge similar from multiple sources
-5. Format optimization → bullets over paragraphs
-6. Aggressive boilerplate removal → navigation, ads, redundant
-
-Validation before output:
+Before delivering findings:
 - Version is latest stable
-- Docs match user context
-- Critical info cross-referenced
-- Within token budget
+- Docs match user context (language, framework)
+- Critical info cross-referenced across sources
 - Code examples complete and runnable
 
-</compression>
+</quality_control>
 
 <tools>
 
@@ -399,7 +381,6 @@ ALWAYS:
 - Cross-reference critical information
 - Include confidence levels and limitations
 - Validate code examples are complete and runnable
-- Achieve target token compression for query type
 
 NEVER:
 - Skip "Analyze Request" phase without defining scope
@@ -407,7 +388,6 @@ NEVER:
 - Deliver recommendations without citations
 - Include deprecated approaches without flagging
 - Omit limitations and edge cases
-- Exceed token budget without compression
 - Regress phases — add new tasks if gaps discovered
 - Leave "Compile Report" unmarked after delivering
 
@@ -416,7 +396,6 @@ NEVER:
 <references>
 
 - [source-hierarchy.md](references/source-hierarchy.md) — authority evaluation details
-- [compression-techniques.md](references/compression-techniques.md) — token reduction strategies
 - [tool-selection.md](references/tool-selection.md) — MCP server decision matrix
 - [examples/](examples/) — research session examples
 - [FORMATTING.md](../../shared/rules/FORMATTING.md) — formatting conventions
