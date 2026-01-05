@@ -15,7 +15,7 @@
 			"name": "baselayer",
 			"source": "./baselayer",
 			"description": "Core development methodology skills: TDD, systematic debugging, type safety, architecture design, technical research, and requirements discovery",
-			"version": "0.5.1",
+			"version": "0.8.1",
 			"keywords": [
 				"tdd",
 				"debugging",
