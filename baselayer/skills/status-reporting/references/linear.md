@@ -1,36 +1,96 @@
 # Linear Integration
 
-Tool-specific patterns for integrating Linear issue tracking into status reports via Linear MCP server.
+Tool-specific patterns for integrating Linear issue tracking into status reports via the **streamlinear MCP server** (`github:obra/streamlinear`).
+
+> **Important**: This guide is specifically for the streamlinear MCP, not the official Linear MCP. The streamlinear server uses a single `mcp__linear__linear` tool with action-based dispatch rather than separate tools per operation.
 
 ## Overview
 
 Linear provides issue tracking with team-based organization, project management, and rich metadata. Status reports should surface recently active issues relevant to current work context.
 
-## Linear MCP Tools
+## Streamlinear MCP Tool
 
-Access Linear data through MCP tools:
+All Linear operations go through a single tool with an `action` parameter:
 
 ```typescript
-// List issues with filters
-await mcp__linear__list_issues({
-  orderBy: 'updatedAt',
-  limit: 10,
-  updatedAt: '-P7D',        // ISO 8601 relative duration
-  team: 'TEAM-UUID',        // Team ID (preferred) or name
-  includeArchived: false
+// Search your active issues
+await mcp__linear__linear({
+  action: 'search'
+});
+
+// Search with text query
+await mcp__linear__linear({
+  action: 'search',
+  query: 'authentication bug'
+});
+
+// Search with filters
+await mcp__linear__linear({
+  action: 'search',
+  query: {
+    team: 'BLZ',
+    state: 'In Progress',
+    assignee: 'me'
+  }
 });
 
 // Get issue details
-await mcp__linear__get_issue({
-  issueId: 'BLZ-123'
+await mcp__linear__linear({
+  action: 'get',
+  id: 'BLZ-123'  // Also accepts URLs or UUIDs
 });
 
-// Search issues
-await mcp__linear__search_issues({
-  query: 'authentication',
-  limit: 20
+// Update issue
+await mcp__linear__linear({
+  action: 'update',
+  id: 'BLZ-123',
+  state: 'Done'
+});
+
+// Add comment
+await mcp__linear__linear({
+  action: 'comment',
+  id: 'BLZ-123',
+  body: 'Fixed in commit abc123'
+});
+
+// Create issue
+await mcp__linear__linear({
+  action: 'create',
+  title: 'Bug title',
+  team: 'BLZ',
+  body: 'Description here',
+  priority: 2
+});
+
+// Raw GraphQL for advanced queries
+await mcp__linear__linear({
+  action: 'graphql',
+  graphql: 'query { teams { nodes { id key name } } }'
 });
 ```
+
+## Action Reference
+
+| Action | Purpose | Key Parameters |
+|--------|---------|----------------|
+| `search` | Find issues | `query` (string or object with filters) |
+| `get` | Issue details | `id` (identifier, URL, or UUID) |
+| `update` | Change issue | `id`, `state`, `priority`, `assignee`, `labels` |
+| `comment` | Add comment | `id`, `body` |
+| `create` | New issue | `title`, `team`, `body`, `priority`, `labels` |
+| `graphql` | Raw queries | `graphql`, `variables` |
+| `help` | Full docs | (none) |
+
+## Priority Values
+
+| Value | Meaning |
+|-------|---------|
+| 0 | None |
+| 1 | Urgent |
+| 2 | High |
+| 3 | Medium |
+| 4 | Low |
 
 ## Data Gathering
 
@@ -58,20 +118,95 @@ interface LinearIssue {
   url: string;
 }
 
-async function fetchRecentIssues(
-  teamId: string,
-  daysBack: number = 7,
-  limit: number = 10
-): Promise<LinearIssue[]> {
-  const result = await mcp__linear__list_issues({
-    team: teamId,
-    orderBy: 'updatedAt',
-    updatedAt: `-P${daysBack}D`,
-    limit,
-    includeArchived: false
+async function fetchTeamIssues(teamKey: string): Promise<LinearIssue[]> {
+  const result = await mcp__linear__linear({
+    action: 'search',
+    query: { team: teamKey }
   });
 
   return result.issues;
+}
+
+async function fetchMyActiveIssues(): Promise<LinearIssue[]> {
+  const result = await mcp__linear__linear({
+    action: 'search'
+  });
+
+  return result.issues;
+}
+```
+
+### Advanced Queries with GraphQL
+
+For complex filtering not supported by the search action, use GraphQL:
+
+```typescript
+// Get all teams
+async function listTeams(): Promise<Array<{id: string, key: string, name: string}>> {
+  const result = await mcp__linear__linear({
+    action: 'graphql',
+    graphql: 'query { teams { nodes { id key name } } }'
+  });
+
+  return result.teams.nodes;
+}
+
+// Get issues updated in last N days across all teams
+async function fetchRecentIssues(daysBack: number = 7): Promise<LinearIssue[]> {
+  const result = await mcp__linear__linear({
+    action: 'graphql',
+    graphql: `
+      query {
+        viewer {
+          assignedIssues(
+            filter: { state: { type: { nin: ["completed", "canceled"] } } }
+            first: 30
+            orderBy: updatedAt
+          ) {
+            nodes {
+              identifier
+              title
+              state { name type }
+              team { key }
+              priority
+              updatedAt
+              url
+            }
+          }
+        }
+      }
+    `
+  });
+
+  return result.viewer.assignedIssues.nodes;
+}
+
+// Filter by state type
+async function fetchIssuesByStateType(
+  stateType: 'unstarted' | 'started' | 'completed' | 'canceled'
+): Promise<LinearIssue[]> {
+  const result = await mcp__linear__linear({
+    action: 'graphql',
+    graphql: `
+      query($stateType: String!) {
+        issues(
+          filter: { state: { type: { eq: $stateType } } }
+          first: 50
+        ) {
+          nodes {
+            identifier
+            title
+            state { name type }
+            team { key }
+            priority
+          }
+        }
+      }
+    `,
+    variables: { stateType }
+  });
+
+  return result.issues.nodes;
 }
 ```
 
@@ -82,8 +217,7 @@ Map repository to Linear team/project:
 ```typescript
 interface LinearContext {
   filterBy: 'team' | 'project' | 'query';
-  teamId?: string;        // Preferred: UUID
-  team?: string;          // Fallback: team name
+  team?: string;          // Team key (e.g., "BLZ")
   project?: string;
   query?: string;
 }
@@ -112,7 +246,6 @@ Example configuration:
       "path": "/Users/mg/Developer/outfitter/blz",
       "linear": {
         "filterBy": "team",
-        "teamId": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
         "team": "BLZ"
       }
     },
@@ -166,52 +299,12 @@ async function resolveLinearContext(cwd: string, config: LinearConfig): Promise<
 }
 ```
 
-## Time Filtering
-
-Convert natural language time constraints to ISO 8601 duration:
-
-```typescript
-function convertToISO8601Duration(timeConstraint: string): string {
-  // Parse constraints like "-24h", "-7d", "-3w"
-  const match = timeConstraint.match(/^-(\d+)([hdw])$/);
-  if (!match) {
-    throw new Error(`Invalid time constraint: ${timeConstraint}`);
-  }
-
-  const [, value, unit] = match;
-  const num = parseInt(value, 10);
-
-  // Convert to ISO 8601 Period format
-  switch (unit) {
-    case 'h': {
-      // Hours: use PT{n}H
-      return `-PT${num}H`;
-    }
-    case 'd': {
-      // Days: use P{n}D
-      return `-P${num}D`;
-    }
-    case 'w': {
-      // Weeks: convert to days
-      return `-P${num * 7}D`;
-    }
-    default:
-      throw new Error(`Unknown unit: ${unit}`);
-  }
-}
-
-// Examples:
-// "-24h" → "-PT24H"
-// "-7d"  → "-P7D"
-// "-2w"  → "-P14D"
-```
-
 ## Presentation Templates
 
 ### Issue Section
 
 ```
-📋 LINEAR ISSUES (Recent Activity - {team_name})
+LINEAR ISSUES (Recent Activity - {team_name})
 {count} issues updated in last {period}
 
 {issue_identifier}: {title} [{state}]
@@ -226,37 +319,37 @@ function convertToISO8601Duration(timeConstraint: string): string {
 ```typescript
 function formatPriority(priority: number): string {
   const labels: Record<number, string> = {
-    0: '○ None',
-    1: '🔴 Urgent',
-    2: '🟠 High',
-    3: '🟡 Normal',
-    4: '🟢 Low'
+    0: 'None',
+    1: 'Urgent',
+    2: 'High',
+    3: 'Medium',
+    4: 'Low'
   };
 
-  return labels[priority] || '○ None';
+  return labels[priority] || 'None';
 }
 ```
 
 ### Example Output
 
 ```
-📋 LINEAR ISSUES (Recent Activity - BLZ Team)
+LINEAR ISSUES (Recent Activity - BLZ Team)
 5 issues updated in last 7 days
 
 BLZ-162: Implement authentication middleware [In Progress]
-  Priority: 🟠 High | Assignee: Alice Smith
+  Priority: High | Assignee: Alice Smith
   Labels: backend, security
   Updated: 3 hours ago
   https://linear.app/outfitter/issue/BLZ-162
 
 BLZ-161: Fix user validation bug [Done]
-  Priority: 🔴 Urgent | Assignee: Bob Jones
+  Priority: Urgent | Assignee: Bob Jones
   Labels: bug, backend
   Updated: 5 hours ago
   https://linear.app/outfitter/issue/BLZ-161
 
 BLZ-158: Update dependencies [Todo]
-  Priority: 🟢 Low | Assignee: Unassigned
+  Priority: Low | Assignee: Unassigned
   Labels: maintenance
   Updated: 2 days ago
   https://linear.app/outfitter/issue/BLZ-158
@@ -301,101 +394,29 @@ async function linkIssuesToPRs(
 ### Annotate Issues with PR Status
 
 ```
-📋 LINEAR ISSUES (with PR Status)
+LINEAR ISSUES (with PR Status)
 
 BLZ-162: Implement authentication middleware [In Progress]
-  Priority: 🟠 High | Assignee: Alice Smith
-  PRs: #156 (✓ Approved, CI passing)
+  Priority: High | Assignee: Alice Smith
+  PRs: #156 (Approved, CI passing)
   Updated: 3 hours ago
 
 BLZ-161: Fix user validation bug [Done]
-  Priority: 🔴 Urgent | Assignee: Bob Jones
-  PRs: #155 (✗ CI failing, changes requested)
+  Priority: Urgent | Assignee: Bob Jones
+  PRs: #155 (CI failing, changes requested)
   Updated: 5 hours ago
 ```
 
-## Advanced Queries
+## State Matching
 
-### Filter by State Type
-
-```typescript
-async function fetchIssuesByState(
-  teamId: string,
-  stateType: 'unstarted' | 'started' | 'completed' | 'canceled'
-): Promise<LinearIssue[]> {
-  // Note: Linear MCP might not support direct state type filtering
-  // Fetch all and filter client-side
-  const allIssues = await fetchRecentIssues(teamId, 30, 50);
-
-  return allIssues.filter(issue => issue.state.type === stateType);
-}
-```
-
-### Search Across Teams
+The streamlinear MCP supports fuzzy state matching:
 
 ```typescript
-async function searchAllTeams(query: string): Promise<LinearIssue[]> {
-  const result = await mcp__linear__search_issues({
-    query,
-    limit: 50
-  });
-
-  return result.issues;
-}
-```
-
-### Filter by Label
-
-```typescript
-function filterByLabels(issues: LinearIssue[], labels: string[]): LinearIssue[] {
-  return issues.filter(issue => {
-    const issueLabels = issue.labels.map(l => l.name.toLowerCase());
-    return labels.some(label => issueLabels.includes(label.toLowerCase()));
-  });
-}
-```
-
-## Performance Optimization
-
-### Caching
-
-Cache Linear queries to reduce MCP calls:
-
-```typescript
-interface LinearCache {
-  timestamp: Date;
-  issues: LinearIssue[];
-  teamId: string;
-  ttl: number;
-}
-
-function getCachedIssues(teamId: string, ttl = 300000): LinearIssue[] | null {
-  const cache = loadCache();
-  if (
-    cache &&
-    cache.teamId === teamId &&
-    Date.now() - cache.timestamp.getTime() < ttl
-  ) {
-    return cache.issues;
-  }
-  return null;
-}
-```
-
-### Parallel Fetching
-
-For multi-team contexts:
-
-```typescript
-async function fetchMultipleTeams(teamIds: string[]): Promise<LinearIssue[]> {
-  const results = await Promise.allSettled(
-    teamIds.map(id => fetchRecentIssues(id))
-  );
-
-  return results
-    .filter(r => r.status === 'fulfilled')
-    .flatMap(r => (r as PromiseFulfilledResult<LinearIssue[]>).value);
-}
+// These all work:
+await mcp__linear__linear({ action: 'update', id: 'BLZ-123', state: 'done' });
+await mcp__linear__linear({ action: 'update', id: 'BLZ-123', state: 'Done' });
+await mcp__linear__linear({ action: 'update', id: 'BLZ-123', state: 'in prog' });
+await mcp__linear__linear({ action: 'update', id: 'BLZ-123', state: 'In Progress' });
 ```
 
 ## Error Handling
@@ -405,8 +426,7 @@ async function fetchMultipleTeams(teamIds: string[]): Promise<LinearIssue[]> {
 ```typescript
 async function checkLinearMCPAvailable(): Promise<boolean> {
   try {
-    // Test with minimal query
-    await mcp__linear__list_issues({ limit: 1 });
+    await mcp__linear__linear({ action: 'search' });
     return true;
   } catch (error) {
     console.warn('Linear MCP not available:', error.message);
@@ -433,7 +453,16 @@ async function fetchLinearIssuesSafe(
   }
 
   try {
-    return await fetchRecentIssues(context.teamId || '', 7, 10);
+    if (context.filterBy === 'team' && context.team) {
+      return await fetchTeamIssues(context.team);
+    } else if (context.filterBy === 'query' && context.query) {
+      const result = await mcp__linear__linear({
+        action: 'search',
+        query: context.query
+      });
+      return result.issues;
+    }
+    return await fetchMyActiveIssues();
   } catch (error) {
     console.error('Failed to fetch Linear issues:', error);
     return null;
@@ -488,20 +517,21 @@ async function loadLinearConfig(): Promise<LinearConfig> {
 
 ## Best Practices
 
-### Team ID vs Team Name
+### Team Key vs Team Name
 
-Prefer team UUID over name:
-- UUIDs are stable (don't change if team renamed)
-- Names may have casing/spacing variations
-- UUIDs are more efficient for API queries
+Use team keys (e.g., "BLZ") rather than full names:
+- Keys are shorter and less prone to typos
+- The streamlinear MCP expects keys in query filters
+- Keys are visible in issue identifiers (BLZ-123)
 
-Get team UUID:
+Get team keys:
 
 ```typescript
-// Via Linear MCP search or list teams
-const teams = await mcp__linear__list_teams();
-const blzTeam = teams.find(t => t.name === 'BLZ');
-const teamId = blzTeam.id; // Use this in config
+const result = await mcp__linear__linear({
+  action: 'graphql',
+  graphql: 'query { teams { nodes { id key name } } }'
+});
+// Returns: [{ id: "uuid", key: "BLZ", name: "BLZ Team" }, ...]
 ```
 
 ### Relative Time Display
@@ -594,33 +624,46 @@ async function annotateStackWithLinear(
 
 ### Linear MCP Not Found
 
-```bash
-# Verify Linear MCP server is installed and configured
-# Check Claude Code MCP settings
+Verify the streamlinear MCP server is configured in `~/.claude.json`:
+
+```json
+{
+  "mcpServers": {
+    "linear": {
+      "type": "stdio",
+      "command": "npx",
+      "args": ["-y", "github:obra/streamlinear"]
+    }
+  }
+}
 ```
+
+Ensure `LINEAR_API_TOKEN` is set in your environment.
 
 ### No Issues Returned
 
 ```typescript
-// Debug: Check team ID
-const teams = await mcp__linear__list_teams();
+// Debug: Check available teams
+const teams = await mcp__linear__linear({
+  action: 'graphql',
+  graphql: 'query { teams { nodes { id key name } } }'
+});
 console.log('Available teams:', teams);
 
-// Debug: Try broader query
-const allIssues = await mcp__linear__search_issues({
-  query: '',
-  limit: 100
+// Debug: Try broader search
+const allIssues = await mcp__linear__linear({
+  action: 'search',
+  query: ''
 });
 console.log('Total issues accessible:', allIssues.length);
 ```
 
-### Team ID Not Working
+### Authentication Issues
 
-```typescript
-// Fall back to team name
-await mcp__linear__list_issues({
-  team: 'BLZ',  // Use name instead of UUID
-  orderBy: 'updatedAt',
-  limit: 10
-});
+The streamlinear MCP reads `LINEAR_API_TOKEN` from environment. Verify it's set:
+
+```bash
+echo $LINEAR_API_TOKEN
 ```
+
+Generate a new token at: https://linear.app/settings/api
