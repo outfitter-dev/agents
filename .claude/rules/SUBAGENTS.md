@@ -2,7 +2,7 @@
 
 ## Authoring
 
-To create or edit subagents, use the **agent-kit:claude-agent-authoring** skill.
+To create or edit subagents, use the **agent-kit:claude-agent-development** skill.
 
 ## Philosophy: Proactive Delegation
 

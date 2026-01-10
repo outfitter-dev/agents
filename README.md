@@ -142,14 +142,11 @@ Plugins are code. Review what you install. See [SECURITY.md](SECURITY.md) for th
 | gitbutler | multi-agent | Coordinate multiple AI agents |
 | gitbutler | stack-workflows | Stacked branches with `--anchor` |
 | gitbutler | complete-branch | Safely merge virtual branches to main |
-| agent-kit | claude-plugin-authoring | Create Claude Code plugins |
+| agent-kit | claude-plugin-development | Create, validate, and distribute Claude Code plugins |
 | agent-kit | claude-command-authoring | Create Claude Code slash commands |
 | agent-kit | claude-hook-authoring | Create Claude Code hooks |
-| agent-kit | claude-agent-authoring | Create Claude Code agents |
-| agent-kit | claude-agent-validation | Validate Claude Code agents |
-| agent-kit | claude-marketplace-setup | Set up plugin marketplaces |
+| agent-kit | claude-agent-development | Create and validate Claude Code agents |
 | agent-kit | claude-code-configuration | Manage Claude configuration files |
-| agent-kit | claude-plugin-distribution | Package and distribute plugins |
 | agent-kit | skills-development | Create and validate cross-tool Agent Skills |
 | agent-kit | codex-configuration | Manage Codex CLI configuration |
 

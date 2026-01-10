@@ -49,25 +49,20 @@ Load skills using the **Skill tool**.
 
 ### Primary Skills
 
-**agent-kit:claude-agent-authoring**
-- Load when: creating new agents, understanding agent structure, learning patterns
-- Provides: frontmatter schema, description format, tool patterns, examples
-- Output: agent files following best practices
-
-**agent-kit:claude-agent-validation**
-- Load when: checking agent quality, fixing issues, pre-commit review
-- Provides: YAML validation, naming checks, description quality, prompt review
-- Output: validation report with fixes
+**agent-kit:claude-agent-development**
+- Load when: creating new agents, validating agents, understanding agent structure, fixing issues
+- Provides: full agent workflow (discovery, design, implementation, validation)
+- Output: agent files following best practices, validation reports with fixes
 
 ## Skill Selection Decision Tree
 
 <skill_selection_decision_tree>
 
 User requests or mentions:
-- "create" / "new agent" / "build agent" → Skill tool: **agent-kit:claude-agent-authoring**
-- "validate" / "check" / "review agent" → Skill tool: **agent-kit:claude-agent-validation**
-- "fix" / "improve" / "not working" → Skill tool: **agent-kit:claude-agent-validation** first, then authoring
-- "before commit" / "pre-commit" → Skill tool: **agent-kit:claude-agent-validation**
+- "create" / "new agent" / "build agent" → Skill tool: **agent-kit:claude-agent-development**
+- "validate" / "check" / "review agent" → Skill tool: **agent-kit:claude-agent-development**
+- "fix" / "improve" / "not working" → Skill tool: **agent-kit:claude-agent-development**
+- "before commit" / "pre-commit" → Skill tool: **agent-kit:claude-agent-development**
 - specific agent file → Read first, then route based on intent
 
 </skill_selection_decision_tree>
@@ -95,12 +90,11 @@ Example: creating a new security review agent
 <todo_list_updated_example>
 
 - [x] Understand request → new agent for security review
-- [ ] Load claude-agent-authoring skill
+- [ ] Load claude-agent-development skill
 - [ ] Determine agent location (project vs personal)
 - [ ] Draft frontmatter (name, description, tools)
 - [ ] Write system prompt with clear process
 - [ ] Add examples to description
-- [ ] Load claude-agent-validation skill
 - [ ] Run validation checks
 - [ ] Apply any fixes
 - [ ] Confirm with user
@@ -119,10 +113,10 @@ Ask user about:
 - **Scope**: What's in/out of scope?
 - **Location**: Project (`agents/`) or personal (`~/.claude/agents/`)?
 
-### 2. Load Authoring Skill
+### 2. Load Development Skill
 
 ```
-Skill tool: agent-kit:claude-agent-authoring
+Skill tool: agent-kit:claude-agent-development
 ```
 
 Follow skill's guidance for:
@@ -130,16 +124,11 @@ Follow skill's guidance for:
 - Description format with examples
 - Tool configuration
 - System prompt patterns
+- Validation checklists
 
 ### 3. Draft and Validate
 
-After creating, immediately validate:
-
-```
-Skill tool: agent-kit:claude-agent-validation
-```
-
-Fix any issues before presenting to user.
+The claude-agent-development skill covers both creation and validation in a single workflow. Follow its validation checklist before presenting to user.
 
 ## Validation Workflow
 
@@ -155,13 +144,13 @@ agents/*.md
 ~/.claude/agents/*.md
 ```
 
-### 2. Load Validation Skill
+### 2. Load Development Skill
 
 ```
-Skill tool: agent-kit:claude-agent-validation
+Skill tool: agent-kit:claude-agent-development
 ```
 
-Follow skill's checklist for:
+Follow skill's validation checklist for:
 - YAML frontmatter syntax
 - Naming conventions
 - Description quality
@@ -250,13 +239,13 @@ Run in parallel when agents are independent. Run sequentially if later agents de
 **Before commit**:
 
 ```
-agent-kit:claude-agent-validation → fix critical → commit
+agent-kit:claude-agent-development → fix critical → commit
 ```
 
 **Full workflow**:
 
 ```
-discovery → agent-kit:claude-agent-authoring → agent-kit:claude-agent-validation → iterate → done
+discovery → agent-kit:claude-agent-development → iterate → done
 ```
 
 ## Remember

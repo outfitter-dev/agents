@@ -12,14 +12,11 @@ This plugin provides skills for building AI agent capabilities across multiple p
 
 ### Claude Code Skills
 
-- **claude-plugin-authoring** - Create complete Claude Code plugins with proper structure, configuration, and best practices
-- **claude-marketplace-setup** - Set up and manage plugin marketplaces for distribution
+- **claude-plugin-development** - Complete lifecycle for creating, validating, and distributing Claude Code plugins
 - **claude-code-configuration** - Manage Claude Desktop and Claude Code configuration files
-- **claude-plugin-distribution** - Package and distribute plugins with proper versioning
 - **claude-command-authoring** - Create and maintain Claude Code slash commands
 - **claude-hook-authoring** - Author Claude Code hooks for automation
-- **claude-agent-authoring** - Create specialized Claude Code agents
-- **claude-agent-validation** - Validate and review Claude Code agents
+- **claude-agent-development** - Create and validate specialized Claude Code agents
 
 ### OpenAI Codex Skills
 
@@ -66,20 +63,15 @@ Includes comprehensive reference documentation on:
 - [implementations.md](skills/skills-development/references/implementations.md) - Per-tool implementation details
 - [invocations.md](skills/skills-development/references/invocations.md) - How each tool activates skills
 
-### claude-plugin-authoring
+### claude-plugin-development
 
-Guides you through creating Claude Code plugins:
-- Plugin structure and organization
-- plugin.json configuration
-- Slash commands, agents, and skills
-- Event hooks and MCP server integration
-
-### claude-marketplace-setup
-
-Helps you set up plugin marketplaces:
-- marketplace.json structure and schema
-- Plugin source configuration (GitHub, Git, local)
-- Team configuration for automatic installation
+Complete lifecycle for developing, validating, and distributing Claude Code plugins:
+- Plugin initialization and structure
+- Component authoring (commands, agents, hooks, skills)
+- Validation and testing
+- Packaging and versioning
+- Marketplace setup and distribution
+- Team configuration
 
 ### claude-code-configuration
 
@@ -98,13 +90,6 @@ Manages OpenAI Codex CLI configuration:
 - MCP server integration
 - Skills path hierarchy
 
-### claude-plugin-distribution
-
-Packages and publishes plugins:
-- Semantic versioning
-- GitHub releases and CI/CD automation
-- Documentation templates
-
 ### claude-command-authoring
 
 Creates Claude Code slash commands:
@@ -119,19 +104,15 @@ Creates Claude Code hooks:
 - Safe shell patterns and tooling
 - Testing and validation guidance
 
-### claude-agent-authoring
+### claude-agent-development
 
-Creates specialized Claude Code agents:
+Creates and validates specialized Claude Code agents:
 - Agent frontmatter and routing patterns
 - Task tool invocation and scoping
 - Best practices for focused expertise
-
-### claude-agent-validation
-
-Validates Claude Code agents:
 - YAML correctness and tool constraints
 - Prompt clarity and role definition
-- Review guidance and fixes
+- Validation checklists and quality checks
 
 ## Supported Platforms
 

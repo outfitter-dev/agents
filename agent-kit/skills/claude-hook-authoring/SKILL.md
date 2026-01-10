@@ -685,5 +685,5 @@ Available in hook scripts:
 ## Related Skills
 
 - **claude-command-authoring**: Combine commands with hooks
-- **claude-plugin-authoring**: Package hooks into plugins
+- **claude-plugin-development**: Package hooks into plugins
 - **claude-config-management**: Manage hook configuration

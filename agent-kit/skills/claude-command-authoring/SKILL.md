@@ -457,5 +457,5 @@ See [EXAMPLES.md](EXAMPLES.md) for:
 ## Related Skills
 
 - **claude-hook-authoring**: Add automation to commands with hooks
-- **claude-plugin-authoring**: Bundle commands into distributable plugins
+- **claude-plugin-development**: Bundle commands into distributable plugins
 - **claude-config-management**: Configure command behavior globally
