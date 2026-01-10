@@ -233,7 +233,7 @@ Run in parallel when agents are independent. Run sequentially if later agents de
 **User wants agent that should be a skill**:
 - Explain difference (agents via Task tool, skills automatic)
 - Recommend skill if broader capability needed
-- Offer to create skill instead with `agent-kit:claude-skill-authoring`
+- Offer to create skill instead with `agent-kit:skills-development`
 
 **Agent duplicates existing functionality**:
 - Search for existing agents with similar purpose

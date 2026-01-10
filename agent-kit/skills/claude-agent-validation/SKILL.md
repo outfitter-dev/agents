@@ -378,4 +378,4 @@ agent-kit:claude-agent-validation → fix critical issues → commit
 ## Related Skills
 
 - **agent-kit:claude-agent-authoring** — Create agents (use before validation)
-- **agent-kit:claude-skill-authoring** — Create skills (different from agents)
+- **agent-kit:skills-development** — Create skills (different from agents)

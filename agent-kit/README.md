@@ -8,8 +8,7 @@ This plugin provides skills for building AI agent capabilities across multiple p
 
 ### Cross-Tool Skills
 
-- **skills-authoring** - Create Agent Skills following the open specification at [agentskills.io](https://agentskills.io), compatible with Claude Code, Codex, Cursor, Amp, Goose, and more
-- **skill-validation** - Validate and review skills against the Agent Skills specification
+- **skills-development** - Create and validate Agent Skills following the open specification at [agentskills.io](https://agentskills.io), compatible with Claude Code, Codex, Cursor, Amp, Goose, and more
 
 ### Claude Code Skills
 
@@ -19,7 +18,6 @@ This plugin provides skills for building AI agent capabilities across multiple p
 - **claude-plugin-distribution** - Package and distribute plugins with proper versioning
 - **claude-command-authoring** - Create and maintain Claude Code slash commands
 - **claude-hook-authoring** - Author Claude Code hooks for automation
-- **claude-skill-authoring** - Build Claude Code skill packages
 - **claude-agent-authoring** - Create specialized Claude Code agents
 - **claude-agent-validation** - Validate and review Claude Code agents
 
@@ -53,25 +51,20 @@ You can also explicitly reference them in your prompts.
 
 ## Skills Overview
 
-### skills-authoring
+### skills-development
 
-Guides you through creating Agent Skills that work across multiple AI coding tools:
+Creates and validates Agent Skills that work across multiple AI coding tools:
 - SKILL.md structure and frontmatter
 - Progressive disclosure pattern
 - References and examples organization
 - Cross-tool compatibility (Claude Code, Codex, Cursor, Amp, Goose, etc.)
+- Validation checklists and report templates
+- Common fixes with before/after examples
 
 Includes comprehensive reference documentation on:
-- [compatibility.md](skills/skills-authoring/references/compatibility.md) - Platform support matrix
-- [implementations.md](skills/skills-authoring/references/implementations.md) - Per-tool implementation details
-- [invocations.md](skills/skills-authoring/references/invocations.md) - How each tool activates skills
-
-### skill-validation
-
-Validates skills against the Agent Skills specification:
-- Frontmatter validation
-- Structure verification
-- Cross-tool compatibility checks
+- [compatibility.md](skills/skills-development/references/compatibility.md) - Platform support matrix
+- [implementations.md](skills/skills-development/references/implementations.md) - Per-tool implementation details
+- [invocations.md](skills/skills-development/references/invocations.md) - How each tool activates skills
 
 ### claude-plugin-authoring
 
@@ -125,13 +118,6 @@ Creates Claude Code hooks:
 - Hook lifecycle and trigger points
 - Safe shell patterns and tooling
 - Testing and validation guidance
-
-### claude-skill-authoring
-
-Creates Claude Code skills:
-- Skill structure and progressive disclosure
-- References, examples, and scripts
-- Compatibility guidance
 
 ### claude-agent-authoring
 

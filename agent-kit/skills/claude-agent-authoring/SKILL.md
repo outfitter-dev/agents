@@ -821,6 +821,6 @@ agents/          # Project agents (shared with team)
 
 ## Related Skills
 
-- **claude-skill-authoring**: Create Skills (different from agents!)
+- **skills-development**: Create Skills (different from agents!)
 - **claude-plugin-authoring**: Bundle agents into plugins
 - **claude-task-tool-usage**: Advanced Task tool patterns
