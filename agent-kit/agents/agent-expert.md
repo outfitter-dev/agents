@@ -60,6 +60,7 @@ User request arrives
 │
 ├── Configuration?
 │   ├── Claude Code settings → Load: claude-code-configuration
+│   ├── Project rules (.claude/rules/) → Load: claude-rules-authoring
 │   └── Codex setup → Load: codex-configuration
 │
 └── Question about concepts?
@@ -75,7 +76,8 @@ User request arrives
 | `skills-development` | Creating or validating skills |
 | `claude-command-authoring` | Creating slash commands |
 | `claude-hook-authoring` | Creating event hooks |
-| `claude-code-configuration` | Claude Code settings, CLAUDE.md, rules |
+| `claude-code-configuration` | Claude Code settings, CLAUDE.md |
+| `claude-rules-authoring` | Project rules in .claude/rules/ |
 | `codex-configuration` | Codex CLI setup and configuration |
 
 ## Workflow
@@ -103,6 +105,7 @@ Skill tool: agent-kit:skills-development
 Skill tool: agent-kit:claude-command-authoring
 Skill tool: agent-kit:claude-hook-authoring
 Skill tool: agent-kit:claude-code-configuration
+Skill tool: agent-kit:claude-rules-authoring
 Skill tool: agent-kit:codex-configuration
 ```
 
@@ -119,6 +122,7 @@ Quick reference for routing decisions:
 | **Skill** | Auto-triggered capability | `skills/*/SKILL.md` | Skill tool (model-initiated) |
 | **Command** | User-invoked prompt | `commands/*.md` | `/command-name` |
 | **Hook** | Event automation | `hooks/hooks.json` | Automatic on events |
+| **Rule** | Reusable conventions | `.claude/rules/*.md` | Referenced from CLAUDE.md |
 
 ### When to Use Each
 
@@ -126,6 +130,7 @@ Quick reference for routing decisions:
 - **Skill**: Model detects context and loads automatically
 - **Agent**: Specialized task delegation via Task tool
 - **Hook**: Automated response to tool/lifecycle events
+- **Rule**: Reusable conventions referenced from CLAUDE.md
 - **Plugin**: Distributable bundle of any combination
 
 ## Validation Modes
@@ -138,6 +143,7 @@ When validating a single component, load its specific skill:
 Validating an agent → claude-agent-development (includes validation checklist)
 Validating a hook → claude-hook-authoring (includes security checks)
 Validating a command → claude-command-authoring (includes frontmatter validation)
+Validating a rule → claude-rules-authoring (includes naming/structure checks)
 ```
 
 ### Full Plugin Validation
