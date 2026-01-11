@@ -389,7 +389,6 @@ Shows command loading and execution details.
 | [community.md](references/community.md) | Community examples and resources |
 
 See [EXAMPLES.md](EXAMPLES.md) for complete real-world examples.
-See [REFERENCE.md](REFERENCE.md) for comprehensive API reference.
 See `scripts/` for scaffolding and validation utilities.
 
 ---
