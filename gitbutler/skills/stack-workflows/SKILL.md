@@ -1,7 +1,7 @@
 ---
-name: GitButler Stack Workflows
+name: stack-workflows
 version: 2.0.0
-description: Create, navigate, and reorganize stacks in GitButler using virtual branches, anchor-based stacking, and post-hoc organization. Use for dependent branches, PR preparation, and reviewable feature breakdown.
+description: This skill should be used when creating stacked branches, dependent features, reviewable PR breakdown, or when stack, stacked branches, or `--anchor` are mentioned.
 ---
 
 # GitButler Stack Workflows

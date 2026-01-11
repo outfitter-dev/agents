@@ -1,7 +1,7 @@
 ---
-name: GitButler Multi-Agent
+name: multi-agent
 version: 2.0.0
-description: Coordinate multiple AI agents working concurrently in the same workspace using GitButler's virtual branch model. Use for parallel development, sequential handoffs, and commit transfer patterns without checkout overhead.
+description: This skill should be used when coordinating multiple agents, parallel development, agent handoffs, or when multi-agent, concurrent agents, or parallel agents are mentioned.
 ---
 
 # GitButler Multi-Agent Coordination

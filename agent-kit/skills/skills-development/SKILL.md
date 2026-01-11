@@ -1,7 +1,7 @@
 ---
 name: skills-development
 version: 1.3.0
-description: Creates and validates skills following the open Agent Skills specification. Guides through discovery, archetype selection, initialization, customization, and validation. Includes validation checklists, report templates, and common fixes. Use when creating skills, validating skills, authoring skills, checking skills before commit, or when `create skill`, `new skill`, `validate skill`, or `check skill` are mentioned.
+description: This skill should be used when creating skills, writing SKILL.md files, or when "create skill", "new skill", "validate skill", or "SKILL.md" are mentioned.
 user-invocable: true
 allowed-tools: Read Write Edit Grep Glob Bash TodoWrite AskUserQuestion
 ---

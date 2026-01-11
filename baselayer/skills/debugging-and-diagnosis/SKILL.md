@@ -1,12 +1,12 @@
 ---
 name: debugging-and-diagnosis
-version: 2.0.0
-description: Systematic debugging methodology using evidence-based investigation to identify root causes. Use when encountering bugs, errors, unexpected behavior, failing tests, or intermittent issues. Enforces four-phase framework (root cause investigation, pattern analysis, hypothesis testing, implementation) with the iron law NO FIXES WITHOUT ROOT CAUSE FIRST. Covers runtime errors, logic bugs, integration failures, and performance issues. Useful when debugging, troubleshooting, or investigating failures.
+version: 2.1.0
+description: This skill should be used when encountering bugs, errors, failing tests, or unexpected behavior. Provides systematic debugging with evidence-based root cause investigation using a four-phase framework.
 ---
 
 # Systematic Debugging
 
-Evidence-based investigation → root cause → verified fix.
+Evidence-based investigation -> root cause -> verified fix.
 
 <when_to_use>
 
@@ -17,7 +17,7 @@ Evidence-based investigation → root cause → verified fix.
 - Performance issues (slow, memory leaks, high CPU)
 - Integration failures (API, database, external services)
 
-NOT for: well-understood issues with obvious fixes, feature requests, architecture planning
+NOT for: obvious fixes, feature requests, architecture planning
 
 </when_to_use>
 
@@ -25,7 +25,7 @@ NOT for: well-understood issues with obvious fixes, feature requests, architectu
 
 **NO FIXES WITHOUT ROOT CAUSE INVESTIGATION FIRST**
 
-Never propose solutions, "quick fixes", or "try this" without first understanding root cause through systematic investigation.
+Never propose solutions or "try this" without understanding root cause through systematic investigation.
 
 </iron_law>
 
@@ -35,174 +35,159 @@ Track with TodoWrite. Phases advance forward only.
 
 | Phase | Trigger | activeForm |
 |-------|---------|------------|
-| Collect Evidence | Session start, bug encountered | "Collecting evidence" |
-| Isolate Variables | Evidence gathered, reproduction confirmed | "Isolating variables" |
-| Formulate Hypotheses | Problem isolated, patterns identified | "Formulating hypotheses" |
+| Collect Evidence | Session start | "Collecting evidence" |
+| Isolate Variables | Evidence gathered | "Isolating variables" |
+| Formulate Hypotheses | Problem isolated | "Formulating hypotheses" |
 | Test Hypothesis | Hypothesis formed | "Testing hypothesis" |
-| Verify Fix | Fix identified and implemented | "Verifying fix" |
+| Verify Fix | Fix identified | "Verifying fix" |
 
-Situational (insert when triggered):
-- Iterate → Hypothesis disproven, need new approach
-  - Trigger: Test Hypothesis fails to confirm hypothesis
-  - activeForm: "Iterating on findings"
-  - Loops back to Test Hypothesis with new hypothesis
+**Situational** (insert when triggered):
+- Iterate -> Hypothesis disproven, loops back with new hypothesis
 
-Workflow:
-- Start: Create "Collect Evidence" as `in_progress`
+**Workflow:**
+- Start: "Collect Evidence" as `in_progress`
 - Transition: Mark current `completed`, add next `in_progress`
-- Failed hypothesis: Mark "Test Hypothesis" complete, add "Iterate" `in_progress`
-- Quick fixes: If root cause obvious from error, skip directly to "Verify Fix" (still create failing test)
-- Need more evidence: Add new "Collect Evidence" task (don't regress phases)
-- Circuit breaker: After 3 failed hypotheses → escalate (see `<escalation>`)
+- Failed hypothesis: Add "Iterate" task
+- Quick fixes: If root cause obvious from error, skip to "Verify Fix" (still create failing test)
+- Need more evidence: Add new evidence task (don't regress phases)
+- Circuit breaker: After 3 failed hypotheses -> escalate
 
 </phases>
 
 <quick_start>
 
-When encountering a bug:
-
-1. Create "Collect Evidence" todo as `in_progress` via TodoWrite
-2. Reproduce — exact steps to trigger consistently
-3. Investigate — gather evidence about what's actually happening
-4. Analyze — compare working vs broken, find all differences
-5. Test hypothesis — form single specific hypothesis, test minimally
-6. Implement — write failing test, then fix
-7. On phase transitions, update todos (mark complete, add next)
+1. Create "Collect Evidence" todo as `in_progress`
+2. Reproduce - exact steps to trigger consistently
+3. Investigate - gather evidence about what's happening
+4. Analyze - compare working vs broken, find differences
+5. Test hypothesis - single specific hypothesis, minimal test
+6. Implement - failing test first, then fix
+7. Update todos on phase transitions
 
 </quick_start>
 
 <phase_1_root_cause>
 
-Goal: Understand what's actually happening, not what you think is happening.
+Goal: Understand what's actually happening.
 
-Transition: Mark "Collect Evidence" complete and add "Isolate Variables" as `in_progress` when you have reproduction steps and initial evidence.
-
-Steps:
+Transition: Mark complete when you have reproduction steps and initial evidence.
 
 **Read error messages completely**
-- Error messages often contain solution
-- Read stack traces top to bottom
+- Stack traces top to bottom
 - Note file paths, line numbers, variable names
 - Look for "caused by" chains
 
 **Reproduce consistently**
-- Document exact steps to trigger bug
-- Note what inputs cause it vs don't cause it
+- Document exact trigger steps
+- Note inputs that cause vs don't cause
 - Check if intermittent (timing, race conditions)
 - Verify in clean environment
 
 **Check recent changes**
-- `git diff` — what changed since it last worked?
-- `git log --since="yesterday"` — recent commits
-- Dependency updates — package.json/Cargo.toml changes
-- Config changes — environment variables, settings files
-- External factors — API changes, database schema
+- `git diff` - what changed?
+- `git log --since="yesterday"` - recent commits
+- Dependency updates
+- Config/environment changes
 
-**Gather evidence systematically**
-- Add logging at key points in data flow
-- Print variable values at each transformation
+**Gather evidence**
+- Add logging at key points
+- Print variable values at transformations
 - Log function entry/exit with parameters
 - Capture timestamps for timing issues
-- Save intermediate state for inspection
 
 **Trace data flow backward**
 - Where does bad value come from?
-- Track backward through transformations
+- Track through transformations
 - Find first place it becomes wrong
-- Identify transformation that broke it
 
-Red flags indicating need more investigation:
+Red flags (return to evidence gathering):
 - "I think maybe X is the problem"
 - "Let's try changing Y"
 - "It might be related to Z"
-- Starting to write code
+- Starting to write code before understanding
 
 </phase_1_root_cause>
 
 <phase_2_pattern_analysis>
 
-Goal: Learn from what works to understand what's broken.
+Goal: Learn from working code to understand broken code.
 
-Transition: Mark "Isolate Variables" complete and add "Formulate Hypotheses" as `in_progress` when you've identified key differences between working and broken cases.
+Transition: Mark complete when key differences identified.
 
-Steps:
-
-**Find working examples in same codebase**
+**Find working examples**
 - Search for similar functionality that works
-- Grep for similar patterns: `rg "pattern"`
-- Look for tests that pass vs fail
-- Check git history for when it last worked
+- `rg "pattern"` for similar patterns
+- Look for passing vs failing tests
+- Check git history for when it worked
 
-**Read reference implementations completely**
-- Don't skim — read every line
-- Understand full context
-- Note all dependencies and imports
-- Check configuration and setup
+**Read references completely**
+- Every line, not skimming
+- Full context
+- All dependencies/imports
+- Configuration and setup
 
 **Identify every difference**
-- Line by line comparison working vs broken
-- Different imports or dependencies?
+- Line by line working vs broken
+- Different imports?
 - Different function signatures?
 - Different error handling?
-- Different data flow or transformations?
-- Different configuration or environment?
+- Different data flow?
+- Different configuration?
 
 **Understand dependencies**
-- What libraries/packages involved?
-- What versions in use?
-- What external services called?
-- What shared state exists?
-- What assumptions made?
+- Libraries/packages involved
+- Versions in use
+- External services
+- Shared state
+- Assumptions made
 
 Questions to answer:
 - Why does working version work?
-- What's fundamentally different in broken version?
-- Are there edge cases working version handles?
-- What invariants does working version maintain?
+- What's fundamentally different?
+- Edge cases working version handles?
+- Invariants working version maintains?
 
 </phase_2_pattern_analysis>
 
 <phase_3_hypothesis_testing>
 
-Goal: Test one specific idea with minimal changes.
+Goal: Test one specific idea with minimal change.
 
-Transition: Mark "Formulate Hypotheses" complete and add "Test Hypothesis" as `in_progress` when you have specific, evidence-based hypothesis.
+Transition: Mark complete when specific, evidence-based hypothesis formed.
 
-Steps:
-
-**Form single, specific hypothesis**
-- Template: "I think X is root cause because Y"
-- Must explain all observed symptoms
+**Form single hypothesis**
+- Template: "X is root cause because Y"
+- Must explain all symptoms
 - Must be testable with small change
 - Must be based on evidence from phases 1-2
 
 **Design minimal test**
-- Smallest possible change to test hypothesis
-- Change exactly ONE variable
+- Smallest change to test hypothesis
+- Change ONE variable
 - Preserve everything else
-- Make it reversible
+- Make reversible
 
-**Execute test**
-- Apply the change
+**Execute and verify**
+- Apply change
 - Run reproduction steps
-- Observe results carefully
-- Document what happened
+- Observe carefully
+- Document results
 
-**Verify or pivot**
-- If fixed: Confirm works across all cases, proceed to "Verify Fix"
-- If not fixed: Mark "Test Hypothesis" complete, add "Iterate" as `in_progress`, form NEW hypothesis
-- If partially fixed: Add "Iterate" to investigate what remains
-- Never: Try random variations hoping one works
+**Outcomes:**
+- Fixed: Confirm across all cases, proceed to Verify Fix
+- Not fixed: Mark complete, add "Iterate", form NEW hypothesis
+- Partially fixed: Add "Iterate" for remaining issues
+- Never: Random variations hoping one works
 
-Bad hypothesis examples:
-- "Maybe it's a race condition" (too vague)
-- "Could be caching or permissions" (multiple causes)
-- "Probably something with the database" (no evidence)
+Bad hypotheses (too vague):
+- "Maybe it's a race condition"
+- "Could be caching or permissions"
+- "Probably something with the database"
 
-Good hypothesis examples:
-- "Function fails because it expects number but receives string when API returns empty results"
-- "Race condition occurs because fetchData() called before initializeClient() completes, causing uninitialized error"
-- "Memory leak happens because event listeners added in useEffect but never removed in cleanup"
+Good hypotheses (specific, testable):
+- "Fails because expects number but receives string when API returns empty"
+- "Race condition: fetchData() called before initializeClient() completes"
+- "Memory leak: event listeners in useEffect never removed in cleanup"
 
 </phase_3_hypothesis_testing>
 
@@ -210,359 +195,85 @@ Good hypothesis examples:
 
 Goal: Fix root cause permanently with verification.
 
-Transition: Mark "Test Hypothesis" complete and add "Verify Fix" as `in_progress` when you've confirmed hypothesis and ready to implement permanent fix.
+Transition: Root cause confirmed, ready for permanent fix.
 
-Steps:
-
-**Create failing test case**
-- Write test that reproduces bug
-- Verify it fails before fix
+**Create failing test**
+- Write test reproducing bug
+- Verify fails before fix
 - Should pass after fix
-- Captures exact scenario that was broken
+- Captures exact broken scenario
 
 **Implement single fix**
 - Address identified root cause
 - No additional "improvements"
 - No refactoring "while you're there"
-- Just fix specific problem
+- Just fix the problem
 
-**Verify fix works**
+**Verify fix**
 - Failing test now passes
-- All existing tests still pass
-- Manual reproduction steps no longer trigger bug
-- No new errors or warnings introduced
+- Existing tests still pass
+- Manual reproduction no longer triggers bug
+- No new errors/warnings
 
-**Circuit breaker: 3 failed fixes**
-- If 3+ fixes tried and none worked: STOP
-- Problem isn't hypothesis — problem is architecture
-- Code may be using wrong pattern entirely
-- Escalate or redesign instead of more fixes
+**Circuit breaker**
+If 3+ fixes tried without success: STOP
+- Problem isn't hypothesis - problem is architecture
+- May be using wrong pattern entirely
+- Escalate or redesign
 
-After fixing:
-- Mark "Verify Fix" as `completed`
-- Add defensive validation at multiple layers
-- Document why bug occurred
-- Consider if similar bugs exist elsewhere
-- Update documentation if behavior was misunderstood
+**After fixing:**
+- Mark "Verify Fix" completed
+- Add defensive validation
+- Document root cause
+- Consider similar bugs elsewhere
 
 </phase_4_implementation>
 
-<playbooks>
-
-Bug type specific investigation focus and techniques.
-
-**Runtime Errors** (crashes, exceptions)
-
-Investigation focus:
-- Stack trace analysis (which line, which function)
-- Variable state at crash point
-- Input values that trigger crash
-- Environment differences (dev vs prod)
-
-Common causes:
-- Null/undefined access
-- Type mismatches
-- Array out of bounds
-- Missing error handling
-- Resource exhaustion
-
-Key techniques:
-- Add try-catch with detailed logging
-- Validate assumptions with assertions
-- Check for null/undefined before access
-- Log input values before processing
-
-**Logic Bugs** (wrong result, unexpected behavior)
-
-Investigation focus:
-- Expected vs actual output comparison
-- Data transformations step by step
-- Conditional logic evaluation
-- State changes over time
-
-Common causes:
-- Off-by-one errors
-- Incorrect comparison operators
-- Wrong order of operations
-- Missing edge case handling
-- State not reset between operations
-
-Key techniques:
-- Print intermediate values
-- Step through with debugger
-- Write test cases for edge cases
-- Check loop boundaries carefully
-
-**Integration Failures** (API, database, external service)
-
-Investigation focus:
-- Request/response logging
-- Network traffic inspection
-- Authentication/authorization
-- Data format mismatches
-- Timing and timeouts
-
-Common causes:
-- API version mismatch
-- Authentication token expired
-- Wrong content-type headers
-- Data serialization differences
-- Network timeout too short
-- Rate limiting
-
-Key techniques:
-- Log full request/response
-- Test with curl/httpie directly
-- Check API documentation version
-- Verify credentials and permissions
-- Monitor network timing
-
-**Intermittent Issues** (works sometimes, fails others)
-
-Investigation focus:
-- What's different when it fails?
-- Timing dependencies
-- Shared state/resources
-- External conditions
-- Concurrency issues
-
-Common causes:
-- Race conditions
-- Cache inconsistency
-- Clock/timezone issues
-- Resource contention
-- External service flakiness
-
-Key techniques:
-- Add timestamps to all logs
-- Run many times to find pattern
-- Check for async operations
-- Look for shared mutable state
-- Test under different loads
-
-**Performance Issues** (slow, memory leaks, high CPU)
-
-Investigation focus:
-- Profiling and metrics
-- Resource usage over time
-- Algorithm complexity
-- Data volume scaling
-- Memory allocation patterns
-
-Common causes:
-- N+1 queries
-- Inefficient algorithms
-- Memory leaks (unreleased resources)
-- Excessive allocations
-- Missing indexes
-- Unbounded caching
-
-Key techniques:
-- Profile with appropriate tools
-- Measure time/memory at checkpoints
-- Test with various data sizes
-- Check for cleanup in destructors
-- Monitor resource usage trends
-
-</playbooks>
-
-<evidence>
-
-Patterns for gathering diagnostic information.
-
-**Instrumentation** — add diagnostic logging without changing behavior:
-
-```typescript
-function processData(data: Data): Result {
-  console.log('[DEBUG] processData input:', JSON.stringify(data));
-
-  const transformed = transform(data);
-  console.log('[DEBUG] after transform:', JSON.stringify(transformed));
-
-  const validated = validate(transformed);
-  console.log('[DEBUG] after validate:', JSON.stringify(validated));
-
-  const result = finalize(validated);
-  console.log('[DEBUG] processData result:', JSON.stringify(result));
-
-  return result;
-}
-```
-
-**Binary Search Debugging** — find commit that introduced bug:
-
-```bash
-git bisect start
-git bisect bad                    # Current commit is bad
-git bisect good <last-good-commit> # Known good commit
-
-# Git will check out middle commit
-# Test if bug exists, then:
-git bisect bad   # if bug exists
-git bisect good  # if bug doesn't exist
-
-# Repeat until git identifies exact commit
-```
-
-**Differential Analysis** — compare versions side by side:
-
-```bash
-# Working version
-git show <good-commit>:path/to/file.ts > file-working.ts
-
-# Broken version
-git show <bad-commit>:path/to/file.ts > file-broken.ts
-
-# Detailed diff
-diff -u file-working.ts file-broken.ts
-```
-
-**Timeline Analysis** — correlate events for intermittent issues:
-
-```
-12:00:01.123 - Request received
-12:00:01.145 - Database query started
-12:00:01.167 - Cache check started
-12:00:01.169 - Cache hit returned  <-- Returned before DB!
-12:00:01.234 - Database query completed
-12:00:01.235 - Error: stale data   <-- Bug symptom
-```
-
-</evidence>
-
 <red_flags>
 
-If you catch yourself thinking or saying these — STOP, return to Phase 1:
+STOP and return to Phase 1 if you catch yourself:
 
 - "Quick fix for now, investigate later"
-- "Just try changing X and see if it works"
+- "Just try changing X and see"
 - "I don't fully understand but this might work"
-- "One more fix attempt" (when already tried 2+)
+- "One more fix attempt" (already tried 2+)
 - "Let me try a few different things"
 - Proposing solutions before gathering evidence
 - Skipping failing test case
 - Fixing symptoms instead of root cause
 
-ALL of these mean: STOP. Return to Phase 1.
-
-Add new "Collect Evidence" task and mark current task complete.
+ALL mean: STOP. Add new "Collect Evidence" task.
 
 </red_flags>
 
-<anti_patterns>
-
-Common debugging mistakes to avoid.
-
-**Random Walk** — trying different things hoping one works without systematic investigation
-
-Why it fails: Wastes time, may mask real issue, doesn't build understanding
-
-Instead: Follow phases 1-2 to understand system
-
-**Quick Fix** — implementing solution that stops symptom without finding root cause
-
-Why it fails: Bug will resurface or manifest differently
-
-Instead: Use phase 1 to find root cause before fixing
-
-**Cargo Cult** — copying code from Stack Overflow without understanding why it works
-
-Why it fails: May not apply to your context, introduces new issues
-
-Instead: Use phase 2 to understand working examples thoroughly
-
-**Shotgun Approach** — changing multiple things simultaneously "to be sure"
-
-Why it fails: Can't tell which change fixed it or if you introduced new bugs
-
-Instead: Use phase 3 to test one hypothesis at a time
-
-</anti_patterns>
-
-<integration>
-
-Connect debugging to broader development workflow.
-
-**Test-Driven Debugging**:
-1. Write test that reproduces bug (fails)
-2. Fix the bug
-3. Test passes
-4. Confirms fix works and prevents regression
-
-**Defensive Programming After Fix** — add validation at multiple layers:
-
-```typescript
-function processUser(userId: string): User {
-  // Input validation
-  if (!userId || typeof userId !== 'string') {
-    throw new Error('Invalid userId: must be non-empty string');
-  }
-
-  // Fetch with error handling
-  const user = await fetchUser(userId);
-  if (!user) {
-    throw new Error(`User not found: ${userId}`);
-  }
-
-  // Output validation
-  if (!user.email || !user.name) {
-    throw new Error('Invalid user data: missing required fields');
-  }
-
-  return user;
-}
-```
-
-**Documentation** — after fixing, document:
-
-1. What broke: Symptom description
-2. Root cause: Why it happened
-3. The fix: What changed
-4. Prevention: How to avoid in future
-
-Example:
-
-```typescript
-/**
- * Processes user data from API.
- *
- * Bug fix (2024-01-15): Added validation for missing email field.
- * Root cause: API sometimes returns partial user objects when
- * user hasn't completed onboarding.
- * Prevention: Always validate required fields before processing.
- */
-```
-
-</integration>
-
 <escalation>
 
-When to ask for help or escalate:
+When to escalate:
 
-1. After 3 failed fix attempts — architecture may be wrong
-2. No clear reproduction — need more context/access
-3. External system issues — need vendor/team involvement
-4. Security implications — need security expertise
-5. Data corruption risks — need backup/recovery planning
+1. After 3 failed fix attempts - architecture may be wrong
+2. No clear reproduction - need more context/access
+3. External system issues - need vendor/team involvement
+4. Security implications - need security expertise
+5. Data corruption risks - need backup/recovery planning
 
 </escalation>
 
 <completion>
 
-Before claiming "fixed", verify checklist:
+Before claiming "fixed":
 
 - [ ] Root cause identified with evidence
 - [ ] Failing test case created
-- [ ] Fix implemented addressing root cause only
+- [ ] Fix addresses root cause only
 - [ ] Test now passes
-- [ ] All existing tests still pass
-- [ ] Manual reproduction steps no longer trigger bug
-- [ ] No new warnings or errors introduced
+- [ ] All existing tests pass
+- [ ] Manual reproduction no longer triggers bug
+- [ ] No new warnings/errors
 - [ ] Root cause documented
 - [ ] Prevention measures considered
-- [ ] "Verify Fix" marked as completed
+- [ ] "Verify Fix" marked completed
 
-Remember: **Understanding the bug is more valuable than fixing it quickly.**
+**Understanding the bug is more valuable than fixing it quickly.**
 
 </completion>
 
@@ -570,28 +281,30 @@ Remember: **Understanding the bug is more valuable than fixing it quickly.**
 
 ALWAYS:
 - Create "Collect Evidence" todo at session start
-- Follow four-phase framework systematically
-- Update todos when transitioning between phases
-- Create failing test before implementing fix
+- Follow four-phase framework
+- Update todos on phase transitions
+- Create failing test before fix
 - Test single hypothesis at a time
-- Document root cause after fixing
-- Mark "Verify Fix" complete only after all tests pass
+- Document root cause after fix
+- Mark "Verify Fix" complete only after tests pass
 
 NEVER:
 - Propose fixes without understanding root cause
-- Skip evidence gathering phase
+- Skip evidence gathering
 - Test multiple hypotheses simultaneously
 - Skip failing test case
 - Fix symptoms instead of root cause
 - Continue after 3 failed fixes without escalation
-- Regress phases — add new tasks if more investigation needed
+- Regress phases - add new tasks if needed
 
 </rules>
 
 <references>
 
-- [reproduction.md](references/reproduction.md) — reproduction techniques
-- [examples/](examples/) — debugging session examples
-- [FORMATTING.md](../../shared/rules/FORMATTING.md) — formatting conventions
+- [playbooks.md](references/playbooks.md) - bug-type specific investigations
+- [evidence-patterns.md](references/evidence-patterns.md) - diagnostic techniques
+- [reproduction.md](references/reproduction.md) - reproduction techniques
+- [integration.md](references/integration.md) - workflow integration, anti-patterns
+- [FORMATTING.md](../../shared/rules/FORMATTING.md) - formatting conventions
 
 </references>

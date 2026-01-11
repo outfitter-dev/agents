@@ -1,7 +1,7 @@
 ---
 name: codebase-analysis
 version: 1.0.0
-description: Evidence-based codebase investigation methodology. Use when analyzing codebases, understanding architecture, exploring patterns, or investigating technical problems. Triggers when user asks to analyze, investigate, understand, research, or explore code. Core foundation for analyst and debugger agents.
+description: This skill should be used when analyzing codebases, understanding architecture, or when "analyze", "investigate", "explore code", or "understand architecture" are mentioned.
 ---
 
 # Codebase Analysis

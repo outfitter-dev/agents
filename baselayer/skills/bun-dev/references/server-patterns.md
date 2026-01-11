@@ -361,6 +361,38 @@ process.on('SIGINT', () => {
 });
 ```
 
+## Compression
+
+```typescript
+import { gzipSync, gunzipSync, deflateSync, inflateSync } from 'bun';
+
+// Gzip compression
+const data = 'Large data string...'.repeat(1000);
+const compressed = gzipSync(data);
+const decompressed = gunzipSync(compressed);
+
+// Deflate
+const deflated = deflateSync('data');
+const inflated = inflateSync(deflated);
+
+// Gzip HTTP response
+app.get('/large-data', (c) => {
+  const data = generateLargeDataset();
+  const json = JSON.stringify(data);
+  const acceptEncoding = c.req.header('accept-encoding') || '';
+
+  if (acceptEncoding.includes('gzip')) {
+    return c.body(gzipSync(json), {
+      headers: {
+        'Content-Type': 'application/json',
+        'Content-Encoding': 'gzip'
+      }
+    });
+  }
+  return c.json(data);
+});
+```
+
 ## TLS/HTTPS
 
 ```typescript

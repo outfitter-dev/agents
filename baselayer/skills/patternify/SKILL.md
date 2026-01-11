@@ -1,7 +1,7 @@
 ---
-name: Patternify
+name: patternify
 version: 1.1.0
-description: Analyze conversation to identify and capture reusable patterns as skills, commands, agents, or hooks. Use when spotting repeatable workflows, orchestration sequences, or decision heuristics worth codifying. Triggers on pattern(s), capture, codify, reusable, workflow, or patternify.
+description: This skill should be used when capturing reusable workflows from conversations, codifying decision heuristics, or when "patternify", "capture", or "codify workflow" are mentioned.
 ---
 
 # Patternify

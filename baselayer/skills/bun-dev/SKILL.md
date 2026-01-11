@@ -1,7 +1,7 @@
 ---
 name: bun-dev
 version: 1.0.0
-description: Bun runtime patterns including native APIs, SQLite, testing, HTTP server, WebSocket, file handling, and shell operations. Use when working with Bun runtime, bun:sqlite, Bun.serve, bun:test, or when Bun, SQLite, or Bun-specific patterns mentioned.
+description: This skill should be used when working with Bun runtime, bun:sqlite, Bun.serve, bun:test, or when "Bun", "bun:test", or Bun-specific patterns are mentioned.
 ---
 
 # Bun Development
@@ -29,25 +29,25 @@ NOT for: Node.js-only patterns, cross-runtime libraries, non-Bun projects
 **Package management**:
 
 ```bash
-bun install          # Install dependencies (faster than npm/yarn)
+bun install          # Install deps
 bun add zod          # Add package
 bun remove zod       # Remove package
-bun update           # Update all dependencies
+bun update           # Update all
 ```
 
 **Script execution**:
 
 ```bash
-bun run dev          # Run script from package.json
+bun run dev          # Run package.json script
 bun run src/index.ts # Execute TypeScript directly
-bun --watch index.ts # Watch mode with auto-reload
+bun --watch index.ts # Watch mode
 ```
 
 **Testing**:
 
 ```bash
-bun test             # Run all tests
-bun test src/        # Run tests in directory
+bun test             # All tests
+bun test src/        # Directory
 bun test --watch     # Watch mode
 bun test --coverage  # With coverage
 ```
@@ -68,33 +68,21 @@ bun build ./index.ts --compile --outfile myapp  # Standalone executable
 ```typescript
 // Read file (lazy, efficient)
 const file = Bun.file('./data.json');
+if (!(await file.exists())) throw new Error('File not found');
 
-// Check existence
-if (!(await file.exists())) {
-  throw new Error('File not found');
-}
-
-// Read as different formats
+// Read formats
 const text = await file.text();
 const json = await file.json();
 const buffer = await file.arrayBuffer();
-const stream = file.stream(); // For large files
+const stream = file.stream(); // Large files
 
-// File metadata
-console.log(file.size);  // bytes
-console.log(file.type);  // MIME type
+// Metadata
+console.log(file.size, file.type);
 
-// Write file
+// Write
 await Bun.write('./output.txt', 'content');
 await Bun.write('./data.json', JSON.stringify(data));
-
-// Write blob
-const blob = new Blob(['data'], { type: 'text/plain' });
-await Bun.write('./blob.txt', blob);
-
-// Write stream (for large data)
-const readable = new ReadableStream({ ... });
-await Bun.write('./stream.txt', readable);
+await Bun.write('./blob.txt', new Blob(['data']));
 ```
 
 </file_operations>
@@ -106,11 +94,7 @@ await Bun.write('./stream.txt', readable);
 ```typescript
 import { Database } from 'bun:sqlite';
 
-const db = new Database('app.db', {
-  create: true,
-  readwrite: true,
-  strict: true
-});
+const db = new Database('app.db', { create: true, readwrite: true, strict: true });
 
 // Create tables
 db.run(`
@@ -122,39 +106,30 @@ db.run(`
   )
 `);
 
-// Prepared statements (recommended)
+// Prepared statements (always use these)
 const getUser = db.prepare('SELECT * FROM users WHERE id = ?');
 const createUser = db.prepare('INSERT INTO users (id, email, name) VALUES (?, ?, ?) RETURNING *');
-const updateUser = db.prepare('UPDATE users SET email = ?, name = ? WHERE id = ? RETURNING *');
-const deleteUser = db.prepare('DELETE FROM users WHERE id = ? RETURNING *');
 
-// Query execution
-const user = getUser.get('user-123');        // Single row
-const allUsers = db.prepare('SELECT * FROM users').all();  // All rows
-db.prepare('DELETE FROM users WHERE id = ?').run('user-123');  // No return
-
-// Parameter binding
-const stmt = db.prepare('SELECT * FROM users WHERE email = ? AND role = ?');
-const user = stmt.get('alice@example.com', 'admin');
+// Execution
+const user = getUser.get('user-123');                    // Single row
+const all = db.prepare('SELECT * FROM users').all();     // All rows
+db.prepare('DELETE FROM users WHERE id = ?').run('id');  // No return
 
 // Named parameters
-const stmt2 = db.prepare('SELECT * FROM users WHERE email = $email');
-const user2 = stmt2.get({ $email: 'alice@example.com' });
+const stmt = db.prepare('SELECT * FROM users WHERE email = $email');
+stmt.get({ $email: 'alice@example.com' });
 
-// Transactions
+// Transactions (atomic, auto-rollback on error)
 const transfer = db.transaction((fromId: string, toId: string, amount: number) => {
   db.run('UPDATE accounts SET balance = balance - ? WHERE id = ?', [amount, fromId]);
   db.run('UPDATE accounts SET balance = balance + ? WHERE id = ?', [amount, toId]);
 });
+transfer('alice', 'bob', 100);
 
-transfer('alice', 'bob', 100);  // Atomic
-// Automatically rolled back on error
-
-// Close when done
-db.close();
+db.close(); // When done
 ```
 
-See [sqlite-patterns.md](references/sqlite-patterns.md) for migrations and advanced patterns.
+See [sqlite-patterns.md](references/sqlite-patterns.md) for migrations, pooling, repository pattern.
 
 </sqlite>
 
@@ -163,44 +138,38 @@ See [sqlite-patterns.md](references/sqlite-patterns.md) for migrations and advan
 <password>
 
 ```typescript
-// Hash password (argon2id recommended)
-const hashedPassword = await Bun.password.hash('password123', {
+// Hash (argon2id recommended)
+const hash = await Bun.password.hash('password123', {
   algorithm: 'argon2id',
   memoryCost: 65536,  // 64 MB
-  timeCost: 3         // Iterations
+  timeCost: 3
 });
 
 // Or bcrypt
 const bcryptHash = await Bun.password.hash('password123', {
   algorithm: 'bcrypt',
-  cost: 12  // Work factor
+  cost: 12
 });
 
-// Verify password
-const isValid = await Bun.password.verify('password123', hashedPassword);
-
-if (!isValid) {
-  throw new Error('Invalid password');
-}
+// Verify
+const isValid = await Bun.password.verify('password123', hash);
+if (!isValid) throw new Error('Invalid password');
 ```
 
-**In auth flow**:
+**Auth flow example**:
 
 ```typescript
 app.post('/auth/register', zValidator('json', RegisterSchema), async (c) => {
   const { email, password } = c.req.valid('json');
   const db = c.get('db');
 
-  const existing = db.prepare('SELECT id FROM users WHERE email = ?').get(email);
-  if (existing) {
+  if (db.prepare('SELECT id FROM users WHERE email = ?').get(email)) {
     throw new HTTPException(409, { message: 'Email already registered' });
   }
 
   const hashedPassword = await Bun.password.hash(password, { algorithm: 'argon2id' });
   const user = db.prepare(`
-    INSERT INTO users (id, email, password)
-    VALUES (?, ?, ?)
-    RETURNING id, email
+    INSERT INTO users (id, email, password) VALUES (?, ?, ?) RETURNING id, email
   `).get(crypto.randomUUID(), email, hashedPassword);
 
   return c.json({ user }, 201);
@@ -218,26 +187,17 @@ Bun.serve({
   port: 3000,
   fetch(req) {
     const url = new URL(req.url);
-
-    if (url.pathname === '/') {
-      return new Response('Hello, world!');
-    }
-
-    if (url.pathname === '/json') {
-      return Response.json({ message: 'Hello' });
-    }
-
+    if (url.pathname === '/') return new Response('Hello');
+    if (url.pathname === '/json') return Response.json({ ok: true });
     return new Response('Not found', { status: 404 });
   },
   error(err) {
     return new Response(`Error: ${err.message}`, { status: 500 });
   }
 });
-
-console.log('Server running on http://localhost:3000');
 ```
 
-**With Hono** (recommended for complex APIs):
+**With Hono** (recommended for APIs):
 
 ```typescript
 import { Hono } from 'hono';
@@ -246,11 +206,10 @@ const app = new Hono()
   .get('/', (c) => c.text('Hello'))
   .get('/json', (c) => c.json({ ok: true }));
 
-Bun.serve({
-  port: 3000,
-  fetch: app.fetch
-});
+Bun.serve({ port: 3000, fetch: app.fetch });
 ```
+
+See [server-patterns.md](references/server-patterns.md) for routing, middleware, file serving, streaming.
 
 </http_server>
 
@@ -261,42 +220,35 @@ Bun.serve({
 ```typescript
 import type { ServerWebSocket } from 'bun';
 
-type WebSocketData = { userId: string };
+type WsData = { userId: string };
 
-Bun.serve<WebSocketData>({
+Bun.serve<WsData>({
   port: 3000,
   fetch(req, server) {
     const url = new URL(req.url);
-
     if (url.pathname === '/ws') {
-      const userId = url.searchParams.get('userId') || 'anonymous';
-      const success = server.upgrade(req, { data: { userId } });
-
-      if (!success) {
-        return new Response('WebSocket upgrade failed', { status: 400 });
-      }
-      return undefined;
+      const userId = url.searchParams.get('userId') || 'anon';
+      return server.upgrade(req, { data: { userId } }) ? undefined
+        : new Response('Upgrade failed', { status: 400 });
     }
-
     return new Response('Hello');
   },
   websocket: {
-    open(ws: ServerWebSocket<WebSocketData>) {
-      console.log(`Client connected: ${ws.data.userId}`);
+    open(ws: ServerWebSocket<WsData>) {
       ws.subscribe('chat');
       ws.send(JSON.stringify({ type: 'connected' }));
     },
-    message(ws: ServerWebSocket<WebSocketData>, message: string | Buffer) {
-      console.log(`Received from ${ws.data.userId}:`, message);
-      ws.publish('chat', message);
+    message(ws: ServerWebSocket<WsData>, msg: string | Buffer) {
+      ws.publish('chat', msg);
     },
-    close(ws: ServerWebSocket<WebSocketData>) {
-      console.log(`Client disconnected: ${ws.data.userId}`);
+    close(ws: ServerWebSocket<WsData>) {
       ws.unsubscribe('chat');
     }
   }
 });
 ```
+
+See [server-patterns.md](references/server-patterns.md) for client tracking, rooms, reconnection.
 
 </websocket>
 
@@ -311,20 +263,17 @@ import { $ } from 'bun';
 const result = await $`ls -la`;
 console.log(result.text());
 
-// With variables (auto-escaped)
+// Variables (auto-escaped)
 const dir = './src';
 await $`find ${dir} -name "*.ts"`;
 
 // Check exit code
 const { exitCode } = await $`npm test`.nothrow();
-if (exitCode !== 0) {
-  console.error('Tests failed');
-}
+if (exitCode !== 0) console.error('Tests failed');
 
 // Spawn process
 const proc = Bun.spawn(['ls', '-la']);
 await proc.exited;
-console.log('Exit code:', proc.exitCode);
 
 // Capture output
 const proc2 = Bun.spawn(['echo', 'Hello'], { stdout: 'pipe' });
@@ -338,37 +287,22 @@ const output = await new Response(proc2.stdout).text();
 <testing>
 
 ```typescript
-import { describe, test, expect, beforeAll, afterAll, beforeEach, afterEach } from 'bun:test';
+import { describe, test, expect, beforeEach, afterEach } from 'bun:test';
 
 describe('feature', () => {
   let db: Database;
 
-  beforeAll(() => {
-    console.log('Setup test suite');
-  });
-
-  afterAll(() => {
-    console.log('Cleanup test suite');
-  });
-
-  beforeEach(() => {
-    db = new Database(':memory:');
-  });
-
-  afterEach(() => {
-    db.close();
-  });
+  beforeEach(() => { db = new Database(':memory:'); });
+  afterEach(() => { db.close(); });
 
   test('behavior', () => {
     expect(result).toBe(expected);
     expect(arr).toContain(item);
     expect(fn).toThrow();
     expect(obj).toEqual({ foo: 'bar' });
-    expect(value).toBeDefined();
-    expect(value).toBeTruthy();
   });
 
-  test('async behavior', async () => {
+  test('async', async () => {
     const result = await asyncFn();
     expect(result).toBeDefined();
   });
@@ -378,14 +312,14 @@ describe('feature', () => {
 });
 ```
 
-**Run tests**:
-
 ```bash
 bun test                    # All tests
 bun test src/api.test.ts    # Specific file
 bun test --watch            # Watch mode
 bun test --coverage         # With coverage
 ```
+
+See [testing.md](references/testing.md) for assertions, mocking, snapshots, best practices.
 
 </testing>
 
@@ -394,11 +328,11 @@ bun test --coverage         # With coverage
 <environment>
 
 ```typescript
-// Access (same as process.env)
+// Access
 console.log(Bun.env.NODE_ENV);
 console.log(Bun.env.DATABASE_URL);
 
-// With Zod validation
+// Zod validation
 import { z } from 'zod';
 
 const EnvSchema = z.object({
@@ -408,61 +342,12 @@ const EnvSchema = z.object({
   API_KEY: z.string().min(32)
 });
 
-const env = EnvSchema.parse(Bun.env);
-export default env;
+export const env = EnvSchema.parse(Bun.env);
 ```
 
-Bun automatically loads `.env` files:
-
-```bash
-# .env
-DATABASE_URL=sqlite://app.db
-PORT=3000
-
-# .env.local (gitignored overrides)
-# .env.production (production values)
-```
+Bun auto-loads `.env`, `.env.local`, `.env.production`.
 
 </environment>
-
-## Compression
-
-<compression>
-
-```typescript
-import { gzipSync, gunzipSync, deflateSync, inflateSync } from 'bun';
-
-// Gzip
-const data = 'Large data string...'.repeat(1000);
-const compressed = gzipSync(data);
-const decompressed = gunzipSync(compressed);
-
-// Deflate
-const deflated = deflateSync('data');
-const inflated = inflateSync(deflated);
-
-// In HTTP response
-app.get('/large-data', (c) => {
-  const data = generateLargeDataset();
-  const json = JSON.stringify(data);
-
-  const acceptEncoding = c.req.header('accept-encoding') || '';
-
-  if (acceptEncoding.includes('gzip')) {
-    const compressed = gzipSync(json);
-    return c.body(compressed, {
-      headers: {
-        'Content-Type': 'application/json',
-        'Content-Encoding': 'gzip'
-      }
-    });
-  }
-
-  return c.json(data);
-});
-```
-
-</compression>
 
 ## Performance Utilities
 
@@ -472,8 +357,7 @@ app.get('/large-data', (c) => {
 // High-resolution timing
 const start = Bun.nanoseconds();
 await doWork();
-const elapsed = Bun.nanoseconds() - start;
-console.log(`Took ${elapsed / 1_000_000}ms`);
+console.log(`Took ${(Bun.nanoseconds() - start) / 1_000_000}ms`);
 
 // Hashing
 const hash = Bun.hash(data);
@@ -481,12 +365,11 @@ const crc32 = Bun.hash.crc32(data);
 const sha256 = Bun.CryptoHasher.hash('sha256', data);
 
 // Sleep
-await Bun.sleep(1000); // ms
+await Bun.sleep(1000);
 
-// Memory usage
-const usage = process.memoryUsage();
-console.log('RSS:', usage.rss / 1024 / 1024, 'MB');
-console.log('Heap Used:', usage.heapUsed / 1024 / 1024, 'MB');
+// Memory
+const { rss, heapUsed } = process.memoryUsage();
+console.log('RSS:', rss / 1024 / 1024, 'MB');
 ```
 
 </performance>
@@ -496,13 +379,13 @@ console.log('Heap Used:', usage.heapUsed / 1024 / 1024, 'MB');
 <building>
 
 ```bash
-# Bundle for production
+# Production bundle
 bun build ./index.ts --outfile dist/bundle.js --minify --sourcemap
 
-# Bundle with external dependencies
+# External deps
 bun build ./index.ts --outfile dist/bundle.js --external hono --external zod
 
-# Compile to standalone executable
+# Standalone executable
 bun build ./index.ts --compile --outfile myapp
 
 # Cross-compile
@@ -524,10 +407,10 @@ ALWAYS:
 - Close database connections when done
 
 NEVER:
-- String interpolation in SQL queries (use parameters)
-- Store plaintext passwords
+- String interpolation in SQL (use parameters)
+- Plaintext passwords
 - Ignore async disposal cleanup
-- Use deprecated Node.js APIs when Bun native exists
+- Deprecated Node.js APIs when Bun native exists
 
 PREFER:
 - Bun.file over fs.readFile
@@ -540,9 +423,9 @@ PREFER:
 
 <references>
 
-- [sqlite-patterns.md](references/sqlite-patterns.md) — migrations, connection pooling
-- [server-patterns.md](references/server-patterns.md) — HTTP, WebSocket, streaming
-- [testing.md](references/testing.md) — bun:test patterns, lifecycle hooks
+- [sqlite-patterns.md](references/sqlite-patterns.md) — migrations, pooling, repository, FTS
+- [server-patterns.md](references/server-patterns.md) — HTTP, WebSocket, streaming, compression
+- [testing.md](references/testing.md) — assertions, mocking, snapshots, best practices
 
 **Examples:**
 - [database-crud.md](examples/database-crud.md) — SQLite CRUD patterns

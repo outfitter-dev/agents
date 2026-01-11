@@ -1,7 +1,7 @@
 ---
 name: claude-command-authoring
 version: 2.0.0
-description: Creates and validates custom slash commands for Claude Code. Covers the full workflow from design through validation including frontmatter, arguments, bash execution, file references, and tool permissions. Use when building commands, creating slash commands, setting up team workflows, or when command authoring, slash command files, .claude/commands, $ARGUMENTS, or `create command` are mentioned.
+description: This skill should be used when creating slash commands, writing command files, or when "/command", ".claude/commands", "$ARGUMENTS", or "create command" are mentioned.
 user-invocable: true
 allowed-tools: Read Write Edit Grep Glob Bash TodoWrite
 ---

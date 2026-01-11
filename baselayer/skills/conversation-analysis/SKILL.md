@@ -1,7 +1,7 @@
 ---
-name: Conversation Analysis
+name: conversation-analysis
 version: 2.0.0
-description: Analyze conversation history to identify patterns, signals, and behaviors. Use when analyzing conversations, finding patterns in chat, identifying what went well/wrong, scanning for frustration, success, workflow transitions, or user preferences. Triggers on analyze, pattern(s), signal(s), or conversation analysis.
+description: This skill should be used when analyzing conversation patterns, identifying frustration or success signals, or when "analyze conversation", "what went wrong", or "patterns" are mentioned.
 ---
 
 # Conversation Analysis

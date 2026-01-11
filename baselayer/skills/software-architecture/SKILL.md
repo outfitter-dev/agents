@@ -1,7 +1,7 @@
 ---
 name: software-architecture
-version: 2.0.0
-description: System design guidance with technology selection frameworks and scalability planning. Use when designing systems, evaluating architectures, making technology decisions, planning for scale, analyzing tradeoffs, or when architecture, system design, tech stack, scalability, or microservices are mentioned.
+version: 2.1.0
+description: This skill should be used when designing systems, evaluating architectures, making technology decisions, or planning for scale. Provides technology selection frameworks, scalability planning, and architectural tradeoff analysis.
 ---
 
 # Software Architecture
@@ -36,9 +36,9 @@ Situational (insert before Documentation when triggered):
 - Review & Refinement → feedback cycles on complex designs
 
 Edge cases:
-- Small questions: skip directly to Solution Design
+- Small questions: skip to Solution Design
 - Greenfield: skip Codebase Analysis
-- No ADR needed: skip Documentation phase
+- No ADR needed: skip Documentation
 - Iteration: Review & Refinement may repeat
 
 TodoWrite format:
@@ -61,28 +61,31 @@ Workflow:
 
 <principles>
 
-Proven over Novel — favor battle-tested over bleeding-edge without strong justification.
+## Proven over Novel
 
-Framework:
+Favor battle-tested over bleeding-edge without strong justification.
+
+Checklist:
 - 3+ years production at scale?
 - Strong community + active maintenance?
 - Available experienced practitioners?
 - Total cost of ownership (learning, tooling, hiring)?
 
-Red flags:
-- "Early adopters" without time budget
-- "Written in X" without benchmarks
-- "Everyone's talking" without case studies
+Red flags: "Early adopters" without time budget, "Written in X" without benchmarks, "Everyone's talking" without case studies.
 
-Complexity Budget — each abstraction must provide 10x value.
+## Complexity Budget
+
+Each abstraction must provide 10x value.
 
 Questions:
 - What specific problem does this solve?
 - Can we solve with existing tools/patterns?
 - Maintenance burden (docs, onboarding, debugging)?
-- Impact on debugging and incident response?
+- Impact on incident response?
 
-Unix Philosophy — small, focused modules with clear contracts, single responsibilities.
+## Unix Philosophy
+
+Small, focused modules with clear contracts, single responsibilities.
 
 Checklist:
 - Single, well-defined purpose?
@@ -91,7 +94,9 @@ Checklist:
 - Testable in isolation?
 - Clean, stable interface?
 
-Observability First — no system ships without metrics, tracing, alerting.
+## Observability First
+
+No system ships without metrics, tracing, alerting.
 
 Required every service:
 - Metrics: RED (Rate, Errors, Duration) for all endpoints
@@ -100,7 +105,9 @@ Required every service:
 - Alerts: SLO-based with runbooks
 - Dashboards: at-a-glance health
 
-Modern by Default — use contemporary proven patterns for greenfield, respect legacy constraints.
+## Modern by Default
+
+Use contemporary proven patterns for greenfield, respect legacy constraints.
 
 Patterns (2025):
 - TypeScript strict mode for type safety
@@ -110,12 +117,11 @@ Patterns (2025):
 - Distributed tracing (OpenTelemetry)
 - Event-driven architectures
 
-Legacy respect:
-- Document why legacy exists
-- Plan incremental migration
-- Don't rewrite what works reliably
+Legacy respect: document why legacy exists, plan incremental migration, don't rewrite what works.
 
-Evolutionary — design for change with clear upgrade paths.
+## Evolutionary
+
+Design for change with clear upgrade paths.
 
 Practices:
 - Version all APIs with deprecation policies
@@ -126,518 +132,158 @@ Practices:
 
 </principles>
 
-<technology_selection>
-
-Database Selection
-
-Decision factors:
-
-1. Data model fit
-   - Relational (structured, ACID, complex queries) → PostgreSQL, MySQL
-   - Document (flexible schema, nested data) → MongoDB, DynamoDB
-   - Graph (relationship-heavy) → Neo4j, DGraph
-   - Time-series (metrics, events) → TimescaleDB, InfluxDB
-   - Key-value (simple lookups, cache) → Redis, DynamoDB
-
-2. Consistency requirements
-   - Strong consistency → PostgreSQL, CockroachDB
-   - Eventual consistency acceptable → DynamoDB, Cassandra
-   - Hybrid needs → MongoDB, Cosmos DB
-
-3. Scale characteristics
-   - Read-heavy → read replicas, caching
-   - Write-heavy → sharding, write-optimized DB
-   - Both → consider CQRS pattern
-
-4. Operational complexity
-   - Managed service available? Use it unless special needs
-   - Self-hosted required? Factor operational overhead
-   - Multi-region? Consider distributed databases
-
-Decision matrix:
-
-```
-ACID + complex queries + proven? → PostgreSQL
-Flexibility + horizontal scaling + managed? → DynamoDB
-Document model + rich queries + open source? → MongoDB
-High write throughput + wide column? → Cassandra
-Caching + pub/sub + simple data? → Redis
-```
-
-Framework Selection
-
-Backend (TypeScript/JavaScript):
-- Hono (modern, fast, edge) — best for new projects, serverless
-- Express (proven, massive ecosystem) — best for teams with Express experience
-- Fastify (performance-focused) — best when raw speed matters
-- NestJS (structured, enterprise) — best for large teams, complex domains
-
-Backend (Rust):
-- Axum (modern, tokio-based) — best for new projects, type-safe routing
-- Actix-web (mature, fast) — best when raw performance critical
-- Rocket (ergonomic, batteries-included) — best for rapid development
-
-Decision criteria:
-- Team expertise and learning curve
-- Performance requirements (most apps don't need Rust speed)
-- Ecosystem and library availability
-- Type safety and developer experience
-- Deployment target (serverless, containers, bare metal)
-
-Frontend:
-- React + TanStack Router — complex state, large ecosystem
-- Solid — performance-critical UIs
-- Svelte — small teams, simple apps
-- Next.js — SSR/SSG needs, full-stack React
-
-Infrastructure
-
-Serverless (Vercel, Cloudflare Workers, AWS Lambda):
-- ✓ Zero ops, auto-scaling, pay-per-use
-- ✗ Cold starts, vendor lock-in, harder debugging
-- Best for: low-traffic apps, edge functions, prototypes
-
-Container orchestration (Kubernetes, ECS):
-- ✓ Portability, fine control, proven at scale
-- ✗ Operational complexity, learning curve
-- Best for: medium-large apps, multi-service systems
-
-Platform-as-a-Service (Heroku, Render, Railway):
-- ✓ Simple deploys, managed infrastructure
-- ✗ Higher cost, less control, scaling limits
-- Best for: startups, MVPs, small teams
-
-Bare metal / VMs:
-- ✓ Full control, cost-effective at scale
-- ✗ High operational burden
-- Best for: special requirements, very large scale
-
-</technology_selection>
-
-<design_patterns>
-
-Service Decomposition
-
-Monolith first, then extract:
-1. Start with well-organized monolith
-2. Identify bounded contexts as you learn domain
-3. Extract when hitting specific pain:
-   - Different scaling needs (one service needs 10x instances)
-   - Different deployment cadences (ML model updates vs API)
-   - Team boundaries (separate teams, separate services)
-   - Technology constraints (need Rust for one component)
-
-When to use microservices:
-- ✓ Large team (10+ engineers)
-- ✓ Clear domain boundaries
-- ✓ Independent scaling needs
-- ✓ Polyglot requirements
-- ✗ Small team (<5 engineers)
-- ✗ Unclear domain
-- ✗ Premature optimization
-
-Communication Patterns
-
-Synchronous (REST, GraphQL, gRPC):
-- Use when: immediate response needed, simple request-response
-- Tradeoffs: tight coupling, cascading failures, latency compounds
-- Mitigation: circuit breakers, timeouts, retries with backoff
-
-Asynchronous (message queues, event streams):
-- Use when: eventual consistency acceptable, high volume, decoupling needed
-- Tradeoffs: complexity, harder debugging, ordering challenges
-- Patterns: message queues (RabbitMQ, SQS), event streams (Kafka, Kinesis)
-
-Event-driven architecture:
-- Core: services publish events, others subscribe
-- Benefits: loose coupling, easy to add consumers, audit trail
-- Challenges: eventual consistency, event versioning, ordering
-- Best practices:
-  - Schema registry for event contracts
-  - Include correlation IDs for tracing
-  - Design idempotent consumers
-  - Plan for out-of-order delivery
-
-Data Management
-
-Database per service:
-- Each service owns its data
-- No direct database access across services
-- Communication via APIs or events
-- Tradeoff: data consistency challenges, no joins across services
-
-Shared database (anti-pattern for microservices):
-- Multiple services access same database
-- Only acceptable: transitioning from monolith
-- Migration path: add service layer, restrict direct access
-
-CQRS (Command Query Responsibility Segregation):
-- Separate write model from read model
-- Use when: read/write patterns very different, complex queries needed
-- Implementation: write to normalized DB, project to read-optimized views
-
-Event Sourcing:
-- Store events, not current state
-- Rebuild state by replaying events
-- Use when: audit trail critical, temporal queries needed
-- Challenges: migration complexity, eventual consistency
-
-</design_patterns>
-
-<scalability>
-
-Performance Modeling
-
-Key metrics:
-- Latency: p50, p95, p99 response times
-- Throughput: requests per second
-- Resource utilization: CPU, memory, network, disk I/O
-- Error rates: 4xx, 5xx responses
-- Saturation: queue depths, connection pools
-
-Capacity planning:
-1. Baseline: measure current performance under normal load
-2. Load test: use realistic traffic patterns (gradual ramp, spike, sustained)
-3. Find limits: identify bottlenecks (CPU? DB? Network?)
-4. Model growth: project based on business metrics (users, transactions)
-5. Plan headroom: maintain 30–50% capacity buffer
-
-Bottleneck Identification
-
-Database:
-- Symptoms: high query latency, connection pool exhaustion
-- Solutions: indexing, query optimization, read replicas, caching, sharding
-
-CPU:
-- Symptoms: high CPU utilization, slow processing
-- Solutions: horizontal scaling, algorithm optimization, caching, async processing
-
-Memory:
-- Symptoms: OOM errors, high GC pressure
-- Solutions: memory profiling, data structure optimization, streaming processing
-
-Network:
-- Symptoms: high bandwidth usage, slow transfers
-- Solutions: compression, CDN, protocol optimization (HTTP/2, gRPC)
-
-I/O:
-- Symptoms: disk queue depth, slow reads/writes
-- Solutions: SSD, batching, async I/O, caching
-
-Scaling Strategies
-
-Vertical scaling (bigger machines):
-- ✓ Simple, no code changes
-- ✗ Expensive, hard limits, single point of failure
-- Use when: quick fix needed, not yet optimized
-
-Horizontal scaling (more machines):
-- ✓ Cost-effective, no hard limits, fault tolerant
-- ✗ Requires stateless design, load balancing complexity
-- Requirements: stateless services, shared state in DB/cache
-
-Caching layers:
-- L1 (Application): in-memory, fastest, stale risk
-- L2 (Distributed): Redis, Memcached, shared across instances
-- L3 (CDN): CloudFlare, CloudFront, edge caching
-- Strategy: cache-aside, write-through, write-behind based on needs
-
-Database scaling:
-- Read replicas: route reads to replicas, writes to primary
-- Sharding: partition data across databases (customer, geography, hash)
-- Connection pooling: PgBouncer, connection reuse
-- Query optimization: indexes, query tuning, explain plans
-
-</scalability>
-
-<rust_architecture>
-
-When to Choose Rust
-
-Strong fit:
-- Performance-critical services (compute-heavy, low-latency)
-- Resource-constrained environments
-- Systems programming needs
-- Memory safety critical (no GC pauses)
-- Concurrent processing with correctness guarantees
-
-May not be worth it:
-- Prototype/MVP phase (slower iteration)
-- Small team without Rust experience
-- Standard CRUD API (TS faster to develop)
-- Heavy dependency on ecosystem libraries only in other languages
-
-Stack Recommendations
-
-Web services:
-- Runtime: `tokio` (async runtime, de facto standard)
-- Web framework: `axum` (modern, type-safe) or `actix-web` (mature, fast)
-- Database: `sqlx` (compile-time checked queries), `diesel` (full ORM)
-- Serialization: `serde` with `serde_json`, `bincode` for binary
-- Observability: `tracing` + `tracing-subscriber` for structured logging
-- Error handling: `thiserror` for libraries, `anyhow` for applications
-
-Project structure:
-
-```
-my-service/
-├── Cargo.toml          # Workspace manifest
-├── crates/
-│   ├── api/            # HTTP handlers, routing
-│   ├── domain/         # Business logic, pure Rust
-│   ├── persistence/    # Database access
-│   └── common/         # Shared utilities
-```
-
-Operational considerations:
-- Build times longer than TS (use `sccache`, `mold` linker)
-- Binary size larger (use `cargo-bloat` to analyze)
-- Memory usage lower at runtime
-- Deploy as single static binary (easy containerization)
-- Cross-compilation more complex
-
-Tradeoffs vs TypeScript:
-
-```
-Rust:
-✓ 5–10x lower memory usage
-✓ Faster execution (often 2–10x)
-✓ Catch bugs at compile time (no null refs, race conditions)
-✓ No GC pauses
-✗ Slower development (borrow checker learning curve)
-✗ Smaller ecosystem for web-specific libraries
-✗ Harder to hire
-
-TypeScript:
-✓ Faster iteration (REPL, quick rebuilds)
-✓ Massive ecosystem (npm)
-✓ Easy to hire
-✗ Higher memory usage
-✗ Runtime errors possible
-✗ GC pauses
-```
-
-</rust_architecture>
-
-<common_patterns>
-
-API Gateway — single entry point for all client requests, handles routing, auth, rate limiting.
-- Use when: multiple backend services, need centralized auth/logging
-- Options: Kong, AWS API Gateway, custom Nginx
-- Tradeoffs: single point of failure, added latency
-
-Backends for Frontends (BFF) — separate backend for each frontend type.
-- Use when: different clients need different data shapes
-- Benefits: optimized per-client, independent deployment
-- Tradeoffs: code duplication, more services to maintain
-
-Circuit Breaker — prevent cascading failures by failing fast when downstream unhealthy.
-- Implementation: track failure rate, open circuit after threshold, half-open to test recovery
-- Libraries: Hystrix (Java), Polly (.NET), Resilience4j (Java), opossum (Node)
-
-Saga Pattern — manage distributed transactions across services.
-- Choreography: services emit events, others listen and react
-- Orchestration: central coordinator manages workflow
-- Use when: multi-service transaction, eventual consistency acceptable
-
-Strangler Fig — gradually migrate from legacy by routing new features to new system.
-1. Route all traffic through proxy/facade
-2. Build new features in new system
-3. Gradually migrate existing features
-4. Sunset legacy when complete
-
-</common_patterns>
-
-<implementation_guidance>
-
-Phased Delivery
-
-Phase 1: MVP (2–4 weeks)
-- Core user workflow only
-- Simplest possible architecture
-- Manual processes acceptable
-- Focus: validate problem-solution fit
-
-Phase 2: Beta (4–8 weeks)
-- Key features, basic scalability
-- Monitoring and logging
-- Automated deployment
-- Focus: validate product-market fit
-
-Phase 3: Production (8–12 weeks)
-- Full feature set
-- Production-grade reliability
-- Auto-scaling, disaster recovery
-- Focus: scale and optimize
-
-Phase 4: Optimization (ongoing)
-- Performance tuning
-- Cost optimization
-- Feature refinement
-- Focus: efficiency and experience
-
-Critical Path Analysis
-
-For each phase identify:
-- Blocking dependencies (what must be done first?)
-- Parallel workstreams (what can happen simultaneously?)
-- Resource constraints (who's needed, when?)
-- Risk areas (what might delay us?)
-- Decision points (what decisions can't be delayed?)
-
-Observability
-
-Metrics (quantitative health):
-- Business metrics (signups, transactions, revenue)
-- System metrics (CPU, memory, disk, network)
-- Application metrics (request rate, latency, errors)
-
-Logging (what happened):
-- Structured JSON logs
-- Correlation IDs across services
-- Context (user ID, request ID, session)
-- Appropriate log levels (ERROR actionable, WARN concerning, INFO key events)
-
-Tracing (where time is spent):
-- Distributed traces with OpenTelemetry
-- Critical path instrumentation
-- Database query timing
-- External API call timing
-
-Alerting (what needs attention):
-- SLO-based alerts (error rate, latency, availability)
-- Actionable only (if it fires, someone must do something)
-- Runbooks for each alert
-- Escalation policies
-
-</implementation_guidance>
-
-<adr_template>
-
-```markdown
-# ADR-XXX: {TITLE}
-
-**Status**: [Proposed | Accepted | Deprecated | Superseded]
-**Date**: YYYY-MM-DD
-**Deciders**: {WHO}
-**Context**: {PROBLEM}
-
-## Decision
-
-{WHAT_WE_DECIDED}
-
-## Alternatives Considered
-
-### Option 1: {NAME}
-- **Pros**: {BENEFITS}
-- **Cons**: {DRAWBACKS}
-- **Why not chosen**: {REASON}
-
-### Option 2: {NAME}
-- **Pros**: {BENEFITS}
-- **Cons**: {DRAWBACKS}
-- **Why not chosen**: {REASON}
-
-## Consequences
-
-**Positive**:
-- {BENEFIT_1}
-- {BENEFIT_2}
-
-**Negative**:
-- {TRADEOFF_1}
-- {TRADEOFF_2}
-
-**Neutral**:
-- {IMPACT_1}
-- {IMPACT_2}
-
-## Implementation Notes
-
-- {TECHNICAL_DETAIL_1}
-- {TECHNICAL_DETAIL_2}
-- {MIGRATION_PATH}
-
-## Success Metrics
-
-- {HOW_MEASURE_SUCCESS}
-- {WHAT_METRICS_TRACK}
-
-## Review Date
-
-{WHEN_REVISIT}
-```
-
-</adr_template>
-
-<questions_to_ask>
-
-Understanding Requirements
-
-Functional:
-- Core user workflows?
-- What data stored, how long?
-- Required integrations?
-- Critical features vs nice-to-haves?
-
-Non-functional:
-- How many users (now and in 1–2 years)?
-- Acceptable latency? (p99 < 500ms? < 100ms?)
-- Availability target? (99.9%? 99.99%?)
-- Consistency requirement? (strong? eventual?)
-- Data retention policy?
-- Compliance requirements? (GDPR, HIPAA, SOC2?)
-
-Constraints
-
-Technical:
-- Existing systems to integrate with?
-- Technologies already in use?
-- Current team expertise?
-- Deployment environment? (cloud, on-prem, hybrid?)
-
-Business:
-- Budget for infrastructure?
-- Timeline for delivery?
-- Acceptable technical debt?
-- Long-term vision (1–2 years)?
-
-Organizational:
-- How many engineers will work on this?
-- Team structure and communication patterns?
-- Deployment frequency? (multiple/day, weekly, monthly?)
-- On-call and support model?
-
-Technology Selection
-
-For each choice ask:
-- Why this over alternatives? (specific reasons, not "popular")
-- What production experience exists? (internal or external)
-- Operational complexity?
-- Vendor lock-in risk?
-- Community support and longevity?
-- Total cost of ownership?
-- Can we hire for this technology?
-
-Risk Assessment
-
-For each decision:
-- Blast radius if this fails?
-- Rollback strategy?
-- How will we detect problems?
-- Contingency plan?
-- What assumptions are we making?
-- Cost of being wrong?
-
-</questions_to_ask>
+<technology_selection_summary>
+
+Load [technology-selection.md](references/technology-selection.md) for detailed guidance.
+
+**Database**: Match data model to use case. PostgreSQL for ACID + complex queries. DynamoDB for flexibility + horizontal scaling. Redis for caching + pub/sub.
+
+**Framework (TS)**: Hono for modern/serverless, Express for proven ecosystem, Fastify for speed, NestJS for enterprise.
+
+**Framework (Rust)**: Axum for type-safe modern, Actix-web for raw performance.
+
+**Frontend**: React + TanStack Router for complex apps, Solid for perf-critical, Next.js for SSR/SSG.
+
+**Infrastructure**: Serverless for low-traffic/prototypes, K8s/ECS for multi-service at scale, PaaS for MVPs.
+
+Selection criteria: team expertise, performance needs, ecosystem, type safety, deployment target.
+
+</technology_selection_summary>
+
+<design_patterns_summary>
+
+Load [design-patterns.md](references/design-patterns.md) for detailed guidance.
+
+**Service Decomposition**
+
+Monolith first. Extract when hitting specific pain:
+- Different scaling needs
+- Different deployment cadences
+- Team boundaries
+- Technology constraints
+
+Microservices: yes for 10+ engineers, clear domains, independent scaling. No for small teams, unclear domains.
+
+**Communication**
+
+| Pattern | Use when | Tradeoffs |
+|---------|----------|-----------|
+| Sync (REST, gRPC) | Immediate response needed | Tight coupling, cascading failures |
+| Async (queues, streams) | Eventual consistency OK | Complexity, ordering challenges |
+| Event-driven | Decoupling, audit trail | Event versioning, consistency |
+
+**Data Management**
+
+- Database per service: each service owns its data
+- CQRS: separate read/write when patterns differ
+- Event sourcing: when audit trail critical
+
+</design_patterns_summary>
+
+<scalability_summary>
+
+Load [scalability.md](references/scalability.md) for detailed guidance.
+
+**Key Metrics**: Latency (p50/p95/p99), throughput (RPS), utilization (CPU/mem/net/disk), error rates, saturation (queues, pools).
+
+**Capacity Planning**: Baseline → load test → find limits → model growth → plan 30-50% headroom.
+
+**Bottleneck Solutions**:
+
+| Resource | Solutions |
+|----------|-----------|
+| Database | Indexing, read replicas, caching, sharding |
+| CPU | Horizontal scale, algorithm optimization, async |
+| Memory | Profiling, streaming, data structure optimization |
+| Network | Compression, CDN, HTTP/2, gRPC |
+| I/O | SSD, batching, async I/O, caching |
+
+**Scaling Strategies**: Vertical (simple, limited), horizontal (stateless required), caching layers (L1/L2/L3), database scaling (replicas, sharding, pooling).
+
+</scalability_summary>
+
+<rust_summary>
+
+Load [rust-architecture.md](references/rust-architecture.md) for detailed guidance.
+
+**Choose Rust when**: Performance-critical, resource-constrained, memory safety critical, concurrent processing.
+
+**Skip Rust when**: Prototype/MVP, small team without experience, standard CRUD, missing ecosystem libs.
+
+**Stack**: tokio (runtime), axum/actix-web (framework), sqlx/diesel (database), serde (serialization), tracing (observability), thiserror/anyhow (errors).
+
+**vs TypeScript**: Rust is 2-10x faster, 5-10x lower memory, compile-time bug detection, no GC. TS has faster iteration, massive ecosystem, easier hiring.
+
+</rust_summary>
+
+<common_patterns_summary>
+
+Load [common-patterns.md](references/common-patterns.md) for detailed guidance.
+
+| Pattern | Purpose |
+|---------|---------|
+| API Gateway | Single entry, routing, auth, rate limiting |
+| BFF | Per-client backends with optimized data shapes |
+| Circuit Breaker | Fail fast when downstream unhealthy |
+| Saga | Distributed transactions across services |
+| Strangler Fig | Gradual legacy migration via proxy |
+
+</common_patterns_summary>
+
+<implementation_summary>
+
+Load [implementation-guidance.md](references/implementation-guidance.md) for detailed guidance.
+
+**Phased Delivery**:
+- MVP (2-4 wks): Core workflow, simplest architecture, validate problem-solution fit
+- Beta (4-8 wks): Key features, monitoring, automated deploy, validate product-market fit
+- Production (8-12 wks): Full features, reliability, auto-scaling, DR
+- Optimization (ongoing): Performance tuning, cost optimization
+
+**Critical Path**: Identify blocking dependencies, parallel workstreams, resource constraints, risk areas, decision points.
+
+**Observability**: Metrics (RED), logging (structured + correlation IDs), tracing (OpenTelemetry), alerting (SLO-based + runbooks).
+
+</implementation_summary>
+
+<adr_summary>
+
+Load [adr-template.md](references/adr-template.md) for the full template.
+
+ADR structure:
+- Status, Date, Deciders, Context
+- Decision
+- Alternatives Considered (with pros/cons/why not)
+- Consequences (positive, negative, neutral)
+- Implementation Notes
+- Success Metrics
+- Review Date
+
+</adr_summary>
+
+<questions_summary>
+
+Load [questions-checklist.md](references/questions-checklist.md) for the full checklist.
+
+**Requirements**: Core workflows, data storage, integrations, critical vs nice-to-have.
+
+**Non-functional**: Users (now + 1-2 yrs), latency targets, availability (99.9%? 99.99%?), consistency, compliance.
+
+**Constraints**: Existing systems, current tech, team expertise, deployment env, budget, timeline, acceptable debt.
+
+**Technology Selection**: Why this over alternatives? Production experience? Operational complexity? Lock-in risk? Hiring?
+
+**Risk**: Blast radius? Rollback strategy? Detection? Contingency? Assumptions? Cost of being wrong?
+
+</questions_summary>
 
 <workflow>
 
 Use `EnterPlanMode` when presenting options — enables keyboard navigation.
 
 Structure:
-- Prose above tool: context, reasoning, ★ recommendation
-- Inside tool: 2–3 options with tradeoffs + "Something else"
+- Prose above tool: context, reasoning, recommendation
+- Inside tool: 2-3 options with tradeoffs + "Something else"
 - User selects: number, modifications, or combo
 
 After user choice:
@@ -665,7 +311,7 @@ ALWAYS:
 - Create Discovery todo at session start
 - Update todos at phase transitions
 - Ask clarifying questions about requirements and constraints before proposing
-- Present 2–3 viable options with clear tradeoffs
+- Present 2-3 viable options with clear tradeoffs
 - Document decisions with rationale (ADR when appropriate)
 - Consider immediate needs and future scale
 - Evaluate team expertise and operational capacity
@@ -677,13 +323,24 @@ NEVER:
 - Skip constraint analysis (budget, timeline, team, existing systems)
 - Propose architectures the team can't operate
 - Ignore operational complexity in technology selection
-- Proceed without understanding non-functional requirements (latency, scale, availability)
+- Proceed without understanding non-functional requirements
 - Skip phase transitions when moving through workflow
 
 </rules>
 
 <references>
 
+**Core**:
 - [FORMATTING.md](../../shared/rules/FORMATTING.md) — formatting conventions
+
+**Deep Dives**:
+- [technology-selection.md](references/technology-selection.md) — database, framework, infrastructure selection
+- [design-patterns.md](references/design-patterns.md) — service decomposition, communication, data management
+- [scalability.md](references/scalability.md) — performance modeling, bottlenecks, scaling strategies
+- [rust-architecture.md](references/rust-architecture.md) — when to use Rust, stack recommendations
+- [common-patterns.md](references/common-patterns.md) — API Gateway, BFF, Circuit Breaker, Saga, Strangler
+- [implementation-guidance.md](references/implementation-guidance.md) — phased delivery, observability
+- [adr-template.md](references/adr-template.md) — Architecture Decision Record template
+- [questions-checklist.md](references/questions-checklist.md) — requirements and risk questions
 
 </references>

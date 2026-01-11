@@ -1,7 +1,7 @@
 ---
-name: GitButler Version Control
+name: version-control
 version: 2.0.0
-description: Version control using GitButler's virtual branches for parallel multi-branch work, post-hoc organization, and multi-agent collaboration. Use when working with GitButler, virtual branches, `but` commands, stacked PRs, multi-agent workflows, or when `gitbutler` or `but` are mentioned.
+description: This skill should be used when working with GitButler, virtual branches, `but` commands, or when `--gitbutler` or `--but` flags are mentioned.
 ---
 
 # GitButler Version Control
@@ -269,7 +269,7 @@ but base update
 # Last resort: but init
 ```
 
-**See [REFERENCE.md](REFERENCE.md#troubleshooting-guide) for comprehensive troubleshooting**
+**See [references/reference.md](references/reference.md#troubleshooting-guide) for comprehensive troubleshooting**
 
 </troubleshooting>
 
@@ -293,8 +293,8 @@ but base update
 
 <references>
 
-- [REFERENCE.md](REFERENCE.md) — complete CLI reference and troubleshooting
-- [EXAMPLES.md](EXAMPLES.md) — real-world workflow patterns
+- [references/reference.md](references/reference.md) — complete CLI reference and troubleshooting
+- [references/examples.md](references/examples.md) — real-world workflow patterns
 - [multi-agent skill](../multi-agent/SKILL.md) — multi-agent coordination
 - [stack-workflows skill](../stack-workflows/SKILL.md) — stacked branches
 - [complete-branch skill](../complete-branch/SKILL.md) — merging to main
