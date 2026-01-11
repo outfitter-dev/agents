@@ -98,17 +98,24 @@ allowed-tools: Read, Grep, Glob, Bash(git *)
 ```
 
 **Tool names** (case-sensitive):
-- `Read` - Read file contents
-- `Write` - Write files
-- `Edit` - Edit files
-- `Grep` - Search file contents
-- `Glob` - Find files by pattern
-- `Bash` - Execute shell commands
-- `Task` - Create subagent tasks
-- `Skill` - Invoke skills
-- `TodoWrite` - Manage to-do list
-- `WebSearch` - Search the web
-- `WebFetch` - Fetch web content
+
+| Tool | Purpose | Returns |
+|------|---------|---------|
+| `Read` | Read file contents, images, PDFs, notebooks | File content with line numbers |
+| `Write` | Create or overwrite files | Confirmation |
+| `Edit` | Make targeted edits to existing files | Updated file snippet |
+| `MultiEdit` | Multiple edits to a single file atomically | Updated file |
+| `Grep` | Search file contents with regex patterns | Matching lines or file paths |
+| `Glob` | Find files by name/path patterns | List of matching file paths |
+| `Bash` | Execute shell commands | Command output |
+| `Task` | Launch subagents for complex/parallel work | Agent result or task ID |
+| `Skill` | Load skills into context | Skill content |
+| `TodoWrite` | Track agent tasks and progress | Confirmation |
+| `WebSearch` | Search the web for current information | Search results with URLs |
+| `WebFetch` | Fetch and process web page content | Processed page content |
+| `AskUserQuestion` | Present choices or gather input from user | User's selection(s) |
+| `NotebookEdit` | Edit Jupyter notebook cells | Updated notebook |
+| `KillShell` | Terminate a background shell process | Confirmation |
 
 **Bash patterns**:
 ```yaml
