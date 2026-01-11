@@ -13,6 +13,3 @@ agent-kit/test-output/
 
 # Deprecated/archived components
 .archive/
-
-# Scratch directory for agent work
-.scratch/
