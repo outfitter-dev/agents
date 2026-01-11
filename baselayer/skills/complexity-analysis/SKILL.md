@@ -1,7 +1,7 @@
 ---
 name: complexity-analysis
 version: 1.0.0
-description: Challenges over-engineering and identifies unnecessary complexity before implementation. Use when planning features, designing architecture, choosing frameworks, evaluating patterns, or when complexity, overengineering, simpler alternatives, complexity analysis, or keep it simple are mentioned. Helps teams avoid technical debt by validating that complexity is justified.
+description: This skill should be used when evaluating complexity, planning features, or when "over-engineering", "simpler", "is this overkill", or "keep it simple" are mentioned.
 ---
 
 # Challenge Complexity

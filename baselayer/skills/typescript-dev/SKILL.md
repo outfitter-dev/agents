@@ -1,23 +1,21 @@
 ---
 name: typescript-dev
 version: 1.0.0
-description: Comprehensive TypeScript patterns including strict type safety, modern TS 5.5+ features, and Zod runtime validation. Use when writing TypeScript, validating data, modernizing code, eliminating any types, implementing Result patterns, or when TypeScript, Zod, or strict types mentioned.
+description: This skill should be used when writing TypeScript, eliminating any types, implementing Zod validation, or when strict type safety is needed. Covers modern TS 5.5+ features and runtime validation patterns.
 ---
 
 # TypeScript Development
 
-Type-safe code → compile-time errors → runtime confidence.
+Type-safe code = compile-time errors = runtime confidence.
 
 <when_to_use>
 
 - Writing new TypeScript code
-- Eliminating `any` types and improving type precision
+- Eliminating `any` types
 - Using modern TypeScript 5.5+ features
 - Validating API inputs/outputs with Zod
 - Implementing Result types and discriminated unions
 - Creating branded types for domain concepts
-- Form and environment variable validation
-- Modernizing codebase patterns
 
 NOT for: runtime-only logic unrelated to types, non-TypeScript projects
 
@@ -45,147 +43,99 @@ NOT for: runtime-only logic unrelated to types, non-TypeScript projects
 }
 ```
 
-**Version requirements**:
-- TS 5.2+: `using`, `await using`, Disposable
-- TS 5.4+: NoInfer utility type
-- TS 5.5+: Inferred type predicates
-- TS 5.6+: Iterator helpers
-- TS 5.7+: Path rewriting
+**Version requirements**: TS 5.2+ (`using`), TS 5.4+ (`NoInfer`), TS 5.5+ (inferred predicates)
 
 </config>
 
-## Core Type Patterns
+## Core Patterns
 
 <eliminating_any>
 
-Problem: `any` defeats the type system.
+`any` defeats the type system. Use `unknown` + guards.
 
 ```typescript
 // ❌ NEVER
-function processData(data: any) {
-  return data.value.toString(); // Runtime error waiting
-}
+function process(data: any) { return data.value; }
 
-// ✅ ALWAYS — unknown + type guard
-function processData(data: unknown): string {
-  if (!isDataWithValue(data)) {
-    throw new TypeError('Invalid data structure');
-  }
+// ✅ ALWAYS
+function process(data: unknown): string {
+  if (!hasValue(data)) throw new TypeError('Invalid');
   return data.value.toString();
 }
 
-function isDataWithValue(value: unknown): value is { value: unknown } {
-  return (
-    typeof value === 'object' &&
-    value !== null &&
-    'value' in value
-  );
+function hasValue(v: unknown): v is { value: unknown } {
+  return typeof v === 'object' && v !== null && 'value' in v;
 }
 ```
 
-**Common patterns**:
-
-API responses:
+Validate at boundaries:
 
 ```typescript
 async function fetchUser(id: string): Promise<User> {
-  const response = await fetch(`/api/users/${id}`);
-  const data: unknown = await response.json();
-  return validateUser(data); // Validate at boundary
+  const data: unknown = await fetch(`/api/users/${id}`).then(r => r.json());
+  return UserSchema.parse(data);
 }
-```
-
-Event handlers:
-
-```typescript
-// ❌ any event
-function handleClick(event: any) { ... }
-
-// ✅ Specific type
-function handleClick(event: MouseEvent<HTMLButtonElement>) { ... }
 ```
 
 </eliminating_any>
 
 <result_types>
 
-Problem: Exceptions hide error cases from types.
+Exceptions hide errors from types. Result makes them explicit.
 
 ```typescript
-// Type shows all possible outcomes
 type Result<T, E = Error> =
   | { readonly ok: true; readonly value: T }
   | { readonly ok: false; readonly error: E };
 
 type UserError =
   | { readonly type: 'not-found'; readonly id: string }
-  | { readonly type: 'network'; readonly message: string }
-  | { readonly type: 'invalid-data'; readonly details: string };
+  | { readonly type: 'network'; readonly message: string };
 
 async function getUser(id: string): Promise<Result<User, UserError>> {
   try {
     const response = await fetch(`/api/users/${id}`);
-
-    if (!response.ok) {
-      if (response.status === 404) {
-        return { ok: false, error: { type: 'not-found', id } };
-      }
+    if (response.status === 404)
+      return { ok: false, error: { type: 'not-found', id } };
+    if (!response.ok)
       return { ok: false, error: { type: 'network', message: response.statusText } };
-    }
-
-    const data: unknown = await response.json();
-    if (!isUser(data)) {
-      return { ok: false, error: { type: 'invalid-data', details: 'Invalid shape' } };
-    }
-
-    return { ok: true, value: data };
-  } catch (error) {
-    return {
-      ok: false,
-      error: { type: 'network', message: error instanceof Error ? error.message : 'Unknown' }
-    };
+    return { ok: true, value: await response.json() };
+  } catch (e) {
+    return { ok: false, error: { type: 'network', message: String(e) } };
   }
 }
 
-// Usage forces error handling
+// Caller must handle
 const result = await getUser(id);
 if (!result.ok) {
   switch (result.error.type) {
     case 'not-found': return showNotFound(result.error.id);
-    case 'network': return showNetworkError(result.error.message);
-    case 'invalid-data': return showDataError(result.error.details);
-    default: return assertNever(result.error);
+    case 'network': return showError(result.error.message);
   }
 }
 return renderUser(result.value);
 ```
 
-See [result-pattern.md](references/result-pattern.md) for utilities.
+See [result-pattern.md](references/result-pattern.md) for utilities (`map`, `flatMap`, `combine`).
 
 </result_types>
 
 <discriminated_unions>
 
-Problem: Loose types allow illegal state combinations.
+Prevent illegal state combinations.
 
 ```typescript
-// ❌ Illegal states possible
-type Request = {
-  status: 'idle' | 'loading' | 'success' | 'error';
-  data?: User;
-  error?: string;
-};
-// { status: 'loading', data: user, error: 'Failed' } is legal but nonsensical
+// ❌ Allows { status: 'loading', data: user, error: 'Failed' }
+type Request = { status: 'idle'|'loading'|'success'|'error'; data?: User; error?: string; };
 
-// ✅ Only valid states possible
+// ✅ Only valid states
 type RequestState =
   | { readonly status: 'idle' }
   | { readonly status: 'loading' }
   | { readonly status: 'success'; readonly data: User }
   | { readonly status: 'error'; readonly error: string };
 
-// Exhaustive pattern matching
-function renderRequest(state: RequestState): JSX.Element {
+function render(state: RequestState): JSX.Element {
   switch (state.status) {
     case 'idle': return <div>Ready</div>;
     case 'loading': return <div>Loading...</div>;
@@ -204,107 +154,80 @@ function assertNever(value: never): never {
 
 <branded_types>
 
-Problem: Primitive types allow mixing incompatible values.
+Prevent mixing incompatible primitives.
 
 ```typescript
-// ❌ Can mix user/product IDs
-type UserId = string;
-type ProductId = string;
-await getUser(productId); // No error, but wrong!
-
-// ✅ Branded types prevent mixing
 declare const __brand: unique symbol;
-type Brand<T, TBrand extends string> = T & { readonly [__brand]: TBrand };
+type Brand<T, B extends string> = T & { readonly [__brand]: B };
 
 type UserId = Brand<string, 'UserId'>;
 type ProductId = Brand<string, 'ProductId'>;
 
 function createUserId(value: string): UserId {
-  if (!/^user-\d+$/.test(value)) {
-    throw new TypeError(`Invalid user ID: ${value}`);
-  }
+  if (!/^user-\d+$/.test(value)) throw new TypeError(`Invalid: ${value}`);
   return value as UserId;
 }
 
 const userId = createUserId('user-123');
-const productId = createProductId('prod-456');
-// await getUser(productId); // ❌ Type error!
-await getUser(userId); // ✅ Works
+// getUser(productId); // ❌ Type error
+getUser(userId);       // ✅ Works
 ```
 
-Security with branded types:
+Security:
 
 ```typescript
 type SanitizedHtml = Brand<string, 'SanitizedHtml'>;
 
-function sanitizeHtml(raw: string): SanitizedHtml {
+function sanitize(raw: string): SanitizedHtml {
   return escapeHtml(raw) as SanitizedHtml;
 }
 
-function renderHtml(html: SanitizedHtml): void {
-  document.body.innerHTML = html; // Safe
+function render(html: SanitizedHtml): void {
+  element.innerHTML = html; // Type proves sanitization
 }
-
-// renderHtml(userInput); // ❌ Type error
-renderHtml(sanitizeHtml(userInput)); // ✅ Must sanitize first
 ```
 
 See [branded-types.md](references/branded-types.md) for advanced patterns.
 
 </branded_types>
 
-## Modern TypeScript (5.5+)
+## Modern TypeScript (5.2+)
 
 <resource_management>
 
-TS 5.2+ introduced `using` for automatic resource cleanup.
+`using` for automatic cleanup (TS 5.2+):
 
 ```typescript
 class DatabaseConnection implements Disposable {
-  [Symbol.dispose]() {
-    this.close();
-  }
-  close() { /* cleanup */ }
+  [Symbol.dispose]() { this.close(); }
 }
 
-function queryDatabase() {
-  using connection = new DatabaseConnection();
-  // Automatically closed when scope exits
-  return connection.query('SELECT * FROM users');
-}
-
-// Async disposal
-class AsyncResource implements AsyncDisposable {
-  async [Symbol.asyncDispose]() {
-    await this.asyncCleanup();
-  }
-}
+function query() {
+  using conn = new DatabaseConnection();
+  return conn.query('SELECT * FROM users');
+} // Automatically closed
 
 async function asyncWork() {
   await using resource = new AsyncResource();
-  // Automatically disposed with await when scope exits
-}
+} // Disposed with await
 ```
 
-Use for: database connections, file handles, locks, HTTP connections, transactions.
+Use for: connections, file handles, locks, transactions.
 
 </resource_management>
 
 <satisfies_operator>
 
-TS 4.9+ validates type without widening inference.
+Validate type without widening (TS 4.9+):
 
 ```typescript
-// ✅ Preserve literal types while validating
 const config = {
   port: 3000,
-  host: 'localhost',
-  ssl: true
-} satisfies Record<string, string | number | boolean>;
+  host: 'localhost'
+} satisfies Record<string, string | number>;
 
-config.port // number (not string | number | boolean)
+config.port // number (not string | number)
 
-// Combine with as const for immutability
 const routes = {
   home: '/',
   user: '/user/:id'
@@ -313,92 +236,64 @@ const routes = {
 type HomeRoute = typeof routes.home; // '/'
 ```
 
-Use `satisfies` when: config objects, route definitions, schema definitions, API response shapes.
-
 </satisfies_operator>
 
 <const_type_parameters>
 
-TS 5.0+ preserves literal types through generics.
+Preserve literals through generics (TS 5.0+):
 
 ```typescript
-// ✅ Preserve literal types
 function makeTuple<const T extends readonly unknown[]>(...args: T): T {
   return args;
 }
-
-const result = makeTuple('a', 'b', 'c');
-// Type: ['a', 'b', 'c'] (not string[])
-
-// Route definitions
-function defineRoutes<const T extends Record<string, string>>(routes: T): T {
-  return routes;
-}
-
-const routes = defineRoutes({
-  home: '/',
-  user: '/user/:id'
-});
-// Type: { home: '/'; user: '/user/:id' }
+const result = makeTuple('a', 'b', 'c'); // ['a', 'b', 'c'] not string[]
 ```
 
 </const_type_parameters>
 
-<inferred_type_predicates>
+<inferred_predicates>
 
-TS 5.5+ automatically infers type predicates.
+TS 5.5+ auto-infers type predicates:
 
 ```typescript
-// ✅ Automatic inference (TS 5.5+)
 function isString(x: unknown) {
   return typeof x === 'string';
 }
-// TypeScript infers: (x: unknown) => x is string
+// Inferred: (x: unknown) => x is string
 
-const values: unknown[] = ['a', 1, 'b'];
 const strings = values.filter(isString); // string[]
-
-// Manual annotation still needed for negation
-function isNotNull<T>(x: T | null): x is T {
-  return x !== null;
-}
 ```
 
-</inferred_type_predicates>
+</inferred_predicates>
 
 <template_literals>
 
-Advanced string pattern matching at type level.
+Pattern matching at type level:
 
 ```typescript
 type Route = `/${string}`;
 type ApiRoute = `/api/v${number}/${string}`;
 
-// Pattern extraction
 type ExtractParams<T extends string> =
-  T extends `${string}:${infer Param}/${infer Rest}`
-    ? Param | ExtractParams<`/${Rest}`>
-    : T extends `${string}:${infer Param}`
-    ? Param
-    : never;
+  T extends `${string}:${infer P}/${infer R}` ? P | ExtractParams<`/${R}`>
+  : T extends `${string}:${infer P}` ? P : never;
 
 type Params = ExtractParams<'/user/:id/post/:postId'>; // 'id' | 'postId'
 ```
 
-See [modern-features.md](references/modern-features.md) for comprehensive coverage.
+See [modern-features.md](references/modern-features.md) for TS 5.5-5.8.
 
 </template_literals>
 
-## Zod Runtime Validation
-
-<zod_fundamentals>
+## Zod Validation
 
 Schema = runtime validation + TypeScript type.
+
+<zod_core>
 
 ```typescript
 import { z } from 'zod';
 
-// ✅ Schema defines both validation and type
 const UserSchema = z.object({
   id: z.string().uuid(),
   email: z.string().email(),
@@ -406,157 +301,28 @@ const UserSchema = z.object({
 });
 
 type User = z.infer<typeof UserSchema>;
-// Type extracted from schema, always in sync
 
-// safeParse returns Result-like object (preferred)
+// safeParse preferred
 const result = UserSchema.safeParse(data);
 if (!result.success) {
   console.error(result.error.issues);
   return;
 }
-const user = result.data; // typed as User
-
-// parse throws on failure
-try {
-  const user = UserSchema.parse(data);
-} catch (error) {
-  if (error instanceof z.ZodError) { /* handle */ }
-}
+const user = result.data;
 ```
 
-**Prefer safeParse**: explicit error handling, no exceptions.
+</zod_core>
 
-</zod_fundamentals>
+<zod_patterns>
 
-<zod_primitives>
-
-```typescript
-// Primitives
-z.string()
-z.number()
-z.boolean()
-z.date()
-z.unknown()  // prefer over z.any()
-
-// String refinements
-z.string().min(1)           // non-empty
-z.string().email()          // email format
-z.string().uuid()           // UUID format
-z.string().url()            // URL format
-z.string().regex(/pattern/) // custom pattern
-z.string().trim()           // trim whitespace
-
-// Number refinements
-z.number().int()            // integer
-z.number().positive()       // > 0
-z.number().min(0).max(100)  // range
-
-// Literals and enums
-z.literal("admin")
-z.enum(["admin", "user", "guest"])
-
-// Arrays
-z.array(z.string())
-z.array(z.number()).nonempty()
-
-// Optional/nullable
-z.string().optional()       // string | undefined
-z.string().nullable()       // string | null
-z.string().default("value") // never undefined
-```
-
-</zod_primitives>
-
-<zod_objects>
+**Discriminated unions** (preferred over z.union):
 
 ```typescript
-const UserSchema = z.object({
-  id: z.string(),
-  email: z.string().email(),
-  name: z.string(),
-  age: z.number().optional()
-});
-
-// Composition
-const BaseSchema = z.object({ id: z.string() });
-const ExtendedSchema = BaseSchema.extend({ name: z.string() });
-
-// Pick/omit
-const PublicUser = UserSchema.pick({ id: true, name: true });
-const UserWithoutEmail = UserSchema.omit({ email: true });
-
-// Partial for updates
-const UserUpdate = UserSchema.partial();
-const DeepPartial = UserSchema.deepPartial();
-
-// Strict vs passthrough
-UserSchema.strict().parse(data);      // Error on extra fields
-UserSchema.passthrough().parse(data); // Keep extra fields
-UserSchema.strip().parse(data);       // Remove extra (default)
-```
-
-</zod_objects>
-
-<zod_discriminated_unions>
-
-```typescript
-// ✅ Discriminated union (preferred)
-const Result = z.discriminatedUnion("status", [
-  z.object({ status: z.literal("success"), data: z.string() }),
-  z.object({ status: z.literal("error"), error: z.string() })
-]);
-
-// API response pattern
 const ApiResponse = z.discriminatedUnion("type", [
-  z.object({
-    type: z.literal("success"),
-    data: z.unknown(),
-    timestamp: z.string().datetime()
-  }),
-  z.object({
-    type: z.literal("error"),
-    code: z.string(),
-    message: z.string()
-  }),
-  z.object({
-    type: z.literal("validation_error"),
-    errors: z.array(z.object({
-      field: z.string(),
-      message: z.string()
-    }))
-  })
+  z.object({ type: z.literal("success"), data: z.unknown() }),
+  z.object({ type: z.literal("error"), code: z.string(), message: z.string() })
 ]);
-
-type ApiResponse = z.infer<typeof ApiResponse>;
 ```
-
-</zod_discriminated_unions>
-
-<zod_transforms>
-
-```typescript
-// Coercion (parse from string)
-z.coerce.number()  // "42" → 42
-z.coerce.boolean() // "true" → true
-z.coerce.date()    // "2024-01-01" → Date
-
-// Custom transforms
-const trimmedString = z.string().transform(s => s.trim());
-
-// Transform with validation
-const positiveNumber = z.number()
-  .refine(n => n > 0, { message: "Must be positive" });
-
-// Async refinement
-const uniqueEmail = z.string().email()
-  .refine(async (email) => {
-    return !(await checkEmailExists(email));
-  }, { message: "Email already exists" });
-```
-
-</zod_transforms>
-
-<zod_integration>
 
 **Environment variables**:
 
@@ -564,241 +330,123 @@ const uniqueEmail = z.string().email()
 const EnvSchema = z.object({
   NODE_ENV: z.enum(['development', 'production', 'test']).default('development'),
   DATABASE_URL: z.string().url(),
-  PORT: z.coerce.number().int().positive().default(3000),
-  API_KEY: z.string().min(32)
+  PORT: z.coerce.number().int().positive().default(3000)
 });
-
 const env = EnvSchema.parse(process.env);
 ```
 
-**API validation with Hono**:
+**API validation (Hono)**:
 
 ```typescript
 import { zValidator } from '@hono/zod-validator';
 
 app.post('/users', zValidator('json', UserSchema), (c) => {
-  const user = c.req.valid('json'); // typed as User
+  const user = c.req.valid('json');
   return c.json(user);
 });
 ```
 
-See [zod-schemas.md](references/zod-schemas.md) and [zod-integration.md](references/zod-integration.md).
+See:
+- [zod-building-blocks.md](references/zod-building-blocks.md) - primitives, refinements, transforms
+- [zod-schemas.md](references/zod-schemas.md) - composition patterns
+- [zod-integration.md](references/zod-integration.md) - API/form/env integration
 
-</zod_integration>
+</zod_patterns>
 
-## Type Guards & Utilities
-
-<type_guards>
+## Type Guards
 
 ```typescript
-// User-defined type guards
-function isString(value: unknown): value is string {
-  return typeof value === 'string';
+// User-defined
+function isString(v: unknown): v is string {
+  return typeof v === 'string';
 }
 
-function isStringArray(value: unknown): value is string[] {
-  return Array.isArray(value) && value.every(isString);
-}
-
-// Assertion functions
-function assertIsString(value: unknown): asserts value is string {
-  if (typeof value !== 'string') {
-    throw new TypeError('Value must be a string');
-  }
+// Assertion
+function assertString(v: unknown): asserts v is string {
+  if (typeof v !== 'string') throw new TypeError('Expected string');
 }
 
 // With noUncheckedIndexedAccess
 const users: User[] = getUsers();
-const first = users[0]; // Type: User | undefined
-
-if (first !== undefined) {
-  processUser(first);
-}
+const first = users[0]; // User | undefined
+if (first !== undefined) processUser(first);
 ```
 
-</type_guards>
+See [advanced-types.md](references/advanced-types.md) for utilities.
 
-<type_utilities>
+## TSDoc
 
-```typescript
-// DeepReadonly
-type DeepReadonly<T> = {
-  readonly [P in keyof T]: T[P] extends object ? DeepReadonly<T[P]> : T[P];
-};
-
-// Option type
-type Option<T> =
-  | { readonly some: true; readonly value: T }
-  | { readonly some: false };
-
-function fromNullable<T>(value: T | null | undefined): Option<T> {
-  if (value == null) return { some: false };
-  return { some: true, value };
-}
-
-// NoInfer (TS 5.4+)
-function createStore<T>(
-  initial: T,
-  middleware?: (value: NoInfer<T>) => NoInfer<T>
-) {
-  // middleware type won't influence T inference
-}
-```
-
-</type_utilities>
-
-<tsdoc>
-
-Types document structure; TSDoc documents intent, constraints, and usage. **TSDoc is critical for agentic development** — AI agents parse documentation to understand code semantics, constraints, and usage patterns that types alone cannot express.
-
-**Why TSDoc matters for AI agents**:
-- Agents read TSDoc to understand **why** code exists, not just **what** it does
-- Examples in `@example` blocks give agents concrete usage patterns to follow
-- `@throws` and `@remarks` communicate constraints agents would otherwise miss
-- Well-documented code lets agents work faster with fewer mistakes
-
-**Document liberally**:
-- All exported functions, classes, types, and interfaces
-- Parameters with any constraints or expected patterns
-- Return values — especially when semantics aren't obvious
-- Thrown errors and edge cases
-- Related APIs via `@see`
+Types show structure. TSDoc shows intent. Critical for AI agents.
 
 ```typescript
 /**
  * Authenticates user and returns session token.
- *
  * @param credentials - User login credentials
  * @returns Session token valid for 24 hours
  * @throws {AuthenticationError} Invalid credentials
- * @throws {RateLimitError} Too many failed attempts
- *
  * @example
- * ```ts
  * const token = await authenticate({ email, password });
- * headers.set('Authorization', `Bearer ${token}`);
- * ```
  */
-export async function authenticate(
-  credentials: Credentials
-): Promise<SessionToken> {
-  // ...
-}
-
-/**
- * User account with profile information.
- *
- * @remarks
- * Email is unique across the system and used for authentication.
- * The `role` field determines access permissions.
- */
-export interface User {
-  /** Unique identifier (UUID v4) */
-  readonly id: UserId;
-  /** Primary email, must be verified */
-  email: string;
-  /** Display name shown in UI */
-  name: string;
-  /** Access level - defaults to 'user' on creation */
-  role: 'admin' | 'user' | 'guest';
-}
-
-/**
- * Result of a validation operation.
- *
- * @typeParam T - The validated data type
- * @typeParam E - The error type (defaults to ValidationError)
- */
-export type ValidationResult<T, E = ValidationError> =
-  | { readonly valid: true; readonly data: T }
-  | { readonly valid: false; readonly errors: E[] };
+export async function authenticate(credentials: Credentials): Promise<SessionToken>;
 ```
 
-**Common TSDoc tags**:
+Document: all exports, parameters with constraints, thrown errors, non-obvious returns.
 
-| Tag | Purpose |
-|-----|---------|
-| `@param` | Document parameter purpose/constraints |
-| `@returns` | Document return value semantics |
-| `@throws` | Document exceptions that may be thrown |
-| `@example` | Provide usage example |
-| `@remarks` | Additional context beyond summary |
-| `@typeParam` | Document generic type parameters |
-| `@see` | Reference related APIs |
-| `@deprecated` | Mark deprecated with migration path |
-
-**Inline comments** for non-obvious logic:
-
-```typescript
-function calculateDiscount(order: Order): number {
-  // Loyalty discount: 5% after 10 orders, 10% after 50
-  const loyaltyMultiplier = order.customerOrderCount > 50
-    ? 0.10
-    : order.customerOrderCount > 10
-      ? 0.05
-      : 0;
-
-  // Holiday promotion takes precedence over loyalty
-  if (order.holidayPromoApplied) {
-    return order.total * 0.15;
-  }
-
-  return order.total * loyaltyMultiplier;
-}
-```
-
-</tsdoc>
+See [tsdoc-patterns.md](references/tsdoc-patterns.md) for comprehensive guide.
 
 <rules>
 
 ALWAYS:
-- Strict TypeScript configuration enabled
+- Strict TypeScript config enabled
 - Type-only imports: `import type { User } from './types'`
 - Const assertions for literal types
-- Exhaustive pattern matching with `assertNever`
-- Runtime validation at system boundaries (Zod)
+- Exhaustive matching with `assertNever`
+- Runtime validation at boundaries (Zod)
 - Branded types for domain/sensitive data
 - Result types for error-prone operations
-- Use `satisfies` to preserve literal inference
-- Use `using` for resources with cleanup
-- TSDoc on all exports — agents depend on it (types show structure, TSDoc shows intent)
+- `satisfies` for literal inference
+- `using` for resources with cleanup
+- TSDoc on all exports
 
 NEVER:
-- `any` type (use `unknown` + guards)
+- `any` (use `unknown` + guards)
 - `@ts-ignore` (fix types or document)
 - TypeScript enums (use const assertions or z.enum)
 - Non-null assertions `!` (use guards)
-- Loose state representations (use discriminated unions)
-- Hidden error cases (use Result types)
-- Manual cleanup when `using` applies
+- Loose state (use discriminated unions)
+- Hidden errors (use Result)
 
 PREFER:
-- safeParse over parse (explicit error handling)
+- safeParse over parse
 - z.discriminatedUnion over z.union
-- Inferred type predicates (TS 5.5+) over manual
-- Const type parameters for literal preservation
+- Inferred predicates (TS 5.5+)
+- Const type parameters for literals
 
 </rules>
 
 <references>
 
 **Type Patterns:**
-- [result-pattern.md](references/result-pattern.md) — Result/Either utilities
-- [branded-types.md](references/branded-types.md) — advanced branded type patterns
-- [advanced-types.md](references/advanced-types.md) — template literals, utilities
+- [result-pattern.md](references/result-pattern.md) - Result/Either utilities
+- [branded-types.md](references/branded-types.md) - advanced branded patterns
+- [advanced-types.md](references/advanced-types.md) - template literals, utilities
 
 **Modern Features:**
-- [modern-features.md](references/modern-features.md) — TS 5.5-5.8 features
-- [migration-paths.md](references/migration-paths.md) — upgrading TypeScript
+- [modern-features.md](references/modern-features.md) - TS 5.5-5.8
+- [migration-paths.md](references/migration-paths.md) - upgrading TypeScript
 
 **Zod:**
-- [zod-schemas.md](references/zod-schemas.md) — comprehensive schema patterns
-- [zod-integration.md](references/zod-integration.md) — API, forms, env, database
+- [zod-building-blocks.md](references/zod-building-blocks.md) - primitives, transforms
+- [zod-schemas.md](references/zod-schemas.md) - composition patterns
+- [zod-integration.md](references/zod-integration.md) - API, forms, env
+
+**TSDoc:**
+- [tsdoc-patterns.md](references/tsdoc-patterns.md) - documentation patterns
 
 **Examples:**
-- [api-response.md](examples/api-response.md) — end-to-end type-safe API
-- [form-validation.md](examples/form-validation.md) — Zod + React Hook Form
-- [resource-management.md](examples/resource-management.md) — using declarations
-- [state-machine.md](examples/state-machine.md) — discriminated union patterns
+- [api-response.md](examples/api-response.md) - end-to-end type-safe API
+- [form-validation.md](examples/form-validation.md) - Zod + React Hook Form
+- [resource-management.md](examples/resource-management.md) - using declarations
+- [state-machine.md](examples/state-machine.md) - discriminated union patterns
 
 </references>

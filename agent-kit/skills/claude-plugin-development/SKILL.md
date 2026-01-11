@@ -1,6 +1,6 @@
 ---
 name: claude-plugin-development
-description: Develops Claude Code plugins through the complete lifecycle from initialization to marketplace distribution. Covers plugin structure, configuration, component authoring, validation, packaging, and publishing. Use when creating Claude Code plugins, setting up plugin projects, distributing plugins to teams, or publishing to marketplaces.
+description: This skill should be used when creating plugins, publishing to marketplaces, or when "plugin.json", "marketplace", "create plugin", or "distribute plugin" are mentioned.
 version: 1.0.0
 user-invocable: true
 ---

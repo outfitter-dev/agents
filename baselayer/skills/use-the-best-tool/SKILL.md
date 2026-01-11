@@ -1,7 +1,7 @@
 ---
-name: Use the Best Tool
+name: use-the-best-tool
 version: 1.0.0
-description: Detect available CLI tools, select optimal tool for tasks, research alternatives when tools underperform. Use when choosing between CLI tools, tool seems slow or limited, need to search/view/process files, checking available tooling.
+description: This skill should be used when choosing CLI tools, a tool seems slow, or when "best tool", "which tool", or "tool alternatives" are mentioned.
 ---
 
 # Use the Best Tool

@@ -1,7 +1,7 @@
 ---
 name: hono-dev
 version: 1.0.0
-description: Type-safe API development with Hono framework. Covers route chaining for type inference, factory patterns, Zod OpenAPI integration, error handling, RPC client, and testing patterns. Use when building APIs with Hono, using hc client, or when Hono, RPC, or OpenAPI mentioned.
+description: This skill should be used when building APIs with Hono, using hc client, implementing OpenAPI, or when "Hono", "RPC", or "type-safe API" are mentioned.
 ---
 
 # Hono API Development

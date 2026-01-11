@@ -1,7 +1,7 @@
 ---
 name: subagent-coordination
 version: 2.1.0
-description: Orchestrate and coordinate baselayer subagents for multi-agent workflows. Dispatch tasks to specialized agents, delegate work across roles, and manage complex scenarios. Load when coordinating agents, delegating tasks, or deciding which agent handles what.
+description: This skill should be used when coordinating agents, delegating tasks to specialists, or when "dispatch agents", "which agent", or "multi-agent" are mentioned.
 ---
 
 # Subagent Coordination

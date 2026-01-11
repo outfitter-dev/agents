@@ -1,7 +1,7 @@
 ---
 name: claude-rules-authoring
 version: 1.0.0
-description: Creates and validates .claude/rules/ files for project conventions. Use when creating rule files, organizing project instructions, or when .claude/rules/, CLAUDE.md organization, project conventions, or `create rule` are mentioned.
+description: This skill should be used when creating rule files, organizing conventions, or when ".claude/rules/", "FORMATTING.md", "create rule", or "project conventions" are mentioned.
 allowed-tools: Read Write Edit Grep Glob
 ---
 

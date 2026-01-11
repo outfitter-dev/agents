@@ -1,7 +1,7 @@
 ---
 name: claude-hook-authoring
 version: 2.0.0
-description: Creates event hooks for Claude Code automation with proper configuration, matchers, input/output handling, and security. Supports all 12 hook events (PreToolUse, PostToolUse, PostToolUseFailure, PermissionRequest, UserPromptSubmit, Notification, Stop, SubagentStart, SubagentStop, PreCompact, SessionStart, SessionEnd) and both prompt-based and command hooks. Use when building automation, creating hooks, setting up event handlers, configuring tool interception, or when users mention hooks, automation, event-driven workflows, PreToolUse, PostToolUse, or validation.
+description: This skill should be used when creating hooks, automating workflows, or when "PreToolUse", "PostToolUse", "hooks.json", "event handler", or "create hook" are mentioned.
 user-invocable: true
 ---
 

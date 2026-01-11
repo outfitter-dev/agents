@@ -1,7 +1,7 @@
 ---
 name: ai-sdk
 version: 1.0.0
-description: Vercel AI SDK v6 patterns for streaming chat with useChat, streamText, generateObject, and ToolLoopAgent. Covers structured outputs, tool approval flows, and agent workflows. Load when building AI-powered features with Next.js, React, or Node.js using ai sdk or vercel ai packages.
+description: This skill should be used when building AI features with Vercel AI SDK, using useChat, streamText, or generateObject, or when "AI SDK", "streaming chat", or "structured outputs" are mentioned.
 ---
 
 # Vercel AI SDK v6
