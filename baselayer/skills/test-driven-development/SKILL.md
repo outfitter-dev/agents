@@ -1,7 +1,7 @@
 ---
 name: test-driven-development
 version: 2.0.0
-description: Applies disciplined test-driven development (TDD) using Red-Green-Refactor cycles with modern TypeScript/Bun and Rust tooling. Use when implementing features with TDD, writing tests first, refactoring with test coverage, bug fixes requiring test reproduction, or when TDD, test-first, red-green-refactor, testing methodology, or --tdd flag are mentioned. Covers test quality, mutation testing, and both TypeScript and Rust workflows.
+description: Applies disciplined test-driven development (TDD) using Red-Green-Refactor cycles with modern TypeScript/Bun and Rust tooling. Use when implementing features with TDD, writing tests first, refactoring with test coverage, bug fixes requiring test reproduction, or when TDD, test-first, red-green-refactor, or testing methodology are mentioned. Covers test quality, mutation testing, and both TypeScript and Rust workflows.
 ---
 
 # Test-Driven Development

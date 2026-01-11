@@ -1,7 +1,7 @@
 ---
 name: debugging-and-diagnosis
 version: 2.0.0
-description: Systematic debugging methodology using evidence-based investigation to identify root causes. Use when encountering bugs, errors, unexpected behavior, failing tests, or intermittent issues. Enforces four-phase framework (root cause investigation, pattern analysis, hypothesis testing, implementation) with the iron law NO FIXES WITHOUT ROOT CAUSE FIRST. Covers runtime errors, logic bugs, integration failures, and performance issues. Useful when debugging, troubleshooting, investigating failures, or when --debug flag is mentioned.
+description: Systematic debugging methodology using evidence-based investigation to identify root causes. Use when encountering bugs, errors, unexpected behavior, failing tests, or intermittent issues. Enforces four-phase framework (root cause investigation, pattern analysis, hypothesis testing, implementation) with the iron law NO FIXES WITHOUT ROOT CAUSE FIRST. Covers runtime errors, logic bugs, integration failures, and performance issues. Useful when debugging, troubleshooting, or investigating failures.
 ---
 
 # Systematic Debugging

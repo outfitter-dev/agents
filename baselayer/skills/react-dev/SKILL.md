@@ -1,7 +1,7 @@
 ---
 name: react-dev
 version: 1.0.0
-description: Type-safe React patterns for React 18-19 including generic components, proper event typing, Server Components, Actions, and TanStack Router integration. Use when building React components with TypeScript, typing hooks, handling events, or when React TypeScript, React 19, Server Components, or --react-dev flag mentioned.
+description: Type-safe React patterns for React 18-19 including generic components, proper event typing, Server Components, Actions, and TanStack Router integration. Use when building React components with TypeScript, typing hooks, handling events, or when React TypeScript, React 19, Server Components, or react-dev mentioned.
 ---
 
 # React TypeScript

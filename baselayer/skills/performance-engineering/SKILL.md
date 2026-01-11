@@ -1,7 +1,7 @@
 ---
 name: performance-engineering
 version: 1.0.0
-description: Performance profiling, optimization techniques, and benchmarking methodology. Use when profiling code, optimizing bottlenecks, benchmarking implementations, analyzing memory usage, improving latency, or when performance, profiling, benchmarking, optimization, memory-leak, or --perf are mentioned.
+description: Performance profiling, optimization techniques, and benchmarking methodology. Use when profiling code, optimizing bottlenecks, benchmarking implementations, analyzing memory usage, improving latency, or when performance, profiling, benchmarking, optimization, memory-leak, or perf are mentioned.
 ---
 
 # Performance Engineering

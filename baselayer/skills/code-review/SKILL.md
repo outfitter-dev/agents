@@ -1,7 +1,7 @@
 ---
 name: code-review
 version: 1.0.0
-description: Systematic pre-commit quality gate using checklist-based review methodology with announcement protocol. Use when reviewing code before commit, performing quality gates, conducting systematic code review, or when fresh-eyes, pre-commit-review, quality-gate, or --review are mentioned. Reviewer agent should load this for thorough reviews.
+description: Systematic pre-commit quality gate using checklist-based review methodology with announcement protocol. Use when reviewing code before commit, performing quality gates, conducting systematic code review, or when fresh-eyes, pre-commit-review, quality-gate, or review are mentioned. Reviewer agent should load this for thorough reviews.
 ---
 
 # Fresh Eyes Review

@@ -1,7 +1,7 @@
 ---
 name: Pathfinding
 version: 2.0.0
-description: Collaborative Q&A to clarify unclear requirements. Use when user wants to figure something out, brainstorm ideas, work through a challenge, explore approaches, or plan features. Triggers would be when requirements are unclear, when exploring an idea, when planning, or when a user explicitly mentions pathfind(ing), brainstorm(ing), clarify(ing), figur(ing) out, work(ing) through, or `--pathfind`.
+description: Collaborative Q&A to clarify unclear requirements. Use when user wants to figure something out, brainstorm ideas, work through a challenge, explore approaches, or plan features. Triggers would be when requirements are unclear, when exploring an idea, when planning, or when a user explicitly mentions pathfind(ing), brainstorm(ing), clarify(ing), figur(ing) out, or work(ing) through.
 ---
 
 # Pathfinding

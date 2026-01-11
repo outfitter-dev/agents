@@ -1,7 +1,7 @@
 ---
 name: bun-dev
 version: 1.0.0
-description: Bun runtime patterns including native APIs, SQLite, testing, HTTP server, WebSocket, file handling, and shell operations. Use when working with Bun runtime, bun:sqlite, Bun.serve, bun:test, or when Bun, --bun flag, SQLite, or Bun-specific patterns mentioned.
+description: Bun runtime patterns including native APIs, SQLite, testing, HTTP server, WebSocket, file handling, and shell operations. Use when working with Bun runtime, bun:sqlite, Bun.serve, bun:test, or when Bun, SQLite, or Bun-specific patterns mentioned.
 ---
 
 # Bun Development

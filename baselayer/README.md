@@ -14,40 +14,51 @@ Core development methodology skills for Claude Code. Provides disciplined approa
 
 ## What's Included
 
-### Skills (18)
+### Skills (26)
 
 | Skill | Purpose |
 |-------|---------|
-| **tdd** | Test-driven development with Red-Green-Refactor cycles |
-| **debugging** | Systematic root cause investigation (no fixes without understanding) |
-| **analysis** | Evidence-based investigation methodology |
-| **software-architecture** | System design with technology selection frameworks |
-| **research-and-report** | Multi-source technical research with citations |
-| **pathfinding** | Collaborative Q&A for unclear requirements |
-| **complexity-analysis** | Pushback against over-engineering |
-| **patternify** | Extract reusable patterns from conversations |
-| **code-review** | Pre-commit quality gate checklist |
-| **scenario-testing** | End-to-end testing without mocks |
-| **software-engineering** | Engineering judgment and decision principles |
-| **conversation-analysis** | Signal extraction from chat history |
-| **typescript-dev** | TypeScript patterns and strict typing |
+| **ai-sdk** | Vercel AI SDK patterns for streaming, structured outputs, and agents |
 | **bun-dev** | Bun runtime APIs and patterns |
+| **cli-development-guidelines** | Redirect to cli-dev plugin |
+| **code-review** | Pre-commit quality gate checklist |
+| **codebase-analysis** | Evidence-based codebase investigation methodology |
+| **complexity-analysis** | Pushback against over-engineering |
+| **conversation-analysis** | Signal extraction from chat history |
+| **debugging-and-diagnosis** | Systematic root cause investigation (no fixes without understanding) |
 | **hono-dev** | Type-safe Hono API development |
-| **react-dev** | React 18-19 TypeScript patterns |
+| **pathfinding** | Collaborative Q&A for unclear requirements |
+| **pattern-analysis** | Identify and extract reusable patterns |
+| **patternify** | Extract reusable patterns from conversations |
 | **performance-engineering** | Profiling and optimization |
+| **react-dev** | React 18-19 TypeScript patterns |
+| **report-findings** | Structure and present research findings |
+| **research-and-report** | Multi-source technical research with citations |
+| **root-cause-analysis** | Systematic problem investigation methodology |
+| **scenario-testing** | End-to-end testing without mocks |
 | **security-engineering** | Security auditing and vulnerability detection |
+| **software-architecture** | System design with technology selection frameworks |
+| **software-engineering** | Engineering judgment and decision principles |
+| **status-reporting** | Comprehensive status reports across VCS, PRs, issues, CI/CD |
+| **subagent-coordination** | Orchestrate baselayer subagents for complex tasks |
+| **test-driven-development** | Test-driven development with Red-Green-Refactor cycles |
+| **typescript-dev** | TypeScript patterns and strict typing |
+| **use-the-best-tool** | Detect and select optimal CLI tools for tasks |
 
-### Agents (7)
+### Agents (10)
 
 | Agent | Role |
 |-------|------|
-| **developer** | Build, fix, implement, refactor |
 | **analyst** | Investigate, research, explore |
-| **reviewer** | Review, critique, check, audit |
-| **tester** | Test, validate, verify |
-| **specialist** | Domain-specific tasks (CI/CD, deploy) |
-| **skeptic** | Challenge assumptions and complexity |
+| **debugger** | Debug, diagnose, troubleshoot, trace |
+| **librarian** | Find documentation, API references |
 | **pattern-analyzer** | Identify patterns and abstractions |
+| **ranger** | Review, critique, check, audit |
+| **scout** | Status reports, project health, what's changed |
+| **senior-dev** | Build, fix, implement, refactor |
+| **skeptic** | Challenge assumptions and complexity |
+| **specialist** | Domain-specific tasks (CI/CD, deploy) |
+| **tester** | Test, validate, verify |
 
 ## Usage
 
@@ -106,8 +117,8 @@ Baselayer enforces disciplined development practices:
 baselayer/
 ├── .claude-plugin/
 │   └── plugin.json
-├── skills/           # 18 development methodology skills
-├── agents/           # 7 specialized agents
+├── skills/           # 26 development methodology skills
+├── agents/           # 10 specialized agents
 └── README.md
 ```
 
@@ -124,11 +135,6 @@ This plugin uses only standard Claude Code tools:
 | Scripts | no | Instructions-only, no executable scripts |
 
 See [SECURITY.md](../SECURITY.md) for the full security model.
-
-## Related Plugins
-
-- **agent-kit** — Build your own Claude Code plugins
-- **gitbutler** — Virtual branch workflows for parallel development
 
 ## License
 

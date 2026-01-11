@@ -1,7 +1,7 @@
 ---
 name: claude-agent-development
 version: 1.0.0
-description: Creates and validates specialized subagents for Claude Code. Covers the full workflow from discovery through validation. Use when building agents, editing agent files, creating subagents, validating agent quality, or when agent development, subagent configuration, Task tool usage, or `--validate-agent` are mentioned. Different from Skills - agents are invoked via Task tool.
+description: Creates and validates specialized subagents for Claude Code. Covers the full workflow from discovery through validation. Use when building agents, editing agent files, creating subagents, validating agent quality, or when agent development, subagent configuration, Task tool usage, or `validate agent` are mentioned. Different from Skills - agents are invoked via Task tool.
 user-invocable: true
 ---
 

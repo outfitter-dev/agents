@@ -1,7 +1,7 @@
 ---
 name: typescript-dev
 version: 1.0.0
-description: Comprehensive TypeScript patterns including strict type safety, modern TS 5.5+ features, and Zod runtime validation. Use when writing TypeScript, validating data, modernizing code, eliminating any types, implementing Result patterns, or when TypeScript, Zod, strict types, or --ts-dev flag mentioned.
+description: Comprehensive TypeScript patterns including strict type safety, modern TS 5.5+ features, and Zod runtime validation. Use when writing TypeScript, validating data, modernizing code, eliminating any types, implementing Result patterns, or when TypeScript, Zod, or strict types mentioned.
 ---
 
 # TypeScript Development
@@ -647,6 +647,108 @@ function createStore<T>(
 
 </type_utilities>
 
+<tsdoc>
+
+Types document structure; TSDoc documents intent, constraints, and usage. **TSDoc is critical for agentic development** — AI agents parse documentation to understand code semantics, constraints, and usage patterns that types alone cannot express.
+
+**Why TSDoc matters for AI agents**:
+- Agents read TSDoc to understand **why** code exists, not just **what** it does
+- Examples in `@example` blocks give agents concrete usage patterns to follow
+- `@throws` and `@remarks` communicate constraints agents would otherwise miss
+- Well-documented code lets agents work faster with fewer mistakes
+
+**Document liberally**:
+- All exported functions, classes, types, and interfaces
+- Parameters with any constraints or expected patterns
+- Return values — especially when semantics aren't obvious
+- Thrown errors and edge cases
+- Related APIs via `@see`
+
+```typescript
+/**
+ * Authenticates user and returns session token.
+ *
+ * @param credentials - User login credentials
+ * @returns Session token valid for 24 hours
+ * @throws {AuthenticationError} Invalid credentials
+ * @throws {RateLimitError} Too many failed attempts
+ *
+ * @example
+ * ```ts
+ * const token = await authenticate({ email, password });
+ * headers.set('Authorization', `Bearer ${token}`);
+ * ```
+ */
+export async function authenticate(
+  credentials: Credentials
+): Promise<SessionToken> {
+  // ...
+}
+
+/**
+ * User account with profile information.
+ *
+ * @remarks
+ * Email is unique across the system and used for authentication.
+ * The `role` field determines access permissions.
+ */
+export interface User {
+  /** Unique identifier (UUID v4) */
+  readonly id: UserId;
+  /** Primary email, must be verified */
+  email: string;
+  /** Display name shown in UI */
+  name: string;
+  /** Access level - defaults to 'user' on creation */
+  role: 'admin' | 'user' | 'guest';
+}
+
+/**
+ * Result of a validation operation.
+ *
+ * @typeParam T - The validated data type
+ * @typeParam E - The error type (defaults to ValidationError)
+ */
+export type ValidationResult<T, E = ValidationError> =
+  | { readonly valid: true; readonly data: T }
+  | { readonly valid: false; readonly errors: E[] };
+```
+
+**Common TSDoc tags**:
+
+| Tag | Purpose |
+|-----|---------|
+| `@param` | Document parameter purpose/constraints |
+| `@returns` | Document return value semantics |
+| `@throws` | Document exceptions that may be thrown |
+| `@example` | Provide usage example |
+| `@remarks` | Additional context beyond summary |
+| `@typeParam` | Document generic type parameters |
+| `@see` | Reference related APIs |
+| `@deprecated` | Mark deprecated with migration path |
+
+**Inline comments** for non-obvious logic:
+
+```typescript
+function calculateDiscount(order: Order): number {
+  // Loyalty discount: 5% after 10 orders, 10% after 50
+  const loyaltyMultiplier = order.customerOrderCount > 50
+    ? 0.10
+    : order.customerOrderCount > 10
+      ? 0.05
+      : 0;
+
+  // Holiday promotion takes precedence over loyalty
+  if (order.holidayPromoApplied) {
+    return order.total * 0.15;
+  }
+
+  return order.total * loyaltyMultiplier;
+}
+```
+
+</tsdoc>
+
 <rules>
 
 ALWAYS:
@@ -659,6 +761,7 @@ ALWAYS:
 - Result types for error-prone operations
 - Use `satisfies` to preserve literal inference
 - Use `using` for resources with cleanup
+- TSDoc on all exports — agents depend on it (types show structure, TSDoc shows intent)
 
 NEVER:
 - `any` type (use `unknown` + guards)

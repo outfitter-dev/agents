@@ -1,7 +1,7 @@
 ---
 name: security-engineering
 version: 1.0.0
-description: Security auditing and vulnerability detection using OWASP patterns, CWE analysis, and threat modeling. Use when auditing code for security issues, reviewing authentication/authorization, evaluating input validation, analyzing cryptographic usage, reviewing dependency security, or when security-audit, vulnerability-scan, OWASP, threat-model, or --security are mentioned.
+description: Security auditing and vulnerability detection using OWASP patterns, CWE analysis, and threat modeling. Use when auditing code for security issues, reviewing authentication/authorization, evaluating input validation, analyzing cryptographic usage, reviewing dependency security, or when security-audit, vulnerability-scan, OWASP, threat-model, or security are mentioned.
 ---
 
 # Security Engineering

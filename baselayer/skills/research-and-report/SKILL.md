@@ -1,7 +1,7 @@
 ---
 name: research-and-report
 version: 2.0.0
-description: Systematic technical research combining multi-source discovery with evidence-based analysis. Delivers authoritative recommendations backed by credible sources. Use when researching best practices, evaluating technologies, comparing approaches, discovering documentation, troubleshooting with authoritative sources, or when research, documentation, evaluation, comparison, or `--research` are mentioned.
+description: Systematic technical research combining multi-source discovery with evidence-based analysis. Delivers authoritative recommendations backed by credible sources. Use when researching best practices, evaluating technologies, comparing approaches, discovering documentation, troubleshooting with authoritative sources, or when research, documentation, evaluation, or comparison are mentioned.
 ---
 
 # Research
