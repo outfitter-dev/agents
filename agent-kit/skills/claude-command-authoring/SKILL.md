@@ -107,7 +107,7 @@ Before writing code, clarify:
 
 **Key questions**:
 - Will this be shared with the team (project) or personal use?
-- Does it need bash execution or file references?
+- Does it require bash execution or file references?
 - Should tool access be restricted for safety?
 
 ---

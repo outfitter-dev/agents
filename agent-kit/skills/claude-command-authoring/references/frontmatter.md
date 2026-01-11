@@ -106,7 +106,7 @@ allowed-tools: Read, Grep, Glob, Bash(git *)
 - `Bash` - Execute shell commands
 - `Task` - Create subagent tasks
 - `Skill` - Invoke skills
-- `TodoWrite` - Manage todo list
+- `TodoWrite` - Manage to-do list
 - `WebSearch` - Search the web
 - `WebFetch` - Fetch web content
 
@@ -170,10 +170,9 @@ model: opus
 ```
 
 **Use cases**:
-- Simple commands (formatting, simple lookups) -> Haiku
-- Standard development tasks -> Sonnet (default)
-- Complex analysis, security review -> Opus
-- Specific feature requirements -> Particular version
+- Simple commands (formatting, simple lookups) -> haiku
+- Standard development tasks -> sonnet (default)
+- Complex analysis, security review -> opus
 
 ---
 

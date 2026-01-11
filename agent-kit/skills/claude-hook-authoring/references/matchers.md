@@ -110,7 +110,6 @@ MCP (Model Context Protocol) tools follow naming: `mcp__<server-name>__<tool-nam
 ```json
 {"matcher": "mcp__memory__.*"}      // All memory MCP tools
 {"matcher": "mcp__github__.*"}      // All GitHub MCP tools
-{"matcher": "mcp__linear__.*"}      // All Linear MCP tools
 {"matcher": "mcp__filesystem__.*"}  // All filesystem MCP tools
 {"matcher": "mcp__brave-search__.*"}// All Brave search tools
 ```
@@ -119,7 +118,7 @@ MCP (Model Context Protocol) tools follow naming: `mcp__<server-name>__<tool-nam
 
 ```json
 {"matcher": "mcp__github__create_issue"}     // Specific GitHub tool
-{"matcher": "mcp__linear__create_issue"}     // Specific Linear tool
+{"matcher": "mcp__github__create_pull_request"} // Create PR tool
 {"matcher": "mcp__memory__add_memory"}       // Add to memory
 {"matcher": "mcp__memory__search_memory"}    // Search memory
 ```
@@ -295,8 +294,8 @@ echo "WriteFile" | grep -E '^Write$'  # Should not match
 // GitHub operations
 {"matcher": "mcp__github__.*"}
 
-// Linear operations
-{"matcher": "mcp__linear__.*"}
+// Memory operations
+{"matcher": "mcp__memory__.*"}
 
 // All external services
 {"matcher": "mcp__.*__.*|WebFetch|WebSearch"}
