@@ -119,12 +119,10 @@ MCP (Model Context Protocol) tools follow naming: `mcp__<server-name>__<tool-nam
 
 ```json
 {"matcher": "mcp__github__create_issue"}     // Specific GitHub tool
-{"matcher": "mcp__linear__linear"}           // Linear (action-based dispatch)
+{"matcher": "mcp__linear__create_issue"}     // Specific Linear tool
 {"matcher": "mcp__memory__add_memory"}       // Add to memory
 {"matcher": "mcp__memory__search_memory"}    // Search memory
 ```
-
-> **Note**: Some MCP servers like Linear use a single tool with action-based dispatch rather than separate tools per operation. For example, Linear uses `mcp__linear__linear` with `{"action": "create", ...}` parameters.
 
 ### Complex MCP Patterns
 

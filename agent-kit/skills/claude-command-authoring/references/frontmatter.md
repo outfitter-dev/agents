@@ -11,7 +11,7 @@ Frontmatter is optional YAML metadata at the start of command files. It configur
 description: Brief description for /help
 argument-hint: <required> [optional]
 allowed-tools: Read, Grep, Glob
-model: claude-3-5-haiku-20241022
+model: haiku
 disable-model-invocation: true
 ---
 ```
@@ -154,19 +154,19 @@ allowed-tools: Read, Write, Edit, Bash(*), Grep, Glob
 **Purpose**: Override model for this command
 
 ```yaml
-model: claude-3-5-haiku-20241022
+model: haiku
 ```
 
 **Available models**:
 ```yaml
 # Fast, low-cost (simple tasks)
-model: claude-3-5-haiku-20241022
+model: haiku
 
 # Balanced (default for most)
-model: claude-sonnet-4-20250514
+model: sonnet
 
 # Most capable (complex analysis)
-model: claude-opus-4-5-20251101
+model: opus
 ```
 
 **Use cases**:
@@ -206,7 +206,7 @@ disable-model-invocation: true
 description: Deploy application with full validation pipeline
 argument-hint: <environment> [--skip-tests] [--force]
 allowed-tools: Read, Bash(kubectl *), Bash(docker *), Bash(git *)
-model: claude-sonnet-4-5-20250929
+model: sonnet
 disable-model-invocation: true
 ---
 
@@ -269,5 +269,5 @@ allowed-tools: Read, Grep, Glob
 model: gpt-4
 
 # Good (valid Claude model)
-model: claude-3-5-haiku-20241022
+model: haiku
 ```
