@@ -145,6 +145,7 @@ allowed-tools: Read, Grep, Glob, Bash(git *)
 | Tool | Purpose | Returns |
 |------|---------|---------|
 | `AskUserQuestion` | Present choices or gather input with structured options | User's selection(s) or custom input |
+| `SlashCommand` | Invoke slash commands programmatically (controlled via `disable-model-invocation`) | Command result |
 
 **Web**
 
