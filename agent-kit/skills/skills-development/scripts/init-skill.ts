@@ -44,13 +44,16 @@ function copyDir(src: string, dest: string): string[] {
 			throw new Error(`Invalid file name: ${entry.name}`);
 		}
 		const srcPath = path.join(src, entry.name);
-		const destPath = path.join(dest, entry.name);
+		// Rename SKILL.template.md to SKILL.md during copy
+		const destName =
+			entry.name === "SKILL.template.md" ? "SKILL.md" : entry.name;
+		const destPath = path.join(dest, destName);
 
 		if (entry.isDirectory()) {
 			copiedFiles.push(...copyDir(srcPath, destPath));
 		} else {
 			fs.copyFileSync(srcPath, destPath);
-			copiedFiles.push(path.relative(dest, destPath) || entry.name);
+			copiedFiles.push(path.relative(dest, destPath) || destName);
 		}
 	}
 

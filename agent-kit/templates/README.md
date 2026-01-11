@@ -129,7 +129,8 @@ Located in `skills/`:
 # 1. Choose template
 cp -r templates/skills/simple-skill/ .claude/skills/my-skill/
 
-# 2. Edit SKILL.md
+# 2. Rename template and edit
+mv .claude/skills/my-skill/SKILL.template.md .claude/skills/my-skill/SKILL.md
 # Replace all [YOUR_*] placeholders
 # Update name and description (critical for discovery!)
 
@@ -313,7 +314,8 @@ claude
 # 1. Create skill
 cp -r templates/skills/simple-skill/ .claude/skills/my-test-skill/
 
-# 2. Customize SKILL.md
+# 2. Rename and customize
+mv .claude/skills/my-test-skill/SKILL.template.md .claude/skills/my-test-skill/SKILL.md
 # Focus on a SPECIFIC, CLEAR description with trigger keywords
 
 # 3. Test discovery

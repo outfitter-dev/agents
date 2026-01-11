@@ -29,7 +29,7 @@
 			"name": "agent-kit",
 			"source": "./agent-kit",
 			"description": "Skills for authoring Agent Skills (cross-tool) and platform-specific configuration for Claude Code, Codex, and other AI coding assistants",
-			"version": "2.6.0",
+			"version": "2.6.1",
 			"keywords": [
 				"agent-skills",
 				"skills-development",
