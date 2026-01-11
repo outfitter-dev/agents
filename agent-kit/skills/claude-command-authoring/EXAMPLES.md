@@ -882,8 +882,100 @@ Based on "$ARGUMENTS", let's:
 Ready to start? What's the first step?
 ```
 
+## Community Command Collections
+
+These community repositories contain production-ready slash commands:
+
+### [wshobson/commands](https://github.com/wshobson/commands)
+
+57 production-ready commands organized as workflows and tools:
+- `/workflows:feature-development` - End-to-end implementation
+- `/workflows:tdd-cycle` - Test-driven development
+- `/tools:security-scan` - Vulnerability assessment
+- `/tools:refactor-clean` - Code cleanup
+
+### [Claude Command Suite](https://github.com/qdhenry/Claude-Command-Suite)
+
+148+ commands with namespace organization:
+- `/dev:*` - Development utilities
+- `/test:*` - Testing infrastructure
+- `/security:*` - Security auditing
+- `/deploy:*` - Deployment automation
+
+### [awesome-claude-code](https://github.com/hesreallyhim/awesome-claude-code)
+
+Curated collection featuring:
+- `/commit` - Conventional commit automation
+- `/context-prime` - Project context initialization
+- `/catchup` - Reload work after `/clear`
+
+## Standout Community Patterns
+
+### Context Priming
+
+From the community - load project context after clearing:
+
+```markdown
+---
+description: Prime context with project structure
+---
+
+## Project Structure
+!`tree -L 2 -I 'node_modules|.git|dist'`
+
+## Configuration
+@package.json
+@tsconfig.json
+
+## Recent Work
+!`git log --oneline -10`
+
+Ready to continue development.
+```
+
+### Fast Commit
+
+Auto-select first commit suggestion without confirmation:
+
+```markdown
+---
+description: Quick commit - auto-select first suggestion
+allowed-tools: Bash(git *)
+disable-model-invocation: true
+---
+
+!`git diff --staged --stat`
+!`git log --oneline -3`
+
+Generate a commit message and execute immediately.
+Pick the most appropriate message without asking.
+```
+
+### Catchup After Clear
+
+Reload uncommitted work into fresh context:
+
+```markdown
+---
+description: Reload work-in-progress after /clear
+allowed-tools: Bash(git *)
+---
+
+## Uncommitted Changes
+!`git diff`
+
+## Unstaged Files
+!`git status --short`
+
+## Recent Commits
+!`git log --oneline -5`
+
+Continue working with the context above.
+```
+
 ## See Also
 
 - [SKILL.md](SKILL.md) - Slash command authoring guide
 - [REFERENCE.md](REFERENCE.md) - Complete reference
+- [references/community.md](references/community.md) - Full community resources
 - [scripts/](scripts/) - Utility scripts

@@ -14,6 +14,9 @@ Real-world examples of Claude Code event hooks for automation, validation, and w
 8. [Team Collaboration](#team-collaboration)
 9. [MCP Integration](#mcp-integration)
 10. [Advanced Patterns](#advanced-patterns)
+11. [Prompt-Based Hooks](#prompt-based-hooks)
+12. [Community Examples](#community-examples)
+13. [Component-Scoped Hooks](#component-scoped-hooks)
 
 ## Auto-Formatting
 
@@ -1651,3 +1654,257 @@ rm -f "$BACKUP"
 echo "✓ Formatted successfully"
 exit 0
 ```
+
+## Prompt-Based Hooks
+
+Prompt-based hooks use LLM reasoning for context-aware validation. Recommended for complex decisions.
+
+### Smart Security Validation
+
+Use LLM to analyze file operations:
+
+```json
+{
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [{
+          "type": "prompt",
+          "prompt": "Analyze this file operation for security issues:\n\n$TOOL_INPUT\n\nCheck for:\n1. Sensitive paths (/etc, ~/.ssh, .env files)\n2. Credentials or API keys in content\n3. Path traversal attempts (..)\n4. Executable file creation\n\nRespond with JSON: {\"decision\": \"allow|deny\", \"reason\": \"brief explanation\"}",
+          "timeout": 30
+        }]
+      }
+    ]
+  }
+}
+```
+
+### Context-Aware Bash Validation
+
+Evaluate command safety with reasoning:
+
+```json
+{
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [{
+          "type": "prompt",
+          "prompt": "Evaluate if this bash command is safe to execute:\n\n$TOOL_INPUT\n\nConsider:\n1. Could it delete important files?\n2. Could it expose secrets?\n3. Could it modify system configuration?\n4. Is it appropriate for a development environment?\n\nRespond: {\"decision\": \"allow|deny\", \"reason\": \"...\"}",
+          "timeout": 30
+        }]
+      }
+    ]
+  }
+}
+```
+
+### Task Completion Verification
+
+Verify work quality before stopping:
+
+```json
+{
+  "hooks": {
+    "Stop": [
+      {
+        "matcher": "*",
+        "hooks": [{
+          "type": "prompt",
+          "prompt": "Review the completed task. Consider:\n1. Were all requirements addressed?\n2. Were tests added or updated?\n3. Is there any unfinished work?\n4. Should the user be informed of anything?\n\nProvide a brief summary if there are concerns.",
+          "timeout": 30
+        }]
+      }
+    ]
+  }
+}
+```
+
+## Community Examples
+
+Real-world examples from the Claude Code community.
+
+### disler/claude-code-hooks-mastery
+
+Comprehensive hook examples using Python with UV for dependency management.
+
+**Directory structure**:
+```
+.claude/
+├── hooks/
+│   ├── user_prompt_submit.py   # Prompt validation and logging
+│   ├── pre_tool_use.py         # Command blocking
+│   ├── post_tool_use.py        # Tool completion logging
+│   ├── notification.py         # TTS notifications
+│   ├── stop.py                 # AI completion messages
+│   ├── subagent_stop.py        # Subagent tracking
+│   ├── pre_compact.py          # Transcript backup
+│   └── session_start.py        # Context loading
+└── settings.json
+```
+
+**Configuration pattern**:
+```json
+{
+  "UserPromptSubmit": [{
+    "hooks": [{
+      "type": "command",
+      "command": "uv run .claude/hooks/user_prompt_submit.py --log-only"
+    }]
+  }],
+  "PreToolUse": [{
+    "matcher": "Bash",
+    "hooks": [{
+      "type": "command",
+      "command": "uv run .claude/hooks/pre_tool_use.py"
+    }]
+  }]
+}
+```
+
+**Source**: https://github.com/disler/claude-code-hooks-mastery
+
+### ChrisWiles/claude-code-showcase
+
+Complete Claude Code configuration with hooks, skills, agents, and GitHub Actions.
+
+**Features**:
+- Auto-format code on file changes
+- Run tests when test files change
+- Type-check TypeScript
+- Block edits on main branch
+- Skill matching for prompts
+
+**Branch protection hook**:
+```json
+{
+  "hooks": {
+    "PreToolUse": [{
+      "matcher": "Edit|Write",
+      "hooks": [{
+        "type": "command",
+        "command": "[ \"$(git branch --show-current)\" != \"main\" ] || exit 2",
+        "timeout": 5
+      }]
+    }]
+  }
+}
+```
+
+**Source**: https://github.com/ChrisWiles/claude-code-showcase
+
+### GitButler Integration
+
+GitButler provides hooks for automatic branch and commit management.
+
+**Configuration**:
+```json
+{
+  "hooks": {
+    "PreToolUse": [{
+      "matcher": "*",
+      "hooks": [{
+        "type": "command",
+        "command": "but claude pre-tool",
+        "timeout": 5
+      }]
+    }],
+    "PostToolUse": [{
+      "matcher": "*",
+      "hooks": [{
+        "type": "command",
+        "command": "but claude post-tool",
+        "timeout": 5
+      }]
+    }],
+    "Stop": [{
+      "matcher": "*",
+      "hooks": [{
+        "type": "command",
+        "command": "but claude stop",
+        "timeout": 10
+      }]
+    }]
+  }
+}
+```
+
+**Source**: https://docs.gitbutler.com/features/ai-integration/claude-code-hooks
+
+## Component-Scoped Hooks
+
+Hooks defined in skills, agents, and commands frontmatter. Only active when the component is loaded.
+
+### Skill with Validation Hook
+
+```yaml
+---
+name: secure-coding
+description: Security-focused coding skill
+hooks:
+  PreToolUse:
+    - matcher: "Write|Edit"
+      hooks:
+        - type: prompt
+          prompt: "Validate this code change for security best practices..."
+  PostToolUse:
+    - matcher: "Write|Edit(*.ts)"
+      hooks:
+        - type: command
+          command: "eslint --fix \"$file\""
+---
+
+# Secure Coding Skill
+
+When active, this skill validates all code changes for security issues.
+```
+
+### Agent with Completion Hook
+
+```yaml
+---
+name: code-reviewer
+description: Reviews code for quality issues
+model: sonnet
+hooks:
+  Stop:
+    - matcher: "*"
+      hooks:
+        - type: prompt
+          prompt: "Summarize the code review findings and severity levels."
+---
+
+# Code Reviewer Agent
+
+Performs thorough code review with summarized findings.
+```
+
+### Command with Context Hook
+
+```yaml
+---
+description: Deploy to staging environment
+argument-hint: [component to deploy]
+hooks:
+  PreToolUse:
+    - matcher: "Bash"
+      hooks:
+        - type: command
+          command: "./.claude/hooks/validate-deploy.sh"
+---
+
+# Deploy Command
+
+Deploys the specified component to staging with pre-flight checks.
+```
+
+## External Resources
+
+- [Official Hooks Reference](https://code.claude.com/docs/en/hooks)
+- [Hooks Guide](https://code.claude.com/docs/en/hooks-guide)
+- [Claude Code Blog: Hook Configuration](https://claude.com/blog/how-to-configure-hooks)
+- [disler/claude-code-hooks-mastery](https://github.com/disler/claude-code-hooks-mastery)
+- [ChrisWiles/claude-code-showcase](https://github.com/ChrisWiles/claude-code-showcase)
+- [GitButler Hooks Documentation](https://docs.gitbutler.com/features/ai-integration/claude-code-hooks)
