@@ -1,7 +1,7 @@
 ---
 name: GitButler Complete Branch
 version: 2.0.0
-description: Complete work on GitButler virtual branches and integrate to main through guided workflows with safety checks and cleanup. Use when finishing branches, merging to main, creating PRs, or when `--complete-branch` flag is mentioned.
+description: Complete work on GitButler virtual branches and integrate to main through guided workflows with safety checks and cleanup. Use when finishing branches, merging to main, creating PRs, or when `complete branch` is mentioned.
 ---
 
 # Complete GitButler Virtual Branch

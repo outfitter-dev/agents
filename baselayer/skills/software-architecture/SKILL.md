@@ -1,7 +1,7 @@
 ---
 name: software-architecture
 version: 2.0.0
-description: System design guidance with technology selection frameworks and scalability planning. Use when designing systems, evaluating architectures, making technology decisions, planning for scale, analyzing tradeoffs, or when architecture, system design, tech stack, scalability, microservices, or `--software-architecture` are mentioned.
+description: System design guidance with technology selection frameworks and scalability planning. Use when designing systems, evaluating architectures, making technology decisions, planning for scale, analyzing tradeoffs, or when architecture, system design, tech stack, scalability, or microservices are mentioned.
 ---
 
 # Software Architecture

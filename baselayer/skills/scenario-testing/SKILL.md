@@ -1,7 +1,7 @@
 ---
 name: Scenario Testing
 version: 1.0.0
-description: End-to-end scenario testing without mocks, using real dependencies. Test scripts go in .scratch/ (gitignored), patterns documented in scenarios.jsonl (committed). Truth hierarchy - scenarios > unit tests > mocks. Use when validating features end-to-end, testing integrations, writing proof programs, or when scenario-test, e2e-test, integration-test, no-mocks, or --scenario are mentioned.
+description: End-to-end scenario testing without mocks, using real dependencies. Test scripts go in .scratch/ (gitignored), patterns documented in scenarios.jsonl (committed). Truth hierarchy - scenarios > unit tests > mocks. Use when validating features end-to-end, testing integrations, writing proof programs, or when scenario-test, e2e-test, integration-test, no-mocks, or scenario are mentioned.
 ---
 
 # Scenario Testing

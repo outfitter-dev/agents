@@ -28,6 +28,7 @@ description: |
   </example>
 tools: Read, Write, Edit, Glob, Grep, Skill, Task, TodoWrite
 model: inherit
+color: blue
 ---
 
 # Agent Expert

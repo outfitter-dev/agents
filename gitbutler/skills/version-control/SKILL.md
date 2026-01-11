@@ -1,7 +1,7 @@
 ---
 name: GitButler Version Control
 version: 2.0.0
-description: Version control using GitButler's virtual branches for parallel multi-branch work, post-hoc organization, and multi-agent collaboration. Use when working with GitButler, virtual branches, `but` commands, stacked PRs, multi-agent workflows, or when `--gitbutler` or `--but` flags are mentioned.
+description: Version control using GitButler's virtual branches for parallel multi-branch work, post-hoc organization, and multi-agent collaboration. Use when working with GitButler, virtual branches, `but` commands, stacked PRs, multi-agent workflows, or when `gitbutler` or `but` are mentioned.
 ---
 
 # GitButler Version Control

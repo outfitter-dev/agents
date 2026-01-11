@@ -1,7 +1,7 @@
 ---
 name: report-findings
 version: 1.0.0
-description: Structure and present research findings with source authority assessment, cross-referencing, and confidence calibration. Use when synthesizing multi-source research, presenting findings, comparing options, or when report, findings, synthesis, sources, or --report are mentioned. Micro-skill loaded by research-and-report, codebase-analysis, and other investigation skills.
+description: Structure and present research findings with source authority assessment, cross-referencing, and confidence calibration. Use when synthesizing multi-source research, presenting findings, comparing options, or when report, findings, synthesis, or sources are mentioned. Micro-skill loaded by research-and-report, codebase-analysis, and other investigation skills.
 ---
 
 # Report Findings

@@ -1,7 +1,7 @@
 ---
 name: pattern-analysis
 version: 1.0.0
-description: Identify and extract reusable patterns from repeated behaviors, workflows, and outcomes. Use when recognizing recurring themes, codifying best practices, extracting workflows from experience, or when pattern, recurring, repeated, or --pattern are mentioned. Micro-skill loaded by codebase-analysis, patternify, and other investigation skills.
+description: Identify and extract reusable patterns from repeated behaviors, workflows, and outcomes. Use when recognizing recurring themes, codifying best practices, extracting workflows from experience, or when pattern, recurring, or repeated are mentioned. Micro-skill loaded by codebase-analysis, patternify, and other investigation skills.
 ---
 
 # Pattern Analysis

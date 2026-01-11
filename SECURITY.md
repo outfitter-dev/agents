@@ -22,6 +22,7 @@ Each plugin documents its capabilities in its README. Summary:
 | baselayer | read | no | no | no |
 | gitbutler | read | yes (git/but commands) | no | no |
 | agent-kit | read/write | yes (scaffolding) | no | no |
+| cli-dev | read | no | no | no |
 
 **Capability definitions:**
 - **Filesystem read**: Reads files to understand context

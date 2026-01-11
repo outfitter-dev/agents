@@ -1,7 +1,7 @@
 ---
 name: root-cause-analysis
 version: 1.0.0
-description: Systematic problem investigation through hypothesis formation, evidence gathering, and elimination methodology. Use when diagnosing failures, investigating incidents, finding root causes, or when root-cause, diagnosis, investigate, or --rca are mentioned. Micro-skill loaded by debugging-and-diagnosis, codebase-analysis, and other investigation skills.
+description: Systematic problem investigation through hypothesis formation, evidence gathering, and elimination methodology. Use when diagnosing failures, investigating incidents, finding root causes, or when root-cause, diagnosis, investigate, or rca are mentioned. Micro-skill loaded by debugging-and-diagnosis, codebase-analysis, and other investigation skills.
 ---
 
 # Root Cause Analysis

@@ -129,11 +129,6 @@ gitbutler/
 
 See [SECURITY.md](../SECURITY.md) for the full security model.
 
-## Related Plugins
-
-- **baselayer** — Core development methodology (TDD, debugging, architecture)
-- **agent-kit** — Build your own Claude Code plugins
-
 ## Resources
 
 - [GitButler Documentation](https://docs.gitbutler.com/)
