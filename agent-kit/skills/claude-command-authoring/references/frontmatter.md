@@ -99,23 +99,68 @@ allowed-tools: Read, Grep, Glob, Bash(git *)
 
 **Tool names** (case-sensitive):
 
+**File Operations**
+
 | Tool | Purpose | Returns |
 |------|---------|---------|
-| `Read` | Read file contents, images, PDFs, notebooks | File content with line numbers |
-| `Write` | Create or overwrite files | Confirmation |
-| `Edit` | Make targeted edits to existing files | Updated file snippet |
-| `MultiEdit` | Multiple edits to a single file atomically | Updated file |
-| `Grep` | Search file contents with regex patterns | Matching lines or file paths |
-| `Glob` | Find files by name/path patterns | List of matching file paths |
-| `Bash` | Execute shell commands | Command output |
-| `Task` | Launch subagents for complex/parallel work | Agent result or task ID |
-| `Skill` | Load skills into context | Skill content |
-| `TodoWrite` | Track agent tasks and progress | Confirmation |
+| `Read` | Read file contents, images, PDFs, Jupyter notebooks | File content with line numbers |
+| `Write` | Create new files or overwrite existing files | Confirmation |
+| `Edit` | Make targeted string replacements in existing files | Updated file snippet |
+| `MultiEdit` | Multiple edits to a single file in one atomic operation | Updated file |
+| `NotebookEdit` | Edit, insert, or delete Jupyter notebook cells | Updated notebook |
+| `LS` | List directory contents | Directory listing |
+
+**Search & Discovery**
+
+| Tool | Purpose | Returns |
+|------|---------|---------|
+| `Grep` | Search file contents using regex patterns | Matching lines, file paths, or counts |
+| `Glob` | Find files by name/path glob patterns (e.g., `**/*.ts`) | List of matching file paths |
+
+**Execution**
+
+| Tool | Purpose | Returns |
+|------|---------|---------|
+| `Bash` | Execute shell commands with optional timeout | Command stdout/stderr |
+| `Task` | Launch subagents for complex, parallel, or specialized work | Agent result or task ID (if background) |
+| `TaskOutput` | Retrieve output from background tasks | Task output and status |
+| `KillShell` | Terminate a running background shell process | Confirmation |
+
+**Context & Skills**
+
+| Tool | Purpose | Returns |
+|------|---------|---------|
+| `Skill` | Load a skill's instructions into context | Skill content |
+| `TodoWrite` | Track agent tasks, progress, and state across context | Confirmation |
+
+**Planning**
+
+| Tool | Purpose | Returns |
+|------|---------|---------|
+| `EnterPlanMode` | Transition to plan mode for complex implementation tasks | User approval prompt |
+| `ExitPlanMode` | Signal plan completion and request user approval | Plan review prompt |
+
+**User Interaction**
+
+| Tool | Purpose | Returns |
+|------|---------|---------|
+| `AskUserQuestion` | Present choices or gather input with structured options | User's selection(s) or custom input |
+
+**Web**
+
+| Tool | Purpose | Returns |
+|------|---------|---------|
 | `WebSearch` | Search the web for current information | Search results with URLs |
-| `WebFetch` | Fetch and process web page content | Processed page content |
-| `AskUserQuestion` | Present choices or gather input from user | User's selection(s) |
-| `NotebookEdit` | Edit Jupyter notebook cells | Updated notebook |
-| `KillShell` | Terminate a background shell process | Confirmation |
+| `WebFetch` | Fetch URL content and process with AI | Processed/summarized content |
+
+**MCP Tools**
+
+MCP (Model Context Protocol) tools follow the naming pattern `mcp__<server>__<tool>`. Examples:
+- `mcp__github__create_issue` - GitHub MCP server
+- `mcp__memory__search` - Memory MCP server
+- `mcp__filesystem__read` - Filesystem MCP server
+
+Use regex patterns to match MCP tools: `mcp__.*__.*` matches all MCP tools.
 
 **Bash patterns**:
 ```yaml
