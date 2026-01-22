@@ -2,6 +2,8 @@
 
 How to delegate work to preserve main conversation context.
 
+> **TL;DR**: Subagents run in isolated contexts—only their summary returns. Delegate: 5+ file reads, codebase searches, specialized reviews. Keep in main: user Q&A, simple edits, files already in context. Use `run_in_background: true` for parallel work. Track delegated tasks in TodoWrite with agent IDs.
+
 ## The Context Problem
 
 Main conversation context is ~128K tokens. Every operation consumes it:

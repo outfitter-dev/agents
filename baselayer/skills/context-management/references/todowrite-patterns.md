@@ -2,6 +2,8 @@
 
 Deep patterns for using TodoWrite as your persistent state layer.
 
+> **TL;DR**: TodoWrite survives compaction—your reasoning doesn't. One `in_progress` at a time. Mark completed immediately. Encode decisions in completed todos (`→ selected jose`). Before compaction, detail your current state in the `in_progress` todo. Track background agents with IDs.
+
 ## Why TodoWrite Matters for Context Management
 
 TodoWrite survives context compaction. When context resets, you lose:

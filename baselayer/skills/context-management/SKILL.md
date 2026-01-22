@@ -161,9 +161,11 @@ Task arrives
 ├── Exploration/research? → Explore agent (always)
 ├── Multi-file reading? → Subagent (summarizes for you)
 ├── Independent subtask? → Background agent
-├── Specialized expertise? → Domain agent (ranger, tester, etc.)
+├── Specialized expertise? → Domain agent (reviewer, tester, etc.)
 └── Simple, focused, single-file? → Main agent (maybe)
 ```
+
+> **Note**: Agent names like `ranger`, `analyst`, `tester`, `senior-dev` are examples. Substitute with agents available in your environment. Use `/agents` to see available agents.
 
 ### Context-Saving Patterns
 
@@ -221,6 +223,8 @@ When background agents complete, update todos and process results.
 ## Cross-Session Patterns
 
 For work spanning multiple sessions, use episodic memory MCP server.
+
+> **Prerequisites**: Cross-session patterns require an episodic-memory MCP server to be configured. If unavailable, skip this section — TodoWrite handles single-session persistence.
 
 ### Saving State
 
