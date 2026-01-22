@@ -1,7 +1,11 @@
 ---
 name: subagent-coordination
-version: 2.1.0
+version: 2.2.0
 description: This skill should be used when coordinating agents, delegating tasks to specialists, or when "dispatch agents", "which agent", or "multi-agent" are mentioned.
+metadata:
+  related-skills:
+    - context-management
+    - pathfinding
 ---
 
 # Subagent Coordination
@@ -34,6 +38,16 @@ Complex task arrives
 - Unknown codebase area — needs exploration first
 - Sequence of agents matters (dependencies between steps)
 - High-stakes changes requiring careful coordination
+
+## Context Management
+
+For long-running orchestration, load the **context-management** skill. It teaches:
+- Using TodoWrite as survivable state (persists across compaction)
+- Delegating to subagents to preserve main context
+- Pre-compaction checklists to capture progress
+- Cross-session patterns for multi-day work
+
+**Key principle**: Main conversation context is precious. Delegate exploration and research to subagents — only their summaries return, keeping main context lean.
 
 ## Roles and Agents
 
