@@ -1,6 +1,10 @@
 ---
 name: codex-configuration
 description: This skill should be used when configuring Codex CLI, setting up profiles, or when "config.toml", "sandbox mode", "Codex config", or "approval policy" are mentioned.
+metadata:
+  related-skills:
+    - claude-code-configuration
+    - skills-development
 version: 1.0.0
 ---
 

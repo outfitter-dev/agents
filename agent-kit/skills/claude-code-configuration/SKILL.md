@@ -1,6 +1,13 @@
 ---
 name: claude-code-configuration
 description: This skill should be used when configuring Claude, setting up MCP servers, or when "settings.json", "claude_desktop_config", "MCP server", or "Claude config" are mentioned.
+metadata:
+  related-skills:
+    - codex-configuration
+    - claude-hook-authoring
+    - claude-rules-authoring
+    - claude-plugin-development
+    - skills-development
 version: 1.0.0
 ---
 
