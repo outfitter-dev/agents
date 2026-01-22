@@ -2,6 +2,12 @@
 name: claude-hook-authoring
 version: 2.0.0
 description: This skill should be used when creating hooks, automating workflows, or when "PreToolUse", "PostToolUse", "hooks.json", "event handler", or "create hook" are mentioned.
+metadata:
+  related-skills:
+    - claude-command-authoring
+    - claude-plugin-development
+    - claude-agent-development
+    - claude-code-configuration
 user-invocable: true
 ---
 

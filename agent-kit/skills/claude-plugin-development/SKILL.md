@@ -1,6 +1,14 @@
 ---
 name: claude-plugin-development
 description: This skill should be used when creating plugins, publishing to marketplaces, or when "plugin.json", "marketplace", "create plugin", or "distribute plugin" are mentioned.
+metadata:
+  related-skills:
+    - claude-agent-development
+    - claude-command-authoring
+    - claude-hook-authoring
+    - skills-development
+    - claude-rules-authoring
+    - claude-code-configuration
 version: 1.0.0
 user-invocable: true
 ---

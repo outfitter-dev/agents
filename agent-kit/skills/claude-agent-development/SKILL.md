@@ -2,6 +2,11 @@
 name: claude-agent-development
 version: 1.0.0
 description: This skill should be used when creating agents, writing agent frontmatter, configuring subagents, or when "create agent", "agent.md", "subagent", or "Task tool" are mentioned.
+metadata:
+  related-skills:
+    - skills-development
+    - claude-plugin-development
+    - claude-hook-authoring
 user-invocable: true
 ---
 

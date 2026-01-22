@@ -2,6 +2,10 @@
 name: claude-rules-authoring
 version: 1.0.0
 description: This skill should be used when creating rule files, organizing conventions, or when ".claude/rules/", "FORMATTING.md", "create rule", or "project conventions" are mentioned.
+metadata:
+  related-skills:
+    - claude-code-configuration
+    - claude-plugin-development
 allowed-tools: Read Write Edit Grep Glob
 ---
 

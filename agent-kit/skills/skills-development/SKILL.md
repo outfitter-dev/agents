@@ -2,6 +2,13 @@
 name: skills-development
 version: 1.3.0
 description: This skill should be used when creating skills, writing SKILL.md files, or when "create skill", "new skill", "validate skill", or "SKILL.md" are mentioned.
+metadata:
+  related-skills:
+    - claude-agent-development
+    - claude-plugin-development
+    - claude-command-authoring
+    - codex-configuration
+    - claude-code-configuration
 user-invocable: true
 allowed-tools: Read Write Edit Grep Glob Bash TodoWrite AskUserQuestion
 ---
