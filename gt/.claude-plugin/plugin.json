@@ -4,7 +4,7 @@
   "description": "Graphite stack workflows for trunk-based development with stacked PRs",
   "author": {
     "name": "Outfitter",
-    "email": "hello@outfitter.dev"
+    "email": "team@outfitter.dev"
   },
   "license": "Apache-2.0",
   "keywords": ["graphite", "stacked-prs", "trunk-based", "gt-commands"],

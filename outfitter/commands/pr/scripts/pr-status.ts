@@ -152,9 +152,9 @@ async function fetchPRs(repo: string): Promise<PR[]> {
 		reviewDecision: pr.reviewDecision,
 		statusCheckRollup: pr.commits.nodes[0]?.commit.statusCheckRollup
 			? {
-					state: pr.commits.nodes[0].commit.statusCheckRollup.state,
+					state: pr.commits.nodes[0]!.commit.statusCheckRollup!.state,
 					contexts:
-						pr.commits.nodes[0].commit.statusCheckRollup.contexts.nodes.map(
+						pr.commits.nodes[0]!.commit.statusCheckRollup!.contexts.nodes.map(
 							(ctx: Record<string, unknown>) => ({
 								name: (ctx.name as string) || (ctx.context as string) || "",
 								state: (ctx.status as string) || (ctx.state as string) || "",

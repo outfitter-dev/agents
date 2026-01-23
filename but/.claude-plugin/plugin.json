@@ -4,7 +4,7 @@
   "description": "GitButler virtual branch workflows for parallel development, multi-agent coordination, and post-hoc commit organization",
   "author": {
     "name": "Outfitter",
-    "email": "hello@outfitter.dev"
+    "email": "team@outfitter.dev"
   },
   "license": "Apache-2.0",
   "keywords": ["gitbutler", "virtual-branches", "parallel-development", "multi-agent"],
