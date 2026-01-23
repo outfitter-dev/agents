@@ -307,6 +307,17 @@ Progress format:
 - **Scope creep**: Task expands beyond role's domain → re-route
 - **Missing context**: Not enough info → research role with pathfinding skill
 
+## Git Operations Policy
+
+> **CRITICAL**: Subagents MUST NOT perform git operations (commit, push, branch creation) when running in parallel.
+>
+> Only the **orchestrator** handles git state. Subagents write code to the filesystem and report completion.
+
+For detailed workflows and recovery procedures, see the **source-control** plugin:
+
+- `source-control:multi-agent-vcs` — Full orchestrator-only workflow patterns
+- `source-control:graphite-stacks` — Graphite-specific commands and recovery
+
 ## Anti-Patterns
 
 - Running all agents on every task (wasteful)
@@ -314,6 +325,7 @@ Progress format:
 - Coding role debugging without debugging skills (inefficient)
 - Parallel agents with dependencies (race conditions)
 - Not challenging complex proposals (over-engineering)
+- **Parallel agents with git permissions** (stack corruption)
 
 ## Quick Reference
 

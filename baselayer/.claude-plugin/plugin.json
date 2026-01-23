@@ -1,7 +1,7 @@
 {
 	"name": "baselayer",
-	"version": "0.9.0",
-	"description": "Core development methodology skills: TDD, systematic debugging, type safety, architecture design, technical research, and requirements discovery",
+	"version": "0.10.0",
+	"description": "Core development methodology skills: TDD, systematic debugging, type safety, architecture design, technical research, multi-agent coordination, and requirements discovery",
 	"author": {
 		"name": "Outfitter",
 		"email": "team@outfitter.dev"
@@ -15,6 +15,8 @@
 		"type-safety",
 		"architecture",
 		"research",
-		"methodology"
+		"methodology",
+		"multi-agent",
+		"coordination"
 	]
 }
