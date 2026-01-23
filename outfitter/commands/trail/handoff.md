@@ -7,7 +7,7 @@ allowed-tools: Read Edit
 
 Creating handoff note for this session.
 
-!`bun ${CLAUDE_PLUGIN_ROOT}/skills/trail/scripts/handoff.ts --session "${CLAUDE_SESSION_ID}"`
+!`bun ${CLAUDE_PLUGIN_ROOT}/skills/trails/scripts/handoff.ts --session "${CLAUDE_SESSION_ID}"`
 
 Read the created handoff file and fill in the sections:
 

@@ -11,7 +11,7 @@ Reading recent trail notes.
 Arguments: $ARGUMENTS
 
 ```bash
-!bun ${CLAUDE_PLUGIN_ROOT}/skills/trail/scripts/read.ts $ARGUMENTS --no-frontmatter
+!bun ${CLAUDE_PLUGIN_ROOT}/skills/trails/scripts/read.ts $ARGUMENTS --no-frontmatter
 ```
 
 Use `--type handoff` for handoffs only, `--type log` for logs only.

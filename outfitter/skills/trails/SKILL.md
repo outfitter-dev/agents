@@ -1,5 +1,5 @@
 ---
-name: trail
+name: trails
 version: 1.0.0
 description: This skill should be used when creating session handoffs, logging research findings, or reading previous trail notes. Triggers include "handoff", "session continuity", "log note", "trail notes", or when ending a session.
 ---
@@ -95,12 +95,12 @@ When working as a subagent, pass the parent session ID to group related notes:
 
 ```bash
 # Handoff with parent context
-bun ${CLAUDE_PLUGIN_ROOT}/skills/trail/scripts/handoff.ts \
+bun ${CLAUDE_PLUGIN_ROOT}/skills/trails/scripts/handoff.ts \
   --session "$CHILD_SESSION" \
   --parent "$PARENT_SESSION"
 
 # Log with parent context
-bun ${CLAUDE_PLUGIN_ROOT}/skills/trail/scripts/log.ts \
+bun ${CLAUDE_PLUGIN_ROOT}/skills/trails/scripts/log.ts \
   --slug "api-findings" \
   --session "$CHILD_SESSION" \
   --parent "$PARENT_SESSION"
