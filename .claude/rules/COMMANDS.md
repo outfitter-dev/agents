@@ -72,7 +72,7 @@ Commands are lightweight entry points that load skills.
 
 **Analysis command** (`/simplify`):
 - Takes proposed solution as argument
-- Loads complexity-analysis skill
+- Loads simplify skill
 - Returns structured analysis
 
 **Discovery command** (`/patternify`):

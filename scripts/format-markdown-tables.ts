@@ -13,8 +13,8 @@
  *
  * Examples:
  *   bun scripts/format-markdown-tables.ts                           # Check all .md files
- *   bun scripts/format-markdown-tables.ts baselayer/                 # Check specific dir
- *   bun scripts/format-markdown-tables.ts --fix agent-kit/          # Fix specific dir
+ *   bun scripts/format-markdown-tables.ts outfitter/                 # Check specific dir
+ *   bun scripts/format-markdown-tables.ts --fix outfitter/           # Fix specific dir
  *   bun scripts/format-markdown-tables.ts --fix path/to/file.md     # Fix single file
  */
 

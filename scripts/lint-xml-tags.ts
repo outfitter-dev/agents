@@ -14,7 +14,7 @@
  *
  * Examples:
  *   bun scripts/lint-xml-tags.ts                    # Lint all .md files
- *   bun scripts/lint-xml-tags.ts baselayer/         # Lint specific directory
+ *   bun scripts/lint-xml-tags.ts outfitter/         # Lint specific directory
  *   bun scripts/lint-xml-tags.ts path/to/file.md    # Lint single file
  *   bun scripts/lint-xml-tags.ts --fix              # Auto-fix all issues
  *   bun scripts/lint-xml-tags.ts --fix file.md      # Fix single file

@@ -19,9 +19,9 @@ Each plugin documents its capabilities in its README. Summary:
 
 | Plugin | Filesystem | Shell | Network | MCP |
 |--------|------------|-------|---------|-----|
-| baselayer | read | no | no | no |
-| gitbutler | read | yes (git/but commands) | no | no |
-| agent-kit | read/write | yes (scaffolding) | no | no |
+| outfitter | read/write | yes (scaffolding) | no | no |
+| but | read | yes (git/but commands) | no | no |
+| gt | read | yes (git/gt commands) | no | no |
 | cli-dev | read | no | no | no |
 
 **Capability definitions:**
@@ -62,7 +62,7 @@ Red flags in plugin code:
 # Check the plugin's README and source code
 
 # Install specific plugin
-/plugin install baselayer@outfitter
+/plugin install outfitter@outfitter
 ```
 
 ### Updates

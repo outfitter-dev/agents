@@ -10,7 +10,7 @@
  *
  * Examples:
  *   bun scripts/lint-related-skills.ts                # Lint all SKILL.md files
- *   bun scripts/lint-related-skills.ts baselayer/     # Lint specific plugin
+ *   bun scripts/lint-related-skills.ts outfitter/     # Lint specific plugin
  */
 
 import { Glob } from "bun";

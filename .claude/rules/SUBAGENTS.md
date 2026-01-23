@@ -2,7 +2,7 @@
 
 ## Authoring
 
-To create or edit subagents, use the **agent-kit:claude-agent-development** skill.
+To create or edit subagents, use the **outfitter:claude-agents** skill.
 
 ## Philosophy: Proactive Delegation
 
@@ -42,7 +42,7 @@ Run agents asynchronously to parallelize work:
 {
   "description": "Security audit of auth module",
   "prompt": "Review src/auth/ for vulnerabilities",
-  "subagent_type": "security-reviewer",
+  "subagent_type": "outfitter:reviewer",
   "run_in_background": true
 }
 ```
@@ -60,9 +60,9 @@ Run agents asynchronously to parallelize work:
 
 ```
 Main agent receives complex task
-  ├─ Launch security-reviewer (background)
-  ├─ Launch performance-analyzer (background)
-  ├─ Launch test-coverage (background)
+  ├─ Launch outfitter:reviewer (background)
+  ├─ Launch outfitter:analyst (background)
+  ├─ Launch outfitter:tester (background)
   └─ Continue other work...
 
 Later: TaskOutput to collect results
@@ -75,10 +75,21 @@ Later: TaskOutput to collect results
 |-----------|---------|
 | `description` | Short summary (3-5 words) |
 | `prompt` | Detailed instructions |
-| `subagent_type` | Agent identifier |
+| `subagent_type` | Agent identifier (see naming below) |
 | `run_in_background` | Async execution |
 | `resume` | Continue previous agent session |
 | `model` | Override model (haiku/sonnet/opus) |
+
+## Agent Naming
+
+**Built-in agents** (no prefix needed):
+- `Explore`, `Plan`, `general-purpose`
+
+**Plugin agents** (require `plugin:agent-name` format):
+- `outfitter:reviewer`, `outfitter:engineer`, `outfitter:analyst`
+- `outfitter:quartermaster`, `outfitter:pattern-analyzer`
+
+Without the prefix, Claude will fail to find the agent and may retry with the correct prefix. Always use the fully qualified name for plugin agents.
 
 ## Context-Saving Patterns
 
@@ -98,9 +109,9 @@ Main agent receives summary, not 50 file contents.
 
 ```json
 // Launch all in single message with run_in_background: true
-{ "subagent_type": "security-reviewer", "run_in_background": true, ... }
-{ "subagent_type": "performance-analyzer", "run_in_background": true, ... }
-{ "subagent_type": "code-quality", "run_in_background": true, ... }
+{ "subagent_type": "outfitter:reviewer", "run_in_background": true, ... }
+{ "subagent_type": "outfitter:analyst", "run_in_background": true, ... }
+{ "subagent_type": "outfitter:tester", "run_in_background": true, ... }
 ```
 
 Three reviews run in parallel. Main agent stays responsive.
@@ -111,7 +122,7 @@ Three reviews run in parallel. Main agent stays responsive.
 {
   "description": "Continue security analysis",
   "prompt": "Now check the session management",
-  "subagent_type": "security-reviewer",
+  "subagent_type": "outfitter:reviewer",
   "resume": "abc123"
 }
 ```

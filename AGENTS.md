@@ -3,13 +3,13 @@
 ## Project Structure & Module Organization
 
 - Root `.claude-plugin/marketplace.json` lists every published plugin; keep it in sync when adding or renaming entries.
-- Plugin folders: `baselayer/`, `agent-kit/`, `gitbutler/`, `cli-dev/`. Each holds its own `.claude-plugin/plugin.json` plus `skills/`, `commands/`, and (where needed) `agents/` or `templates/`.
-- The TypeScript package with code you can build/test today is `agent-kit/` (`src/` for logic, `hooks/` for integrations, `node_modules/` vendored for reproducibility). Tests live beside sources as `*.test.ts`.
-- Docs live with their plugin (e.g., `agent-kit/README.md`, `baselayer/README.md`); keep user-facing instructions close to the code that implements them.
+- Plugin folders: `outfitter/`, `but/`, `gt/`, `cli-dev/`. Each holds its own `.claude-plugin/plugin.json` plus `skills/`, `commands/`, and (where needed) `agents/` or `templates/`.
+- The TypeScript package with code you can build/test today is `outfitter/` (`scripts/` for utilities, `templates/` for scaffolding). Tests live beside sources as `*.test.ts`.
+- Docs live with their plugin (e.g., `outfitter/README.md`, `but/README.md`); keep user-facing instructions close to the code that implements them.
 
 ## Build, Test, and Development Commands
 
-- Use Bun everywhere. From a plugin directory (e.g., `agent-kit/`):
+- Use Bun everywhere. From a plugin directory (e.g., `outfitter/`):
   - `bun install` — restore deps (typically already vendored).
   - `bun run typecheck` — strict `tsc --noEmit` for API correctness.
   - `bun run lint` / `bun run format` — Biome lint/format for style parity.

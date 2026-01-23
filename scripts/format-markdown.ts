@@ -14,7 +14,7 @@
  *
  * Examples:
  *   bun scripts/format-markdown.ts                           # Format all .md files
- *   bun scripts/format-markdown.ts agent-kit/                 # Format specific dir
+ *   bun scripts/format-markdown.ts outfitter/                  # Format specific dir
  *   bun scripts/format-markdown.ts path/to/file.md           # Format single file
  *   bun scripts/format-markdown.ts --check                   # CI mode
  */

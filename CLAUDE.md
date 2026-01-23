@@ -36,9 +36,10 @@ Each plugin follows Claude Code's plugin structure with a `.claude-plugin/plugin
 
 | Plugin | Purpose |
 |--------|---------|
-| **baselayer** | Core development methodology: TDD, debugging, type safety, architecture, research |
-| **agent-kit** | Authoring Claude Code plugins, agents, skills, and configuration |
-| **gitbutler** | GitButler virtual branch workflows for parallel development |
+| **outfitter** | Core methodology + Claude Code extensibility (TDD, debugging, architecture, research, plugins, skills, agents) |
+| **but** | GitButler virtual branch workflows for parallel development |
+| **gt** | Graphite stacked PR workflows for trunk-based development |
+| **cli-dev** | CLI development: argument parsing, help text, subcommands |
 
 ## Working with Skills
 
@@ -51,9 +52,9 @@ Skills are markdown-based instruction sets that guide agent behavior for specifi
 find . -name "SKILL.md" -not -path "*/node_modules/*"
 
 # Skills live under each plugin
-baselayer/skills/     # TDD, debugging, pathfinding, etc.
-agent-kit/skills/     # Plugin authoring, agents, skills, config
-gitbutler/skills/     # Version control workflows
+outfitter/skills/     # TDD, debugging, pathfinding, plugin authoring, etc.
+but/skills/           # GitButler virtual branch workflows
+gt/skills/            # Graphite stacked PR workflows
 ```
 
 ### Loading Skills into Context
@@ -66,10 +67,10 @@ To use a skill, read the `SKILL.md` file into context. Skills use **progressive 
 
 ```bash
 # Example: load the pathfinding skill
-cat baselayer/skills/pathfinding/SKILL.md
+cat outfitter/skills/pathfinding/SKILL.md
 
 # If you need more detail on confidence levels
-cat baselayer/skills/pathfinding/references/confidence.md
+cat outfitter/skills/pathfinding/references/confidence.md
 ```
 
 ### Skill Anatomy
