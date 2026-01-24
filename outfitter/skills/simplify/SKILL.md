@@ -22,7 +22,7 @@ NOT for: trivial tasks, clear requirements with validated complexity, regulatory
 
 <phases>
 
-Track with TodoWrite when applying framework to non-trivial proposals:
+Load the **maintain-tasks** skill when applying framework to non-trivial proposals:
 
 | Phase | Trigger | activeForm |
 |-------|---------|------------|
@@ -31,7 +31,7 @@ Track with TodoWrite when applying framework to non-trivial proposals:
 | Question | Probing constraints | "Questioning constraints" |
 | Document | Recording decision | "Documenting decision" |
 
-TodoWrite format:
+Task format:
 
 ```text
 - Identify { complexity type } smell

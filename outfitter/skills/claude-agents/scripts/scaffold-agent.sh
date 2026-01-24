@@ -37,7 +37,7 @@ Examples:
   $(basename "$0") performance-analyzer -t analyzer -d "Performance bottleneck detection"
 
   # Personal agent with specific tools
-  $(basename "$0") code-quality -p --tools "Glob, Grep, Read, Skill, Task, TodoWrite"
+  $(basename "$0") code-quality -p --tools "Glob, Grep, Read, Skill, Task, TaskCreate, TaskUpdate, TaskList, TaskGet"
 
   # Agent with specific model
   $(basename "$0") quick-formatter -m claude-3-5-haiku-20241022
@@ -53,7 +53,7 @@ Template Types:
   simple       - Basic agent template (default)
 
 Note: Agents use 'model: inherit' by default. Baseline tools include:
-  Glob, Grep, Read, Skill, Task, TodoWrite
+  Glob, Grep, Read, Skill, Task, TaskCreate, TaskUpdate, TaskList, TaskGet
 Additional tools are added based on template type.
 EOF
 }
@@ -176,28 +176,28 @@ fi
 if [[ -z "$TOOLS" ]]; then
   case "$TEMPLATE_TYPE" in
     analyzer)
-      TOOLS="Glob, Grep, Read, Skill, Task, TodoWrite, Bash"
+      TOOLS="Glob, Grep, Read, Skill, Task, TaskCreate, TaskUpdate, TaskList, TaskGet, Bash"
       ;;
     implementer)
-      TOOLS="Glob, Grep, Read, Skill, Task, TodoWrite, Edit, Write, Bash"
+      TOOLS="Glob, Grep, Read, Skill, Task, TaskCreate, TaskUpdate, TaskList, TaskGet, Edit, Write, Bash"
       ;;
     reviewer)
-      TOOLS="Glob, Grep, Read, Skill, Task, TodoWrite"
+      TOOLS="Glob, Grep, Read, Skill, Task, TaskCreate, TaskUpdate, TaskList, TaskGet"
       ;;
     tester)
-      TOOLS="Glob, Grep, Read, Skill, Task, TodoWrite, Edit, Write, Bash"
+      TOOLS="Glob, Grep, Read, Skill, Task, TaskCreate, TaskUpdate, TaskList, TaskGet, Edit, Write, Bash"
       ;;
     migrator)
-      TOOLS="Glob, Grep, Read, Skill, Task, TodoWrite, Edit, Write, Bash"
+      TOOLS="Glob, Grep, Read, Skill, Task, TaskCreate, TaskUpdate, TaskList, TaskGet, Edit, Write, Bash"
       ;;
     deployer)
-      TOOLS="Glob, Grep, Read, Skill, Task, TodoWrite, Edit, Write, Bash"
+      TOOLS="Glob, Grep, Read, Skill, Task, TaskCreate, TaskUpdate, TaskList, TaskGet, Edit, Write, Bash"
       ;;
     researcher)
-      TOOLS="Glob, Grep, Read, Skill, Task, TodoWrite, WebSearch, WebFetch"
+      TOOLS="Glob, Grep, Read, Skill, Task, TaskCreate, TaskUpdate, TaskList, TaskGet, WebSearch, WebFetch"
       ;;
     simple|*)
-      TOOLS="Glob, Grep, Read, Skill, Task, TodoWrite"
+      TOOLS="Glob, Grep, Read, Skill, Task, TaskCreate, TaskUpdate, TaskList, TaskGet"
       ;;
   esac
 fi

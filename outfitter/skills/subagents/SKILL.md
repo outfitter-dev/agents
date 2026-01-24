@@ -42,7 +42,7 @@ Complex task arrives
 ## Context Management
 
 For long-running orchestration, load the **context-management** skill. It teaches:
-- Using TodoWrite as survivable state (persists across compaction)
+- Using Tasks as survivable state (persists across compaction)
 - Delegating to subagents to preserve main context
 - Pre-compaction checklists to capture progress
 - Cross-session patterns for multi-day work
@@ -295,6 +295,7 @@ Orchestrators and agents should:
 - **Include file paths and line numbers** when referencing code
 
 Progress format:
+
 ```
 ░░░░░░░░░░ [1/5] research: Exploring auth patterns
 ▓▓▓▓░░░░░░ [2/5] coding: Implementing refresh token flow

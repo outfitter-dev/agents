@@ -235,6 +235,7 @@ export * from './tokens';
 ## Anti-Patterns
 
 **Redundant documentation**:
+
 ```typescript
 // Bad - adds no information
 /**
@@ -256,6 +257,7 @@ function getUser(id: UserId): User | undefined {}
 ```
 
 **Missing @throws**:
+
 ```typescript
 // Bad - caller doesn't know this throws
 function parseConfig(path: string): Config {

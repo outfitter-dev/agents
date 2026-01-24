@@ -8,7 +8,7 @@ metadata:
     - claude-plugins
     - skills-dev
 user-invocable: true
-allowed-tools: Read Write Edit Grep Glob Bash TodoWrite
+allowed-tools: Read Write Edit Grep Glob Bash TaskCreate TaskUpdate TaskList TaskGet
 ---
 
 # Claude Command Authoring
@@ -183,21 +183,27 @@ Based on validation above, proceed with deployment or explain issues.
 ### Argument Patterns
 
 **Positional arguments** (`$1`, `$2`, `$3`):
+
 ```markdown
 Compare file $1 with file $2 and summarize differences.
 ```
+
 Usage: `/compare old.ts new.ts`
 
 **All arguments** (`$ARGUMENTS`):
+
 ```markdown
 Fix the following issues: $ARGUMENTS
 ```
+
 Usage: `/fix memory leak in auth slow query in search`
 
 **Combined with file references**:
+
 ```markdown
 Analyze this file: @$1
 ```
+
 Usage: `/analyze src/main.ts`
 
 See [arguments.md](references/arguments.md) for advanced patterns.

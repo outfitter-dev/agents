@@ -149,7 +149,7 @@ Use indicator for visibility.
 
 - `HIGH/MEDIUM/LOW` — confidence levels
 - Progress bars for visual confidence
--  — caveats and warnings
+- — caveats and warnings
 - Tables for comparisons
 
 ### Citations

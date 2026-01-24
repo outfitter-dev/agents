@@ -67,6 +67,7 @@ bun run scripts/validate.ts --schema=user.json --input=$INPUT_FILE
 ```
 
 Do not modify the validation logic inline. If changes are needed, update scripts/validate.ts.
+
 ```
 
 **When to use:** Security-critical, deterministic reliability, complex algorithms.
@@ -308,16 +309,21 @@ Find specific metrics:
 ```bash
 grep -i "revenue" references/finance.md
 ```
+
 ```
 
 ### Keep References One Level Deep
 
 ```
+
 # Good
+
 SKILL.md -> reference.md
 
 # Bad (too deep)
+
 SKILL.md -> advanced.md -> details.md -> specifics.md
+
 ```
 
 Claude may partially read nested files, getting incomplete information.
@@ -325,19 +331,23 @@ Claude may partially read nested files, getting incomplete information.
 ### Topic-Based File Naming
 
 ```
+
 references/
 ├── finance.md          # Clear domain
 ├── sales.md
 └── product.md
+
 ```
 
 **Not:**
 
 ```
+
 references/
 ├── doc1.md             # What's in this?
 ├── reference2.md
 └── stuff.md
+
 ```
 
 ---
@@ -441,6 +451,7 @@ For strict output requirements, provide exact templates.
 ALWAYS use this exact commit message format:
 
 ```
+
 <type>(<scope>): <subject>
 
 <body>
@@ -451,6 +462,7 @@ ALWAYS use this exact commit message format:
 Types: feat, fix, docs, style, refactor, test, chore
 
 Example:
+
 ```
 feat(auth): add refresh token rotation
 
@@ -459,6 +471,7 @@ Tokens are invalidated after single use.
 
 Closes #123
 ```
+
 ```
 
 ### Checklist Pattern

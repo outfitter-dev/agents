@@ -13,6 +13,7 @@ Sequential process with defined phases.
 - Repeatable across similar contexts
 
 **Example structure**:
+
 ```
 Phase 1 → Validation → Phase 2 → Validation → Phase 3 → Complete
 ```
@@ -24,6 +25,7 @@ Phase 1 → Validation → Phase 2 → Validation → Phase 3 → Complete
 - Consistent outcomes when followed
 
 **Template**:
+
 ```markdown
 # Workflow: {Name}
 
@@ -51,6 +53,7 @@ Coordinates multiple components or actors.
 - Aggregates results
 
 **Example structure**:
+
 ```
 Input → Router → [Component A, Component B, Component C] → Aggregator → Output
 ```
@@ -62,6 +65,7 @@ Input → Router → [Component A, Component B, Component C] → Aggregator → 
 - Results need aggregation
 
 **Template**:
+
 ```markdown
 # Orchestration: {Name}
 
@@ -91,6 +95,7 @@ Decision-making guideline or rule of thumb.
 - Often has exceptions
 
 **Example structure**:
+
 ```
 If {condition}, then {action}
 Unless {exception}, in which case {alternative}
@@ -103,6 +108,7 @@ Unless {exception}, in which case {alternative}
 - Known exceptions
 
 **Template**:
+
 ```markdown
 # Heuristic: {Name}
 
@@ -130,6 +136,7 @@ Common mistake that leads to problems.
 - Has better alternative
 
 **Example structure**:
+
 ```
 Appears reasonable → Causes {problem} → Better approach: {alternative}
 ```
@@ -141,6 +148,7 @@ Appears reasonable → Causes {problem} → Better approach: {alternative}
 - Others might make same mistake
 
 **Template**:
+
 ```markdown
 # Anti-Pattern: {Name}
 

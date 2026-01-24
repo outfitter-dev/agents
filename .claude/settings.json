@@ -1,0 +1,17 @@
+{
+  "extraKnownMarketplaces": {
+    "outfitter": {
+      "source": { "source": "directory", "path": "." }
+    },
+    "outfitter-internal": {
+      "source": { "source": "directory", "path": "../agents-internal" }
+    }
+  },
+  "enabledPlugins": {
+    "outfitter@outfitter": true,
+    "gt@outfitter": true,
+    "but@outfitter": true,
+    "cli-dev@outfitter": true,
+    "outfitter-dev@outfitter-internal": true
+  }
+}

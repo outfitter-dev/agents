@@ -52,8 +52,7 @@ Core development methodology and Claude Code extensibility. Provides disciplined
 
 | Skill | Purpose |
 |-------|---------|
-| **skills-dev** | Cross-platform Agent Skills authoring (agentskills.io spec) |
-| **claude-skills** | Claude-specific skill guidance (tool restrictions, testing) |
+| **skills-dev** | Agent Skills authoring (cross-platform spec + Claude extensions via `references/claude-code.md`) |
 | **claude-plugins** | Full plugin lifecycle, marketplace distribution |
 | **claude-agents** | Subagent creation and validation |
 | **claude-commands** | Slash command authoring |

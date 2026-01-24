@@ -40,7 +40,7 @@ Below level 5: include `△ Caveats` section.
 
 <phases>
 
-Track with TodoWrite. Phases advance only, never regress.
+Load the **maintain-tasks** skill for phase tracking. Phases advance only, never regress.
 
 | Phase | Trigger | activeForm |
 |-------|---------|------------|
@@ -49,7 +49,7 @@ Track with TodoWrite. Phases advance only, never regress.
 | Clarify | level 4 | "Clarifying" |
 | Deliver | level 5 | "Delivering" |
 
-TodoWrite format — each phase gets context-specific title:
+Task format — each phase gets context-specific title:
 
 ```text
 - Prep { domain } requirements
@@ -231,7 +231,7 @@ Below 5: Append `△ Caveats`:
 <rules>
 
 ALWAYS:
-- TodoWrite phase matching initial confidence at start
+- Task phase matching initial confidence at start
 - `EnterPlanMode` for each question (keyboard nav)
 - Prose above tool for context + ★ recommendation
 - One question at a time, wait for response

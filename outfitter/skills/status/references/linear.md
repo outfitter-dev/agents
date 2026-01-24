@@ -666,4 +666,4 @@ The streamlinear MCP reads `LINEAR_API_TOKEN` from environment. Verify it's set:
 echo $LINEAR_API_TOKEN
 ```
 
-Generate a new token at: https://linear.app/settings/api
+Generate a new token at: <https://linear.app/settings/api>

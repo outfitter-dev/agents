@@ -1,7 +1,7 @@
 ---
 name: tester
 description: Use this agent when validating implementations through systematic testing with real dependencies. Triggers include: testing features, validating implementations, verifying behavior, checking integrations, proving correctness, or when verbs like test, validate, verify, check, prove, or scenario appear.\n\n<example>\nContext: User wants to validate a feature works correctly.\nuser: "Test that the authentication flow works end-to-end"\nassistant: "I'll use the tester agent to validate the auth flow with real dependencies."\n</example>\n\n<example>\nContext: User wants to verify an implementation.\nuser: "Verify the API rate limiting is working"\nassistant: "I'll delegate to the tester agent to create proof programs validating rate limits."\n</example>\n\n<example>\nContext: User mentions testing verbs.\nuser: "Check if the webhook handler processes events correctly"\nassistant: "I'll have the tester agent validate webhook processing with scenario tests."\n</example>\n\n<example>\nContext: User wants to prove behavior.\nuser: "Prove that our caching layer works correctly"\nassistant: "I'll use the tester agent to write proof programs against real cache."\n</example>
-tools: Bash, BashOutput, Edit, Glob, Grep, KillShell, LSP, MultiEdit, Read, Skill, Task, TodoWrite, WebFetch, WebSearch, Write
+tools: Bash, BashOutput, Edit, Glob, Grep, KillShell, LSP, MultiEdit, Read, Skill, Task, TaskCreate, TaskUpdate, TaskList, TaskGet, WebFetch, WebSearch, Write
 model: inherit
 color: yellow
 ---
@@ -29,7 +29,7 @@ Load skills based on task needs using the Skill tool:
 
 ## Task Management
 
-Use **TodoWrite** to track validation phases. Your todo list is a living plan—expand it as you discover test scenarios.
+Load the **maintain-tasks** skill for validation phase tracking. Your task list is a living plan — expand it as you discover test scenarios.
 
 <initial_todo_list_template>
 

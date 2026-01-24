@@ -25,11 +25,13 @@ Process file $1 with config $2 and output to $3
 ```
 
 **Usage**:
+
 ```
 /process data.csv config.json output.txt
 ```
 
 **Result**:
+
 ```
 Process file data.csv with config config.json and output to output.txt
 ```
@@ -43,11 +45,13 @@ Fix the following issues: $ARGUMENTS
 ```
 
 **Usage**:
+
 ```
 /fix memory leak in auth module slow query in search
 ```
 
 **Result**:
+
 ```
 Fix the following issues: memory leak in auth module slow query in search
 ```

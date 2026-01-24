@@ -25,6 +25,7 @@ Executes **before** a tool runs. Can block or modify tool execution.
 - Provide context via `systemMessage`
 
 **Common matchers**:
+
 ```json
 "Bash"                  // Shell commands
 "Write"                 // File writing
@@ -121,6 +122,7 @@ Executes **after** a tool completes successfully.
 - `$file`: Path to affected file (Write/Edit tools only)
 
 **Common matchers**:
+
 ```json
 "Write|Edit(*.ts)"      // TypeScript files
 "Write(*.py)"           // Python files
@@ -481,6 +483,7 @@ Executes when session starts or resumes.
 - `reason`: Start type
 
 **Matchers**:
+
 ```json
 "startup"   // Claude Code starts fresh
 "resume"    // Session resumes (--resume or --continue)
@@ -545,6 +548,7 @@ Executes when session ends.
 - `reason`: End type
 
 **Matchers** (reasons):
+
 ```json
 "clear"               // User ran /clear
 "logout"              // User logged out
@@ -588,6 +592,7 @@ Executes before conversation compacts.
 - Compact trigger type
 
 **Matchers**:
+
 ```json
 "manual"   // User triggered via /compact
 "auto"     // Automatic compact (context limit)

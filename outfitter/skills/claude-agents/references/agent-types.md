@@ -15,7 +15,7 @@ Common agent archetypes and their characteristics.
 **Example tasks:** "Analyze performance", "Find memory leaks", "Review bundle size"
 
 ```yaml
-tools: Glob, Grep, Read, Skill, Task, TodoWrite
+tools: Glob, Grep, Read, Skill, Task, TaskCreate, TaskUpdate, TaskList, TaskGet
 ```
 
 ## Implementation Agents
@@ -46,7 +46,7 @@ tools: Glob, Grep, Read, Skill, Task, TodoWrite
 **Example tasks:** "Review this PR", "Check code quality", "Evaluate architecture"
 
 ```yaml
-tools: Glob, Grep, Read, Skill, Task, TodoWrite
+tools: Glob, Grep, Read, Skill, Task, TaskCreate, TaskUpdate, TaskList, TaskGet
 ```
 
 ## Testing Agents
@@ -62,7 +62,7 @@ tools: Glob, Grep, Read, Skill, Task, TodoWrite
 **Example tasks:** "Create tests for X", "Improve coverage", "Add edge case tests"
 
 ```yaml
-tools: Glob, Grep, Read, Write, Edit, Bash, Skill, Task, TodoWrite
+tools: Glob, Grep, Read, Write, Edit, Bash, Skill, Task, TaskCreate, TaskUpdate, TaskList, TaskGet
 ```
 
 ## Migration Agents
@@ -78,7 +78,7 @@ tools: Glob, Grep, Read, Write, Edit, Bash, Skill, Task, TodoWrite
 **Example tasks:** "Migrate to TypeScript", "Update to new API", "Refactor to pattern"
 
 ```yaml
-tools: Glob, Grep, Read, Write, Edit, Skill, Task, TodoWrite
+tools: Glob, Grep, Read, Write, Edit, Skill, Task, TaskCreate, TaskUpdate, TaskList, TaskGet
 ```
 
 ## Research Agents
@@ -94,7 +94,7 @@ tools: Glob, Grep, Read, Write, Edit, Skill, Task, TodoWrite
 **Example tasks:** "Research how to X", "Find examples of Y", "Best practice for Z"
 
 ```yaml
-tools: Glob, Grep, Read, Skill, Task, TodoWrite, WebSearch, WebFetch
+tools: Glob, Grep, Read, Skill, Task, TaskCreate, TaskUpdate, TaskList, TaskGet, WebSearch, WebFetch
 ```
 
 ## Deployment Agents
@@ -110,7 +110,7 @@ tools: Glob, Grep, Read, Skill, Task, TodoWrite, WebSearch, WebFetch
 **Example tasks:** "Deploy to staging", "Rollback deployment", "Check cluster health"
 
 ```yaml
-tools: Glob, Grep, Read, Skill, Task, TodoWrite, Bash(kubectl *), Bash(docker *)
+tools: Glob, Grep, Read, Skill, Task, TaskCreate, TaskUpdate, TaskList, TaskGet, Bash(kubectl *), Bash(docker *)
 ```
 
 ## Choosing an Archetype

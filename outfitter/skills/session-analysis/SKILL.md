@@ -49,7 +49,7 @@ Confidence levels:
 
 <phases>
 
-Track with TodoWrite. Phases advance only, never regress.
+Load the **maintain-tasks** skill for phase tracking. Phases advance only, never regress.
 
 | Phase | Trigger | activeForm |
 |-------|---------|------------|
@@ -58,7 +58,7 @@ Track with TodoWrite. Phases advance only, never regress.
 | Detect Patterns | Signals extracted | "Detecting patterns" |
 | Synthesize Report | Patterns detected | "Synthesizing report" |
 
-TodoWrite format:
+Task format:
 
 ```text
 - Parse Input { scope description }

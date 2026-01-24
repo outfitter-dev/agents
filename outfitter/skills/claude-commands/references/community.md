@@ -48,6 +48,7 @@ Setup guide with:
 
 **`/commit` (steadycursor)**
 Automates git commit with conventional format:
+
 ```yaml
 ---
 description: Create conventional commit from staged changes
@@ -60,6 +61,7 @@ Full PR workflow: branch, commit, format, submit.
 
 **`/catchup`**
 Reload work-in-progress after `/clear`:
+
 ```yaml
 ---
 description: Load uncommitted changes into context
@@ -73,6 +75,7 @@ Continue with the above context.
 
 **`/commit-fast`**
 Selects first commit suggestion automatically:
+
 ```yaml
 ---
 description: Fast commit - auto-select first suggestion
@@ -93,6 +96,7 @@ Test-driven development orchestration:
 
 **`/context-prime`**
 Initialize project understanding:
+
 ```yaml
 ---
 description: Prime context with project structure and goals
@@ -112,6 +116,7 @@ Lightweight context setup via directory visualization.
 ### Workflow Orchestration
 
 **Sequential Pipeline**:
+
 ```
 /feature-development implement OAuth
   -> Backend scaffolding
@@ -121,6 +126,7 @@ Lightweight context setup via directory visualization.
 ```
 
 **Parallel Tools**:
+
 ```
 /review-suite
   -> /security-scan (parallel)
@@ -131,6 +137,7 @@ Lightweight context setup via directory visualization.
 ### Smart Routing
 
 **Dynamic Agent Selection** (from Claude Command Suite):
+
 ```yaml
 ---
 description: Intelligent problem resolution
@@ -144,6 +151,7 @@ Based on the issue type, delegate to:
 ### Resume Capability
 
 **Interruptible Workflows**:
+
 ```yaml
 ---
 description: Save and resume complex tasks

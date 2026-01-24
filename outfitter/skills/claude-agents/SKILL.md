@@ -75,9 +75,9 @@ Before writing code, clarify:
 
 | Type | Purpose | Typical Tools |
 |------|---------|---------------|
-| **Analyzer** | Examine without modifying | `Glob, Grep, Read, Skill, Task, TodoWrite` |
+| **Analyzer** | Examine without modifying | `Glob, Grep, Read, Skill, Task, TaskCreate, TaskUpdate, TaskList, TaskGet` |
 | **Implementer** | Build and modify code | Full access (inherit) |
-| **Reviewer** | Provide feedback | `Glob, Grep, Read, Skill, Task, TodoWrite` |
+| **Reviewer** | Provide feedback | `Glob, Grep, Read, Skill, Task, TaskCreate, TaskUpdate, TaskList, TaskGet` |
 | **Tester** | Create and manage tests | `Glob, Grep, Read, Write, Edit, Bash, ...` |
 | **Researcher** | Find and synthesize info | `..., WebSearch, WebFetch` |
 | **Deployer** | Handle infrastructure | `..., Bash(kubectl *), Bash(docker *)` |
@@ -120,8 +120,9 @@ See [frontmatter.md](references/frontmatter.md) for complete schema.
 **Philosophy**: Don't over-restrict. Only limit tools when there's a specific safety reason.
 
 **Baseline** (always include when restricting):
+
 ```yaml
-tools: Glob, Grep, Read, Skill, Task, TodoWrite
+tools: Glob, Grep, Read, Skill, Task, TaskCreate, TaskUpdate, TaskList, TaskGet
 ```
 
 See [tools.md](references/tools.md) for patterns.
@@ -194,6 +195,7 @@ Descriptions are the most critical field for agent discovery:
 ### Best Practices
 
 **Single Responsibility**
+
 ```yaml
 # Good: Focused
 description: SQL injection vulnerability detector
@@ -203,6 +205,7 @@ description: Security expert handling all issues
 ```
 
 **Document Boundaries**
+
 ```markdown
 ## What I Don't Do
 - I analyze, not implement fixes
@@ -274,19 +277,20 @@ After creating an agent, validate against these checklists.
 - [ ] Field name is `tools:` (not `allowed-tools:`)
 - [ ] Comma-separated list
 - [ ] Tool names correctly spelled and case-sensitive
-- [ ] Includes baseline tools if restricting: `Glob, Grep, Read, Skill, Task, TodoWrite`
+- [ ] Includes baseline tools if restricting: `Glob, Grep, Read, Skill, Task, TaskCreate, TaskUpdate, TaskList, TaskGet`
 - [ ] Tools appropriate for agent's purpose
 
 **Common patterns**:
+
 ```yaml
 # Read-only
-tools: Glob, Grep, Read, Skill, Task, TodoWrite
+tools: Glob, Grep, Read, Skill, Task, TaskCreate, TaskUpdate, TaskList, TaskGet
 
 # Read-only + git
-tools: Glob, Grep, Read, Skill, Task, TodoWrite, Bash(git show:*), Bash(git diff:*)
+tools: Glob, Grep, Read, Skill, Task, TaskCreate, TaskUpdate, TaskList, TaskGet, Bash(git show:*), Bash(git diff:*)
 
 # Research
-tools: Glob, Grep, Read, Skill, Task, TodoWrite, WebSearch, WebFetch
+tools: Glob, Grep, Read, Skill, Task, TaskCreate, TaskUpdate, TaskList, TaskGet, WebSearch, WebFetch
 
 # Full access
 # (omit field to inherit all)
@@ -378,7 +382,7 @@ Prefer `model: inherit` to use parent's tool access. Only specify `tools:` when 
 | [discovery.md](references/discovery.md) | How agents are found and loaded |
 | [agent-types.md](references/agent-types.md) | Archetypes: analysis, implementation, etc. |
 | [patterns.md](references/patterns.md) | Best practices and multi-agent patterns |
-| [todowrite.md](references/todowrite.md) | TodoWrite patterns for agents |
+| [tasks.md](references/tasks.md) | Task tool patterns for agents |
 | [advanced-features.md](references/advanced-features.md) | Resumable agents, CLI config |
 
 See [EXAMPLES.md](EXAMPLES.md) for complete real-world agent examples.

@@ -33,7 +33,7 @@ description: |
   user: "Check this code for security vulnerabilities"
   assistant: "I'll use the security-scanner agent to analyze for OWASP Top 10 issues."
   </example>
-tools: Glob, Grep, Read, Skill, Task, TodoWrite, Bash
+tools: Glob, Grep, Read, Skill, Task, TaskCreate, TaskUpdate, TaskList, TaskGet, Bash
 model: inherit
 ---
 
@@ -219,7 +219,7 @@ description: |
   user: "Review our JWT implementation"
   assistant: "I'll use the auth-security-specialist agent to validate the token security."
   </example>
-tools: Glob, Grep, Read, Skill, Task, TodoWrite
+tools: Glob, Grep, Read, Skill, Task, TaskCreate, TaskUpdate, TaskList, TaskGet
 model: inherit
 ---
 
@@ -410,7 +410,7 @@ description: |
   user: "Write tests for the user authentication module"
   assistant: "I'll use the tdd-specialist agent to create a test suite."
   </example>
-tools: Glob, Grep, Read, Skill, Task, TodoWrite, Edit, Write, Bash
+tools: Glob, Grep, Read, Skill, Task, TaskCreate, TaskUpdate, TaskList, TaskGet, Edit, Write, Bash
 model: inherit
 ---
 
@@ -750,7 +750,7 @@ description: |
   user: "Test the GraphQL authentication endpoints"
   assistant: "I'll use the api-testing-specialist agent to validate the endpoints."
   </example>
-tools: Glob, Grep, Read, Skill, Task, TodoWrite, Edit, Write, Bash
+tools: Glob, Grep, Read, Skill, Task, TaskCreate, TaskUpdate, TaskList, TaskGet, Edit, Write, Bash
 model: inherit
 ---
 
@@ -1149,7 +1149,7 @@ description: |
   user: "Review this module for code quality issues"
   assistant: "I'll use the code-quality-reviewer agent to analyze maintainability."
   </example>
-tools: Glob, Grep, Read, Skill, Task, TodoWrite
+tools: Glob, Grep, Read, Skill, Task, TaskCreate, TaskUpdate, TaskList, TaskGet
 model: inherit
 ---
 
@@ -1496,7 +1496,7 @@ description: |
   user: "Deploy the new version to the staging cluster"
   assistant: "I'll use the kubernetes-deployment agent to orchestrate the deployment."
   </example>
-tools: Glob, Grep, Read, Skill, Task, TodoWrite, Edit, Write, Bash
+tools: Glob, Grep, Read, Skill, Task, TaskCreate, TaskUpdate, TaskList, TaskGet, Edit, Write, Bash
 model: inherit
 ---
 
@@ -1811,7 +1811,7 @@ description: |
   user: "Find the official docs on React Server Components"
   assistant: "I'll use the docs-researcher agent to find and synthesize the documentation."
   </example>
-tools: Glob, Grep, Read, Skill, Task, TodoWrite, WebSearch, WebFetch
+tools: Glob, Grep, Read, Skill, Task, TaskCreate, TaskUpdate, TaskList, TaskGet, WebSearch, WebFetch
 model: inherit
 ---
 

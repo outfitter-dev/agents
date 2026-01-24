@@ -85,10 +85,10 @@ Agents benefit from prompt caching:
 model: inherit
 
 # If restricting, use baseline + needed extras
-tools: Glob, Grep, Read, Skill, Task, TodoWrite, WebSearch
+tools: Glob, Grep, Read, Skill, Task, TaskCreate, TaskUpdate, TaskList, TaskGet, WebSearch
 
 # Full bash when needed (simpler than Bash(*))
-tools: Glob, Grep, Read, Skill, Task, TodoWrite, Bash
+tools: Glob, Grep, Read, Skill, Task, TaskCreate, TaskUpdate, TaskList, TaskGet, Bash
 ```
 
 ## Context Size Guidelines

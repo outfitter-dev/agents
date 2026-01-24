@@ -31,7 +31,7 @@ Never propose solutions or "try this" without understanding root cause through s
 
 <phases>
 
-Track with TodoWrite. Phases advance forward only.
+Load the **maintain-tasks** skill for phase tracking. Phases advance forward only.
 
 | Phase | Trigger | activeForm |
 |-------|---------|------------|

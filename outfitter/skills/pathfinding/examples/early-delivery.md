@@ -11,7 +11,7 @@ I want to add real-time notifications to our app. Users should get notified when
 <claude>
 
 ```text
-[TodoWrite] Getting oriented
+[Task] Getting oriented
 - Prep notification requirements (in_progress)
 - Explore delivery mechanisms (pending)
 - Clarify scale and persistence (pending)
@@ -85,7 +85,7 @@ Concerns:
 ```
 
 ```text
-[TodoWrite] Shape emerging
+[Task] Shape emerging
 - Prep notification requirements (completed)
 - Explore delivery mechanisms (in_progress)
 - Clarify scale and persistence (pending)
@@ -157,7 +157,7 @@ Concerns:
 ```
 
 ```text
-[TodoWrite] Getting close
+[Task] Getting close
 - Prep notification requirements (completed)
 - Explore delivery mechanisms (completed)
 - Clarify scale and persistence (in_progress)
@@ -196,7 +196,7 @@ Skipping to delivery at level 3. Including caveats for what's unresolved.
 ```
 
 ```text
-[TodoWrite] Early delivery — shipping with caveats
+[Task] Early delivery — shipping with caveats
 - Prep notification requirements (completed)
 - Explore delivery mechanisms (completed)
 - Clarify scale and persistence (completed)
@@ -331,7 +331,7 @@ export function useNotifications(userId: string) {
 - Notification preferences (mute, frequency)
 
 ```text
-[TodoWrite] Done — shipped with caveats
+[Task] Done — shipped with caveats
 - Prep notification requirements (completed)
 - Explore delivery mechanisms (completed)
 - Clarify scale and persistence (completed)

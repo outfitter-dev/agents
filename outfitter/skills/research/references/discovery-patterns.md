@@ -18,6 +18,7 @@ Getting started with a new library.
 ### Steps
 
 **1. Package Discovery**
+
 ```
 octocode.packageSearch(name)
 → Repository URL
@@ -27,6 +28,7 @@ octocode.packageSearch(name)
 ```
 
 **2. Documentation Retrieval**
+
 ```
 context7.resolve-library-id(name)
 → Documentation identifier
@@ -84,6 +86,7 @@ Diagnosing and fixing errors.
 ### Steps
 
 **1. Parse Error**
+
 ```
 Extract from error message:
 - Error code/type
@@ -93,6 +96,7 @@ Extract from error message:
 ```
 
 **2. Search Issues**
+
 ```
 octocode.githubSearchIssues(pattern)
 → Related GitHub issues
@@ -101,6 +105,7 @@ octocode.githubSearchIssues(pattern)
 ```
 
 **3. Official Troubleshooting**
+
 ```
 context7.get-library-docs(id, topic="troubleshooting")
 → Known issues
@@ -109,6 +114,7 @@ context7.get-library-docs(id, topic="troubleshooting")
 ```
 
 **4. Community Solutions**
+
 ```
 firecrawl.search(error_message)
 → Stack Overflow answers
@@ -162,12 +168,14 @@ Understanding library APIs.
 ### Steps
 
 **1. Documentation ID**
+
 ```
 context7.resolve-library-id(name)
 → Documentation identifier
 ```
 
 **2. API Reference**
+
 ```
 context7.get-library-docs(id, topic="api")
 → Function signatures
@@ -177,6 +185,7 @@ context7.get-library-docs(id, topic="api")
 ```
 
 **3. Real Usage**
+
 ```
 octocode.githubSearchCode("import { functionName } from 'library'")
 → Production usage patterns
@@ -231,6 +240,7 @@ Evaluating options for a decision.
 **1. Parallel Discovery**
 
 For each option, simultaneously:
+
 ```
 context7: Official documentation, features
 octocode: GitHub activity, issues, community
@@ -302,6 +312,7 @@ Finding recommended approaches.
 ### Steps
 
 **1. Official Guidance**
+
 ```
 context7.get-library-docs(id, topic="best-practices")
 → Recommended patterns
@@ -310,6 +321,7 @@ context7.get-library-docs(id, topic="best-practices")
 ```
 
 **2. Expert Opinions**
+
 ```
 firecrawl.search("{topic} best practices {year}")
 → Expert blog posts
@@ -318,6 +330,7 @@ firecrawl.search("{topic} best practices {year}")
 ```
 
 **3. Community Patterns**
+
 ```
 octocode.githubSearchCode("{pattern}")
 → How production code implements

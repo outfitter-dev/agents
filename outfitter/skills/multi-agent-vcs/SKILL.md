@@ -85,9 +85,9 @@ Write code to the filesystem only. The orchestrator handles all git state.
 Report which files you created/modified when done.
 ```
 
-## TodoWrite Integration
+## Task Integration
 
-Track git operations explicitly in todo lists:
+Track git operations explicitly in task lists:
 
 ```
 # Phase: Parallel Implementation

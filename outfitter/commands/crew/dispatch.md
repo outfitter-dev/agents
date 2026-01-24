@@ -16,14 +16,14 @@ Coordinate multiple agents to accomplish a complex task requiring different expe
 
 1. **Load Skills** — Use the Skill tool to load:
    - **outfitter:subagents** — agent routing and orchestration patterns
-   - **outfitter:context-management** — for long-running tasks, teaches TodoWrite state persistence
+   - **outfitter:context-management** — for long-running tasks, teaches Task state persistence
 2. **Consider** — Ultrathink and analyze the task, consider the complexity, sequence of steps, and agent requirements.
 3. **Planning** — Use the **Plan subagent** to research the codebase and design an orchestration strategy
 4. **Report** — Present the orchestration plan (which agents, what sequence, expected handoffs)
    - **IMPORTANT**: After presenting the orchestration plan, proceed directly to execution.
    - Do not wait for approval unless the task is high-risk (destructive changes, production deployment, security-sensitive).
 5. **Execute** — Dispatch agents according to the plan, passing context between them
-6. **Persist** — Update TodoWrite throughout with agent IDs, decisions, and progress (survives compaction)
+6. **Persist** — Update Tasks throughout with agent IDs, decisions, and progress (survives compaction)
 
 ## Planning Process
 

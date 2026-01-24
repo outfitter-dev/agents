@@ -32,6 +32,7 @@ User: !`git config user.email`
 ```
 
 **Output** (example):
+
 ```markdown
 ## Git Context
 Branch: main
@@ -97,6 +98,7 @@ echo "bun: $(bun --version 2>/dev/null || echo 'not installed')"`
 **Default limit**: 15,000 characters per command
 
 **Configure via environment variable**:
+
 ```bash
 export SLASH_COMMAND_TOOL_CHAR_BUDGET=30000
 ```
@@ -125,11 +127,13 @@ Stats only: !`git diff --stat | tail -1`
 ### Error Handling
 
 **Stderr is captured**:
+
 ```markdown
 Result: !`some-command 2>&1`
 ```
 
 **Conditional execution**:
+
 ```markdown
 Status: !`git status 2>&1 || echo "Not a git repository"`
 
@@ -137,6 +141,7 @@ File check: !`[ -f config.json ] && cat config.json || echo "No config found"`
 ```
 
 **Exit codes**:
+
 ```markdown
 Test result:
 !`bun test && echo "All tests passed" || echo "Tests failed"`
@@ -234,6 +239,7 @@ Type: !`file "$1"`
 ```
 
 **Important**: Quote arguments to handle spaces:
+
 ```markdown
 !`cat "$1"`      # Correct
 !`cat $1`        # Breaks with spaces in path

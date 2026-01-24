@@ -37,6 +37,7 @@ description: Deploy application to target environment with health checks
 - Avoid vague terms like "helps with" or "stuff"
 
 **Examples**:
+
 ```yaml
 # Good
 description: Create git commit from staged changes with conventional format
@@ -68,6 +69,7 @@ argument-hint: <environment> [--skip-tests] [--no-notify]
 - `<arg1|arg2>` - Alternatives (pipe-separated)
 
 **Examples**:
+
 ```yaml
 # Single required argument
 argument-hint: <issue-number>
@@ -131,7 +133,10 @@ allowed-tools: Read, Grep, Glob, Bash(git *)
 | Tool | Purpose | Returns |
 |------|---------|---------|
 | `Skill` | Load a skill's instructions into context | Skill content |
-| `TodoWrite` | Track agent tasks, progress, and state across context | Confirmation |
+| `TaskCreate` | Create tasks for tracking progress | Task ID |
+| `TaskUpdate` | Update task status (in_progress, completed) | Confirmation |
+| `TaskList` | List all tasks | Task summaries |
+| `TaskGet` | Get full task details | Task details |
 
 **Planning**
 
@@ -164,6 +169,7 @@ MCP (Model Context Protocol) tools follow the naming pattern `mcp__<server>__<to
 Use regex patterns to match MCP tools: `mcp__.*__.*` matches all MCP tools.
 
 **Bash patterns**:
+
 ```yaml
 # All bash commands
 allowed-tools: Bash(*)
@@ -179,6 +185,7 @@ allowed-tools: Bash(git *), Bash(npm *), Bash(bun *)
 ```
 
 **Common patterns**:
+
 ```yaml
 # Read-only analysis
 allowed-tools: Read, Grep, Glob
@@ -211,6 +218,7 @@ model: haiku
 ```
 
 **Available models**:
+
 ```yaml
 # Fast, low-cost (simple tasks)
 model: haiku
@@ -289,15 +297,17 @@ Options: $ARGUMENTS
 ## Common Errors
 
 **Tab characters**:
+
 ```yaml
 # Bad (tabs)
-description:	Deploy to staging
+description: Deploy to staging
 
 # Good (spaces)
 description: Deploy to staging
 ```
 
 **Unquoted special characters**:
+
 ```yaml
 # Bad (colon in value)
 description: Review: code quality check
@@ -307,6 +317,7 @@ description: "Review: code quality check"
 ```
 
 **Wrong tool names**:
+
 ```yaml
 # Bad (lowercase)
 allowed-tools: read, grep, glob
@@ -316,6 +327,7 @@ allowed-tools: Read, Grep, Glob
 ```
 
 **Invalid model**:
+
 ```yaml
 # Bad (non-existent)
 model: gpt-4

@@ -23,7 +23,7 @@ NOT for: exploratory coding, UI prototypes, static config, trivial glue code
 
 <phases>
 
-Track with TodoWrite. Advance through RED-GREEN-REFACTOR cycle.
+Load the **maintain-tasks** skill for phase tracking. Advance through RED-GREEN-REFACTOR cycle.
 
 | Phase | Trigger | activeForm |
 |-------|---------|------------|
@@ -32,7 +32,7 @@ Track with TodoWrite. Advance through RED-GREEN-REFACTOR cycle.
 | Refactor | Tests passing | "Refactoring code" |
 | Verify | Refactor complete | "Verifying implementation" |
 
-TodoWrite format:
+Task format:
 
 ```text
 - Write failing test for { feature }
@@ -232,6 +232,7 @@ Final: Run full suite. Mark "Verify" `completed` when all checks pass.
 Follow project conventions, defaulting to:
 
 TypeScript/Bun:
+
 ```
 src/{module}/{name}.ts          # Implementation
 src/{module}/{name}.test.ts     # Unit tests colocated
@@ -241,6 +242,7 @@ tests/e2e/                      # End-to-end tests
 ```
 
 Rust:
+
 ```
 src/{module}/mod.rs             # #[cfg(test)] mod tests { ... }
 tests/integration/              # Integration tests
@@ -304,7 +306,7 @@ function divide(a: number, b: number): Result {
 <rules>
 
 ALWAYS:
-- Track progress with TodoWrite phases
+- Track progress with Tasks (load **maintain-tasks** skill)
 - Write tests before implementation (RED first)
 - Run tests after each phase
 - Verify tests fail for right reason in RED

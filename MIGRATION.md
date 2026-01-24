@@ -82,12 +82,16 @@ Skills were merged into `outfitter` and renamed to shorter forms:
 | `agent-kit:claude-code-configuration` | `outfitter:claude-config` |
 | `agent-kit:codex-configuration` | `outfitter:codex-config` |
 
-**New skill added:**
-| Skill | Purpose |
-|-------|---------|
-| `outfitter:claude-skills` | Claude-specific skill guidance (split from skills-development) |
+**Skill restructured:**
+
+| Old | New |
+|-----|-----|
+| `outfitter:claude-skills` | Merged into `outfitter:skills-dev` as `references/claude-code.md` |
+
+Claude-specific guidance (tool restrictions, testing, troubleshooting) is now in `skills-dev/references/claude-code.md` rather than a separate skill.
 
 **Agent moved:**
+
 | Old | New |
 |-----|-----|
 | `agent-kit:agent-expert` | `outfitter:quartermaster` |

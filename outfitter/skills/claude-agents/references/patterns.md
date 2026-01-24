@@ -143,7 +143,7 @@ Continue implementation
 tools: Read  # Can't even search!
 
 # ✅ Appropriate baseline
-tools: Glob, Grep, Read, Skill, Task, TodoWrite
+tools: Glob, Grep, Read, Skill, Task, TaskCreate, TaskUpdate, TaskList, TaskGet
 ```
 
 ### Vague Description

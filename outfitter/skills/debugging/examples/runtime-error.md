@@ -8,7 +8,7 @@ User reports: "Application crashes when processing certain user profiles with `T
 
 ## Phase 1: Collect Evidence
 
-**TodoWrite state**: "Collecting evidence" (in_progress)
+**Task state**: "Collecting evidence" (in_progress)
 
 ### Read Error Message
 
@@ -86,7 +86,7 @@ User object from API is missing email field.
 
 ## Phase 2: Isolate Variables
 
-**TodoWrite state**: "Isolating variables" (in_progress)
+**Task state**: "Isolating variables" (in_progress)
 
 ### Find Working Examples
 
@@ -152,7 +152,7 @@ const user = profile.user; // May be incomplete
 
 ## Phase 3: Formulate Hypotheses & Test
 
-**TodoWrite state**: "Formulating hypotheses" (in_progress)
+**Task state**: "Formulating hypotheses" (in_progress)
 
 ### Form Hypothesis
 
@@ -166,7 +166,7 @@ Evidence supporting hypothesis:
 
 **Transition**: Hypothesis formed. Mark "Formulate Hypotheses" complete, add "Test Hypothesis" as in_progress.
 
-**TodoWrite state**: "Testing hypothesis" (in_progress)
+**Task state**: "Testing hypothesis" (in_progress)
 
 ### Design Minimal Test
 
@@ -191,7 +191,7 @@ Run with reverted code:
 
 ## Phase 4: Verify Fix
 
-**TodoWrite state**: "Verifying fix" (in_progress)
+**Task state**: "Verifying fix" (in_progress)
 
 ### Create Failing Test
 
@@ -282,7 +282,7 @@ try {
 
 **Transition**: Fix verified and deployed. Mark "Verify Fix" complete.
 
-**TodoWrite state**: All tasks completed.
+**Task state**: All tasks completed.
 
 ## Summary
 

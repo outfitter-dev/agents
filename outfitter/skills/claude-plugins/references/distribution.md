@@ -134,6 +134,7 @@ git push origin main --tags
 ### ZIP Distribution
 
 **Correct structure:**
+
 ```
 my-plugin.zip
 └── my-plugin/           # Plugin folder at root
@@ -397,6 +398,7 @@ echo "Bumped to $NEW"
 ```
 
 Usage:
+
 ```bash
 ./bump-version.sh patch  # 1.0.0 -> 1.0.1
 ./bump-version.sh minor  # 1.0.1 -> 1.1.0

@@ -9,7 +9,7 @@ Complete TDD session implementing user authentication feature from scratch.
 **Starting Point**: No existing code
 **Duration**: ~45 minutes (3 RED-GREEN-REFACTOR cycles)
 
-## TodoWrite State Tracking
+## Task State Tracking
 
 Initial todos:
 
@@ -89,7 +89,7 @@ Tests fail as expected — no implementation exists yet.
 
 **Commit**: `test: add failing tests for user authentication`
 
-**TodoWrite Update**:
+**Task Update**:
 
 ```text
 1. Write failing test for user authentication [completed]
@@ -181,7 +181,7 @@ All tests pass — implementation complete.
 
 **Commit**: `feat: implement user authentication to pass tests`
 
-**TodoWrite Update**:
+**Task Update**:
 
 ```text
 1. Write failing test for user authentication [completed]
@@ -296,7 +296,7 @@ Tests still pass — refactoring successful.
 
 **Commit**: `refactor: extract validation and password verification`
 
-**TodoWrite Update**:
+**Task Update**:
 
 ```text
 1. Write failing test for user authentication [completed]
@@ -329,7 +329,7 @@ Coverage:
 
 Coverage ≥80% — quality standards met.
 
-**TodoWrite Update**:
+**Task Update**:
 
 ```text
 1. Write failing test for user authentication [completed]
@@ -342,7 +342,7 @@ Coverage ≥80% — quality standards met.
 
 Starting new cycle for email validation edge cases.
 
-**TodoWrite Update**:
+**Task Update**:
 
 ```text
 1. Write failing test for email validation [in_progress]
@@ -659,7 +659,7 @@ Results:
 - Mutation score: 78.3%
 - All tests passing
 
-**TodoWrite**: All completed
+**Task**: All completed
 
 ## Session Summary
 

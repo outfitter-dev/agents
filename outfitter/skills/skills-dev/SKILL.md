@@ -1,15 +1,14 @@
 ---
 name: skills-dev
-version: 2.0.0
+version: 2.1.0
 description: This skill should be used when creating skills, writing SKILL.md files, or when "create skill", "new skill", "validate skill", or "SKILL.md" are mentioned. Covers cross-platform Agent Skills specification.
 metadata:
   related-skills:
-    - claude-skills
     - claude-plugins
     - claude-agents
     - codex-config
 user-invocable: true
-allowed-tools: Read Write Edit Grep Glob Bash TodoWrite AskUserQuestion
+allowed-tools: Read Write Edit Grep Glob Bash TaskCreate TaskUpdate TaskList TaskGet AskUserQuestion
 ---
 
 # Skills Development
@@ -59,25 +58,26 @@ skill-name/
 ---
 name: skill-name
 description: What it does and when to use it. Include trigger keywords.
+version: 1.0.0                         # optional, recommended
 license: Apache-2.0                    # optional
 compatibility: Requires git and jq     # optional
 metadata:                              # optional
   author: your-org
-  version: "1.0"
-allowed-tools: Read Grep Glob          # optional, experimental
-user-invocable: true                   # optional, makes skill a /command
+  category: development
+  tags: [testing, automation]
 ---
 ```
 
 | Field | Required | Constraints |
 |-------|----------|-------------|
-| `name` | Yes | 1-64 chars, lowercase/numbers/hyphens, must match directory |
-| `description` | Yes | 1-1024 chars, describes what + when |
-| `user-invocable` | No | Boolean, enables `/skill-name` command |
+| `name` | Yes | 2-64 chars, lowercase/numbers/hyphens, must match directory |
+| `description` | Yes | 10-1024 chars, describes what + when |
+| `version` | No | Semantic version (MAJOR.MINOR.PATCH) |
 | `license` | No | License name or reference |
 | `compatibility` | No | 1-500 chars, environment requirements |
-| `allowed-tools` | No | Space-delimited tool list (experimental) |
 | `metadata` | No | Object for custom fields |
+
+**Note**: Platform-specific fields (e.g., Claude's `allowed-tools`, `user-invocable`) should be added per-platform. See [claude-code.md](references/claude-code.md) for Claude Code extensions.
 
 ### Custom Frontmatter
 
@@ -117,24 +117,28 @@ description: Extracts text and tables from PDF files, fills forms, merges docume
 ### Validation Checklist
 
 #### A. YAML Frontmatter
+
 - [ ] Opens with `---` on line 1, closes with `---`
 - [ ] `name` and `description` present (required)
 - [ ] Uses spaces, not tabs
 - [ ] Special characters quoted
 
 #### B. Naming
+
 - [ ] Lowercase, numbers, hyphens only (1-64 chars)
 - [ ] Matches parent directory name
 - [ ] No `--`, leading/trailing hyphens
 - [ ] No `anthropic` or `claude` in name
 
 #### C. Description Quality
+
 - [ ] WHAT: Explains capabilities
 - [ ] WHEN: States "Use when..." conditions
 - [ ] TRIGGERS: 3-5 keywords users would say
 - [ ] Third-person voice (not "I can" or "you can")
 
 #### D. Structure
+
 - [ ] SKILL.md under 500 lines
 - [ ] All referenced files exist
 - [ ] No TODO/placeholder markers
@@ -204,7 +208,7 @@ See [patterns.md](references/patterns.md) for detailed examples.
 
 Skills are cross-platform, but each tool has specific implementation details:
 
-- **Claude Code**: See [claude-skills](../claude-skills/SKILL.md) for tool restrictions, testing, troubleshooting
+- **Claude Code**: See [claude-code.md](references/claude-code.md) for tool restrictions, testing, troubleshooting, and Claude-specific frontmatter extensions
 - **Codex CLI**: See [codex.md](references/codex.md) for discovery paths, `$skill-name` invocation
 
 See [implementations.md](references/implementations.md) for storage paths and [invocations.md](references/invocations.md) for activation patterns.

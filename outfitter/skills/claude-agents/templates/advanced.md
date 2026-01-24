@@ -40,7 +40,7 @@ model: inherit
 # skills: skill1, skill2
 
 # Tool restrictions (omit to inherit full access from parent):
-# tools: Glob, Grep, Read, Skill, Task, TodoWrite
+# tools: Glob, Grep, Read, Skill, Task, TaskCreate, TaskUpdate, TaskList, TaskGet
 ---
 
 # { Agent Name }

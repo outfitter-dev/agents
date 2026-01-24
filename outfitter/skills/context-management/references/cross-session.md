@@ -4,8 +4,8 @@ Persisting state across conversation sessions using episodic memory.
 
 ## The Session Boundary Problem
 
-TodoWrite survives **context compaction** but not **session boundaries**. When a conversation ends:
-- TodoWrite state is gone
+Tasks survive **context compaction** but not **session boundaries**. When a conversation ends:
+- Task state is gone
 - Agent IDs are invalid
 - Decisions are forgotten
 
@@ -20,7 +20,7 @@ For work spanning multiple sessions, use episodic memory MCP server.
 - Handing off to another agent or future self
 - Key decisions need to survive sessions
 
-**Just use TodoWrite when**:
+**Just use Tasks when**:
 - Single-session task
 - Work completes within conversation
 - No significant decisions to preserve
@@ -82,7 +82,7 @@ At new session start:
 
 Then:
 1. Read the returned state
-2. Reconstruct TodoWrite from saved data
+2. Reconstruct tasks from saved data using `TaskCreate`
 3. Resume from `current_focus`
 
 ## What to Save
@@ -132,6 +132,7 @@ See outfitter's **claude-hooks** skill for hook configuration details.
 For longer projects:
 
 **Day 1 (end)**:
+
 ```json
 {
   "project": "api-redesign",
@@ -144,6 +145,7 @@ For longer projects:
 
 **Day 2 (start)**: Search for "api-redesign"
 **Day 2 (end)**:
+
 ```json
 {
   "project": "api-redesign",
@@ -162,12 +164,12 @@ Episodic memory is your **session-level** state. External trackers handle **proj
 
 | Tool | Scope | When to Update |
 |------|-------|----------------|
-| TodoWrite | Within conversation | Every task completion |
+| Tasks | Within conversation | Every task completion |
 | Episodic memory | Across sessions | Session boundaries |
 | Linear/GitHub | Project lifetime | Phase completions |
 
 Workflow:
 1. Pull task from Linear/GitHub
-2. Track in TodoWrite during session
+2. Track in Tasks during session
 3. Save to episodic memory at session end
 4. Update Linear/GitHub at phase completion

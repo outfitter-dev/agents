@@ -8,7 +8,7 @@ User reports: "Cache occasionally returns stale data. Works most of the time, bu
 
 ## Phase 1: Collect Evidence
 
-**TodoWrite state**: "Collecting evidence" (in_progress)
+**Task state**: "Collecting evidence" (in_progress)
 
 ### Read Error Description
 
@@ -99,7 +99,7 @@ Captured logs from a failure:
 
 ## Phase 2: Isolate Variables
 
-**TodoWrite state**: "Isolating variables" (in_progress)
+**Task state**: "Isolating variables" (in_progress)
 
 ### Find Working Examples
 
@@ -171,7 +171,7 @@ Broken code:
 
 ## Phase 3: Formulate Hypotheses & Test
 
-**TodoWrite state**: "Formulating hypotheses" (in_progress)
+**Task state**: "Formulating hypotheses" (in_progress)
 
 ### Form Hypothesis
 
@@ -185,7 +185,7 @@ Evidence:
 
 **Transition**: Hypothesis formed. Mark "Formulate Hypotheses" complete, add "Test Hypothesis" as in_progress.
 
-**TodoWrite state**: "Testing hypothesis" (in_progress)
+**Task state**: "Testing hypothesis" (in_progress)
 
 ### Design Minimal Test
 
@@ -246,7 +246,7 @@ Run 100 times:
 
 ## Phase 4: Verify Fix
 
-**TodoWrite state**: "Verifying fix" (in_progress)
+**Task state**: "Verifying fix" (in_progress)
 
 ### Create Failing Test
 
@@ -369,7 +369,7 @@ export async function getCache(key: string): Promise<any> {
 
 **Transition**: Fix verified and monitoring added. Mark "Verify Fix" complete.
 
-**TodoWrite state**: All tasks completed.
+**Task state**: All tasks completed.
 
 ## Summary
 

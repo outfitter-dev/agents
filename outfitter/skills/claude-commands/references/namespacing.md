@@ -202,6 +202,7 @@ Group by command category:
 ### Project Namespaces
 
 Project commands (`.claude/commands/`) show:
+
 ```
 /command (project:namespace)
 ```
@@ -209,6 +210,7 @@ Project commands (`.claude/commands/`) show:
 ### Personal Namespaces
 
 Personal commands (`~/.claude/commands/`) show:
+
 ```
 /command (user:namespace)
 ```
@@ -216,6 +218,7 @@ Personal commands (`~/.claude/commands/`) show:
 ### Plugin Namespaces
 
 Plugin commands show:
+
 ```
 /command (plugin-name:namespace)
 ```

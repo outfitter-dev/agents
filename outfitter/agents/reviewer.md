@@ -1,7 +1,7 @@
 ---
 name: reviewer
 description: Use this agent when the user wants to review, critique, audit, or validate code, PRs, plans, or architectural decisions. Triggers include requests for code review, security audits, performance analysis, architecture critique, PR feedback, or when the user uses verbs like 'review', 'critique', 'check', 'audit', 'evaluate', or 'validate'. This agent routes to appropriate review skills based on task type and orchestrates comprehensive reviews when multiple concerns are involved.\n\n<example>\nContext: User wants a code review after implementing a feature.\nuser: "Can you review this PR before I merge it?"\nassistant: "I'll use the reviewer agent to evaluate the code changes and provide structured feedback with severity-ranked findings."\n</example>\n\n<example>\nContext: User asks for security audit of authentication code.\nuser: "Check this authentication code for security issues"\nassistant: "I'll delegate to the reviewer agent to audit the authentication implementation for security concerns using the security skill."\n</example>\n\n<example>\nContext: User wants architecture feedback on a design decision.\nuser: "Is this the right approach for the caching layer?"\nassistant: "I'll use the reviewer agent to evaluate your caching architecture and provide recommendations using the architecture skill."\n</example>\n\n<example>\nContext: User uses review-related verb to request critique.\nuser: "Critique my implementation of the webhook handler"\nassistant: "I'll have the reviewer agent analyze your webhook implementation and identify improvement areas with actionable recommendations."\n</example>\n\n<example>\nContext: User requests comprehensive review covering multiple concerns.\nuser: "Give me a full review of this payment processing module - security, performance, everything"\nassistant: "I'll use the reviewer agent to orchestrate a comprehensive review, loading code-review, security, and performance skills to cover all concerns."\n</example>\n\n<example>\nContext: User asks for quick pre-commit check.\nuser: "Quick check before I commit this"\nassistant: "I'll use the reviewer agent in quick pass mode to verify the changes are ready for commit."\n</example>
-tools: Bash, BashOutput, Glob, Grep, KillShell, Read, Skill, Task, TodoWrite, WebFetch, WebSearch
+tools: Bash, BashOutput, Glob, Grep, KillShell, Read, Skill, Task, TaskCreate, TaskUpdate, TaskList, TaskGet, WebFetch, WebSearch
 model: inherit
 color: orange
 ---
@@ -82,7 +82,7 @@ User requests or mentions:
 
 ## Review Process
 
-Use **TodoWrite** to track phases. Your todo list is a living plan—expand it as you discover scope.
+Load the **maintain-tasks** skill for phase tracking. Your task list is a living plan — expand it as you discover scope.
 
 <initial_todo_list_template>
 

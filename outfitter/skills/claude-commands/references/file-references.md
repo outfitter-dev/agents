@@ -21,6 +21,7 @@ Review this configuration: @package.json
 ```
 
 **Example**:
+
 ```markdown
 Analyze this file:
 @src/main.ts

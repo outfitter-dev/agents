@@ -18,7 +18,7 @@ Error: Division by zero
 
 ## TDD Workflow
 
-### TodoWrite Setup
+### Task Setup
 
 ```text
 1. Write failing test reproducing bug [in_progress]
@@ -88,7 +88,7 @@ Bug reproduced successfully — test fails as expected.
 
 **Commit**: `test: add failing test for division by zero bug`
 
-**TodoWrite Update**:
+**Task Update**:
 
 ```text
 1. Write failing test reproducing bug [completed]
@@ -137,7 +137,7 @@ No other tests broken — safe fix.
 
 **Commit**: `fix: handle division by zero in percentage calculation`
 
-**TodoWrite Update**:
+**Task Update**:
 
 ```text
 1. Write failing test reproducing bug [completed]
@@ -258,7 +258,7 @@ No regressions — refactor successful.
 
 **Commit**: `refactor: use Result type for percentage calculation errors`
 
-**TodoWrite Update**:
+**Task Update**:
 
 ```text
 1. Write failing test reproducing bug [completed]
@@ -328,7 +328,7 @@ API Integration Tests
 All integration tests passing
 ```
 
-**TodoWrite Update**:
+**Task Update**:
 
 ```text
 1. Write failing test reproducing bug [completed]

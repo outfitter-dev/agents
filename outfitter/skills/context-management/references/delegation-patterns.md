@@ -2,7 +2,7 @@
 
 How to delegate work to preserve main conversation context.
 
-> **TL;DR**: Subagents run in isolated contexts—only their summary returns. Delegate: 5+ file reads, codebase searches, specialized reviews. Keep in main: user Q&A, simple edits, files already in context. Use `run_in_background: true` for parallel work. Track delegated tasks in TodoWrite with agent IDs.
+> **TL;DR**: Subagents run in isolated contexts—only their summary returns. Delegate: 5+ file reads, codebase searches, specialized reviews. Keep in main: user Q&A, simple edits, files already in context. Use `run_in_background: true` for parallel work. Track delegated tasks with Tasks and agent IDs.
 
 ## The Context Problem
 
@@ -126,23 +126,23 @@ Not everything should be delegated:
 - Test execution
 - Background validation
 
-## TodoWrite Integration
+## Task Integration
 
-Track delegated work:
+Track delegated work with Tasks:
 
 ```
-- [ ] [analyst] Research caching patterns (task-id: abc123, background)
-- [ ] Wait for analyst results
-- [ ] [engineer] Implement cache layer (after analyst, depends-on: abc123)
-- [ ] [reviewer] Review implementation (after engineer)
+#1: "[analyst] Research caching patterns" - pending, metadata: {agentId: "abc123", background: true}
+#2: "Wait for analyst results" - pending, blockedBy: #1
+#3: "[engineer] Implement cache layer" - pending, blockedBy: #2
+#4: "[reviewer] Review implementation" - pending, blockedBy: #3
 ```
 
 Update when agents complete:
 
 ```
-- [x] [analyst] Research caching patterns (task-id: abc123) → Redis recommended
-- [x] Wait for analyst results → received, Redis approach confirmed
-- [ ] [in_progress] [engineer] Implement Redis cache layer
+#1: "[analyst] Research caching patterns" - completed, description: "Redis recommended"
+#2: "Wait for analyst results" - completed, description: "Redis approach confirmed"
+#3: "[engineer] Implement Redis cache layer" - in_progress
 ```
 
 ## Anti-Patterns

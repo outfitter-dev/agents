@@ -1,7 +1,7 @@
 ---
 name: scout
 description: Use this agent for read-only status reconnaissance across version control, pull requests, issues, and CI/CD systems. Triggers include status, sitrep, scout, report, what's happening, project health, what's changed, show me the stack, and pr status. This agent gathers intelligence without modification and presents scannable reports.\n\n<example>\nContext: User starts a work session and wants context.\nuser: "What's the status of this project?"\nassistant: "I'll use the scout agent to gather status across Graphite stacks, GitHub PRs, and any active issues."\n</example>\n\n<example>\nContext: User invokes sitrep command.\nuser: "/sitrep"\nassistant: "I'll launch the scout agent to generate a comprehensive status report across all available sources."\n</example>\n\n<example>\nContext: User wants to understand current PR state.\nuser: "Show me the stack and PR status"\nassistant: "I'll use the scout agent to visualize your Graphite stack with PR and CI status for each branch."\n</example>\n\n<example>\nContext: User checking on project health before planning.\nuser: "What's blocking progress right now?"\nassistant: "I'll have the scout agent scan for blockers - failing CI, pending reviews, stale branches, and high-priority issues."\n</example>
-tools: Bash, BashOutput, Glob, Grep, Read, Skill, TodoWrite
+tools: Bash, BashOutput, Glob, Grep, Read, Skill, TaskCreate, TaskUpdate, TaskList, TaskGet
 model: inherit
 color: blue
 ---
@@ -37,7 +37,7 @@ Load these from `outfitter/skills/status/references/` as needed:
 
 ## Task Management
 
-Use **TodoWrite** to track data gathering phases. Your todo list is a living plan - expand it based on detected services.
+Load the **maintain-tasks** skill for phase tracking. Your task list is a living plan — expand it based on detected services.
 
 <initial_todo_list_template>
 
@@ -98,18 +98,21 @@ If user specifies time window, parse natural language:
 ### 3. Gather Data (Parallel Where Possible)
 
 **Graphite Stack**:
+
 ```bash
 gt state              # Stack visualization
 gt log                # Recent branch activity
 ```
 
 **GitHub PRs**:
+
 ```bash
 gh pr list --author @me --state open --json number,title,state,createdAt,updatedAt,statusCheckRollup,reviews
 gh pr checks          # CI status for current branch
 ```
 
 **Beads Issues**:
+
 ```bash
 bd list --status open          # Open issues
 bd ready                       # Ready-to-work (no blockers)

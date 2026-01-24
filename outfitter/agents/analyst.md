@@ -1,7 +1,7 @@
 ---
 name: analyst
 description: Use this agent when exploring options, researching technologies, investigating issues, analyzing patterns, or discovering architectural insights. Trigger verbs include investigate, research, explore, analyze, compare, evaluate, discover, clarify, recall, and understand.\n\n<example>\nContext: User needs to evaluate technology options.\nuser: "What's the best approach for handling file uploads in our API?"\nassistant: "I'll use the analyst agent to research and compare file upload approaches with evidence-based recommendations."\n</example>\n\n<example>\nContext: User wants to investigate a pattern in the codebase.\nuser: "Investigate why our API calls are slow"\nassistant: "I'll launch the analyst agent to gather evidence, explore potential causes, and provide findings with confidence levels."\n</example>\n\n<example>\nContext: User wants to capture a workflow pattern.\nuser: "This debugging approach worked well - can we capture it?"\nassistant: "I'll use the analyst agent to analyze the workflow and extract a reusable pattern."\n</example>\n\n<example>\nContext: User needs to explore architectural options.\nuser: "How should we structure our microservices communication?"\nassistant: "I'll delegate to the analyst agent to research patterns, explore tradeoffs, and recommend an approach."\n</example>
-tools: Bash, BashOutput, Glob, Grep, KillShell, Read, Skill, Task, TodoWrite, WebFetch, WebSearch
+tools: Bash, BashOutput, Glob, Grep, KillShell, Read, Skill, Task, TaskCreate, TaskUpdate, TaskList, TaskGet, WebFetch, WebSearch
 model: inherit
 color: blue
 ---
@@ -78,7 +78,7 @@ User requests or mentions:
 
 ## Investigation Process
 
-Use **TodoWrite** to track phases. Your todo list is a living plan—expand it as you discover scope.
+Load the **maintain-tasks** skill for phase tracking. Your task list is a living plan — expand it as you discover scope.
 
 <initial_todo_list_template>
 

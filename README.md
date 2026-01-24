@@ -156,8 +156,7 @@ Plugins are code. Review what you install. See [SECURITY.md](SECURITY.md) for th
 
 | Skill | Description |
 |-------|-------------|
-| skills-dev | Cross-platform Agent Skills authoring (agentskills.io spec) |
-| claude-skills | Claude-specific skill guidance (tool restrictions, testing) |
+| skills-dev | Agent Skills authoring (cross-platform spec + Claude extensions via `references/claude-code.md`) |
 | claude-plugins | Create, validate, and distribute Claude Code plugins |
 | claude-agents | Create and validate Claude Code agents |
 | claude-commands | Create Claude Code slash commands |
@@ -191,7 +190,7 @@ Want to build your own Claude Code plugin?
    /plugin install outfitter@outfitter
    ```
 
-2. **Use the extensibility skills**: `claude-plugins`, `claude-skills`, `claude-agents`, etc.
+2. **Use the extensibility skills**: `claude-plugins`, `skills-dev`, `claude-agents`, etc.
 
 3. **Submit a PR**: Add your plugin to `.claude-plugin/marketplace.json`
 

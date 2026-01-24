@@ -132,6 +132,7 @@ For plugins in the same repository:
 ```
 
 With `pluginRoot`:
+
 ```json
 {
   "metadata": {"pluginRoot": "./plugins"},
@@ -153,6 +154,7 @@ With `pluginRoot`:
 ```
 
 With specific version:
+
 ```json
 {
   "source": {
@@ -447,24 +449,28 @@ jobs:
 ## Best Practices
 
 ### Organization
+
 - Group related plugins together
 - Use categories for discovery
 - Maintain consistent naming
 - Document plugin purposes
 
 ### Versioning
+
 - Use semantic versioning
 - Track versions in entries
 - Maintain CHANGELOG
 - Tag releases in Git
 
 ### Security
+
 - Review plugins before adding
 - Verify sources
 - Document requirements
 - Use private repos for sensitive tools
 
 ### Maintenance
+
 - Keep versions updated
 - Remove deprecated plugins
 - Test after updates

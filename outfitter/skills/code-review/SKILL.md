@@ -168,7 +168,7 @@ Emit completion protocol:
 - Detailed findings list
 - Optional: patterns noticed, suggestions for future
 
-Use TodoWrite with activeForm for tracking review phases.
+Load the **maintain-tasks** skill for tracking review phases.
 
 </phases>
 

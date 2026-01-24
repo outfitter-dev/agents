@@ -27,6 +27,7 @@ grep -r "authentication" .
 - User likely to repeat this search frequently
 
 **Trigger evaluation:**
+
 ```
 Performance: ◆◆ CRITICAL
 - 30s for recursive text search is very slow
@@ -96,11 +97,13 @@ Decision: TRIGGER RESEARCH
 ### Step 3: Hands-On Testing
 
 **Installation:**
+
 ```bash
 brew install ripgrep
 ```
 
 **Test 1: Basic search**
+
 ```bash
 # Compare with current command
 time grep -r "authentication" .
@@ -113,11 +116,13 @@ time rg "authentication"
 ```
 
 **Test 2: Output quality**
+
 ```bash
 rg "authentication"
 ```
 
 Output:
+
 ```
 src/auth/login.ts
 42:export async function authenticate(credentials: Credentials) {
@@ -139,6 +144,7 @@ tests/auth.test.ts
 - Automatically skipped node_modules, .git ✓
 
 **Test 3: Edge cases**
+
 ```bash
 # Error handling
 rg "pattern" nonexistent-directory
@@ -155,6 +161,7 @@ rg "auth\w+" --type ts
 ```
 
 **Test 4: Integration**
+
 ```bash
 # Pipe to other commands
 rg "TODO" --files-with-matches | wc -l
@@ -170,6 +177,7 @@ fi
 ### Step 4: Compatibility Check
 
 **Drop-in replacement viability:**
+
 ```bash
 # Can we alias grep → rg?
 # Mostly yes, but flags differ
@@ -190,6 +198,7 @@ grep -n  → rg -n (same, but rg shows by default)
 ### Performance Analysis
 
 **Benchmark results:**
+
 ```
 Task: Search 50k files for "authentication"
 
@@ -274,6 +283,7 @@ brew install ripgrep
 ```
 
 Example (replaces your current command):
+
 ```bash
 # Instead of: grep -r "authentication" .
 rg "authentication"
@@ -298,15 +308,18 @@ Confidence: HIGH
 Recommend: INSTALL
 
 Want me to also add a shell alias to ease transition?
+
 ```
 
 ### User Response Options
 
 **Option 1: User accepts immediately**
 ```
+
 User: "Yes, install it and set up the alias"
 
 Agent:
+
 ```bash
 # Verify installation
 command -v rg
@@ -320,15 +333,19 @@ source ~/.zshrc
 grep "authentication"
 # Works! Using ripgrep now.
 ```
+
 Done. You're now using ripgrep when you type `grep`.
 The original grep is still available as `command grep` if needed.
+
 ```
 
 **Option 2: User wants to try first**
 ```
+
 User: "Let me try it for a while before aliasing"
 
 Agent: Great approach. Try these commands:
+
 ```bash
 # Your current search
 rg "authentication"
@@ -344,19 +361,23 @@ rg "authentication" --files-with-matches
 ```
 
 After a few days, if you like it, run:
+
 ```bash
 echo "alias grep='rg'" >> ~/.zshrc
 ```
+
 ```
 
 **Option 3: User declines**
 ```
+
 User: "I'll stick with grep for now"
 
 Agent: Understood. I'll note that ripgrep is available if you
 change your mind. For now, I'll continue using grep.
 
 [Internal note: rg available but user prefers grep - respect preference]
+
 ```
 
 ## Phase 5: Outcome
@@ -427,6 +448,7 @@ This example demonstrates:
 7. **Measurable outcome**: Confirm improvement, track adoption
 
 **Pattern for future tool upgrades:**
+
 ```
 Trigger → Research → Evaluate → Test → Recommend → Install → Verify → Follow-up
 ```

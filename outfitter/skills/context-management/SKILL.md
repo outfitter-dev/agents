@@ -1,7 +1,7 @@
 ---
 name: context-management
 version: 1.0.0
-description: Manage context window, survive compaction, persist state. Use when planning long tasks, coordinating agents, approaching context limits, or when "context", "compaction", "todowrite", or "persist state" are mentioned.
+description: Manage context window, survive compaction, persist state. Use when planning long tasks, coordinating agents, approaching context limits, or when "context", "compaction", "tasks", or "persist state" are mentioned.
 user-invocable: false
 metadata:
   related-skills:
@@ -30,7 +30,7 @@ NOT for: simple single-turn tasks, quick Q&A, tasks completing in one response
 Claude Code operates in a ~128K token context window that compacts automatically as it fills. When compaction happens:
 
 **What survives**:
-- TodoWrite state (full task list persists)
+- Task state (full task list persists)
 - Tool results (summarized)
 - User messages (recent ones)
 - System instructions
@@ -45,63 +45,61 @@ Claude Code operates in a ~128K token context window that compacts automatically
 
 </problem>
 
-<todowrite>
+<tasks>
 
-## TodoWrite: Your Survivable State
+## Tasks: Your Survivable State
 
-TodoWrite is not just a task tracker — it's your **persistent memory layer**. Treat it as the single source of truth for task state.
+Tasks are not just a tracker — they're your **persistent memory layer**. Use TaskCreate, TaskUpdate, TaskList, and TaskGet to manage state that survives compaction.
 
-### What Goes in TodoWrite
+### What Goes in Tasks
 
 | Category | Example |
 |----------|---------|
-| Current work | `- [ ] [in_progress] Implementing auth refresh flow` |
-| Completed work | `- [x] JWT validation logic added to middleware` |
-| Discovered work | `- [ ] Handle token expiry edge case (found during impl)` |
-| Key decisions | `- [x] Using RS256 for JWT signing (per security review)` |
-| Agent handoffs | `- [ ] [reviewer] Review auth implementation (agent-id: abc123)` |
-| Blockers | `- [ ] Resolve: Missing JWKS endpoint configuration` |
+| Current work | `Implementing auth refresh flow` (status: in_progress) |
+| Completed work | `JWT validation logic added to middleware` (status: completed) |
+| Discovered work | `Handle token expiry edge case` (status: pending) |
+| Key decisions | Embed in task description: "Using RS256 per security review" |
+| Agent handoffs | `[reviewer] Review auth implementation` + metadata: `{agentId: "abc123"}` |
+| Blockers | Create blocker task, use `blockedBy` field |
 
-### TodoWrite Discipline
+### Task Discipline
 
-**Exactly one `in_progress`** at any time. Multiple active tasks signal unclear focus.
+**Exactly one `in_progress`** at any time. Call `TaskUpdate` to mark `in_progress` before starting.
 
-**Mark complete immediately**. Don't batch completions — mark done as you finish.
+**Mark complete immediately**. Don't batch completions — `TaskUpdate` with `completed` as you finish.
 
-**Include agent IDs** for resumable sessions. Format: `(agent-id: {ID})`
+**Include agent IDs** for resumable sessions in task metadata.
 
-**Expand dynamically**. Add todos as you discover work; don't front-load everything.
+**Expand dynamically**. `TaskCreate` as you discover work; don't front-load everything.
 
-**Action-oriented descriptions**. Use verbs: "Implement X", "Fix Y", "Review Z"
+**Action-oriented subjects**. Use verbs: "Implement X", "Fix Y", "Review Z"
 
 ### Status Flow
 
 ```
 pending → in_progress → completed
                 ↓
-         (blocked → new task for blocker)
+         (blocked → TaskCreate for blocker, add blockedBy)
 ```
 
-If blocked, don't mark complete. Create a new todo for the blocker and keep the blocked task `in_progress` or revert to `pending`.
+If blocked, don't mark complete. Create a new task for the blocker and link with `addBlockedBy`.
 
 ### Pre-Compaction Pattern
 
-As context fills, update TodoWrite to capture:
+As context fills, ensure tasks capture progress. Use TaskUpdate to add details to in_progress task description:
 
 ```
-- [x] Explored auth patterns → using middleware approach
-- [x] JWT library selected → jose (per existing usage)
-- [ ] [in_progress] Implementing token refresh
-    - Refresh endpoint: /api/auth/refresh
-    - Token rotation: enabled
-    - Refresh window: 5 minutes before expiry
-- [ ] Add tests for refresh flow
-- [ ] [reviewer] Security review (after impl)
+Task: Implementing token refresh
+Description:
+  - Refresh endpoint: POST /api/auth/refresh
+  - Token rotation: enabled
+  - Refresh window: 5 minutes before expiry
+  - Remaining: validation logic
 ```
 
-Notice: Decisions embedded in completed todos. Current state detailed in active todo. Future work queued.
+Decisions embedded in completed task descriptions. Current state detailed in active task. Future work queued as pending.
 
-</todowrite>
+</tasks>
 
 <pre_compaction>
 
@@ -109,21 +107,22 @@ Notice: Decisions embedded in completed todos. Current state detailed in active 
 
 Run through this when context is filling (you'll notice: slower responses, repetition, degraded reasoning):
 
-1. **Capture progress** — What's done? Update completed todos with outcomes.
+1. **Capture progress** — What's done? `TaskUpdate` completed tasks with outcomes in description.
 
-2. **Record decisions** — What did you decide? Why? Put in todo descriptions.
+2. **Record decisions** — What did you decide? Why? Put in task descriptions.
 
-3. **Note current state** — Where exactly are you in the current task? Update `in_progress` todo with specifics.
+3. **Note current state** — Where exactly are you in the current task? `TaskUpdate` the `in_progress` task with specifics.
 
-4. **Queue discovered work** — What did you find that needs doing? Add as pending todos.
+4. **Queue discovered work** — What did you find that needs doing? `TaskCreate` as pending.
 
-5. **Mark dependencies** — What needs what? Add notes: `(after: other-task)` or `(blocked-by: X)`
+5. **Mark dependencies** — What needs what? Use `addBlockedBy` in `TaskUpdate`.
 
-6. **Include agent IDs** — Any background agents? Record IDs for resumption.
+6. **Include agent IDs** — Any background agents? Record IDs in task metadata.
 
 ### Example: Before Compaction
 
 **Bad** (state will be lost):
+
 ```
 - [x] Research auth approaches
 - [ ] Implement auth
@@ -131,6 +130,7 @@ Run through this when context is filling (you'll notice: slower responses, repet
 ```
 
 **Good** (state survives):
+
 ```
 - [x] Research auth approaches → middleware + JWT (see src/auth/README.md)
 - [ ] [in_progress] Implement JWT refresh flow
@@ -170,6 +170,7 @@ Task arrives
 ### Context-Saving Patterns
 
 **Research delegation** — Instead of reading 10 files:
+
 ```json
 {
   "description": "Find auth implementation",
@@ -177,17 +178,21 @@ Task arrives
   "subagent_type": "Explore"
 }
 ```
+
 Main agent receives: concise summary, not 10 file contents.
 
 **Parallel review** — Instead of sequential analysis:
+
 ```json
 // Single message, multiple calls, all run_in_background: true
 { "subagent_type": "outfitter:reviewer", "run_in_background": true, "prompt": "Security review..." }
 { "subagent_type": "outfitter:analyst", "run_in_background": true, "prompt": "Performance review..." }
 ```
+
 Main agent: stays lean, collects results when ready.
 
 **Background execution** — For independent work:
+
 ```json
 {
   "subagent_type": "outfitter:tester",
@@ -195,20 +200,21 @@ Main agent: stays lean, collects results when ready.
   "prompt": "Run integration tests for auth module"
 }
 ```
+
 Continue other work; retrieve with `TaskOutput` later.
 
-### TodoWrite Integration
+### Task Integration
 
-Track delegated work in todos:
+Track delegated work in tasks:
 
 ```
-- [ ] [analyst] Research caching strategies (background, task-id: def456)
-- [ ] [engineer] Implement cache layer (after analyst)
-- [ ] [reviewer] Review cache implementation (after engineer)
-- [ ] [tester] Validate cache behavior (after reviewer approval)
+[analyst] Research caching strategies (pending, metadata: {taskId: "def456"})
+[engineer] Implement cache layer (pending, blockedBy: analyst task)
+[reviewer] Review cache implementation (pending, blockedBy: engineer task)
+[tester] Validate cache behavior (pending, blockedBy: reviewer task)
 ```
 
-When background agents complete, update todos and process results.
+When background agents complete, `TaskUpdate` status and process results.
 
 ### What NOT to Delegate
 
@@ -224,7 +230,7 @@ When background agents complete, update todos and process results.
 
 For work spanning multiple sessions, use episodic memory MCP server.
 
-> **Prerequisites**: Cross-session patterns require an episodic-memory MCP server to be configured. If unavailable, skip this section — TodoWrite handles single-session persistence.
+> **Prerequisites**: Cross-session patterns require an episodic-memory MCP server to be configured. If unavailable, skip this section — Tasks handle single-session persistence.
 
 ### Saving State
 
@@ -260,7 +266,7 @@ At session start:
 }
 ```
 
-Then reconstruct TodoWrite from saved state.
+Then reconstruct tasks from saved state using `TaskCreate`.
 
 ### When to Use Cross-Session
 
@@ -269,7 +275,7 @@ Then reconstruct TodoWrite from saved state.
 - Work that will be interrupted
 - Handing off to future sessions
 
-For single-session work, TodoWrite alone suffices.
+For single-session work, Tasks alone suffice.
 
 </cross_session>
 
@@ -279,33 +285,33 @@ For single-session work, TodoWrite alone suffices.
 
 ### At Task Start
 
-1. Create TodoWrite with initial scope
+1. `TaskCreate` with initial scope
 2. If complex: use Plan subagent to explore, preserve main context
-3. Mark first task `in_progress`
+3. `TaskUpdate` first task to `in_progress`
 
 ### During Execution
 
-1. Update todos as work progresses
+1. `TaskUpdate` as work progresses
 2. Delegate exploration to subagents
 3. Mark completed immediately (no batching)
-4. Add discovered work as new pending todos
-5. Note decisions in completed todo descriptions
+4. `TaskCreate` for discovered work
+5. Note decisions in completed task descriptions
 
 ### Approaching Compaction
 
 1. Run pre-compaction checklist
-2. Ensure current state captured in `in_progress` todo
-3. Record any background agent IDs
+2. Ensure current state captured in `in_progress` task description
+3. Record any background agent IDs in task metadata
 
 ### After Compaction
 
-1. Read TodoWrite state (it persists)
+1. `TaskList` to read task state (it persists)
 2. Resume from `in_progress` task
 3. Use saved details to continue without re-exploration
 
 ### At Task Completion
 
-1. Mark final todos complete with outcomes
+1. `TaskUpdate` final tasks to complete with outcomes in description
 2. If multi-session: save to episodic memory
 3. Report summary to user
 
@@ -314,12 +320,12 @@ For single-session work, TodoWrite alone suffices.
 <rules>
 
 ALWAYS:
-- Use TodoWrite for any task over 2-3 steps
-- Update todos before significant actions
+- Use Tasks for any work over 2-3 steps
+- `TaskUpdate` before significant actions
 - Mark completed immediately, not batched
-- Include agent IDs in todos for resumable sessions
+- Include agent IDs in task metadata for resumable sessions
 - Delegate exploration to subagents (preserves main context)
-- Record decisions in completed todo descriptions
+- Record decisions in completed task descriptions
 - Run pre-compaction checklist when context fills
 
 NEVER:
@@ -328,13 +334,13 @@ NEVER:
 - Have multiple `in_progress` tasks simultaneously
 - Stop early due to context concerns (persist state instead)
 - Batch multiple completions together
-- Leave todos vague ("do the thing" → "Implement refresh endpoint")
+- Leave tasks vague ("do the thing" → "Implement refresh endpoint")
 
 </rules>
 
 <references>
 
-- [todowrite-patterns.md](references/todowrite-patterns.md) — deep patterns and templates
+- [task-patterns.md](references/task-patterns.md) — deep patterns and templates
 - [delegation-patterns.md](references/delegation-patterns.md) — context-preserving delegation
 - [cross-session.md](references/cross-session.md) — episodic memory integration
 - [FORMATTING.md](../../shared/rules/FORMATTING.md) — formatting conventions

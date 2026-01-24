@@ -11,7 +11,7 @@ I need to build an API
 <claude>
 
 ```text
-[TodoWrite] Getting oriented
+[Task] Getting oriented
 - Prep API requirements (in_progress)
 - Explore architecture options (pending)
 - Clarify data and auth needs (pending)
@@ -157,7 +157,7 @@ Concerns:
 ```
 
 ```text
-[TodoWrite] Shape emerging — exploring options
+[Task] Shape emerging — exploring options
 - Prep API requirements (completed)
 - Explore architecture options (in_progress)
 - Clarify data and auth needs (pending)
@@ -211,7 +211,7 @@ Concerns:
 ```
 
 ```text
-[TodoWrite] Getting close — one more detail
+[Task] Getting close — one more detail
 - Prep API requirements (completed)
 - Explore architecture options (completed)
 - Clarify data and auth needs (in_progress)
@@ -244,7 +244,7 @@ Decisions:
 ```
 
 ```text
-[TodoWrite] Clear path — delivering design
+[Task] Clear path — delivering design
 - Prep API requirements (completed)
 - Explore architecture options (completed)
 - Clarify data and auth needs (completed)
@@ -329,7 +329,7 @@ BodyMetric {
 6. Deploy MVP
 
 ```text
-[TodoWrite] Done — design shipped
+[Task] Done — design shipped
 - Prep API requirements (completed)
 - Explore architecture options (completed)
 - Clarify data and auth needs (completed)

@@ -132,6 +132,7 @@ For inline documentation or PR comments:
 ```
 
 Example:
+
 ```
 [HIGH] SQL Injection in src/api/users.ts:45
 - Issue: User email concatenated into query string

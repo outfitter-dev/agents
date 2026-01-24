@@ -39,7 +39,7 @@ Optimizing unmeasured code wastes time and introduces bugs.
 
 <phases>
 
-Use TodoWrite to track optimization process:
+Load the **maintain-tasks** skill for phase tracking:
 
 **Phase 1: Establishing baseline**
 - content: "Establish performance baseline with realistic workload"

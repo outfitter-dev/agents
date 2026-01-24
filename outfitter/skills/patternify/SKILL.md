@@ -102,7 +102,7 @@ All five quality checks must pass before codifying.
 5. Quality: Validate against SRVDS criteria
 6. Implement: Create the component(s)
 
-TodoWrite phases:
+Task phases:
 
 ```text
 - Identify { pattern description }

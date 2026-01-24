@@ -242,6 +242,7 @@ Your responsibilities:
 ### Hook Script Interface
 
 **Input (stdin):**
+
 ```json
 {
   "tool": "Write",
@@ -255,11 +256,13 @@ Your responsibilities:
 **Output (stdout):**
 
 Allow:
+
 ```json
 {"allowed": true}
 ```
 
 Block:
+
 ```json
 {
   "allowed": false,
@@ -268,6 +271,7 @@ Block:
 ```
 
 Modify:
+
 ```json
 {
   "allowed": true,
@@ -339,13 +343,16 @@ if __name__ == "__main__":
 ## Platform Considerations
 
 ### macOS
+
 - Config: `~/Library/Application Support/Claude/`
 - Logs: `~/Library/Logs/Claude/`
 
 ### Windows
+
 - Config: `%APPDATA%\Claude\`
 - Use forward slashes or double backslashes
 
 ### Linux
+
 - Config: `~/.config/claude/`
 - Check shebang and permissions

@@ -138,6 +138,7 @@ Tool-specific: [graphite.md](references/graphite.md), [github.md](references/git
 - `◇` minor | `◆` moderate | `◆◆` severe
 
 **Output Structure**:
+
 ```
 === STATUS REPORT: {repo} ===
 Generated: {timestamp}

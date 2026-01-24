@@ -22,7 +22,7 @@ NOT for: trivial tech choices, premature optimization, undocumented requirements
 
 <phases>
 
-Track with TodoWrite. Advance only, never regress.
+Load the **maintain-tasks** skill for phase tracking. Phases advance only, never regress.
 
 | Phase | Trigger | activeForm |
 |-------|---------|------------|
@@ -41,7 +41,7 @@ Edge cases:
 - No ADR needed: skip Documentation
 - Iteration: Review & Refinement may repeat
 
-TodoWrite format:
+Task format:
 
 ```text
 - Discovery { problem domain }

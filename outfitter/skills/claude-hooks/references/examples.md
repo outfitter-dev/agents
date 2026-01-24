@@ -1731,6 +1731,7 @@ Real-world examples from the Claude Code community.
 Comprehensive hook examples using Python with UV for dependency management.
 
 **Directory structure**:
+
 ```
 .claude/
 ├── hooks/
@@ -1746,6 +1747,7 @@ Comprehensive hook examples using Python with UV for dependency management.
 ```
 
 **Configuration pattern**:
+
 ```json
 {
   "UserPromptSubmit": [{
@@ -1764,7 +1766,7 @@ Comprehensive hook examples using Python with UV for dependency management.
 }
 ```
 
-**Source**: https://github.com/disler/claude-code-hooks-mastery
+**Source**: <https://github.com/disler/claude-code-hooks-mastery>
 
 ### ChrisWiles/claude-code-showcase
 
@@ -1778,6 +1780,7 @@ Complete Claude Code configuration with hooks, skills, agents, and GitHub Action
 - Skill matching for prompts
 
 **Branch protection hook**:
+
 ```json
 {
   "hooks": {
@@ -1793,13 +1796,14 @@ Complete Claude Code configuration with hooks, skills, agents, and GitHub Action
 }
 ```
 
-**Source**: https://github.com/ChrisWiles/claude-code-showcase
+**Source**: <https://github.com/ChrisWiles/claude-code-showcase>
 
 ### GitButler Integration
 
 GitButler provides hooks for automatic branch and commit management.
 
 **Configuration**:
+
 ```json
 {
   "hooks": {
@@ -1831,7 +1835,7 @@ GitButler provides hooks for automatic branch and commit management.
 }
 ```
 
-**Source**: https://docs.gitbutler.com/features/ai-integration/claude-code-hooks
+**Source**: <https://docs.gitbutler.com/features/ai-integration/claude-code-hooks>
 
 ## Component-Scoped Hooks
 

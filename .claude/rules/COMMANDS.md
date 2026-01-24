@@ -82,7 +82,7 @@ Commands are lightweight entry points that load skills.
 
 ## Naming Conventions
 
-- Verb-based: `/debug`, `/simplify`, `/pathfind`
+- Verb-based: `/debug`, `/simplify`, `/collab`
 - Action-oriented: what user wants to happen
 - Kebab-case for multi-word: `/discover-skills`
 

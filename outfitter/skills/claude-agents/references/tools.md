@@ -35,7 +35,7 @@ Only restrict when:
 When restricting, always include these:
 
 ```yaml
-tools: Glob, Grep, Read, Skill, Task, TodoWrite
+tools: Glob, Grep, Read, Skill, Task, TaskCreate, TaskUpdate, TaskList, TaskGet
 ```
 
 These enable: file discovery, searching, reading, skill loading, sub-agent delegation, task tracking.
@@ -45,25 +45,25 @@ These enable: file discovery, searching, reading, skill loading, sub-agent deleg
 **Read-only analysis:**
 
 ```yaml
-tools: Glob, Grep, Read, Skill, Task, TodoWrite
+tools: Glob, Grep, Read, Skill, Task, TaskCreate, TaskUpdate, TaskList, TaskGet
 ```
 
 **Read-only with git history:**
 
 ```yaml
-tools: Glob, Grep, Read, Skill, Task, TodoWrite, Bash(git show:*), Bash(git diff:*)
+tools: Glob, Grep, Read, Skill, Task, TaskCreate, TaskUpdate, TaskList, TaskGet, Bash(git show:*), Bash(git diff:*)
 ```
 
 **Research agent:**
 
 ```yaml
-tools: Glob, Grep, Read, Skill, Task, TodoWrite, WebSearch, WebFetch
+tools: Glob, Grep, Read, Skill, Task, TaskCreate, TaskUpdate, TaskList, TaskGet, WebSearch, WebFetch
 ```
 
 **Implementation agent:**
 
 ```yaml
-tools: Glob, Grep, Read, Write, Edit, Bash, Skill, Task, TodoWrite
+tools: Glob, Grep, Read, Write, Edit, Bash, Skill, Task, TaskCreate, TaskUpdate, TaskList, TaskGet
 ```
 
 ## Pattern Matching Syntax
@@ -95,7 +95,7 @@ mcp__server__*
 ---
 name: security-auditor
 description: Read-only security analysis.
-tools: Glob, Grep, Read, Skill, Task, TodoWrite, Bash(git diff:*), Bash(git log:*)
+tools: Glob, Grep, Read, Skill, Task, TaskCreate, TaskUpdate, TaskList, TaskGet, Bash(git diff:*), Bash(git log:*)
 model: inherit
 ---
 ```
@@ -106,7 +106,7 @@ model: inherit
 ---
 name: k8s-deployer
 description: Kubernetes deployment tasks.
-tools: Glob, Grep, Read, Skill, Task, TodoWrite, Bash(kubectl *), Bash(docker *)
+tools: Glob, Grep, Read, Skill, Task, TaskCreate, TaskUpdate, TaskList, TaskGet, Bash(kubectl *), Bash(docker *)
 model: inherit
 ---
 ```
@@ -117,7 +117,7 @@ model: inherit
 ---
 name: test-writer
 description: Writes tests only in test directories.
-tools: Glob, Grep, Read, Skill, Task, TodoWrite, Write(tests/**), Write(__tests__/**)
+tools: Glob, Grep, Read, Skill, Task, TaskCreate, TaskUpdate, TaskList, TaskGet, Write(tests/**), Write(__tests__/**)
 model: inherit
 ---
 ```

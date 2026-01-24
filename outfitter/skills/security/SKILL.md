@@ -23,7 +23,7 @@ NOT for: performance optimization, general code review, feature implementation
 
 <phases>
 
-Track with TodoWrite. Each phase feeds the next.
+Load the **maintain-tasks** skill for phase tracking. Each phase feeds the next.
 
 | Phase | Trigger | activeForm |
 |-------|---------|------------|

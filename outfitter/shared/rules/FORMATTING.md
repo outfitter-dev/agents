@@ -136,9 +136,9 @@ Pattern: `N. Option name [★] — brief description *why recommended*`
 - `*italicized rationale*` provides quick reasoning
 - Everything scannable in one place
 
-## TodoWrite
+## Tasks
 
-Give todos friendly, context-specific descriptions instead of generic phase names. The description should tell the user what's actually happening.
+Give tasks friendly, context-specific descriptions instead of generic phase names. The description should tell the user what's actually happening.
 
 **Prefer**:
 

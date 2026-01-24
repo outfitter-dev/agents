@@ -3,7 +3,7 @@ description: Check available CLI tools and get recommendations
 argument-hint: [category: search|json|viewers|navigation|http]
 ---
 
-# Best Tool
+# Tool Check
 
 Detect available modern CLI tools and get recommendations for your environment.
 
@@ -16,6 +16,7 @@ bun outfitter/skills/which-tool/scripts/index.ts
 ```
 
 Filter by category:
+
 ```bash
 bun outfitter/skills/which-tool/scripts/index.ts -c search
 ```

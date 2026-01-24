@@ -1,0 +1,144 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://agentskills.io/schemas/skill-spec.json",
+  "title": "Agent Skills Specification",
+  "description": "JSON schema for Agent Skills frontmatter validation. Defines base spec fields and platform-specific extensions.",
+  "type": "object",
+  "required": ["name", "description"],
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Skill identifier. Must match parent directory name.",
+      "pattern": "^[a-z][a-z0-9]*(-[a-z0-9]+)*$",
+      "minLength": 2,
+      "maxLength": 64
+    },
+    "description": {
+      "type": "string",
+      "description": "WHAT the skill does + WHEN to use it + TRIGGER keywords.",
+      "minLength": 10,
+      "maxLength": 1024
+    },
+    "version": {
+      "type": "string",
+      "description": "Semantic version (MAJOR.MINOR.PATCH).",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$"
+    },
+    "license": {
+      "type": "string",
+      "description": "License identifier (e.g., Apache-2.0, MIT)."
+    },
+    "compatibility": {
+      "type": "string",
+      "description": "Environment requirements (e.g., 'Requires git and jq').",
+      "maxLength": 500
+    },
+    "metadata": {
+      "type": "object",
+      "description": "Custom fields must be nested under metadata.",
+      "properties": {
+        "author": { "type": "string" },
+        "version": { "type": "string" },
+        "category": { "type": "string" },
+        "tags": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "related-skills": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "changelog": { "type": "string" }
+      },
+      "additionalProperties": true
+    }
+  },
+  "definitions": {
+    "claude-extensions": {
+      "title": "Claude Code Extensions",
+      "description": "Fields specific to Claude Code implementation.",
+      "type": "object",
+      "properties": {
+        "allowed-tools": {
+          "type": "string",
+          "description": "Space-separated list of tools. Supports Bash patterns (e.g., 'Bash(git *)') and MCP tools (e.g., 'mcp__server__tool')."
+        },
+        "user-invocable": {
+          "type": "boolean",
+          "description": "When true, skill can be invoked as /skill-name command."
+        },
+        "disable-model-invocation": {
+          "type": "boolean",
+          "description": "When true, prevents automatic activation by model. Only manual invocation via Skill tool."
+        },
+        "context": {
+          "type": "string",
+          "enum": ["inherit", "fork"],
+          "description": "Context mode: 'inherit' (default) or 'fork' for isolated subagent execution."
+        },
+        "agent": {
+          "type": "string",
+          "description": "Agent to use when skill is invoked (e.g., 'outfitter:analyst')."
+        },
+        "model": {
+          "type": "string",
+          "enum": ["haiku", "sonnet", "opus"],
+          "description": "Override model for skill execution."
+        },
+        "hooks": {
+          "type": "object",
+          "description": "Event hooks for skill lifecycle.",
+          "properties": {
+            "on-activate": { "type": "string" },
+            "on-complete": { "type": "string" }
+          }
+        },
+        "argument-hint": {
+          "type": "string",
+          "description": "Hint text shown after /skill-name. E.g., '[file path]' or '[error message]'."
+        }
+      }
+    }
+  },
+  "allOf": [
+    { "$ref": "#/definitions/claude-extensions" }
+  ],
+  "validation": {
+    "rules": {
+      "name-pattern": {
+        "description": "Lowercase letters, numbers, hyphens. No leading/trailing hyphens, no double hyphens.",
+        "severity": "error"
+      },
+      "name-reserved": {
+        "description": "Cannot contain 'anthropic' or 'claude' in name.",
+        "reserved": ["anthropic", "claude"],
+        "severity": "error"
+      },
+      "name-directory-match": {
+        "description": "Skill name must match parent directory name.",
+        "severity": "error"
+      },
+      "description-length": {
+        "description": "Description should be 10-1024 characters.",
+        "severity": "error"
+      },
+      "custom-fields-nested": {
+        "description": "Custom fields must be under 'metadata', not at top level.",
+        "severity": "error"
+      }
+    },
+    "warnings": {
+      "line-count": {
+        "description": "SKILL.md should be under 500 lines for efficient context usage.",
+        "max": 500
+      },
+      "claude-recommended": {
+        "description": "When in Claude context, recommend setting these fields.",
+        "fields": ["allowed-tools", "user-invocable"]
+      },
+      "description-quality": {
+        "description": "Description should include WHAT, WHEN, and trigger keywords."
+      }
+    }
+  }
+}

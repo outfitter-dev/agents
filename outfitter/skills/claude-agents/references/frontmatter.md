@@ -107,13 +107,13 @@ Restrict tool access. Default: inherits full access from parent.
 
 ```yaml
 # Read-only analysis
-tools: Glob, Grep, Read, Skill, Task, TodoWrite
+tools: Glob, Grep, Read, Skill, Task, TaskCreate, TaskUpdate, TaskList, TaskGet
 
 # With git history
-tools: Glob, Grep, Read, Skill, Task, TodoWrite, Bash(git show:*), Bash(git diff:*)
+tools: Glob, Grep, Read, Skill, Task, TaskCreate, TaskUpdate, TaskList, TaskGet, Bash(git show:*), Bash(git diff:*)
 
 # Research agent
-tools: Glob, Grep, Read, Skill, Task, TodoWrite, WebSearch, WebFetch
+tools: Glob, Grep, Read, Skill, Task, TaskCreate, TaskUpdate, TaskList, TaskGet, WebSearch, WebFetch
 ```
 
 See [tools.md](tools.md) for detailed patterns.

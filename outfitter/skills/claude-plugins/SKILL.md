@@ -328,11 +328,13 @@ mkdir -p .claude-plugin
 ### Plugin Sources
 
 **Relative path:**
+
 ```json
 {"source": "./plugins/my-plugin"}
 ```
 
 **GitHub:**
+
 ```json
 {
   "source": {
@@ -344,6 +346,7 @@ mkdir -p .claude-plugin
 ```
 
 **Git URL:**
+
 ```json
 {
   "source": {

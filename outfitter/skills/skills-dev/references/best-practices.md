@@ -18,6 +18,7 @@ Community-sourced patterns, techniques, and pitfalls from practitioners and offi
 **Three-tier information model**: Discovery → Activation → Execution
 
 ### Discovery Layer (~50 tokens)
+
 YAML frontmatter that helps agents find the right skill without loading full content.
 
 ```yaml
@@ -34,9 +35,11 @@ description: Extracts text and tables from PDF files, fills forms, and merges do
 - Keep under 100 tokens
 
 ### Activation Layer (~2-5K tokens)
+
 Core SKILL.md instructions loaded when skill is invoked.
 
 **Structure**:
+
 ```markdown
 # Skill Name
 
@@ -66,9 +69,11 @@ Links to deep-dive docs in references/ subdirectory
 - **Use examples sparingly**: Only for non-obvious patterns
 
 ### Execution Layer (dynamic)
+
 Deep-dive content loaded on-demand from references/ subdirectory.
 
 **Pattern from practitioners**:
+
 ```
 skill-name/
 ├── SKILL.md                    # Core workflow (500 lines max)
@@ -111,63 +116,17 @@ Pass these parameters to the debugging workflow:
 
 **Anti-pattern**: Embedding another skill's instructions inline.
 
-### Master-Clone Architecture (Subagent Pattern)
+### Subagent Architecture
 
-**For orchestrating specialized work** (source: blog.sshh.io):
+For orchestrating specialized work with context isolation, see [claude-code.md](./claude-code.md#master-clone-architecture) for Claude Code-specific patterns.
 
-**Master Agent**: Coordinates, maintains conversation context, delegates specialized tasks
-**Clone Agents**: Isolated context, loads specific skill, returns focused output
+### Skill + External Service Integration
 
-```
-User request
-   ↓
-Master agent decides: needs security analysis
-   ↓
-Launch clone agent with security-audit skill
-   ↓
-Clone returns findings (only findings in main context)
-   ↓
-Master synthesizes and continues
-```
+Skills can integrate with external services (APIs, MCP servers) by separating concerns:
+- **External service**: Handles authentication, rate limiting, data access
+- **Skill**: Handles business logic, formatting, workflows
 
-**Advantage over Lead-Specialist**: Master preserves main conversation context; specialist work happens in isolated bubble.
-
-**Implementation**:
-```json
-{
-  "description": "Security audit of auth module",
-  "prompt": "Review src/auth/ for vulnerabilities using security-audit skill",
-  "subagent_type": "security-reviewer",
-  "run_in_background": true
-}
-```
-
-### Skill + MCP Integration
-
-**Pattern**: Skills provide workflows, MCP servers provide data/tools.
-
-**Example** (source: Medium - Production AI Agents):
-- **MCP Server**: Linear API access (issues, projects, users)
-- **Skill**: Project standup workflow (what data to pull, how to format, communication patterns)
-
-```markdown
----
-name: linear-standup
-description: Generates team standup reports from Linear issues
----
-
-# Linear Standup Skill
-
-Use the Linear MCP server to:
-1. Fetch issues by status and assignee
-2. Group by project and priority
-3. Format as standup report
-```
-
-**Why separate**:
-- MCP handles authentication, rate limiting, data access
-- Skill handles business logic, formatting, workflows
-- Easier to reuse across similar domains
+This separation enables reuse across similar domains.
 
 ## Description Optimization
 
@@ -220,6 +179,7 @@ description: Creates weekly team status reports with wins, challenges, and prior
 **Example** (source: Anthropic best practices):
 
 ❌ **Verbose**:
+
 ```markdown
 ## What is Test-Driven Development?
 
@@ -231,6 +191,7 @@ and has become a cornerstone of modern software engineering practices...
 ```
 
 ✅ **Concise**:
+
 ```markdown
 ## TDD Workflow
 
@@ -246,6 +207,7 @@ ALWAYS write the test first. NEVER skip the refactor step.
 **Symptom**: Instructions full of "NEVER do X" without alternatives.
 
 ❌ **Problem**:
+
 ```markdown
 - NEVER use any types
 - NEVER skip error handling
@@ -255,6 +217,7 @@ ALWAYS write the test first. NEVER skip the refactor step.
 **Why it's a problem**: Tells Claude what NOT to do but not what TO do.
 
 ✅ **Fix**: Pair constraints with positive alternatives:
+
 ```markdown
 - ALWAYS use strict types; NEVER use `any`
 - ALWAYS handle errors with Result types; NEVER let exceptions propagate silently
@@ -276,11 +239,13 @@ ALWAYS write the test first. NEVER skip the refactor step.
 - Let Claude request additional detail if needed
 
 ❌ **Deep nesting**:
+
 ```
 SKILL.md → references/patterns.md → references/examples/auth.md → references/examples/auth/jwt.md
 ```
 
 ✅ **Flat structure**:
+
 ```
 SKILL.md → references/auth-patterns.md (with ToC for JWT, OAuth, etc.)
 ```
@@ -301,6 +266,7 @@ SKILL.md → references/auth-patterns.md (with ToC for JWT, OAuth, etc.)
 - **Changelog**: Document what changed and why
 
 **Pattern from practitioners**:
+
 ```markdown
 ---
 name: api-integration
@@ -364,6 +330,7 @@ changelog: |
 **Fix**: Include 1-2 examples in references/examples.md
 
 **Pattern**:
+
 ```markdown
 # Examples
 
@@ -413,6 +380,7 @@ changelog: |
 - Builds regression test suite automatically
 
 **Implementation** (from Nate's debugging toolkit):
+
 ```typescript
 // skill-testing-framework pattern
 interface SkillEval {
@@ -500,49 +468,16 @@ const tddSkillEvals: SkillEval[] = [
 
 ### Hook-Based Validation
 
-**Pattern**: Use hooks to enforce constraints at decision points (source: blog.sshh.io).
+For platform-specific hook implementation patterns, see [claude-code.md](./claude-code.md#hook-based-validation).
 
-**PreToolUse hook example**:
-```typescript
-// Block commits without tests
-export async function preToolUse(event) {
-  if (event.tool === 'Bash' && event.params.command.includes('git commit')) {
-    const hasTests = await checkForTestCoverage();
-    if (!hasTests) {
-      throw new Error('Cannot commit: No tests found. Run tests first.');
-    }
-  }
-}
-```
-
-**Use cases**:
-- Prevent destructive operations
-- Enforce testing requirements
-- Validate configuration before deployment
-- Check security constraints
-
-**Advanced pattern - Block at submit**:
-```typescript
-export async function blockAtSubmit() {
-  // Runs before PR creation
-  const issues = await runStaticAnalysis();
-  const testsPassing = await runTestSuite();
-  const securityClear = await runSecurityAudit();
-
-  return {
-    block: issues.length > 0 || !testsPassing || !securityClear,
-    reason: formatBlockingIssues(issues)
-  };
-}
-```
-
-**Source**: Hooks as quality gates prevent issues from reaching production.
+**General principle**: Use hooks to enforce constraints at decision points—prevent destructive operations, enforce testing requirements, validate configuration before deployment.
 
 ### Organization-Wide Skill Libraries
 
 **Pattern**: Centralized skill repository as institutional knowledge (source: Juan C Olamendy, Medium).
 
 **Structure**:
+
 ```
 company-skills/
 ├── engineering/
@@ -571,6 +506,7 @@ company-skills/
 5. **Deprecation policy**: How to sunset old patterns
 
 **Pattern from blog.sshh.io**:
+
 ```markdown
 # Company Skill Manifest
 
@@ -596,6 +532,7 @@ company-skills/
 **Advanced pattern**: Table of contents in reference files for targeted loading.
 
 **Example** (source: skillmatic-ai architecture):
+
 ```markdown
 # API Integration Patterns
 
@@ -640,6 +577,7 @@ company-skills/
 **Example transformation**:
 
 ❌ **Static doc** (docs/deployment.md):
+
 ```markdown
 # Deployment Process
 
@@ -654,6 +592,7 @@ company-skills/
 ```
 
 ✅ **Skill** (skills/deployment/SKILL.md):
+
 ```markdown
 ---
 name: deployment-production
@@ -678,6 +617,7 @@ ALWAYS wait for health check before considering deploy complete.
 **Pattern**: Master skill orchestrates sequence of specialized skills.
 
 **Example** (source: practitioner patterns):
+
 ```markdown
 ---
 name: feature-development
@@ -707,6 +647,7 @@ Each phase must complete successfully before proceeding to next.
 **Advantage**: Each specialized skill can evolve independently. Feature-development orchestrates but doesn't duplicate.
 
 **Related pattern - Conditional chaining**:
+
 ```markdown
 ## Error Recovery
 
@@ -741,6 +682,7 @@ If code review finds issues in Phase 4:
 - Verify skill matches description (no hidden behavior)
 
 **2. Code review checklist** (from security research):
+
 ```markdown
 ## Skill Security Review
 
@@ -760,6 +702,7 @@ If code review finds issues in Phase 4:
 - Check for unexpected side effects
 
 **4. Minimal permissions**:
+
 ```yaml
 # Proposed security metadata (from research)
 permissions:
@@ -803,6 +746,7 @@ Track what skills do in production:
 6. **Deprecate docs**: Point to skills instead of wikis
 
 **Example from blog.sshh.io**:
+
 ```markdown
 ---
 name: internal-deploy
@@ -838,6 +782,7 @@ NEVER skip smoke tests. ALWAYS monitor after deploy.
 **Pattern**: Treat skills like open source contributions.
 
 **Template** (from ComposioHQ awesome-claude-skills):
+
 ```markdown
 # Contributing Skills
 
@@ -886,6 +831,7 @@ version: 2.1.0
 - **PATCH**: Bug fixes (typos, clarifications, small improvements)
 
 **Breaking change example**:
+
 ```markdown
 # Version 1.x: Required user to provide API key
 ---
@@ -903,6 +849,7 @@ description: Make API calls using Linear MCP server
 ```
 
 **Migration guide pattern**:
+
 ```markdown
 # Migration Guide: 1.x → 2.0
 

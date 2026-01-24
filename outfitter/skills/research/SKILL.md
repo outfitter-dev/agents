@@ -21,7 +21,7 @@ NOT for: quick lookups, well-known patterns, time-critical debugging without inv
 
 <phases>
 
-Track with TodoWrite. Phases advance only, never regress.
+Load the **maintain-tasks** skill for phase tracking. Phases advance only, never regress.
 
 | Phase | Trigger | activeForm |
 |-------|---------|------------|
@@ -116,6 +116,7 @@ See [discovery-patterns.md](references/discovery-patterns.md) for detailed workf
 Two output modes:
 
 **Evaluation Mode** (recommendations):
+
 ```
 Finding: { assertion }
 Source: { authoritative source with link }
@@ -123,6 +124,7 @@ Confidence: High/Medium/Low — { rationale }
 ```
 
 **Discovery Mode** (gathering):
+
 ```
 Found: { what was discovered }
 Source: { where from with link }

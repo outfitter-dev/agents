@@ -46,7 +46,10 @@ Tools are case-sensitive. Use exact names:
 | `Bash` | Execute shell commands |
 | `Task` | Create subagent tasks |
 | `Skill` | Invoke skills |
-| `TodoWrite` | Manage todo list |
+| `TaskCreate` | Create tasks |
+| `TaskUpdate` | Update task status |
+| `TaskList` | List tasks |
+| `TaskGet` | Get task details |
 | `WebSearch` | Search the web |
 | `WebFetch` | Fetch web content |
 | `SlashCommand` | Invoke other commands |
@@ -142,7 +145,7 @@ When no restrictions needed:
 
 ```yaml
 # Option 1: Explicit full access
-allowed-tools: Read, Write, Edit, Grep, Glob, Bash(*), Task, Skill, TodoWrite
+allowed-tools: Read, Write, Edit, Grep, Glob, Bash(*), Task, Skill, TaskCreate, TaskUpdate, TaskList, TaskGet
 
 # Option 2: Omit field entirely (inherits all)
 # (no allowed-tools field)

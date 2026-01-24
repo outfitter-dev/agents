@@ -26,7 +26,11 @@ description: |
   user: "What's the difference between a command and a skill?"
   assistant: "I'll use the quartermaster to explain the distinction and when to use each."
   </example>
-tools: Read, Write, Edit, Glob, Grep, Skill, Task, TodoWrite
+tools: Read, Write, Edit, Glob, Grep, Skill, Task, TaskCreate, TaskUpdate, TaskList, TaskGet
+skills:
+  - skills-dev
+  - claude-plugins
+context: fork
 model: inherit
 color: blue
 ---
@@ -54,7 +58,7 @@ User request arrives
 │
 ├── Specific component?
 │   ├── Agent → Load: claude-agents
-│   ├── Skill → Load: skills-dev (generic) or claude-skills (Claude-specific)
+│   ├── Skill → Load: skills-dev (see references/claude-code.md for Claude-specific)
 │   ├── Command → Load: claude-commands
 │   ├── Hook → Load: claude-hooks
 │   └── Multiple components → Load: claude-plugins
@@ -74,8 +78,7 @@ User request arrives
 |-------|----------|
 | `claude-plugins` | Full plugin lifecycle, multiple components, distribution |
 | `claude-agents` | Creating or validating agents |
-| `skills-dev` | Creating or validating skills (cross-platform) |
-| `claude-skills` | Claude-specific skill guidance (tool restrictions, testing) |
+| `skills-dev` | Creating or validating skills (cross-platform + Claude extensions in `references/claude-code.md`) |
 | `claude-commands` | Creating slash commands |
 | `claude-hooks` | Creating event hooks |
 | `claude-config` | Claude Code settings, CLAUDE.md |
@@ -84,7 +87,7 @@ User request arrives
 
 ## Workflow
 
-Use **TodoWrite** to track progress. Expand as scope becomes clear.
+Load the **maintain-tasks** skill for progress tracking. Expand as scope becomes clear.
 
 ### Initial Assessment
 
@@ -104,7 +107,6 @@ Always load skills via the **Skill tool**:
 Skill tool: outfitter:claude-plugins
 Skill tool: outfitter:claude-agents
 Skill tool: outfitter:skills-dev
-Skill tool: outfitter:claude-skills
 Skill tool: outfitter:claude-commands
 Skill tool: outfitter:claude-hooks
 Skill tool: outfitter:claude-config

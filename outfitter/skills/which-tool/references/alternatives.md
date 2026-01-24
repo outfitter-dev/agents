@@ -58,6 +58,7 @@ Consider research for:
 #### 1. GitHub Search
 
 **Search patterns**:
+
 ```
 site:github.com {category} rust OR go language:Rust OR language:Go stars:>1000
 site:github.com {category} CLI tool stars:>500
@@ -65,6 +66,7 @@ site:github.com modern {legacy-tool} alternative
 ```
 
 **Examples**:
+
 ```
 site:github.com file search rust language:Rust stars:>1000
 site:github.com grep alternative rust language:Rust stars:>1000
@@ -79,17 +81,17 @@ site:github.com modern ls replacement stars:>500
 
 #### 2. Curated Lists
 
-**awesome-cli-apps**: https://github.com/agarrharr/awesome-cli-apps
+**awesome-cli-apps**: <https://github.com/agarrharr/awesome-cli-apps>
 - Categorized by function
 - Curated for quality
 - Regularly updated
 
-**modern-unix**: https://github.com/ibraheemdev/modern-unix
+**modern-unix**: <https://github.com/ibraheemdev/modern-unix>
 - Specifically Unix tool replacements
 - Focus on performance and ergonomics
 - Comparison with legacy tools
 
-**awesome-tuis**: https://github.com/rothgar/awesome-tuis
+**awesome-tuis**: <https://github.com/rothgar/awesome-tuis>
 - Terminal UI applications
 - Interactive tools
 - Well-maintained list
@@ -102,11 +104,11 @@ site:github.com modern ls replacement stars:>500
 #### 3. Language-Specific Ecosystems
 
 **Rust CLI Working Group**:
-- https://rust-cli.github.io/book/
-- https://lib.rs/command-line-utilities
+- <https://rust-cli.github.io/book/>
+- <https://lib.rs/command-line-utilities>
 
 **Go CLI Tools**:
-- https://github.com/avelino/awesome-go#command-line
+- <https://github.com/avelino/awesome-go#command-line>
 
 **Why language ecosystems:**
 - Rust tools often fastest (native performance, zero-cost abstractions)
@@ -118,6 +120,7 @@ site:github.com modern ls replacement stars:>500
 #### Hacker News
 
 **Search patterns**:
+
 ```
 site:news.ycombinator.com {tool} alternative
 site:news.ycombinator.com modern {category} tools
@@ -144,7 +147,7 @@ site:news.ycombinator.com CLI productivity
 
 #### Tool Comparison Sites
 
-**AlternativeTo**: https://alternativeto.net
+**AlternativeTo**: <https://alternativeto.net>
 - User ratings
 - Feature comparison matrices
 - Platform availability
@@ -187,6 +190,7 @@ Evaluate candidates across these dimensions:
 - **10× faster**: High priority upgrade, significant productivity gain
 
 **How to benchmark:**
+
 ```bash
 # Quick comparison with time
 time {old-tool} args
@@ -283,6 +287,7 @@ hyperfine --parameter-scan num 10 10000 '{tool} args'
 - **Flags**: Similar enough for muscle memory transfer?
 
 **Examples:**
+
 ```bash
 # Safe drop-in replacements
 alias cat=bat       # Generally yes (bat mimics cat behavior)
@@ -299,6 +304,7 @@ alias awk=...       # No good modern replacement (awk is unique)
 ### Phase 1: Quick Evaluation (5 minutes)
 
 **Install in isolated way:**
+
 ```bash
 # Prefer cargo for isolated testing (doesn't require sudo)
 cargo install {tool}
@@ -308,6 +314,7 @@ brew install {tool}
 ```
 
 **Basic functionality check:**
+
 ```bash
 # Check help output
 {tool} --help
@@ -424,11 +431,13 @@ Confidence: {HIGH/MEDIUM/LOW}
 - LOW: Bleeding edge, or significant compatibility concerns
 
 Recommend: {INSTALL/TRY/SKIP}
+
 ```
 
 ### Example
 
 ```
+
 Found: ripgrep (rg) — Fast line-oriented search tool
 
 Performance:
@@ -442,6 +451,7 @@ Benefits:
 - Automatic binary file detection
 
 Installation:
+
 ```bash
 brew install ripgrep
 ```
@@ -456,6 +466,7 @@ Confidence: HIGH
 - Drop-in for most grep use cases
 
 Recommend: INSTALL
+
 ```
 
 ## When to Recommend Installation
@@ -572,6 +583,7 @@ fi
 | ugrep | ★★★ | ★★ | ★★ | ★★ |
 
 **Hands-on test**:
+
 ```bash
 brew install ripgrep
 
@@ -589,6 +601,7 @@ grep -r "pattern" .  # Hangs on binaries unless -I flag
 ```
 
 **Findings**:
+
 ```
 Found: ripgrep (rg) — Recursive line-oriented search tool
 
@@ -625,7 +638,7 @@ Recommendation: ★ ADOPT — 35x speedup justifies one-time learning cost
 - r/commandline — CLI tool discussions
 - r/rust — Rust-based tools (often fastest)
 - r/golang — Go-based tools (good balance)
-- Lobsters CLI tag — https://lobste.rs/t/cli
+- Lobsters CLI tag — <https://lobste.rs/t/cli>
 
 ### Benchmarking Tools
 

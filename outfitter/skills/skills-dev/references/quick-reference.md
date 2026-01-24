@@ -5,6 +5,7 @@ Fast checklist for skill development. See [best-practices.md](./best-practices.m
 ## Skill Creation Checklist
 
 ### Structure
+
 ```
 skill-name/
 ├── SKILL.md              # < 500 lines, core workflow
@@ -16,6 +17,7 @@ skill-name/
 ```
 
 ### SKILL.md Template
+
 ```markdown
 ---
 name: kebab-case-name
@@ -76,6 +78,7 @@ Clear criteria for when this applies
 ## Testing Checklist
 
 ### Before Publishing
+
 - [ ] Test with Haiku (needs more explicit instructions?)
 - [ ] Test with Sonnet (balanced clarity?)
 - [ ] Test with Opus (handles complexity?)
@@ -87,6 +90,7 @@ Clear criteria for when this applies
 - [ ] References properly linked
 
 ### Ongoing Validation
+
 - [ ] Track skill load frequency
 - [ ] Monitor completion rate
 - [ ] Log user satisfaction
@@ -96,11 +100,13 @@ Clear criteria for when this applies
 ## Composition Patterns
 
 ### Reference Other Skills
+
 ```markdown
 Load the **outfitter:debugging** skill using the Skill tool to investigate.
 ```
 
 ### Skill Chaining
+
 ```markdown
 1. Load **pathfinding** skill for planning
 2. Load **tdd** skill for implementation
@@ -108,6 +114,7 @@ Load the **outfitter:debugging** skill using the Skill tool to investigate.
 ```
 
 ### Skills + MCP
+
 - **MCP**: Data access (APIs, databases, tools)
 - **Skill**: Workflows (what to do with that data)
 
@@ -207,7 +214,7 @@ See [patterns.md](./patterns.md) for detailed examples.
 
 ## Getting Help
 
-- **Official docs**: https://platform.claude.com/docs/en/agents-and-tools/agent-skills
+- **Official docs**: <https://platform.claude.com/docs/en/agents-and-tools/agent-skills>
 - **Community**: ComposioHQ/awesome-claude-skills (GitHub)
 - **Research**: skillmatic-ai/awesome-agent-skills (GitHub)
 - **Examples**: Load existing well-crafted skills for patterns

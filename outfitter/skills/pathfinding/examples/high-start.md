@@ -11,7 +11,7 @@ I need to add a dark mode toggle to my Next.js app. I'm using Tailwind CSS and w
 <claude>
 
 ```text
-[TodoWrite] Clear requirements — fast path
+[Task] Clear requirements — fast path
 - Clarify implementation details (in_progress)
 - Deliver dark mode implementation (pending)
 ```
@@ -67,7 +67,7 @@ All clear — delivering implementation.
 ```
 
 ```text
-[TodoWrite] Delivering
+[Task] Delivering
 - Clarify implementation details (completed)
 - Deliver dark mode implementation (in_progress)
 ```
@@ -231,7 +231,7 @@ export function Header() {
 - No flash on page load
 
 ```text
-[TodoWrite] Done
+[Task] Done
 - Clarify implementation details (completed)
 - Deliver dark mode implementation (completed)
 ```
