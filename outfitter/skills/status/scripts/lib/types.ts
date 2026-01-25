@@ -2,18 +2,31 @@
  * Shared types for status gatherers
  */
 
+/** Possible states for a gatherer operation. */
 export type GathererStatus = "success" | "unavailable" | "error";
 
+/**
+ * Result returned by a status gatherer.
+ * @typeParam T - Type of gathered data
+ */
 export interface GathererResult<T = unknown> {
+	/** Source identifier */
 	source: string;
+	/** Operation status */
 	status: GathererStatus;
+	/** Gathered data (present when success) */
 	data?: T;
+	/** Error message (present when error) */
 	error?: string;
+	/** Unavailability reason (present when unavailable) */
 	reason?: string;
+	/** ISO timestamp of when data was gathered */
 	timestamp: string;
 }
 
-// Beads types
+/**
+ * Issue from Beads local issue tracking.
+ */
 export interface BeadsIssue {
 	id: string;
 	title: string;
@@ -30,6 +43,9 @@ export interface BeadsIssue {
 	dependent_count: number;
 }
 
+/**
+ * Aggregated statistics for Beads issues.
+ */
 export interface BeadsStats {
 	total: number;
 	open: number;
@@ -40,6 +56,9 @@ export interface BeadsStats {
 	average_lead_time?: number;
 }
 
+/**
+ * Data gathered from Beads issue tracker.
+ */
 export interface BeadsData {
 	stats: BeadsStats;
 	inProgress: BeadsIssue[];
@@ -48,7 +67,9 @@ export interface BeadsData {
 	recentlyClosed: BeadsIssue[];
 }
 
-// GitHub types
+/**
+ * Pull request from GitHub.
+ */
 export interface GitHubPR {
 	number: number;
 	title: string;
@@ -69,6 +90,9 @@ export interface GitHubPR {
 	reviewDecision?: "APPROVED" | "CHANGES_REQUESTED" | "REVIEW_REQUIRED" | null;
 }
 
+/**
+ * GitHub Actions workflow run.
+ */
 export interface GitHubWorkflowRun {
 	name: string;
 	status: string;
@@ -77,13 +101,18 @@ export interface GitHubWorkflowRun {
 	url: string;
 }
 
+/**
+ * Data gathered from GitHub.
+ */
 export interface GitHubData {
 	repo: string;
 	openPRs: GitHubPR[];
 	recentRuns: GitHubWorkflowRun[];
 }
 
-// Graphite types
+/**
+ * Branch in a Graphite stack.
+ */
 export interface GraphiteBranch {
 	name: string;
 	prNumber?: number;
@@ -97,6 +126,9 @@ export interface GraphiteBranch {
 	commitCount: number;
 }
 
+/**
+ * Data gathered from Graphite.
+ */
 export interface GraphiteData {
 	currentBranch: string;
 	trunk: string;
@@ -104,7 +136,9 @@ export interface GraphiteData {
 	stacks: string[][]; // Each stack as array of branch names
 }
 
-// Linear types
+/**
+ * Issue from Linear.
+ */
 export interface LinearIssue {
 	identifier: string;
 	title: string;
@@ -120,12 +154,17 @@ export interface LinearIssue {
 	url: string;
 }
 
+/**
+ * Data gathered from Linear.
+ */
 export interface LinearData {
 	team?: string;
 	issues: LinearIssue[];
 }
 
-// Aggregated result
+/**
+ * Aggregated status report result.
+ */
 export interface SitrepResult {
 	timeConstraint: string;
 	timestamp: string;

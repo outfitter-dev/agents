@@ -13,3 +13,6 @@ agent-kit/test-output/
 
 # Deprecated/archived components
 .archive/
+
+# Ephemeral output (docs-audit reports, etc.)
+.pack/

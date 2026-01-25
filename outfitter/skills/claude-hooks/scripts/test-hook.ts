@@ -21,7 +21,9 @@ const colors = {
 	reset: "\x1b[0m",
 };
 
-// Hook input interface
+/**
+ * JSON input structure for Claude Code hooks.
+ */
 interface HookInput {
 	session_id: string;
 	transcript_path: string;
@@ -32,7 +34,9 @@ interface HookInput {
 	reason?: string;
 }
 
-// Test options
+/**
+ * Options for testing a hook script.
+ */
 interface TestOptions {
 	event: string;
 	tool?: string;

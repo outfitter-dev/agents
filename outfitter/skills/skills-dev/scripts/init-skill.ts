@@ -17,13 +17,23 @@ import * as path from "node:path";
 const SCRIPT_DIR = path.dirname(new URL(import.meta.url).pathname);
 const TEMPLATES_DIR = path.join(SCRIPT_DIR, "../templates/skill-archetypes");
 
+/**
+ * Result of skill initialization.
+ */
 interface InitResult {
+	/** Whether initialization succeeded or failed */
 	status: "success" | "error";
+	/** Path to created skill directory */
 	skillDir?: string;
+	/** Template used if any */
 	template?: string;
+	/** Files created during initialization */
 	files?: string[];
+	/** Suggested next steps after initialization */
 	nextSteps?: string[];
+	/** Error message if status is "error" */
 	error?: string;
+	/** Available templates when template not found */
 	availableTemplates?: string[];
 }
 

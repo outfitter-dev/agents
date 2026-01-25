@@ -11,38 +11,70 @@
 
 import { $ } from "bun";
 
+/**
+ * A PR review thread with resolution status.
+ */
 interface ReviewThread {
+	/** Whether the thread has been resolved */
 	isResolved: boolean;
+	/** Comments in the thread */
 	comments: { body: string; author: { login: string } }[];
 }
 
+/**
+ * Normalized pull request data for display.
+ */
 interface PR {
+	/** PR number */
 	number: number;
+	/** PR title */
 	title: string;
+	/** URL to the PR on GitHub */
 	url: string;
+	/** Whether PR is in draft state */
 	isDraft: boolean;
+	/** PR author info */
 	author: { login: string };
+	/** Branch name */
 	headRefName: string;
+	/** ISO timestamp of creation */
 	createdAt: string;
+	/** ISO timestamp of last update */
 	updatedAt: string;
+	/** Review decision (APPROVED, CHANGES_REQUESTED, etc.) */
 	reviewDecision: string | null;
+	/** CI/CD check status rollup */
 	statusCheckRollup: {
 		state: string;
 		contexts: { name: string; state: string; conclusion: string | null }[];
 	} | null;
+	/** Review comment threads */
 	reviewThreads: { nodes: ReviewThread[] };
 }
 
+/**
+ * Raw PR response structure from GitHub GraphQL API.
+ */
 interface PRResponse {
+	/** PR number */
 	number: number;
+	/** PR title */
 	title: string;
+	/** URL to the PR */
 	url: string;
+	/** Draft state */
 	isDraft: boolean;
+	/** Author info */
 	author: { login: string };
+	/** Branch name */
 	headRefName: string;
+	/** Creation timestamp */
 	createdAt: string;
+	/** Last update timestamp */
 	updatedAt: string;
+	/** Review decision */
 	reviewDecision: string | null;
+	/** Commits with status checks */
 	commits: {
 		nodes: {
 			commit: {
@@ -55,6 +87,7 @@ interface PRResponse {
 			};
 		}[];
 	};
+	/** Review threads */
 	reviewThreads: { nodes: ReviewThread[] };
 }
 

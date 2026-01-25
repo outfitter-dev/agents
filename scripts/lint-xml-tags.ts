@@ -23,11 +23,19 @@
 import { Glob } from "bun";
 import { statSync } from "fs";
 
+/**
+ * An XML tag formatting violation in a markdown file.
+ */
 interface Violation {
+  /** File path where violation was found */
   file: string;
+  /** Line number of the violation */
   line: number;
+  /** The XML tag that has the issue */
   tag: string;
+  /** Whether it's an opening or closing tag */
   type: "opening" | "closing";
+  /** Description of the formatting issue */
   message: string;
 }
 

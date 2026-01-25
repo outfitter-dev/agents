@@ -21,17 +21,31 @@
 import { Glob } from "bun";
 import { statSync } from "fs";
 
+/**
+ * A table formatting issue found in a markdown file.
+ */
 interface TableIssue {
+  /** File path where issue was found */
   file: string;
+  /** Line number of the issue */
   line: number;
+  /** Description of the formatting issue */
   message: string;
+  /** Original line content */
   before: string;
+  /** Corrected line content */
   after: string;
 }
 
+/**
+ * Result of formatting tables in a file.
+ */
 interface FormatResult {
+  /** Formatted file content */
   content: string;
+  /** Issues found and fixed */
   issues: TableIssue[];
+  /** Whether content was modified */
   changed: boolean;
 }
 

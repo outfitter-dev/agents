@@ -1,6 +1,10 @@
 import type { ToolCheckResult } from "../types.ts";
 import { checkTool } from "../utils.ts";
 
+/**
+ * Checks availability of search-related CLI tools (fd, ripgrep, ast-grep).
+ * @returns Array of tool check results for search category
+ */
 export async function checkSearchTools(): Promise<ToolCheckResult[]> {
   const tools = [
     {

@@ -14,16 +14,29 @@
 import { existsSync, readdirSync, readFileSync } from "node:fs";
 import { isAbsolute, join, resolve } from "node:path";
 
+/**
+ * Result of validating a marketplace component.
+ */
 interface ValidationResult {
+	/** Whether validation passed without errors */
 	passed: boolean;
+	/** Critical validation errors */
 	errors: string[];
+	/** Non-critical validation warnings */
 	warnings: string[];
 }
 
+/**
+ * Structure of marketplace.json configuration.
+ */
 interface MarketplaceJson {
+	/** Marketplace name */
 	name: string;
+	/** Marketplace owner info */
 	owner?: { name: string; email?: string };
+	/** Marketplace metadata */
 	metadata?: { description?: string; version?: string };
+	/** Plugins available in this marketplace */
 	plugins: Array<{
 		name: string;
 		source: string;
@@ -32,11 +45,19 @@ interface MarketplaceJson {
 	}>;
 }
 
+/**
+ * Structure of plugin.json configuration.
+ */
 interface PluginJson {
+	/** Plugin name */
 	name: string;
+	/** Semantic version */
 	version: string;
+	/** Plugin description */
 	description: string;
+	/** Plugin author info */
 	author?: { name: string; email?: string; url?: string };
+	/** Keywords for discovery */
 	keywords?: string[];
 }
 

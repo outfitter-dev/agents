@@ -7,12 +7,21 @@
 
 import { stderr, stdin, stdout } from "node:process";
 
+/**
+ * Input structure received by pre-tool-use hooks.
+ */
 interface HookInput {
+	/** Current session ID */
 	session_id: string;
+	/** Path to conversation transcript */
 	transcript_path: string;
+	/** Current working directory */
 	cwd: string;
+	/** Name of the hook event */
 	hook_event_name: string;
+	/** Name of the tool being invoked */
 	tool_name: string;
+	/** Tool-specific input parameters */
 	tool_input: {
 		command?: string;
 		description?: string;

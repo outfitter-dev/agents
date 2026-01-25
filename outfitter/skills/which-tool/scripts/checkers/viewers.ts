@@ -1,6 +1,10 @@
 import type { ToolCheckResult } from "../types.ts";
 import { checkTool } from "../utils.ts";
 
+/**
+ * Checks availability of file viewer tools (bat, eza, delta).
+ * @returns Array of tool check results for viewers category
+ */
 export async function checkViewerTools(): Promise<ToolCheckResult[]> {
   const tools = [
     {

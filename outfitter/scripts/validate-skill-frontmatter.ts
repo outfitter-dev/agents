@@ -25,13 +25,23 @@ const MAX_LINES = 500;
 const MAX_DESCRIPTION_LENGTH = 1024;
 const MIN_DESCRIPTION_LENGTH = 10;
 
+/**
+ * Result of skill frontmatter validation.
+ */
 interface ValidationResult {
+  /** Whether the frontmatter passes all required checks */
   valid: boolean;
+  /** Blocking errors that must be fixed */
   errors: string[];
+  /** Non-blocking warnings for improvement */
   warnings: string[];
+  /** Parsed frontmatter if YAML was valid */
   frontmatter: Record<string, unknown> | null;
 }
 
+/**
+ * Expected structure of SKILL.md frontmatter.
+ */
 interface SkillFrontmatter {
   name?: string;
   description?: string;
@@ -72,6 +82,11 @@ const CLAUDE_FIELDS = new Set([
   "argument-hint",
 ]);
 
+/**
+ * Extracts YAML frontmatter from markdown content.
+ * @param content - Full markdown file content
+ * @returns Object with extracted YAML string and total line count
+ */
 function extractFrontmatter(content: string): {
   yaml: string | null;
   lineCount: number;
@@ -99,6 +114,11 @@ function extractFrontmatter(content: string): {
   return { yaml, lineCount };
 }
 
+/**
+ * Checks if a file path indicates Claude Code context.
+ * @param path - File path to check
+ * @returns True if path matches Claude skill locations
+ */
 function detectClaudeContext(path: string): boolean {
   const patterns = [
     /\.claude-plugin\//,
@@ -108,6 +128,12 @@ function detectClaudeContext(path: string): boolean {
   return patterns.some((p) => p.test(path));
 }
 
+/**
+ * Validates SKILL.md content against the Agent Skills specification.
+ * @param content - Full SKILL.md file content
+ * @param filePath - Path to the file (used for context detection)
+ * @returns Validation result with errors, warnings, and parsed frontmatter
+ */
 function validate(
   content: string,
   filePath: string
@@ -279,6 +305,11 @@ function validate(
   return result;
 }
 
+/**
+ * Formats validation result for human-readable console output.
+ * @param result - Validation result to format
+ * @param path - Original file path for display
+ */
 function formatOutput(result: ValidationResult, path: string): void {
   const status = result.valid
     ? result.warnings.length > 0

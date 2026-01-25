@@ -1,6 +1,10 @@
 import type { ToolCheckResult } from "../types.ts";
 import { checkTool } from "../utils.ts";
 
+/**
+ * Checks availability of navigation tools (zoxide, fzf).
+ * @returns Array of tool check results for navigation category
+ */
 export async function checkNavigationTools(): Promise<ToolCheckResult[]> {
   const tools = [
     {

@@ -1,6 +1,10 @@
 import type { ToolCheckResult } from "../types.ts";
 import { checkTool } from "../utils.ts";
 
+/**
+ * Checks availability of JSON processing tools (jq).
+ * @returns Array of tool check results for JSON category
+ */
 export async function checkJsonTools(): Promise<ToolCheckResult[]> {
   const tools = [
     {

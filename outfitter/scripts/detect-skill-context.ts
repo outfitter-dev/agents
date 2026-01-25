@@ -12,10 +12,17 @@
 
 import { basename, dirname } from "path";
 
+/**
+ * Result of skill context detection.
+ */
 interface ContextResult {
+  /** Detected platform context */
   context: "claude" | "codex" | "cursor" | "github" | "generic";
+  /** Explanation for why this context was detected */
   reason: string;
+  /** Platform-specific recommendations */
   recommendations: string[];
+  /** Normalized file path that was analyzed */
   path: string;
 }
 
@@ -76,6 +83,11 @@ const RECOMMENDATIONS: Record<string, string[]> = {
   ],
 };
 
+/**
+ * Detects the execution context for a skill based on its file path.
+ * @param path - Path to the SKILL.md file
+ * @returns Context detection result with platform and recommendations
+ */
 function detectContext(path: string): ContextResult {
   const normalizedPath = path.replace(/\\/g, "/");
 

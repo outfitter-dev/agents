@@ -1,5 +1,7 @@
 /**
- * Check if a command-line tool is available and get its version
+ * Checks if a command-line tool is available and gets its version.
+ * @param cmd - Command name to check in PATH
+ * @returns Object with availability status and optional version string
  */
 export async function checkTool(
   cmd: string,

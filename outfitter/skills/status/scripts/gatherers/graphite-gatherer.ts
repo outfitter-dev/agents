@@ -42,12 +42,21 @@ Output:
 	process.exit(0);
 }
 
+/**
+ * Result of running a shell command.
+ */
 interface CmdOutput {
 	success: boolean;
 	stdout: string;
 	stderr: string;
 }
 
+/**
+ * Runs a shell command and captures output.
+ * @param cmd - Command to run
+ * @param args - Arguments to pass
+ * @returns Command output
+ */
 async function runCmd(cmd: string, args: string[]): Promise<CmdOutput> {
 	const proc = Bun.spawn([cmd, ...args], {
 		stdout: "pipe",
@@ -61,16 +70,28 @@ async function runCmd(cmd: string, args: string[]): Promise<CmdOutput> {
 	return { success: exitCode === 0, stdout, stderr };
 }
 
+/**
+ * Checks if Graphite CLI is installed.
+ * @returns True if gt is available
+ */
 async function checkGtAvailable(): Promise<boolean> {
 	const result = await runCmd("which", ["gt"]);
 	return result.success;
 }
 
+/**
+ * Checks if current directory is a git repository.
+ * @returns True if in a git repo
+ */
 async function checkGitRepo(): Promise<boolean> {
 	const result = await runCmd("git", ["rev-parse", "--git-dir"]);
 	return result.success;
 }
 
+/**
+ * Gets Graphite stack state from gt CLI.
+ * @returns Stack state or null on failure
+ */
 async function getGtState(): Promise<{
 	branches: GraphiteBranch[];
 	stacks: string[][];
@@ -97,6 +118,11 @@ async function getGtState(): Promise<{
 	}
 }
 
+/**
+ * Parses JSON output from gt log command.
+ * @param data - Raw JSON data
+ * @returns Structured Graphite state
+ */
 function parseGtLogJson(data: unknown): {
 	branches: GraphiteBranch[];
 	stacks: string[][];
@@ -149,6 +175,11 @@ function parseGtLogJson(data: unknown): {
 	};
 }
 
+/**
+ * Parses text output from gt state command (fallback).
+ * @param text - Raw text output
+ * @returns Structured Graphite state
+ */
 function parseGtStateText(text: string): {
 	branches: GraphiteBranch[];
 	stacks: string[][];
@@ -187,6 +218,12 @@ function parseGtStateText(text: string): {
 	};
 }
 
+/**
+ * Maps PR state from API to internal status.
+ * @param state - API state string
+ * @param isDraft - Whether PR is a draft
+ * @returns Normalized status
+ */
 function mapPrState(
 	state?: string,
 	isDraft?: boolean,
@@ -206,6 +243,12 @@ function mapPrState(
 	}
 }
 
+/**
+ * Builds stack arrays from branch relationships.
+ * @param branchMap - Map of branch names to branch data
+ * @param trunk - Trunk branch name
+ * @returns Array of stacks (each stack is array of branch names)
+ */
 function buildStacks(
 	branchMap: Map<string, GraphiteBranch>,
 	trunk: string,
@@ -245,6 +288,11 @@ function buildStacks(
 	return stacks;
 }
 
+/**
+ * Gets count of recent commits within time window.
+ * @param timeMs - Time window in milliseconds
+ * @returns Number of commits
+ */
 async function getRecentCommits(timeMs: number): Promise<number> {
 	const since = toGitSince(timeMs);
 	const result = await runCmd("git", ["log", `--since=${since}`, "--oneline"]);
@@ -253,6 +301,10 @@ async function getRecentCommits(timeMs: number): Promise<number> {
 	return result.stdout.split("\n").filter((l) => l.trim()).length;
 }
 
+/**
+ * Gathers Graphite stack and branch data.
+ * @returns Gatherer result with Graphite data
+ */
 async function gatherGraphiteData(): Promise<GathererResult<GraphiteData>> {
 	const timestamp = new Date().toISOString();
 
