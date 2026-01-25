@@ -1,6 +1,6 @@
 {
   "name": "but",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "GitButler virtual branch workflows for parallel development, multi-agent coordination, and post-hoc commit organization",
   "author": {
     "name": "Outfitter",

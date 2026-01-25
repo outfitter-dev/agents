@@ -1,6 +1,6 @@
 {
 	"name": "cli-dev",
-	"version": "0.1.0",
+	"version": "0.1.1",
 	"description": "Skills for building command-line tools: argument parsing, help text, subcommands, and CLI best practices",
 	"author": {
 		"name": "Outfitter",
