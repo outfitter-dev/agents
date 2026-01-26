@@ -8,15 +8,25 @@
 
 import * as fs from "node:fs";
 
-// Type definitions for your format
+/**
+ * Extracted content from a document.
+ */
 interface DocumentContent {
+	/** Text content extracted from the document */
 	text: string;
+	/** Document metadata (path, size, custom fields) */
 	metadata: Record<string, unknown>;
 }
 
+/**
+ * Result of a document processing operation.
+ */
 interface ProcessResult {
+	/** Processing status */
 	status: "success" | "error";
+	/** Processed document content if successful */
 	data?: DocumentContent;
+	/** Error message if failed */
 	error?: string;
 }
 

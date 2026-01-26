@@ -46,12 +46,20 @@ Output:
 	process.exit(0);
 }
 
+/**
+ * Result of running a bd CLI command.
+ */
 interface BdOutput<T> {
 	success: boolean;
 	data?: T;
 	error?: string;
 }
 
+/**
+ * Runs a bd CLI command and parses JSON output.
+ * @param args - Arguments to pass to bd
+ * @returns Parsed output or error
+ */
 async function runBd<T>(args: string[]): Promise<BdOutput<T>> {
 	const workspaceArgs = values.workspace
 		? ["--workspace-root", values.workspace]
@@ -81,6 +89,10 @@ async function runBd<T>(args: string[]): Promise<BdOutput<T>> {
 	}
 }
 
+/**
+ * Checks if Beads is initialized in workspace.
+ * @returns True if .beads directory exists
+ */
 async function checkBeadsAvailable(): Promise<boolean> {
 	// Check if .beads directory exists
 	const beadsDir = values.workspace ? `${values.workspace}/.beads` : ".beads";
@@ -89,6 +101,10 @@ async function checkBeadsAvailable(): Promise<boolean> {
 	return file.exists();
 }
 
+/**
+ * Gathers Beads issue tracking data.
+ * @returns Gatherer result with Beads data
+ */
 async function gatherBeadsData(): Promise<GathererResult<BeadsData>> {
 	const timestamp = new Date().toISOString();
 

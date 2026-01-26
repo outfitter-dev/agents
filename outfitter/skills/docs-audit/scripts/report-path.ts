@@ -21,17 +21,32 @@ import { parseArgs } from "util";
 import { mkdir, writeFile } from "node:fs/promises";
 import { existsSync } from "node:fs";
 
+/**
+ * Components of a report path.
+ */
 interface ReportPathComponents {
-  timestamp: string;        // YYYYMMDDhhmm
-  timestampISO: string;     // ISO 8601 for frontmatter
-  type: string;             // e.g., "docs-audit"
-  sessionFull: string;      // Full session ID (or empty)
-  sessionShort: string;     // First 8 chars (or empty)
-  filename: string;         // Just the filename
-  path: string;             // Full path including base
-  isMulti: boolean;         // Directory mode
+  /** Timestamp as YYYYMMDDhhmm */
+  timestamp: string;
+  /** ISO 8601 timestamp for frontmatter */
+  timestampISO: string;
+  /** Report type (e.g., "docs-audit") */
+  type: string;
+  /** Full session ID (or empty) */
+  sessionFull: string;
+  /** First 8 chars of session ID (or empty) */
+  sessionShort: string;
+  /** Just the filename */
+  filename: string;
+  /** Full path including base */
+  path: string;
+  /** Whether this is a directory mode report */
+  isMulti: boolean;
 }
 
+/**
+ * Gets current timestamp in both formatted and ISO formats.
+ * @returns Object with formatted (YYYYMMDDhhmm) and ISO timestamps
+ */
 function getTimestamp(): { formatted: string; iso: string } {
   const now = new Date();
   const formatted = [
@@ -48,6 +63,11 @@ function getTimestamp(): { formatted: string; iso: string } {
   };
 }
 
+/**
+ * Truncates session ID to first 8 characters.
+ * @param sessionId - Full session ID
+ * @returns First 8 characters of session ID
+ */
 function getShortSessionId(sessionId: string): string {
   if (!sessionId) return "";
   // Handle UUIDs (take first segment) or just first 8 chars
@@ -55,6 +75,14 @@ function getShortSessionId(sessionId: string): string {
   return firstSegment.length >= 8 ? firstSegment.slice(0, 8) : firstSegment;
 }
 
+/**
+ * Builds a filename from components.
+ * @param timestamp - Formatted timestamp
+ * @param type - Report type
+ * @param sessionShort - Short session ID
+ * @param isMulti - Whether this is a multi-file report
+ * @returns Filename or directory name
+ */
 function buildFilename(
   timestamp: string,
   type: string,
@@ -82,6 +110,12 @@ const MULTI_FILE_STRUCTURE = [
   { name: "meta.json", description: "Session metadata (structured)" },
 ] as const;
 
+/**
+ * Generates YAML frontmatter for report file.
+ * @param components - Report path components
+ * @param fileType - Type of file within report
+ * @returns Frontmatter string
+ */
 function generateFrontmatter(components: ReportPathComponents, fileType: string): string {
   return `---
 type: ${components.type}
@@ -96,6 +130,11 @@ status: pending
 `;
 }
 
+/**
+ * Generates meta.json content for multi-file reports.
+ * @param components - Report path components
+ * @returns JSON string
+ */
 function generateMetaJson(components: ReportPathComponents): string {
   return JSON.stringify(
     {
@@ -113,6 +152,11 @@ function generateMetaJson(components: ReportPathComponents): string {
   );
 }
 
+/**
+ * Creates directory structure and placeholder files for report.
+ * @param components - Report path components
+ * @returns Array of created paths
+ */
 async function scaffoldReport(components: ReportPathComponents): Promise<string[]> {
   const created: string[] = [];
 
@@ -150,6 +194,11 @@ async function scaffoldReport(components: ReportPathComponents): Promise<string[
   return created;
 }
 
+/**
+ * Generates report path components from options.
+ * @param options - Report path options
+ * @returns Report path components
+ */
 function generateReportPath(options: {
   session?: string;
   type?: string;

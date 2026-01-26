@@ -30,10 +30,17 @@ import {
 } from "./context.ts";
 import { buildFilename, slugify, truncateSessionId } from "./filename.ts";
 
+/**
+ * Options for creating a log note.
+ */
 interface LogOptions {
+	/** URL-safe slug for the log */
 	slug: string;
+	/** Current session ID */
 	sessionId: string;
+	/** Parent session ID if this is a subagent */
 	parentSessionId?: string;
+	/** Custom title (defaults to derived from slug) */
 	title?: string;
 }
 

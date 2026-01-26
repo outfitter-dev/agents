@@ -43,12 +43,20 @@ Output:
 	process.exit(0);
 }
 
+/**
+ * Result of running a gh CLI command.
+ */
 interface GhOutput<T> {
 	success: boolean;
 	data?: T;
 	error?: string;
 }
 
+/**
+ * Runs a gh CLI command and parses JSON output.
+ * @param args - Arguments to pass to gh
+ * @returns Parsed output or error
+ */
 async function runGh<T>(args: string[]): Promise<GhOutput<T>> {
 	const repoArgs = values.repo ? ["-R", values.repo] : [];
 
@@ -76,6 +84,10 @@ async function runGh<T>(args: string[]): Promise<GhOutput<T>> {
 	}
 }
 
+/**
+ * Checks if gh CLI is installed.
+ * @returns True if gh is available
+ */
 async function checkGhAvailable(): Promise<boolean> {
 	const proc = Bun.spawn(["which", "gh"], {
 		stdout: "pipe",
@@ -85,6 +97,10 @@ async function checkGhAvailable(): Promise<boolean> {
 	return exitCode === 0;
 }
 
+/**
+ * Checks if gh CLI is authenticated.
+ * @returns True if authenticated
+ */
 async function checkGhAuth(): Promise<boolean> {
 	const proc = Bun.spawn(["gh", "auth", "status"], {
 		stdout: "pipe",
@@ -94,6 +110,10 @@ async function checkGhAuth(): Promise<boolean> {
 	return exitCode === 0;
 }
 
+/**
+ * Gets the current repository name (owner/repo format).
+ * @returns Repository name or null if not in a repo
+ */
 async function getRepoName(): Promise<string | null> {
 	if (values.repo) return values.repo;
 
@@ -126,6 +146,10 @@ const PR_QUERY_FIELDS = [
 	"reviewDecision",
 ].join(",");
 
+/**
+ * Gathers GitHub data including PRs and workflow runs.
+ * @returns Gatherer result with GitHub data
+ */
 async function gatherGitHubData(): Promise<GathererResult<GitHubData>> {
 	const timestamp = new Date().toISOString();
 

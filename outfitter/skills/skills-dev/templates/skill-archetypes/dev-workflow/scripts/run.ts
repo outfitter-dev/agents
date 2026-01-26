@@ -8,15 +8,27 @@
 
 import { $ } from "bun";
 
+/**
+ * Options for workflow execution.
+ */
 interface RunOptions {
+	/** Preview without executing */
 	dryRun: boolean;
+	/** Show detailed output */
 	verbose: boolean;
+	/** Skip confirmations */
 	force: boolean;
 }
 
+/**
+ * Result of a workflow command execution.
+ */
 interface RunResult {
+	/** Execution status */
 	status: "success" | "error" | "dry-run";
+	/** Human-readable result message */
 	message: string;
+	/** Additional execution details */
 	details?: unknown;
 }
 

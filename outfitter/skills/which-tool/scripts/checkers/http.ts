@@ -1,6 +1,10 @@
 import type { ToolCheckResult } from "../types.ts";
 import { checkTool } from "../utils.ts";
 
+/**
+ * Checks availability of HTTP client tools (httpie).
+ * @returns Array of tool check results for HTTP category
+ */
 export async function checkHttpTools(): Promise<ToolCheckResult[]> {
   const tools = [
     {

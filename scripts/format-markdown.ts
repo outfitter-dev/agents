@@ -25,10 +25,17 @@ import { dirname, join, resolve } from "path";
 
 const SCRIPTS_DIR = dirname(new URL(import.meta.url).pathname);
 
+/**
+ * Result of a single formatting step.
+ */
 interface FormatResult {
+  /** Name of the formatting step */
   step: string;
+  /** Whether the step completed without errors */
   success: boolean;
+  /** Output from the formatting tool */
   output: string;
+  /** Whether files were modified */
   changed: boolean;
 }
 

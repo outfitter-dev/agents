@@ -44,6 +44,10 @@ Note:
 	process.exit(0);
 }
 
+/**
+ * Checks if Linear MCP is configured in Claude settings.
+ * @returns True if Linear MCP is configured
+ */
 async function checkLinearMCPConfigured(): Promise<boolean> {
 	// Check both user and project settings
 	const settingsPaths = [
@@ -74,6 +78,10 @@ async function checkLinearMCPConfigured(): Promise<boolean> {
 	return false;
 }
 
+/**
+ * Checks if Claude CLI is installed.
+ * @returns True if claude is available
+ */
 async function checkClaudeCliAvailable(): Promise<boolean> {
 	const proc = Bun.spawn(["which", "claude"], {
 		stdout: "pipe",
@@ -83,6 +91,12 @@ async function checkClaudeCliAvailable(): Promise<boolean> {
 	return exitCode === 0;
 }
 
+/**
+ * Queries Linear issues via Claude CLI headless mode.
+ * @param timeMs - Time window in milliseconds
+ * @param team - Optional team key to filter by
+ * @returns Array of issues or null on failure
+ */
 async function queryLinearViaClaude(
 	timeMs: number,
 	team?: string,
@@ -168,6 +182,10 @@ If no issues found, return an empty array [].`;
 	}
 }
 
+/**
+ * Gathers Linear issue data via MCP.
+ * @returns Gatherer result with Linear data
+ */
 async function gatherLinearData(): Promise<GathererResult<LinearData>> {
 	const timestamp = new Date().toISOString();
 

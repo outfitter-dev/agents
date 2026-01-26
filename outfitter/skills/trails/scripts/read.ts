@@ -25,12 +25,22 @@ import { join } from "node:path";
 import { formatDateDir, getTrailRoot } from "./context.ts";
 import { parseFilename } from "./filename.ts";
 
+/**
+ * Type of trail notes to filter by.
+ */
 type NoteType = "handoff" | "log" | "all";
 
+/**
+ * Options for reading trail notes.
+ */
 interface ReadOptions {
+	/** Filter by note type */
 	type: NoteType;
+	/** Number of days to look back */
 	days: number;
+	/** Max lines to output (null for unlimited) */
 	lines: number | null;
+	/** Whether to strip YAML frontmatter */
 	noFrontmatter: boolean;
 }
 

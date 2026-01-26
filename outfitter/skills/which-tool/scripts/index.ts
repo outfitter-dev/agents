@@ -8,6 +8,9 @@ import { checkViewerTools } from "./checkers/viewers.ts";
 import { checkNavigationTools } from "./checkers/navigation.ts";
 import { checkHttpTools } from "./checkers/http.ts";
 
+/**
+ * Function signature for tool category checkers.
+ */
 interface CheckerFunction {
   (): Promise<ToolCheckResult[]>;
 }

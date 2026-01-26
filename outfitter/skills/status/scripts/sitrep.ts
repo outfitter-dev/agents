@@ -25,6 +25,7 @@ import type {
 } from "./lib/types";
 
 const SOURCES = ["graphite", "github", "linear", "beads"] as const;
+/** Available status data sources. */
 type Source = (typeof SOURCES)[number];
 
 const { values } = parseArgs({
@@ -69,6 +70,11 @@ Sources:
 // Get script directory for running gatherers
 const scriptDir = import.meta.dir;
 
+/**
+ * Runs a gatherer script for a specific source.
+ * @param source - Source to gather data from
+ * @returns Gatherer result with data or error
+ */
 async function runGatherer<T>(source: Source): Promise<GathererResult<T>> {
 	const gathererPath = `${scriptDir}/gatherers/${source}-gatherer.ts`;
 	const timeValue = values.time ?? "24h";
@@ -104,6 +110,10 @@ async function runGatherer<T>(source: Source): Promise<GathererResult<T>> {
 	}
 }
 
+/**
+ * Parses source list from command line arguments.
+ * @returns Array of validated source names
+ */
 function parseSources(): Source[] {
 	if (!values.sources || values.sources === "all") {
 		return [...SOURCES];
@@ -125,6 +135,11 @@ function parseSources(): Source[] {
 	return valid.length > 0 ? valid : [...SOURCES];
 }
 
+/**
+ * Gathers status data from all specified sources in parallel.
+ * @param sources - Sources to gather data from
+ * @returns Aggregated sitrep result
+ */
 async function gatherAll(sources: Source[]): Promise<SitrepResult> {
 	const timestamp = new Date().toISOString();
 
@@ -162,7 +177,11 @@ async function gatherAll(sources: Source[]): Promise<SitrepResult> {
 	};
 }
 
-// Text formatting helpers
+/**
+ * Formats sitrep result as human-readable text report.
+ * @param result - Sitrep result to format
+ * @returns Formatted text output
+ */
 function formatTextReport(result: SitrepResult): string {
 	const lines: string[] = [];
 	const timeLabel = formatTimeConstraint(result.timeConstraint);

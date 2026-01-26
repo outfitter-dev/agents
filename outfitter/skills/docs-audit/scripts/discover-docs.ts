@@ -19,24 +19,43 @@ import { $ } from "bun";
 import { parseArgs } from "util";
 import { stat } from "node:fs/promises";
 
-// Types
+/**
+ * Documentation file with git metadata.
+ */
 interface DocFile {
+  /** File path relative to repo root */
   path: string;
+  /** Short SHA of last commit touching this file */
   lastCommitSha: string;
+  /** ISO date of last commit */
   lastCommitDate: string;
+  /** Author name of last commit */
   lastAuthor: string;
+  /** Days since last modification */
   daysAgo: number;
+  /** Activity classification based on age */
   activityStatus: "active" | "recent" | "idle" | "stale" | "ancient";
+  /** Line count */
   lines: number;
+  /** File size in bytes */
   bytes: number;
+  /** Code files modified in same commits */
   relatedCodeFiles: string[];
 }
 
+/**
+ * Discovery manifest with all markdown files.
+ */
 interface Manifest {
+  /** Generation timestamp */
   generated: string;
+  /** Repository root path */
   repoRoot: string;
+  /** Whether this is a git repository */
   isGitRepo: boolean;
+  /** Total files discovered */
   totalFiles: number;
+  /** Documentation files with metadata */
   files: DocFile[];
 }
 
@@ -49,6 +68,11 @@ const ACTIVITY_THRESHOLDS = {
   // ancient: > 365
 } as const;
 
+/**
+ * Gets activity status classification based on days since last modification.
+ * @param daysAgo - Days since last modification
+ * @returns Activity status classification
+ */
 function getActivityStatus(daysAgo: number): DocFile["activityStatus"] {
   if (daysAgo < ACTIVITY_THRESHOLDS.active) return "active";
   if (daysAgo < ACTIVITY_THRESHOLDS.recent) return "recent";

@@ -17,16 +17,29 @@ import { Glob } from "bun";
 import { statSync } from "node:fs";
 import { basename, dirname, resolve } from "node:path";
 
+/**
+ * Parsed skill metadata from SKILL.md frontmatter.
+ */
 interface SkillInfo {
+  /** File path to SKILL.md */
   path: string;
+  /** Skill name from frontmatter or directory name */
   name: string;
+  /** Related skills listed in metadata */
   relatedSkills: string[];
 }
 
+/**
+ * A bidirectionality violation in related-skills metadata.
+ */
 interface Violation {
+  /** Skill that declares the relationship */
   sourceSkill: string;
+  /** Path to source skill's SKILL.md */
   sourcePath: string;
+  /** Skill referenced in related-skills */
   targetSkill: string;
+  /** Description of the violation */
   message: string;
 }
 
