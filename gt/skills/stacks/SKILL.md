@@ -1,8 +1,8 @@
 ---
 name: graphite-stacks
 description: This skill should be used when the user asks to "create a stack", "submit stacked PRs", "gt submit", "gt create", "reorganize branches", "fix stack corruption", or mentions Graphite, stacked PRs, gt commands, or trunk-based development workflows.
-version: 1.0.0
 metadata:
+  version: "1.0.0"
   author: outfitter
   category: version-control
 ---

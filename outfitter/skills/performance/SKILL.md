@@ -1,7 +1,8 @@
 ---
 name: performance
-version: 1.0.0
 description: This skill should be used when profiling code, optimizing bottlenecks, benchmarking, or when "performance", "profiling", "optimization", or "--perf" are mentioned.
+metadata:
+  version: "1.0.0"
 ---
 
 # Performance Engineering

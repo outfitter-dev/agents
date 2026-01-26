@@ -1,7 +1,8 @@
 ---
 name: trails
-version: 1.0.0
 description: This skill should be used when creating session handoffs, logging research findings, or reading previous trail notes. Triggers include "handoff", "session continuity", "log note", "trail notes", or when ending a session.
+metadata:
+  version: "1.0.0"
 ---
 
 # Trail

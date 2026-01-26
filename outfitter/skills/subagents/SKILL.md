@@ -1,8 +1,8 @@
 ---
 name: subagents
-version: 2.2.0
 description: This skill should be used when coordinating agents, delegating tasks to specialists, or when "dispatch agents", "which agent", or "multi-agent" are mentioned.
 metadata:
+  version: "2.2.0"
   related-skills:
     - context-management
     - pathfinding

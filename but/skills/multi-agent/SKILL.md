@@ -1,8 +1,8 @@
 ---
 name: gitbutler-multi-agent
 description: This skill should be used when coordinating multiple AI agents working concurrently, handling agent handoffs, transferring commits between agents, or when "multi-agent", "concurrent agents", "parallel agents", "agent collaboration", or "parallel execution" are mentioned with GitButler. Provides virtual branch patterns for parallel execution without coordination overhead.
-version: 1.0.0
 metadata:
+  version: "1.0.0"
   author: outfitter
   category: version-control
   related-skills:

@@ -1,8 +1,8 @@
 ---
 name: gitbutler-virtual-branches
 description: This skill should be used when the user asks to "create a virtual branch", "assign file to branch", "work on multiple features simultaneously", "organize commits after coding", "use but commands", or mentions GitButler, virtual branches, parallel development without checkout, post-hoc commit organization, multi-agent concurrent development, or `--gitbutler`/`--but` flags.
-version: 1.0.0
 metadata:
+  version: "1.0.0"
   author: outfitter
   category: version-control
   related-skills:

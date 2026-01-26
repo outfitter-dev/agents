@@ -19,11 +19,6 @@
       "minLength": 10,
       "maxLength": 1024
     },
-    "version": {
-      "type": "string",
-      "description": "Semantic version (MAJOR.MINOR.PATCH).",
-      "pattern": "^\\d+\\.\\d+\\.\\d+$"
-    },
     "license": {
       "type": "string",
       "description": "License identifier (e.g., Apache-2.0, MIT)."
@@ -111,9 +106,9 @@
         "severity": "error"
       },
       "name-reserved": {
-        "description": "Cannot contain 'anthropic' or 'claude' in name.",
+        "description": "Names containing 'anthropic' or 'claude' should be skills ABOUT those products, not impersonating them.",
         "reserved": ["anthropic", "claude"],
-        "severity": "error"
+        "severity": "warning"
       },
       "name-directory-match": {
         "description": "Skill name must match parent directory name.",

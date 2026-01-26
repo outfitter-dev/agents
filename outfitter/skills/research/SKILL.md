@@ -1,7 +1,8 @@
 ---
 name: research
-version: 2.0.0
 description: This skill should be used when researching best practices, evaluating technologies, comparing approaches, or when "research", "evaluation", or "comparison" are mentioned.
+metadata:
+  version: "2.0.0"
 ---
 
 # Research

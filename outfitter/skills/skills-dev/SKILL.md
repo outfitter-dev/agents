@@ -1,8 +1,8 @@
 ---
 name: skills-dev
-version: 2.1.0
 description: This skill should be used when creating skills, writing SKILL.md files, or when "create skill", "new skill", "validate skill", or "SKILL.md" are mentioned. Covers cross-platform Agent Skills specification.
 metadata:
+  version: "2.1.0"
   related-skills:
     - claude-plugins
     - claude-agents

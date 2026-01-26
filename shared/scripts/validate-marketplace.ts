@@ -222,17 +222,11 @@ function validateSkillFrontmatter(
 		return result;
 	}
 
-	// Required frontmatter fields
+	// Required frontmatter fields (per agentskills.io spec: name + description only)
 	if (!frontmatter.name) {
 		result.passed = false;
 		result.errors.push(
 			`${pluginName}/${skillName}/SKILL.md: frontmatter missing 'name'`,
-		);
-	}
-	if (!frontmatter.version) {
-		result.passed = false;
-		result.errors.push(
-			`${pluginName}/${skillName}/SKILL.md: frontmatter missing 'version'`,
 		);
 	}
 	if (!frontmatter.description) {

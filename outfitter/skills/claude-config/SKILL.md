@@ -2,13 +2,13 @@
 name: claude-config
 description: This skill should be used when configuring Claude, setting up MCP servers, or when "settings.json", "claude_desktop_config", "MCP server", or "Claude config" are mentioned.
 metadata:
+  version: "1.0.0"
   related-skills:
     - codex-config
     - claude-hooks
     - claude-rules
     - claude-plugins
     - skills-dev
-version: 1.0.0
 ---
 
 # Claude Config Management

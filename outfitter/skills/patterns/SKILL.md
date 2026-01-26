@@ -1,7 +1,8 @@
 ---
 name: patterns
-version: 1.0.0
 description: This skill should be used when recognizing recurring themes, codifying best practices, extracting reusable workflows, or when "pattern", "recurring", or "repeated" are mentioned.
+metadata:
+  version: "1.0.0"
 ---
 
 # Pattern Analysis

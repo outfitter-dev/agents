@@ -1,7 +1,8 @@
 ---
 name: status
-version: 1.0.0
 description: This skill should be used when checking project status, starting sessions, reviewing activity, or when "sitrep", "status report", or "what's changed" are mentioned.
+metadata:
+  version: "1.0.0"
 ---
 
 # Status Reporting

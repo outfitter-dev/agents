@@ -1,7 +1,8 @@
 ---
 name: find-root-causes
-version: 1.0.0
 description: This skill should be used when diagnosing failures, investigating incidents, finding root causes, or when "root cause", "diagnosis", "investigate", or "--rca" are mentioned.
+metadata:
+  version: "1.0.0"
 ---
 
 # Root Cause Analysis

@@ -1,8 +1,8 @@
 ---
 name: claude-rules
-version: 1.0.0
 description: This skill should be used when creating rule files, organizing conventions, or when ".claude/rules/", "FORMATTING.md", "create rule", or "project conventions" are mentioned.
 metadata:
+  version: "1.0.0"
   related-skills:
     - claude-config
     - claude-plugins

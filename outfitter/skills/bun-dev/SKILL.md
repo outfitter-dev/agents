@@ -1,7 +1,8 @@
 ---
 name: bun-dev
-version: 1.0.0
 description: This skill should be used when working with Bun runtime, bun:sqlite, Bun.serve, bun:test, or when "Bun", "bun:test", or Bun-specific patterns are mentioned.
+metadata:
+  version: "1.0.0"
 ---
 
 # Bun Development

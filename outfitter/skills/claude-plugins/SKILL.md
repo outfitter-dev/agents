@@ -2,6 +2,7 @@
 name: claude-plugins
 description: This skill should be used when creating plugins, publishing to marketplaces, or when "plugin.json", "marketplace", "create plugin", or "distribute plugin" are mentioned.
 metadata:
+  version: "1.0.0"
   related-skills:
     - claude-agents
     - claude-commands
@@ -9,7 +10,6 @@ metadata:
     - skills-dev
     - claude-rules
     - claude-config
-version: 1.0.0
 ---
 
 # Claude Plugin Development

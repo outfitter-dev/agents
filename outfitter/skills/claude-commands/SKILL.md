@@ -1,8 +1,8 @@
 ---
 name: claude-commands
-version: 2.0.0
 description: This skill should be used when creating slash commands, writing command files, or when "/command", ".claude/commands", "$ARGUMENTS", or "create command" are mentioned.
 metadata:
+  version: "2.0.0"
   related-skills:
     - claude-hooks
     - claude-plugins

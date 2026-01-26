@@ -1,7 +1,8 @@
 ---
 name: ai-sdk
-version: 1.0.0
 description: This skill should be used when building AI features with Vercel AI SDK, using useChat, streamText, or generateObject, or when "AI SDK", "streaming chat", or "structured outputs" are mentioned.
+metadata:
+  version: "1.0.0"
 ---
 
 # Vercel AI SDK v6

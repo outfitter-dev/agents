@@ -1,7 +1,8 @@
 ---
 name: codebase-recon
-version: 1.0.0
 description: This skill should be used when analyzing codebases, understanding architecture, or when "analyze", "investigate", "explore code", or "understand architecture" are mentioned.
+metadata:
+  version: "1.0.0"
 ---
 
 # Codebase Analysis

@@ -1,8 +1,8 @@
 ---
 name: gitbutler-complete-branch
 description: This skill should be used when the user asks to "complete a branch", "merge to main", "finish my feature", "ship this branch", "integrate to main", "create a PR from GitButler", or when `--complete-branch` flag is mentioned. Guides completion of GitButler virtual branches with safety snapshots, integration workflows, and cleanup.
-version: 1.0.0
 metadata:
+  version: "1.0.0"
   author: outfitter
   category: version-control
   related-skills:

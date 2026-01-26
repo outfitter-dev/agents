@@ -3,7 +3,7 @@ name: docs-audit
 description: |
   Comprehensive documentation audit against current code state. Checks markdown files for accuracy, link validity, code example correctness, and docstring coverage. Uses efficient discovery to minimize context usage while providing thorough analysis.
 context: fork
-subagent: editor
+agent: editor
 allowed-tools:
   - Bash
   - Read
@@ -14,26 +14,27 @@ allowed-tools:
   - TaskUpdate
   - TaskList
   - TaskGet
-arg-schema:
-  path:
-    type: string
-    description: Optional path to limit audit scope (e.g., "docs/", "src/")
-  focus:
-    type: string
-    enum: [stale, all, recent]
-    default: stale
-    description: Which files to prioritize - stale (default), all, or recently modified
-  limit:
-    type: number
-    default: 10
-    description: Maximum number of files to analyze deeply (5-20 recommended)
-  output:
-    type: string
-    description: Output path for report. Defaults to .pack/reports/{timestamp}-docs-audit-{sessionShort}.md
-  multi:
-    type: boolean
-    default: false
-    description: Multi-file mode - creates .pack/reports/{timestamp}-docs-audit-{sessionShort}/ directory
+metadata:
+  arg-schema:
+    path:
+      type: string
+      description: Optional path to limit audit scope (e.g., "docs/", "src/")
+    focus:
+      type: string
+      enum: [stale, all, recent]
+      default: stale
+      description: Which files to prioritize - stale (default), all, or recently modified
+    limit:
+      type: number
+      default: 10
+      description: Maximum number of files to analyze deeply (5-20 recommended)
+    output:
+      type: string
+      description: Output path for report. Defaults to .pack/reports/{timestamp}-docs-audit-{sessionShort}.md
+    multi:
+      type: boolean
+      default: false
+      description: Multi-file mode - creates .pack/reports/{timestamp}-docs-audit-{sessionShort}/ directory
 ---
 
 # Documentation Audit Skill

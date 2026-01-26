@@ -1,7 +1,8 @@
 ---
 name: report-findings
-version: 1.0.0
 description: This skill should be used when synthesizing multi-source research, presenting findings with attribution, or when "report", "findings", or "synthesis" are mentioned.
+metadata:
+  version: "1.0.0"
 ---
 
 # Report Findings

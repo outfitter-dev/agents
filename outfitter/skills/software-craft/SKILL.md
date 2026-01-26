@@ -1,7 +1,8 @@
 ---
 name: software-craft
-version: 1.0.0
 description: This skill should be used when making design decisions, evaluating trade-offs, assessing code quality, or when "engineering judgment" or "code quality" are mentioned.
+metadata:
+  version: "1.0.0"
 ---
 
 # Software Engineering

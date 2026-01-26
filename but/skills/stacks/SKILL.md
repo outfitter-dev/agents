@@ -1,8 +1,8 @@
 ---
 name: gitbutler-stacks
 description: This skill should be used when creating stacks, dependent branches, or when "stack", "stacked branches", "anchor", "--anchor", "but branch new -a", "create dependent branch", or "break feature into PRs" are mentioned with GitButler. Covers anchor-based stacking for dependent features and reviewable PR breakdown.
-version: 1.0.0
 metadata:
+  version: "1.0.0"
   author: outfitter
   category: version-control
   related-skills:

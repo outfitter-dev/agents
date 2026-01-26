@@ -1,7 +1,8 @@
 ---
 name: pathfinding
-version: 2.0.0
 description: This skill should be used when requirements are unclear, brainstorming ideas, or when "pathfind", "brainstorm", "figure out", "clarify requirements", or "work through" are mentioned.
+metadata:
+  version: "2.0.0"
 ---
 
 # Pathfinding

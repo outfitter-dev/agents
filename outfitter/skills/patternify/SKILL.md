@@ -1,7 +1,8 @@
 ---
 name: patternify
-version: 1.1.0
 description: This skill should be used when capturing reusable workflows from conversations, codifying decision heuristics, or when "patternify", "capture", or "codify workflow" are mentioned.
+metadata:
+  version: "1.1.0"
 ---
 
 # Patternify
