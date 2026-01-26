@@ -2,7 +2,11 @@
 name: debugging
 description: This skill should be used when encountering bugs, errors, failing tests, or unexpected behavior. Provides systematic debugging with evidence-based root cause investigation using a four-phase framework.
 metadata:
-  version: "2.1.0"
+  version: "2.2.0"
+  related-skills:
+    - maintain-tasks
+    - find-root-causes
+    - codebase-recon
 ---
 
 # Systematic Debugging
@@ -15,9 +19,10 @@ Evidence-based investigation -> root cause -> verified fix.
 2. Collect evidence (reproduce, gather symptoms)
 3. Isolate variables (narrow scope)
 4. Formulate and test hypotheses
-5. If root cause unclear, load the `outfitter:find-root-causes` skill
-6. Implement fix with failing test first
-7. Verify fix resolves the issue
+5. Implement fix with failing test first
+6. Verify fix resolves the issue
+
+For formal incident investigation requiring RCA documentation, use `find-root-causes` skill instead (it loads this skill and adds formal RCA methodology).
 
 <when_to_use>
 

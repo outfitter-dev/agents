@@ -1,13 +1,25 @@
 ---
 name: patterns
-description: This skill should be used when recognizing recurring themes, codifying best practices, extracting reusable workflows, or when "pattern", "recurring", or "repeated" are mentioned.
+description: This skill should be used when recognizing recurring themes, identifying patterns in work or data, or when "pattern", "recurring", or "repeated" are mentioned. For implementation, see codify skill.
 metadata:
-  version: "1.0.0"
+  version: "1.1.0"
+  related-skills:
+    - codify
+    - codebase-recon
+    - report-findings
 ---
 
-# Pattern Analysis
+# Pattern Identification
 
-Identify signals → classify patterns → validate with evidence → document for reuse.
+Observe signals → classify patterns → validate with evidence → document findings.
+
+## Steps
+
+1. Collect signals from conversation, code, or data
+2. Classify pattern type (workflow, orchestration, heuristic, anti-pattern)
+3. Validate against evidence threshold (3+ instances, multiple contexts)
+4. Document pattern with constraints and examples
+5. If implementation needed, delegate by loading the `outfitter:codify` skill
 
 <when_to_use>
 
@@ -126,13 +138,13 @@ NEVER:
 
 <references>
 
-**Deep-dive documentation**:
 - [signal-types.md](references/signal-types.md) — detailed signal taxonomy
 - [pattern-types.md](references/pattern-types.md) — pattern templates and examples
 
-**Related skills**:
-- `outfitter:codify` — pattern extraction and component implementation (delegated)
-- `outfitter:codebase-recon` — uses pattern analysis for code investigation
-- `outfitter:report-findings` — presenting discovered patterns
+**Identification vs Implementation**:
+- This skill (`patterns`) identifies and documents patterns
+- `codify` skill implements patterns as Claude Code components (skills, commands, hooks, agents)
+
+Use `patterns` to answer "what patterns exist?" Use `codify` to answer "how do I turn this into a reusable component?"
 
 </references>

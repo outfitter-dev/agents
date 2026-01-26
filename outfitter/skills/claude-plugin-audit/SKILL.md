@@ -6,8 +6,7 @@ metadata:
   related-skills:
     - claude-plugins
 context: fork
-agent:
-  - outfitter:quartermaster
+agent: quartermaster
 argument-hint: [plugin path]
 allowed-tools: Read Grep Glob Bash(find *) Bash(jq *)
 ---

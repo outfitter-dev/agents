@@ -2,7 +2,11 @@
 name: report-findings
 description: This skill should be used when synthesizing multi-source research, presenting findings with attribution, or when "report", "findings", or "synthesis" are mentioned.
 metadata:
-  version: "1.0.0"
+  version: "1.1.0"
+  related-skills:
+    - research
+    - codebase-recon
+    - patterns
 ---
 
 # Report Findings
@@ -157,14 +161,14 @@ NEVER:
 
 <references>
 
-**Deep-dive documentation**:
 - [source-tiers.md](references/source-tiers.md) — detailed authority assessment
 - [comparison-methods.md](references/comparison-methods.md) — comparison templates
 - [output-template.md](references/output-template.md) — full report structure
 
-**Related skills**:
-- [research](../research/SKILL.md) — full research workflow (loads this skill)
-- [codebase-recon](../codebase-recon/SKILL.md) — uses for technical research synthesis
-- [patterns](../patterns/SKILL.md) — identifying patterns in findings
+**Research vs Report-Findings**:
+- `research` skill covers the full investigation workflow using MCP tools
+- This skill (`report-findings`) covers synthesis, source assessment, and presentation
+
+Load this skill during research synthesis phase, or standalone for any task requiring multi-source synthesis with proper attribution.
 
 </references>

@@ -2,12 +2,23 @@
 name: research
 description: This skill should be used when researching best practices, evaluating technologies, comparing approaches, or when "research", "evaluation", or "comparison" are mentioned.
 metadata:
-  version: "2.0.0"
+  version: "2.1.0"
+  related-skills:
+    - report-findings
+    - codebase-recon
 ---
 
 # Research
 
 Systematic investigation → evidence-based analysis → authoritative recommendations.
+
+## Steps
+
+1. Define scope and evaluation criteria
+2. Discover sources using MCP tools (context7, octocode, firecrawl)
+3. Gather information with multi-source approach
+4. Load the `outfitter:report-findings` skill for synthesis
+5. Compile report with confidence levels and citations
 
 <when_to_use>
 
@@ -207,11 +218,14 @@ NEVER:
 
 <references>
 
-**Deep-dive documentation**:
 - [source-hierarchy.md](references/source-hierarchy.md) — authority evaluation details
 - [tool-selection.md](references/tool-selection.md) — MCP server decision matrix
 - [discovery-patterns.md](references/discovery-patterns.md) — detailed research workflows
 
-**Related resources**:
+**Research vs Report-Findings**:
+- This skill (`research`) covers the full investigation workflow using MCP tools
+- `report-findings` skill covers synthesis, source assessment, and presentation
+
+Use `research` for technology evaluation, documentation discovery, and best practices research. Load `report-findings` during synthesis phase for source authority assessment and confidence calibration.
 
 </references>

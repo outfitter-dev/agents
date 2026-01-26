@@ -1,15 +1,21 @@
 ---
 name: codify
-description: This skill should be used when capturing reusable workflows from conversations, codifying decision heuristics, or when "codify", "capture workflow", or "turn into a skill" are mentioned.
+description: This skill should be used when implementing patterns as Claude Code components (skills, commands, hooks, agents), or when "codify", "capture workflow", "turn into a skill", or "make reusable" are mentioned. For pattern identification, see patterns skill.
 agent: analyst
 context: fork
 metadata:
-  version: "1.2.0"
+  version: "1.3.0"
+  related-skills:
+    - patterns
+    - claude-skills
+    - claude-commands
+    - claude-hooks
+    - claude-agents
 ---
 
 # Codify
 
-Conversation analysis → reusable pattern → correct component.
+Identified pattern → component mapping → implementation.
 
 <when_to_use>
 
@@ -165,10 +171,20 @@ NEVER:
 
 <references>
 
-- `outfitter:codebase-recon` — core investigation methodology
-- `outfitter:patterns` — signal extraction techniques
 - [pattern-types.md](references/pattern-types.md) — extended examples by type
 - [component-mapping.md](references/component-mapping.md) — decision tree details
 - [examples/](examples/) — captured pattern examples
+
+**Identification vs Implementation**:
+- `patterns` skill identifies and documents patterns
+- This skill (`codify`) implements patterns as Claude Code components
+
+Use `patterns` first to identify what's worth capturing. Use `codify` to turn identified patterns into skills, commands, hooks, or agents.
+
+**Component skills** (loaded during implementation):
+- `claude-skills` — skill authoring
+- `claude-commands` — command authoring
+- `claude-hooks` — hook authoring
+- `claude-agents` — agent authoring
 
 </references>
