@@ -1,0 +1,12 @@
+{
+  "name": "vcs",
+  "version": "1.0.0",
+  "description": "Version control workflows for Graphite stacks, GitButler branches, and multi-agent coordination",
+  "author": {
+    "name": "Outfitter",
+    "email": "hello@outfitter.dev"
+  },
+  "license": "Apache-2.0",
+  "keywords": ["graphite", "gitbutler", "git", "stacks", "version-control"],
+  "repository": "https://github.com/outfitter-dev/agents"
+}
