@@ -131,8 +131,8 @@ NEVER:
 - [pattern-types.md](references/pattern-types.md) — pattern templates and examples
 
 **Related skills**:
-- [patternify](../patternify/SKILL.md) — pattern discovery from conversations
-- [codebase-recon](../codebase-recon/SKILL.md) — uses pattern analysis for code investigation
-- [report-findings](../report-findings/SKILL.md) — presenting discovered patterns
+- `outfitter:codify` — pattern extraction and component implementation (delegated)
+- `outfitter:codebase-recon` — uses pattern analysis for code investigation
+- `outfitter:report-findings` — presenting discovered patterns
 
 </references>

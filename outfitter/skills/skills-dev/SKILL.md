@@ -4,6 +4,7 @@ description: This skill should be used when creating skills, writing SKILL.md fi
 metadata:
   version: "2.1.0"
   related-skills:
+    - claude-skills
     - claude-plugins
     - claude-agents
     - codex-config
@@ -214,6 +215,7 @@ See [implementations.md](references/implementations.md) for storage paths and [i
 
 ## References
 
+- [steps-pattern.md](references/steps-pattern.md) - Composable skill workflows with dependencies
 - [patterns.md](references/patterns.md) - Degrees of freedom, script design, variant organization
 - [best-practices.md](references/best-practices.md) - Community patterns, testing strategies
 - [quick-reference.md](references/quick-reference.md) - Fast checklist and one-liners

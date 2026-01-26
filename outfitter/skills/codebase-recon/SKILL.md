@@ -9,6 +9,16 @@ metadata:
 
 Evidence-based investigation → findings → confidence-tracked conclusions.
 
+## Steps
+
+1. Gather evidence from multiple sources (code, docs, tests, history)
+2. Track confidence level as investigation progresses
+3. Based on findings:
+   - If pattern analysis needed → load the `outfitter:patterns` skill
+   - If root cause investigation → load the `outfitter:find-root-causes` skill
+   - If ready to report → load the `outfitter:report-findings` skill
+4. Deliver findings with confidence level and caveats
+
 <when_to_use>
 
 - Codebase exploration and understanding
@@ -160,14 +170,12 @@ Lower confidence areas:
 
 <specialized_techniques>
 
-Load micro-skills for specialized analysis:
+Load skills for specialized analysis (see Steps section):
 
-- **Pattern analysis** → load [patterns](../patterns/SKILL.md) skill
-- **Root cause investigation** → load [find-root-causes](../find-root-causes/SKILL.md) skill
-- **Research synthesis** → load [report-findings](../report-findings/SKILL.md) skill
+- **Pattern analysis** → `outfitter:patterns`
+- **Root cause investigation** → `outfitter:find-root-causes`
+- **Research synthesis** → `outfitter:report-findings`
 - **Architecture analysis** → see [architecture-analysis.md](references/architecture-analysis.md)
-
-These provide deep-dive methodologies for specific analysis types.
 
 </specialized_techniques>
 
@@ -244,15 +252,15 @@ Core methodology:
 - [confidence.md](../pathfinding/references/confidence.md) — confidence calibration (shared with pathfinding)
 
 Micro-skills (load as needed):
-- [patterns](../patterns/SKILL.md) — extracting and validating patterns
-- [find-root-causes](../find-root-causes/SKILL.md) — systematic problem diagnosis
-- [report-findings](../report-findings/SKILL.md) — multi-source research synthesis
+- `outfitter:patterns` — extracting and validating patterns
+- `outfitter:find-root-causes` — systematic problem diagnosis
+- `outfitter:report-findings` — multi-source research synthesis
 
 Local references:
 - [architecture-analysis.md](references/architecture-analysis.md) — system structure mapping
 
 Related skills:
-- pathfinding — clarifying requirements before analysis
-- debugging — structured bug investigation (loads find-root-causes)
+- `outfitter:pathfinding` — clarifying requirements before analysis
+- `outfitter:debugging` — structured bug investigation
 
 </references>

@@ -9,6 +9,16 @@ metadata:
 
 Evidence-based investigation -> root cause -> verified fix.
 
+## Steps
+
+1. Load the `outfitter:maintain-tasks` skill for phase tracking
+2. Collect evidence (reproduce, gather symptoms)
+3. Isolate variables (narrow scope)
+4. Formulate and test hypotheses
+5. If root cause unclear, load the `outfitter:find-root-causes` skill
+6. Implement fix with failing test first
+7. Verify fix resolves the issue
+
 <when_to_use>
 
 - Bugs, errors, exceptions, crashes
@@ -32,7 +42,7 @@ Never propose solutions or "try this" without understanding root cause through s
 
 <phases>
 
-Load the **maintain-tasks** skill for phase tracking. Phases advance forward only.
+See Steps section for skill dependencies. Phases advance forward only.
 
 | Phase | Trigger | activeForm |
 |-------|---------|------------|
