@@ -56,16 +56,41 @@ Before creating a plugin, clarify:
 
 ## Phase 2: Initialization
 
-### Minimal Plugin Structure
+### Standalone vs Marketplace
+
+Choose your distribution model:
+
+| Model | When to Use | Manifest Location |
+|-------|-------------|-------------------|
+| **Standalone** | Single plugin, independent repo | `.claude-plugin/plugin.json` inside plugin dir |
+| **Marketplace** | Multiple plugins, shared repo | `.claude-plugin/marketplace.json` at repo root |
+
+**Key rule:** Marketplace plugins do NOT have their own `.claude-plugin/` directories. They're defined in the marketplace manifest.
+
+### Standalone Plugin Structure
 
 ```
 my-plugin/
-├── plugin.json          # Required: metadata
+├── .claude-plugin/
+│   └── plugin.json      # Required: metadata
 ├── README.md            # Required for distribution
 └── commands/            # Optional components
 ```
 
-### plugin.json (Required)
+### Marketplace Structure
+
+```
+my-marketplace/
+├── .claude-plugin/
+│   └── marketplace.json # Defines all plugins
+├── plugin-a/            # No .claude-plugin/ here
+│   └── commands/
+├── plugin-b/            # No .claude-plugin/ here
+│   └── skills/
+└── README.md
+```
+
+### plugin.json (Standalone)
 
 ```json
 {
@@ -77,6 +102,32 @@ my-plugin/
     "email": "you@example.com"
   },
   "license": "MIT"
+}
+```
+
+### marketplace.json (Marketplace)
+
+```json
+{
+  "name": "my-marketplace",
+  "owner": {
+    "name": "Team Name",
+    "email": "team@example.com"
+  },
+  "plugins": [
+    {
+      "name": "plugin-a",
+      "source": "./plugin-a",
+      "description": "Plugin A description",
+      "version": "1.0.0"
+    },
+    {
+      "name": "plugin-b",
+      "source": "./plugin-b",
+      "description": "Plugin B description",
+      "version": "1.0.0"
+    }
+  ]
 }
 ```
 
@@ -141,7 +192,9 @@ For agent design patterns, load the **claude-agent-development** skill.
 
 ### Event Hooks
 
-React to Claude Code events via plugin.json:
+Hooks are **auto-discovered** from `hooks/hooks.json` inside your plugin directory. Do NOT define hooks in `plugin.json`.
+
+**File:** `my-plugin/hooks/hooks.json`
 
 ```json
 {
@@ -152,7 +205,8 @@ React to Claude Code events via plugin.json:
         "hooks": [
           {
             "type": "command",
-            "command": "${CLAUDE_PLUGIN_ROOT}/hooks/validate.sh"
+            "command": "${CLAUDE_PLUGIN_ROOT}/scripts/validate.sh",
+            "timeout": 10
           }
         ]
       }
@@ -161,9 +215,11 @@ React to Claude Code events via plugin.json:
 }
 ```
 
-**Hook types:** PreToolUse, PostToolUse, PrePromptSubmit, PostPromptSubmit
+**Important:** The file requires a root-level `"hooks"` wrapper around event types.
 
-For hook implementation, load the **claude-hook-authoring** skill.
+**Hook types:** PreToolUse, PostToolUse, UserPromptSubmit, Stop, SessionStart, SessionEnd
+
+For hook implementation, load the **claude-hooks** skill.
 
 ### Skills
 

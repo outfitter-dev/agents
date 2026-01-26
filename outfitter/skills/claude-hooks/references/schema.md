@@ -1545,7 +1545,11 @@ exit 0
 
 ### Plugin Hook Configuration
 
-Location: `plugin/hooks/hooks.json` or inline in `plugin.json`
+Hooks are **auto-discovered** from `{plugin}/hooks/hooks.json`. Do NOT define hooks in `plugin.json`.
+
+**Location:** `{plugin}/hooks/hooks.json`
+
+**Important:** The file requires a root-level `"hooks"` wrapper around the event types:
 
 ```json
 {
@@ -1563,6 +1567,8 @@ Location: `plugin/hooks/hooks.json` or inline in `plugin.json`
   }
 }
 ```
+
+> **Note:** This differs from project-level hooks in `.claude/settings.json`, which also have a `"hooks"` wrapper but are configured differently. Plugin hooks use `${CLAUDE_PLUGIN_ROOT}` for paths.
 
 ### Plugin-Specific Variables
 

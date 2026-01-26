@@ -1,22 +1,65 @@
 # Plugin Structure Reference
 
-Complete directory layout and plugin.json schema for Claude Code plugins.
+Complete directory layout and configuration schemas for Claude Code plugins.
+
+## Standalone vs Marketplace Plugins
+
+Claude Code supports two plugin distribution models:
+
+### Standalone Plugin
+
+A single plugin distributed independently. Uses `.claude-plugin/plugin.json` inside the plugin directory.
+
+```
+my-plugin/
+├── .claude-plugin/
+│   └── plugin.json      # Plugin manifest
+├── commands/
+├── agents/
+├── hooks/
+│   └── hooks.json       # Auto-discovered hooks
+└── README.md
+```
+
+### Marketplace Plugin
+
+Multiple plugins distributed together via a marketplace. Uses a single `.claude-plugin/marketplace.json` at the repo root. Individual plugins do NOT have their own `.claude-plugin/` directories.
+
+```
+my-marketplace/
+├── .claude-plugin/
+│   └── marketplace.json # Defines all plugins
+├── plugin-a/            # No .claude-plugin/ here
+│   ├── commands/
+│   ├── agents/
+│   ├── hooks/
+│   │   └── hooks.json   # Auto-discovered hooks
+│   └── README.md
+├── plugin-b/            # No .claude-plugin/ here
+│   ├── skills/
+│   └── README.md
+└── README.md
+```
+
+**Key difference:** Marketplace plugins are defined in `marketplace.json` with a `source` field pointing to each plugin directory. The plugin directories themselves contain only components (commands, agents, hooks, skills), not manifest files.
 
 ## Directory Structure
 
-### Minimal Plugin
+### Minimal Standalone Plugin
 
 ```
 my-plugin/
-├── plugin.json          # Required: metadata
+├── .claude-plugin/
+│   └── plugin.json      # Required: metadata
 └── README.md            # Required for distribution
 ```
 
-### Complete Plugin
+### Complete Standalone Plugin
 
 ```
 my-plugin/
-├── plugin.json          # Plugin metadata
+├── .claude-plugin/
+│   └── plugin.json      # Plugin metadata
 ├── README.md            # Documentation
 ├── CHANGELOG.md         # Version history
 ├── LICENSE              # License file
@@ -33,10 +76,7 @@ my-plugin/
 │   └── my-skill/
 │       └── SKILL.md
 ├── hooks/               # Event hooks
-│   ├── pre-tool/
-│   │   └── validate.sh
-│   └── post-tool/
-│       └── log.sh
+│   └── hooks.json       # Auto-discovered (required format)
 ├── servers/             # MCP servers
 │   └── my-server/
 │       ├── server.py
@@ -75,9 +115,10 @@ my-plugin/
 |-------|------|-------------|
 | `commands` | array | Custom paths to command files |
 | `agents` | array | Custom paths to agent files |
-| `hooks` | object | Event hook configurations |
 | `mcpServers` | object | MCP server configurations |
 | `strict` | boolean | Require plugin.json (default: true) |
+
+> **Note:** Hooks are NOT defined in plugin.json. They are auto-discovered from `hooks/hooks.json`.
 
 ### Complete Example
 
@@ -103,30 +144,6 @@ my-plugin/
     "./agents/security-reviewer.md",
     "./agents/compliance-checker.md"
   ],
-  "hooks": {
-    "PreToolUse": [
-      {
-        "matcher": "Write|Edit",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "${CLAUDE_PLUGIN_ROOT}/hooks/validate.sh"
-          }
-        ]
-      }
-    ],
-    "PostToolUse": [
-      {
-        "matcher": "Bash",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "${CLAUDE_PLUGIN_ROOT}/hooks/audit.sh"
-          }
-        ]
-      }
-    ]
-  },
   "mcpServers": {
     "database": {
       "command": "${CLAUDE_PLUGIN_ROOT}/servers/db-server",
@@ -139,6 +156,8 @@ my-plugin/
   }
 }
 ```
+
+> **Note:** Hooks are defined in `hooks/hooks.json`, not in plugin.json. See [Event Hooks](#event-hooks) below.
 
 ## Slash Commands
 
@@ -210,16 +229,32 @@ Your responsibilities:
 
 ## Event Hooks
 
+Hooks are **auto-discovered** from `hooks/hooks.json` inside the plugin directory. Do NOT define hooks in `plugin.json`.
+
+### Hook File Location
+
+```
+my-plugin/
+├── .claude-plugin/
+│   └── plugin.json      # NO hooks field here
+└── hooks/
+    └── hooks.json       # Hooks defined here (auto-discovered)
+```
+
 ### Hook Types
 
 | Type | When | Use Cases |
 |------|------|-----------|
 | `PreToolUse` | Before tool | Validation, permissions |
-| `PostToolUse` | After tool | Logging, notifications |
-| `PrePromptSubmit` | Before prompt | Input validation |
-| `PostPromptSubmit` | After prompt | Audit logging |
+| `PostToolUse` | After tool | Logging, formatting |
+| `UserPromptSubmit` | Before prompt | Input validation |
+| `Stop` | After response | Cleanup, notifications |
+| `SessionStart` | Session begins | Context loading |
+| `SessionEnd` | Session ends | Cleanup |
 
-### Hook Configuration
+### hooks/hooks.json Format
+
+**Important:** The file requires a root-level `"hooks"` wrapper:
 
 ```json
 {
@@ -230,7 +265,20 @@ Your responsibilities:
         "hooks": [
           {
             "type": "command",
-            "command": "${CLAUDE_PLUGIN_ROOT}/hooks/validate.sh"
+            "command": "${CLAUDE_PLUGIN_ROOT}/scripts/validate.sh",
+            "timeout": 10
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Write(*.ts)",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "biome check --write \"$file\"",
+            "timeout": 30
           }
         ]
       }
@@ -238,6 +286,13 @@ Your responsibilities:
   }
 }
 ```
+
+### Key Points
+
+- Hooks are auto-discovered from `hooks/hooks.json`
+- The file MUST have a root `"hooks"` object wrapper
+- Use `${CLAUDE_PLUGIN_ROOT}` for paths relative to plugin
+- Use `$file` for the affected file path in PostToolUse
 
 ### Hook Script Interface
 
