@@ -1,0 +1,12 @@
+{
+  "name": "gt",
+  "version": "1.0.1",
+  "description": "Graphite stack workflows for trunk-based development with stacked PRs",
+  "author": {
+    "name": "Outfitter",
+    "email": "team@outfitter.dev"
+  },
+  "license": "Apache-2.0",
+  "keywords": ["graphite", "stacked-prs", "trunk-based", "gt-commands"],
+  "repository": "https://github.com/outfitter-dev/agents"
+}

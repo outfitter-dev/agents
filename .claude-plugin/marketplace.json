@@ -31,8 +31,7 @@
 				"codex",
 				"plugins",
 				"hooks"
-			],
-			"hooks": "hooks/hooks.json"
+			]
 		},
 		{
 			"name": "but",
