@@ -6,7 +6,7 @@
 	},
 	"metadata": {
 		"description": "Official Outfitter development tools and integrations for Claude Code",
-		"version": "1.0.0",
+		"version": "1.0.1",
 		"homepage": "https://github.com/outfitter-dev/agents",
 		"repository": "https://github.com/outfitter-dev/agents"
 	},
@@ -15,7 +15,7 @@
 			"name": "outfitter",
 			"source": "./outfitter",
 			"description": "Core development methodology and Claude Code extensibility. Includes TDD, debugging, architecture, research, multi-agent coordination, plus skills/plugins/agents/hooks authoring for Claude Code and Codex configuration.",
-			"version": "1.0.0",
+			"version": "1.0.1",
 			"keywords": [
 				"tdd",
 				"debugging",
@@ -37,7 +37,7 @@
 			"name": "but",
 			"source": "./but",
 			"description": "GitButler virtual branch workflows for parallel development, multi-agent coordination, and post-hoc commit organization",
-			"version": "1.0.0",
+			"version": "1.0.1",
 			"keywords": [
 				"gitbutler",
 				"virtual-branches",
@@ -49,7 +49,7 @@
 			"name": "gt",
 			"source": "./gt",
 			"description": "Graphite stack workflows for trunk-based development with stacked PRs",
-			"version": "1.0.0",
+			"version": "1.0.1",
 			"keywords": [
 				"graphite",
 				"stacked-prs",
@@ -61,7 +61,7 @@
 			"name": "cli-dev",
 			"source": "./cli-dev",
 			"description": "Skills for building command-line tools: argument parsing, help text, subcommands, and CLI best practices",
-			"version": "0.1.0",
+			"version": "0.1.1",
 			"keywords": ["cli", "command-line", "argument-parsing", "terminal"]
 		}
 	]
