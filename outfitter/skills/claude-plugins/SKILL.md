@@ -4,6 +4,7 @@ description: This skill should be used when creating plugins, publishing to mark
 metadata:
   version: "1.0.0"
   related-skills:
+    - claude-plugin-audit
     - claude-agents
     - claude-commands
     - claude-hooks
@@ -15,6 +16,17 @@ metadata:
 # Claude Plugin Development
 
 Complete lifecycle for developing, validating, and distributing Claude Code plugins.
+
+## Steps
+
+1. Define plugin scope and components needed
+2. Initialize plugin structure with `plugin.json`
+3. If adding commands, load the `outfitter:claude-commands` skill
+4. If adding agents, load the `outfitter:claude-agents` skill
+5. If adding hooks, load the `outfitter:claude-hooks` skill
+6. If adding skills, load the `outfitter:skills-dev` skill
+7. Delegate by loading the `outfitter:claude-plugin-audit` skill for validation
+8. Fix issues and distribute
 
 ## Quick Start
 
@@ -87,7 +99,7 @@ my-plugin/
 
 ### Marketplace Structure
 
-A marketplace catalogs multiple plugins. Each plugin remains self-contained with its own `.claude-plugin/plugin.json`. The marketplace.json simply points to plugin directories:
+A marketplace catalogs multiple plugins. Each plugin remains self-contained:
 
 ```
 my-marketplace/
@@ -97,10 +109,6 @@ my-marketplace/
 │   ├── .claude-plugin/
 │   │   └── plugin.json  # Plugin A's own manifest
 │   └── commands/
-├── plugin-b/
-│   ├── .claude-plugin/
-│   │   └── plugin.json  # Plugin B's own manifest
-│   └── skills/
 └── README.md
 ```
 
@@ -116,41 +124,21 @@ Keep marketplace entries minimal - just point to plugin directories:
     "email": "team@example.com"
   },
   "plugins": [
-    {
-      "name": "plugin-a",
-      "source": "./plugin-a"
-    },
-    {
-      "name": "plugin-b",
-      "source": "./plugin-b"
-    }
+    {"name": "plugin-a", "source": "./plugin-a"},
+    {"name": "plugin-b", "source": "./plugin-b"}
   ]
 }
 ```
 
-Marketplace entries can supplement plugin.json with additional metadata (description, version, keywords), but the plugin itself should be complete and self-contained.
-
-### Using the Scaffold Script
-
-```bash
-./scripts/scaffold-plugin.sh my-plugin \
-  --author "Your Name" \
-  --with-commands \
-  --with-agent \
-  --with-hooks
-```
-
-See [references/structure.md](references/structure.md) for complete plugin structure and plugin.json schema.
+See [structure.md](references/structure.md) for complete plugin.json schema.
 
 ## Phase 3: Components
 
-Add components based on plugin needs. For detailed component authoring, load the appropriate skill:
+Add components based on plugin needs. See Steps section for which skills to load.
 
 ### Slash Commands
 
-Create custom commands in `commands/` directory.
-
-**Example: commands/review.md**
+Create custom commands in `commands/` directory:
 
 ```markdown
 ---
@@ -159,20 +147,14 @@ description: "Review code for quality issues"
 
 Review the following code: {{0}}
 
-Check for:
-- Code style and formatting
-- Potential bugs
-- Performance issues
-- Security concerns
+Check for: code style, bugs, performance, security
 ```
 
-For complex commands, load the **claude-command-authoring** skill.
+For complex commands, load the `outfitter:claude-commands` skill.
 
 ### Custom Agents
 
-Define specialized agents in `agents/` directory.
-
-**Example: agents/security-reviewer.md**
+Define specialized agents in `agents/` directory:
 
 ```markdown
 ---
@@ -183,17 +165,16 @@ description: "Security-focused code reviewer"
 You are a security expert. When reviewing code:
 1. Check for vulnerabilities
 2. Verify input validation
-3. Review authentication flows
-4. Report issues with severity levels
+3. Report issues with severity levels
 ```
 
-For agent design patterns, load the **claude-agent-development** skill.
+For agent design patterns, load the `outfitter:claude-agents` skill.
 
 ### Event Hooks
 
-Two ways to define hooks in a plugin:
+Two ways to define hooks:
 
-**Option 1: File-based** (auto-discovered from `hooks/hooks.json`)
+**File-based** (auto-discovered from `hooks/hooks.json`):
 
 ```json
 {
@@ -201,56 +182,24 @@ Two ways to define hooks in a plugin:
     "PreToolUse": [
       {
         "matcher": "Write|Edit",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "${CLAUDE_PLUGIN_ROOT}/scripts/validate.sh",
-            "timeout": 10
-          }
-        ]
+        "hooks": [{"type": "command", "command": "${CLAUDE_PLUGIN_ROOT}/scripts/validate.sh"}]
       }
     ]
   }
 }
 ```
 
-**Option 2: Inline in plugin.json**
+**Inline in plugin.json** - same structure, add `"hooks"` key directly.
 
-```json
-{
-  "name": "my-plugin",
-  "version": "1.0.0",
-  "hooks": {
-    "PostToolUse": [
-      {
-        "matcher": "Write|Edit",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "${CLAUDE_PLUGIN_ROOT}/scripts/format.sh"
-          }
-        ]
-      }
-    ]
-  }
-}
-```
+Hook types: PreToolUse, PostToolUse, UserPromptSubmit, Stop, SessionStart, SessionEnd
 
-Both formats use the same structure with a `"hooks"` wrapper around event types.
-
-**Hook types:** PreToolUse, PostToolUse, UserPromptSubmit, Stop, SessionStart, SessionEnd
-
-For hook implementation, load the **claude-hooks** skill.
+For hook implementation, load the `outfitter:claude-hooks` skill. See [structure.md](references/structure.md) for hook JSON format and script interface.
 
 ### Skills
 
-Add reusable methodology patterns in `skills/` directory.
-
-For skill authoring, load the **skills-development** skill.
+Add reusable methodology patterns in `skills/` directory. For skill authoring, load the `outfitter:skills-dev` skill.
 
 ### MCP Servers
-
-Integrate MCP servers for external capabilities:
 
 ```json
 {
@@ -258,141 +207,44 @@ Integrate MCP servers for external capabilities:
     "my-server": {
       "command": "${CLAUDE_PLUGIN_ROOT}/servers/my-server",
       "args": ["--config", "${CLAUDE_PLUGIN_ROOT}/config.json"],
-      "env": {
-        "API_KEY": "${MY_API_KEY}"
-      }
+      "env": {"API_KEY": "${MY_API_KEY}"}
     }
   }
 }
 ```
 
-**Path variables:**
-- `${CLAUDE_PLUGIN_ROOT}` - Plugin installation directory
-- `${MY_API_KEY}` - Environment variable expansion
+Path variables: `${CLAUDE_PLUGIN_ROOT}` (plugin directory), `${VAR_NAME}` (env var)
 
-## Plugin Caching and Path Limitations
+## Plugin Caching
 
-When plugins are installed, Claude Code copies them to a cache directory for security. This affects how you structure shared resources.
+When plugins are installed, Claude Code copies them to a cache directory. This has implications:
 
-### Path Traversal Limitation
+- **Path traversal breaks**: `../../shared/file.md` will not work after install
+- **Keep resources inside plugin**: Shared scripts, rules, and assets must be within plugin directory
+- **Cross-plugin dependencies**: Use skill invocation (`plugin:skill-name`) instead of file references
 
-Paths that traverse outside the plugin root won't work after installation:
-
-```
-# BROKEN after install - traverses outside plugin
-../../shared-utils/helper.sh
-../other-plugin/rules/FORMATTING.md
-```
-
-Only files within the plugin directory are copied to the cache.
-
-### Shared Resources Within a Plugin
-
-Organize shared resources inside your plugin:
-
-```
-my-plugin/
-├── .claude-plugin/
-│   └── plugin.json
-├── rules/                    # Shared rules
-│   └── FORMATTING.md
-├── scripts/                  # Shared scripts
-│   └── validate.sh
-└── skills/
-    └── my-skill/
-        └── SKILL.md          # Can reference ../../rules/FORMATTING.md
-```
-
-Skills can reference `../../rules/FORMATTING.md` because it stays within the plugin.
-
-### Cross-Plugin Dependencies
-
-If plugins need to share resources across plugin boundaries, you have two options:
-
-**Option 1: Symlinks**
-
-Create symlinks within your plugin that point to external files. Symlinks are followed during the copy:
-
-```bash
-# Inside your plugin directory
-ln -s /path/to/shared-utils ./shared-utils
-```
-
-**Option 2: Restructure Marketplace**
-
-Set the marketplace source to a parent directory containing all plugins:
-
-```json
-{
-  "name": "my-plugin",
-  "source": "./",
-  "description": "Plugin with access to sibling directories",
-  "commands": ["./plugins/my-plugin/commands/"],
-  "skills": ["./plugins/my-plugin/skills/"],
-  "strict": false
-}
-```
-
-This copies the entire marketplace root, giving plugins access to siblings.
-
-**Option 3: Skill Invocation (Recommended)**
-
-Instead of file references, use skill invocation for cross-plugin patterns:
-
-```markdown
-## Related Skills
-
-- **outfitter:tdd** — Test-driven development patterns
-- **outfitter:debugging** — Systematic debugging methodology
-```
-
-Reference skills by `plugin:skill-name` and invoke with the Skill tool.
+See [caching.md](references/caching.md) for workarounds and best practices.
 
 ## Phase 4: Validation
 
-Before distribution, validate the plugin:
+Before distribution, validate the plugin.
 
-### Validation Checklist
+### Checklist
 
 **Structure:**
 - [ ] plugin.json exists and is valid JSON
 - [ ] Required fields present (name, version, description)
 - [ ] Plugin name matches directory name (kebab-case)
 
-**Commands:**
-- [ ] YAML frontmatter with description
-- [ ] Parameter syntax correct ({{0}}, {{1}})
-
-**Agents:**
-- [ ] YAML frontmatter with name and description
-- [ ] Tool restrictions appropriate
-
-**Hooks:**
-- [ ] Scripts executable (`chmod +x`)
-- [ ] JSON input/output format correct
-- [ ] Matchers are valid regex
+**Components:**
+- [ ] Commands have YAML frontmatter with description
+- [ ] Agents have YAML frontmatter with name and description
+- [ ] Hook scripts are executable (`chmod +x`)
+- [ ] Hook matchers are valid regex
 
 **Documentation:**
 - [ ] README.md with installation instructions
-- [ ] CHANGELOG.md for version history
 - [ ] LICENSE file included
-
-### Validation Commands
-
-```bash
-# Validate JSON
-jq empty plugin.json
-
-# Check command frontmatter
-for f in commands/**/*.md; do
-  head -n 5 "$f" | grep -q '^---$' || echo "Missing: $f"
-done
-
-# Verify scripts executable
-for f in hooks/**/*.sh; do
-  test -x "$f" || echo "Not executable: $f"
-done
-```
 
 ### Local Testing
 
@@ -406,6 +258,8 @@ done
 # Test commands
 /my-command arg1 arg2
 ```
+
+See [structure.md](references/structure.md) for validation commands and detailed component schemas.
 
 ## Phase 5: Distribution
 
@@ -421,20 +275,14 @@ Follow semver (MAJOR.MINOR.PATCH):
 ```bash
 # 1. Update version in plugin.json
 # 2. Update CHANGELOG.md
-# 3. Commit
+# 3. Commit and tag
 git add plugin.json CHANGELOG.md
 git commit -m "chore: release v1.0.0"
-
-# 4. Tag
 git tag v1.0.0
-
-# 5. Push
 git push origin main --tags
 
-# 6. Create GitHub release
-gh release create v1.0.0 \
-  --title "v1.0.0" \
-  --notes "Initial release"
+# 4. Create GitHub release
+gh release create v1.0.0 --title "v1.0.0" --notes "Initial release"
 ```
 
 ### Distribution Methods
@@ -444,112 +292,50 @@ gh release create v1.0.0 \
 | GitHub repo | Public/team plugins | Push to GitHub |
 | Git URL | GitLab, Bitbucket | Full URL in source |
 | Local path | Development/testing | Relative path |
-| ZIP package | Offline distribution | Create archive |
 
-See [references/distribution.md](references/distribution.md) for packaging, CI/CD, and release automation.
+See [distribution.md](references/distribution.md) for packaging, CI/CD, and release automation.
 
 ## Phase 6: Marketplace
 
-### What is a Marketplace?
-
-A catalog of plugins defined in `.claude-plugin/marketplace.json` that enables discovery, installation, and version management.
+A marketplace catalogs plugins for discovery and installation.
 
 ### Creating a Marketplace
 
-```bash
-mkdir -p .claude-plugin
-```
-
-**.claude-plugin/marketplace.json:**
-
-Keep entries minimal - just point to plugin directories:
+Create `.claude-plugin/marketplace.json`:
 
 ```json
 {
   "name": "my-marketplace",
-  "owner": {
-    "name": "Team Name",
-    "email": "team@example.com"
-  },
+  "owner": {"name": "Team Name", "email": "team@example.com"},
   "plugins": [
-    {
-      "name": "my-plugin",
-      "source": "./plugins/my-plugin"
-    }
+    {"name": "my-plugin", "source": "./plugins/my-plugin"}
   ]
 }
 ```
 
-The plugin's own `.claude-plugin/plugin.json` provides metadata. Marketplace entries can supplement with additional fields if needed.
-
-**When to use `strict: false`:** Set `strict: false` in a marketplace entry when the plugin has no `.claude-plugin/plugin.json` - the marketplace entry then defines everything (commands, hooks, mcpServers, etc.).
-
 ### Plugin Sources
 
-**Relative path:**
-
 ```json
+// Relative path
 {"source": "./plugins/my-plugin"}
+
+// GitHub
+{"source": {"source": "github", "repo": "owner/plugin-repo", "ref": "v1.0.0"}}
+
+// Git URL
+{"source": {"source": "url", "url": "https://gitlab.com/team/plugin.git"}}
 ```
 
-**GitHub:**
-
-```json
-{
-  "source": {
-    "source": "github",
-    "repo": "owner/plugin-repo",
-    "ref": "v1.0.0"
-  }
-}
-```
-
-**Git URL:**
-
-```json
-{
-  "source": {
-    "source": "url",
-    "url": "https://gitlab.com/team/plugin.git"
-  }
-}
-```
-
-### Team Configuration
-
-Configure automatic marketplace installation in `.claude/settings.json`:
-
-```json
-{
-  "extraKnownMarketplaces": {
-    "team-tools": {
-      "source": {
-        "source": "github",
-        "repo": "company/claude-plugins"
-      }
-    }
-  }
-}
-```
-
-### Marketplace Commands
+### Commands
 
 ```bash
-# Add marketplace
-/plugin marketplace add owner/repo
-/plugin marketplace add ./local-path
-
-# List available
-/plugin marketplace list
-
-# Install from marketplace
-/plugin install plugin-name@marketplace-name
-
-# Update
-/plugin marketplace update marketplace-name
+/plugin marketplace add owner/repo       # Add marketplace
+/plugin marketplace list                  # List available
+/plugin install plugin-name@marketplace  # Install from marketplace
+/plugin marketplace update marketplace   # Update
 ```
 
-See [references/marketplace.md](references/marketplace.md) for full schema, team setup, and hosting strategies.
+See [marketplace.md](references/marketplace.md) for full schema, team configuration, and hosting strategies.
 
 ## Best Practices
 
@@ -558,14 +344,12 @@ See [references/marketplace.md](references/marketplace.md) for full schema, team
 - **Plugin name**: kebab-case (e.g., `dev-tools`)
 - **Commands**: kebab-case (e.g., `review-pr`)
 - **Agents**: kebab-case (e.g., `security-reviewer`)
-- **Scripts**: kebab-case with extension (e.g., `validate.sh`)
 
 ### Security
 
 - Never hardcode secrets in plugin files
 - Use environment variables for sensitive data
 - Validate all user inputs in hooks
-- Review third-party dependencies
 - Document security requirements
 
 ### Documentation
@@ -573,15 +357,6 @@ See [references/marketplace.md](references/marketplace.md) for full schema, team
 - **README.md**: Overview, installation, usage examples
 - **CHANGELOG.md**: Version history with semver
 - **LICENSE**: Appropriate license file
-- **Commands/Agents**: Clear description in frontmatter
-
-### Testing
-
-- Test all commands with various inputs
-- Verify hooks don't block normal workflow
-- Check MCP servers connect properly
-- Test installation and removal
-- Validate cross-platform compatibility
 
 ## Troubleshooting
 
@@ -593,29 +368,46 @@ See [references/marketplace.md](references/marketplace.md) for full schema, team
 **Commands not appearing:**
 - Verify YAML frontmatter exists
 - Check files in `commands/` directory
-- Ensure markdown syntax correct
 
 **Hooks not executing:**
 - Check scripts executable: `chmod +x`
 - Verify matcher regex correct
 - Test hook script independently
-- Review JSON output format
 
 **MCP servers failing:**
 - Verify server binary exists
 - Check environment variables set
-- Test with MCP Inspector
 - Review logs: `~/Library/Logs/Claude/`
 
-## References
+<references>
 
-- [references/structure.md](references/structure.md) - Directory layout, plugin.json schema
-- [references/distribution.md](references/distribution.md) - Packaging, versioning, release automation
-- [references/marketplace.md](references/marketplace.md) - Marketplace schema, hosting, team setup
+- [structure.md](references/structure.md) - Directory layout, plugin.json schema, component formats
+- [distribution.md](references/distribution.md) - Packaging, versioning, CI/CD, release automation
+- [marketplace.md](references/marketplace.md) - Marketplace schema, hosting, team configuration
+- [caching.md](references/caching.md) - Plugin caching behavior and cross-plugin dependencies
+
+</references>
+
+<rules>
+
+ALWAYS:
+- Create `.claude-plugin/plugin.json` for every plugin
+- Keep plugin resources within plugin directory (caching limitation)
+- Use kebab-case for all names
+- Include README.md and LICENSE for distribution
+- Follow semantic versioning
+
+NEVER:
+- Hardcode secrets in plugin files
+- Use path traversal (`../`) for cross-plugin resources
+- Skip validation before distribution
+- Omit description in plugin.json
+
+</rules>
 
 ## Related Skills
 
-- **claude-command-authoring** - Slash command development
-- **claude-agent-development** - Custom agent design
-- **claude-hook-authoring** - Event hook implementation
-- **skills-development** - Skill creation patterns
+- **claude-commands** - Slash command development
+- **claude-agents** - Custom agent design
+- **claude-hooks** - Event hook implementation
+- **skills-dev** - Skill creation patterns
