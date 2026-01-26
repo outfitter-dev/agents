@@ -295,11 +295,6 @@ function validate(
         "Claude context detected. Consider adding 'allowed-tools' for tool permissions."
       );
     }
-    if (frontmatter["user-invocable"] === undefined) {
-      result.warnings.push(
-        "Claude context detected. Consider 'user-invocable: true' for slash command access."
-      );
-    }
   }
 
   return result;

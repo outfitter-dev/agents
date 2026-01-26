@@ -8,7 +8,6 @@ metadata:
     - claude-plugins
     - claude-agents
     - claude-config
-user-invocable: true
 ---
 
 # Claude Hook Authoring

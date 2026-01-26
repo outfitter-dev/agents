@@ -7,7 +7,6 @@ metadata:
     - skills-dev
     - claude-plugins
     - claude-hooks
-user-invocable: true
 ---
 
 # Claude Agent Development

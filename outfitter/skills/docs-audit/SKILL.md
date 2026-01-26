@@ -2,7 +2,6 @@
 name: docs-audit
 description: |
   Comprehensive documentation audit against current code state. Checks markdown files for accuracy, link validity, code example correctness, and docstring coverage. Uses efficient discovery to minimize context usage while providing thorough analysis.
-user-invocable: true
 context: fork
 subagent: editor
 allowed-tools:

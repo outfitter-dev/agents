@@ -7,7 +7,6 @@ metadata:
     - claude-hooks
     - claude-plugins
     - skills-dev
-user-invocable: true
 allowed-tools: Read Write Edit Grep Glob Bash TaskCreate TaskUpdate TaskList TaskGet
 ---
 

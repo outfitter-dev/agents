@@ -60,7 +60,6 @@ const CONTEXT_PATTERNS: Record<
 const RECOMMENDATIONS: Record<string, string[]> = {
   claude: [
     "Consider adding 'allowed-tools' for tool permissions",
-    "Consider 'user-invocable: true' for slash command access",
     "Use 'argument-hint' if skill accepts arguments",
     "Test with 'claude --debug' to verify loading",
   ],

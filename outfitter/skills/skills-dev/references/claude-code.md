@@ -26,7 +26,7 @@ Claude Code extends the base Agent Skills specification with additional frontmat
 | Field | Type | Description |
 |-------|------|-------------|
 | `allowed-tools` | string | Space-separated list of tools the skill can use without permission prompts |
-| `user-invocable` | boolean | When `true`, skill becomes callable as `/skill-name` command |
+| `user-invocable` | boolean | Default `true`. Set to `false` to prevent slash command access |
 | `disable-model-invocation` | boolean | Prevents automatic activation; requires manual invocation via Skill tool |
 | `context` | string | `inherit` (default) or `fork` for isolated subagent execution |
 | `agent` | string | Agent to use when skill is invoked (e.g., `outfitter:analyst`) |
@@ -42,11 +42,12 @@ name: code-review
 version: 1.0.0
 description: Reviews code for bugs, security issues, and best practices. Use when reviewing PRs, auditing code, or before merging.
 allowed-tools: Read Grep Glob Bash(git diff *)
-user-invocable: true
 argument-hint: [file or directory]
 model: sonnet
 ---
 ```
+
+> **Note:** `user-invocable` defaults to `true`, so skills are callable as `/skill-name` by default. Only set `user-invocable: false` if you want to prevent slash command access.
 
 ---
 
@@ -116,18 +117,29 @@ allowed-tools: Read Edit Write Bash(git *) Bash(bun *) Bash(npm *)
 
 ## User Invocable Skills
 
-When `user-invocable: true`, the skill becomes callable as a slash command:
+Skills are callable as slash commands by default (`user-invocable: true`). Use `user-invocable: false` to prevent slash command access for skills that should only be auto-activated.
 
 ```yaml
 ---
 name: code-review
 description: Reviews code for bugs and best practices...
-user-invocable: true
 argument-hint: [file or PR number]
 ---
 ```
 
-Users can then invoke with `/code-review src/auth.ts` instead of waiting for auto-activation.
+Users can invoke with `/code-review src/auth.ts` or wait for auto-activation based on the description.
+
+### Disabling Slash Command Access
+
+For skills that should only activate automatically (not manually invoked):
+
+```yaml
+---
+name: internal-validator
+description: Validates internal state when specific patterns are detected...
+user-invocable: false
+---
+```
 
 ### With Arguments
 

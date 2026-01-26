@@ -65,7 +65,8 @@
         },
         "user-invocable": {
           "type": "boolean",
-          "description": "When true, skill can be invoked as /skill-name command."
+          "default": true,
+          "description": "Default true. Set to false to prevent /skill-name slash command access."
         },
         "disable-model-invocation": {
           "type": "boolean",
@@ -134,7 +135,7 @@
       },
       "claude-recommended": {
         "description": "When in Claude context, recommend setting these fields.",
-        "fields": ["allowed-tools", "user-invocable"]
+        "fields": ["allowed-tools"]
       },
       "description-quality": {
         "description": "Description should include WHAT, WHEN, and trigger keywords."

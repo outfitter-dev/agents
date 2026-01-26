@@ -7,7 +7,6 @@ metadata:
     - claude-plugins
     - claude-agents
     - codex-config
-user-invocable: true
 allowed-tools: Read Write Edit Grep Glob Bash TaskCreate TaskUpdate TaskList TaskGet AskUserQuestion
 ---
 

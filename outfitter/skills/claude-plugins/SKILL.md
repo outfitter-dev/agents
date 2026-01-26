@@ -10,7 +10,6 @@ metadata:
     - claude-rules
     - claude-config
 version: 1.0.0
-user-invocable: true
 ---
 
 # Claude Plugin Development
