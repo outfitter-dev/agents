@@ -240,6 +240,5 @@ Examples:
 - [EXAMPLES.md](EXAMPLES.md) - Usage examples and sample output
 
 Formatting:
-- [FORMATTING.md](../../shared/rules/FORMATTING.md) - Visual conventions
 
 </references>

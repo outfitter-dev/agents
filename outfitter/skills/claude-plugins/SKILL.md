@@ -55,41 +55,22 @@ Before creating a plugin, clarify:
 
 ## Phase 2: Initialization
 
-### Standalone vs Marketplace
+### Plugin Structure
 
-Choose your distribution model:
-
-| Model | When to Use | Manifest Location |
-|-------|-------------|-------------------|
-| **Standalone** | Single plugin, independent repo | `.claude-plugin/plugin.json` inside plugin dir |
-| **Marketplace** | Multiple plugins, shared repo | `.claude-plugin/marketplace.json` at repo root |
-
-**Key rule:** Marketplace plugins do NOT have their own `.claude-plugin/` directories. They're defined in the marketplace manifest.
-
-### Standalone Plugin Structure
+Every plugin should have its own `.claude-plugin/plugin.json` manifest:
 
 ```
 my-plugin/
 ├── .claude-plugin/
-│   └── plugin.json      # Required: metadata
+│   └── plugin.json      # Required: plugin metadata
 ├── README.md            # Required for distribution
-└── commands/            # Optional components
+├── commands/            # Optional components
+├── agents/
+├── skills/
+└── hooks/
 ```
 
-### Marketplace Structure
-
-```
-my-marketplace/
-├── .claude-plugin/
-│   └── marketplace.json # Defines all plugins
-├── plugin-a/            # No .claude-plugin/ here
-│   └── commands/
-├── plugin-b/            # No .claude-plugin/ here
-│   └── skills/
-└── README.md
-```
-
-### plugin.json (Standalone)
+### plugin.json
 
 ```json
 {
@@ -104,7 +85,28 @@ my-marketplace/
 }
 ```
 
-### marketplace.json (Marketplace)
+### Marketplace Structure
+
+A marketplace catalogs multiple plugins. Each plugin remains self-contained with its own `.claude-plugin/plugin.json`. The marketplace.json simply points to plugin directories:
+
+```
+my-marketplace/
+├── .claude-plugin/
+│   └── marketplace.json # Catalogs plugins
+├── plugin-a/
+│   ├── .claude-plugin/
+│   │   └── plugin.json  # Plugin A's own manifest
+│   └── commands/
+├── plugin-b/
+│   ├── .claude-plugin/
+│   │   └── plugin.json  # Plugin B's own manifest
+│   └── skills/
+└── README.md
+```
+
+### marketplace.json
+
+Keep marketplace entries minimal - just point to plugin directories:
 
 ```json
 {
@@ -116,19 +118,17 @@ my-marketplace/
   "plugins": [
     {
       "name": "plugin-a",
-      "source": "./plugin-a",
-      "description": "Plugin A description",
-      "version": "1.0.0"
+      "source": "./plugin-a"
     },
     {
       "name": "plugin-b",
-      "source": "./plugin-b",
-      "description": "Plugin B description",
-      "version": "1.0.0"
+      "source": "./plugin-b"
     }
   ]
 }
 ```
+
+Marketplace entries can supplement plugin.json with additional metadata (description, version, keywords), but the plugin itself should be complete and self-contained.
 
 ### Using the Scaffold Script
 
@@ -191,9 +191,9 @@ For agent design patterns, load the **claude-agent-development** skill.
 
 ### Event Hooks
 
-Hooks are **auto-discovered** from `hooks/hooks.json` inside your plugin directory. Do NOT define hooks in `plugin.json`.
+Two ways to define hooks in a plugin:
 
-**File:** `my-plugin/hooks/hooks.json`
+**Option 1: File-based** (auto-discovered from `hooks/hooks.json`)
 
 ```json
 {
@@ -214,7 +214,29 @@ Hooks are **auto-discovered** from `hooks/hooks.json` inside your plugin directo
 }
 ```
 
-**Important:** The file requires a root-level `"hooks"` wrapper around event types.
+**Option 2: Inline in plugin.json**
+
+```json
+{
+  "name": "my-plugin",
+  "version": "1.0.0",
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "${CLAUDE_PLUGIN_ROOT}/scripts/format.sh"
+          }
+        ]
+      }
+    ]
+  }
+}
+```
+
+Both formats use the same structure with a `"hooks"` wrapper around event types.
 
 **Hook types:** PreToolUse, PostToolUse, UserPromptSubmit, Stop, SessionStart, SessionEnd
 
@@ -247,6 +269,84 @@ Integrate MCP servers for external capabilities:
 **Path variables:**
 - `${CLAUDE_PLUGIN_ROOT}` - Plugin installation directory
 - `${MY_API_KEY}` - Environment variable expansion
+
+## Plugin Caching and Path Limitations
+
+When plugins are installed, Claude Code copies them to a cache directory for security. This affects how you structure shared resources.
+
+### Path Traversal Limitation
+
+Paths that traverse outside the plugin root won't work after installation:
+
+```
+# BROKEN after install - traverses outside plugin
+../../shared-utils/helper.sh
+../other-plugin/rules/FORMATTING.md
+```
+
+Only files within the plugin directory are copied to the cache.
+
+### Shared Resources Within a Plugin
+
+Organize shared resources inside your plugin:
+
+```
+my-plugin/
+├── .claude-plugin/
+│   └── plugin.json
+├── rules/                    # Shared rules
+│   └── FORMATTING.md
+├── scripts/                  # Shared scripts
+│   └── validate.sh
+└── skills/
+    └── my-skill/
+        └── SKILL.md          # Can reference ../../rules/FORMATTING.md
+```
+
+Skills can reference `../../rules/FORMATTING.md` because it stays within the plugin.
+
+### Cross-Plugin Dependencies
+
+If plugins need to share resources across plugin boundaries, you have two options:
+
+**Option 1: Symlinks**
+
+Create symlinks within your plugin that point to external files. Symlinks are followed during the copy:
+
+```bash
+# Inside your plugin directory
+ln -s /path/to/shared-utils ./shared-utils
+```
+
+**Option 2: Restructure Marketplace**
+
+Set the marketplace source to a parent directory containing all plugins:
+
+```json
+{
+  "name": "my-plugin",
+  "source": "./",
+  "description": "Plugin with access to sibling directories",
+  "commands": ["./plugins/my-plugin/commands/"],
+  "skills": ["./plugins/my-plugin/skills/"],
+  "strict": false
+}
+```
+
+This copies the entire marketplace root, giving plugins access to siblings.
+
+**Option 3: Skill Invocation (Recommended)**
+
+Instead of file references, use skill invocation for cross-plugin patterns:
+
+```markdown
+## Related Skills
+
+- **outfitter:tdd** — Test-driven development patterns
+- **outfitter:debugging** — Systematic debugging methodology
+```
+
+Reference skills by `plugin:skill-name` and invoke with the Skill tool.
 
 ## Phase 4: Validation
 
@@ -362,6 +462,8 @@ mkdir -p .claude-plugin
 
 **.claude-plugin/marketplace.json:**
 
+Keep entries minimal - just point to plugin directories:
+
 ```json
 {
   "name": "my-marketplace",
@@ -372,13 +474,15 @@ mkdir -p .claude-plugin
   "plugins": [
     {
       "name": "my-plugin",
-      "source": "./plugins/my-plugin",
-      "description": "Plugin description",
-      "version": "1.0.0"
+      "source": "./plugins/my-plugin"
     }
   ]
 }
 ```
+
+The plugin's own `.claude-plugin/plugin.json` provides metadata. Marketplace entries can supplement with additional fields if needed.
+
+**When to use `strict: false`:** Set `strict: false` in a marketplace entry when the plugin has no `.claude-plugin/plugin.json` - the marketplace entry then defines everything (commands, hooks, mcpServers, etc.).
 
 ### Plugin Sources
 

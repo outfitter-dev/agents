@@ -242,7 +242,6 @@ NEVER:
 
 Core methodology:
 - [confidence.md](../pathfinding/references/confidence.md) — confidence calibration (shared with pathfinding)
-- [FORMATTING.md](../../shared/rules/FORMATTING.md) — formatting conventions
 
 Micro-skills (load as needed):
 - [patterns](../patterns/SKILL.md) — extracting and validating patterns

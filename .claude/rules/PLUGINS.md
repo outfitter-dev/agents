@@ -11,13 +11,13 @@
 ├── commands/            # {name}.md slash commands (optional)
 ├── hooks/               # Event-triggered automation (optional)
 ├── scripts/             # Shared utility scripts (optional)
-├── templates/           # Reusable templates (optional)
-├── shared/
-│   └── rules/           # Common rules for this plugin (optional)
+├── rules/               # Plugin-internal shared rules (optional)
 └── README.md
 ```
 
 Only `.claude-plugin/`, `skills/`, and `README.md` are required.
+
+**Note:** Plugin rules in `rules/` only work within that plugin. Cross-plugin references don't survive installation (plugins are cached separately). Use skill invocation for cross-plugin patterns.
 
 ## Marketplace Registration
 

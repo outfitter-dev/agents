@@ -6,15 +6,17 @@
  * Designed for use as a PreToolUse hook for Write/Edit operations on SKILL.md files.
  *
  * Exit codes:
- *   0 - Valid (warnings may be on stderr)
+ *   0 - Valid/skip (proceed with tool use)
  *   2 - Block (critical errors)
  *
- * Usage:
- *   bun validate-skill-frontmatter.ts <path-to-SKILL.md>
- *   echo '---\nname: test\n---' | bun validate-skill-frontmatter.ts --stdin
+ * Input: JSON on stdin from Claude Code PreToolUse hook
+ * {
+ *   "tool_name": "Write" | "Edit",
+ *   "tool_input": { "file_path": string, "content"?: string, "old_string"?: string, "new_string"?: string }
+ * }
  */
 
-import { readFileSync, statSync } from "fs";
+import { readFileSync } from "fs";
 import { basename, dirname } from "path";
 import { parse as parseYaml } from "yaml";
 
@@ -337,60 +339,155 @@ function formatOutput(result: ValidationResult, path: string): void {
   }
 }
 
-async function main() {
-  const args = process.argv.slice(2);
+/**
+ * Hook input from Claude Code PreToolUse
+ */
+interface HookInput {
+  tool_name: string;
+  tool_input: {
+    file_path: string;
+    content?: string; // Write tool
+    old_string?: string; // Edit tool
+    new_string?: string; // Edit tool
+  };
+}
 
-  if (args.length === 0 || args[0] === "--help" || args[0] === "-h") {
-    console.log(`Usage: validate-skill-frontmatter.ts <path-to-SKILL.md>
+/**
+ * Quick check: does this string look like it might affect frontmatter?
+ * Used to bail out fast on Edit operations that don't touch frontmatter.
+ */
+function mightAffectFrontmatter(str: string): boolean {
+  // Contains frontmatter delimiter
+  if (str.includes("---")) return true;
+  // Contains YAML-like key: value pattern
+  if (/^[a-z][-a-z]*:/m.test(str)) return true;
+  return false;
+}
 
-Validates SKILL.md frontmatter against Agent Skills specification.
+/**
+ * Read JSON from stdin with timeout protection
+ */
+async function readStdin(timeoutMs = 5000): Promise<string> {
+  const chunks: Buffer[] = [];
 
-Options:
-  --stdin    Read content from stdin
-  --json     Output as JSON
-  --quiet    Only output on errors
-  --help     Show this help message
+  const timeout = new Promise<never>((_, reject) => {
+    setTimeout(() => reject(new Error("stdin timeout")), timeoutMs);
+  });
 
-Exit codes:
-  0 - Valid (warnings may be present)
-  2 - Invalid (blocking errors)
-`);
-    process.exit(0);
-  }
-
-  let content: string;
-  let filePath: string;
-  const outputJson = args.includes("--json");
-  const quiet = args.includes("--quiet");
-
-  if (args.includes("--stdin")) {
-    // Read from stdin for hook usage
-    const chunks: Buffer[] = [];
+  const read = (async () => {
     for await (const chunk of Bun.stdin.stream()) {
       chunks.push(Buffer.from(chunk));
     }
-    content = Buffer.concat(chunks).toString("utf-8");
-    filePath = "--stdin";
-  } else {
-    filePath = args.find((a) => !a.startsWith("--")) || "";
+    return Buffer.concat(chunks).toString("utf-8");
+  })();
+
+  return Promise.race([read, timeout]);
+}
+
+async function main() {
+  const args = process.argv.slice(2);
+
+  // CLI mode for manual testing
+  if (args.length > 0 && !args[0].startsWith("{")) {
+    if (args[0] === "--help" || args[0] === "-h") {
+      console.log(`Usage: validate-skill-frontmatter.ts [file]
+
+PreToolUse hook for SKILL.md frontmatter validation.
+
+Hook mode (default): Reads JSON from stdin
+CLI mode: Pass file path as argument for manual testing
+
+Exit codes:
+  0 - Valid/skip (proceed)
+  2 - Block (errors)
+`);
+      process.exit(0);
+    }
+
+    // Manual file validation
+    const filePath = args[0];
+    let content: string;
     try {
       content = readFileSync(filePath, "utf-8");
     } catch (e) {
       console.error(`Error reading file: ${filePath}`);
       process.exit(2);
     }
-  }
 
-  const result = validate(content, filePath);
-
-  if (outputJson) {
-    console.log(JSON.stringify(result, null, 2));
-  } else if (!quiet || !result.valid || result.warnings.length > 0) {
+    const result = validate(content, filePath);
     formatOutput(result, filePath);
+    process.exit(result.valid ? 0 : 2);
   }
 
-  // Exit code: 0 for valid (even with warnings), 2 for blocking errors
-  process.exit(result.valid ? 0 : 2);
+  // Hook mode: read JSON from stdin
+  let input: HookInput;
+  try {
+    const raw = await readStdin();
+    input = JSON.parse(raw);
+  } catch (e) {
+    // Can't parse input → don't block, exit cleanly
+    process.exit(0);
+  }
+
+  const { tool_name, tool_input } = input;
+  const filePath = tool_input?.file_path ?? "";
+
+  // Fast bailout: Edit that doesn't touch frontmatter
+  if (tool_name === "Edit") {
+    const oldStr = tool_input.old_string ?? "";
+    const newStr = tool_input.new_string ?? "";
+
+    if (!mightAffectFrontmatter(oldStr) && !mightAffectFrontmatter(newStr)) {
+      // Edit doesn't touch frontmatter area → skip validation
+      process.exit(0);
+    }
+
+    // For Edit, we need current file + apply changes to validate
+    // Read current file, apply edit, validate result
+    let currentContent: string;
+    try {
+      currentContent = readFileSync(filePath, "utf-8");
+    } catch {
+      // File doesn't exist yet or can't read → skip
+      process.exit(0);
+    }
+
+    // Apply the edit
+    if (!currentContent.includes(oldStr)) {
+      // old_string not found → Claude will error anyway, don't block
+      process.exit(0);
+    }
+
+    const newContent = currentContent.replace(oldStr, newStr);
+    const result = validate(newContent, filePath);
+
+    if (!result.valid) {
+      formatOutput(result, filePath);
+      process.exit(2);
+    }
+    process.exit(0);
+  }
+
+  // Write tool: validate the new content directly
+  if (tool_name === "Write") {
+    const content = tool_input.content ?? "";
+
+    if (!content.trim()) {
+      // Empty content → don't block
+      process.exit(0);
+    }
+
+    const result = validate(content, filePath);
+
+    if (!result.valid) {
+      formatOutput(result, filePath);
+      process.exit(2);
+    }
+    process.exit(0);
+  }
+
+  // Unknown tool → don't block
+  process.exit(0);
 }
 
 main();

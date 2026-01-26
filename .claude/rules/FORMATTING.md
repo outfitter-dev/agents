@@ -1,3 +1,3 @@
 # Formatting Conventions
 
-@../../outfitter/shared/rules/FORMATTING.md
+@../../outfitter/rules/FORMATTING.md

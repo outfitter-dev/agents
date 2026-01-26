@@ -343,7 +343,6 @@ NEVER:
 - [task-patterns.md](references/task-patterns.md) — deep patterns and templates
 - [delegation-patterns.md](references/delegation-patterns.md) — context-preserving delegation
 - [cross-session.md](references/cross-session.md) — episodic memory integration
-- [FORMATTING.md](../../shared/rules/FORMATTING.md) — formatting conventions
 - subagents skill — agent orchestration patterns
 
 </references>

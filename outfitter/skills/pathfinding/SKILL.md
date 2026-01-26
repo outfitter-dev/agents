@@ -257,7 +257,6 @@ NEVER:
 - [confidence.md](references/confidence.md) — confidence deep dive
 - [questions.md](references/questions.md) — question crafting
 - [examples/](examples/) — session examples
-- [FORMATTING.md](../../shared/`rules/`FORMATTING.md) — formatting conventions
 - skeptic agent (outfitter:skeptic) — complexity sanity checks
 
 </references>

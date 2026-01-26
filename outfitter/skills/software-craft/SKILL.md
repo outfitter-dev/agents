@@ -348,6 +348,5 @@ Complements other outfitter skills:
 - [code-quality-patterns.md](references/code-quality-patterns.md) - code examples
 
 **Standards:**
-- [FORMATTING.md](../../shared/rules/FORMATTING.md) - formatting conventions
 
 </references>

@@ -2,13 +2,11 @@
 
 Complete directory layout and configuration schemas for Claude Code plugins.
 
-## Standalone vs Marketplace Plugins
+## Plugin Structure
 
-Claude Code supports two plugin distribution models:
+Every plugin should have its own `.claude-plugin/plugin.json` manifest, whether distributed standalone or via a marketplace.
 
-### Standalone Plugin
-
-A single plugin distributed independently. Uses `.claude-plugin/plugin.json` inside the plugin directory.
+### Single Plugin
 
 ```
 my-plugin/
@@ -17,31 +15,33 @@ my-plugin/
 ├── commands/
 ├── agents/
 ├── hooks/
-│   └── hooks.json       # Auto-discovered hooks
+│   └── hooks.json       # Auto-discovered hooks (or inline in plugin.json)
 └── README.md
 ```
 
-### Marketplace Plugin
+### Marketplace with Multiple Plugins
 
-Multiple plugins distributed together via a marketplace. Uses a single `.claude-plugin/marketplace.json` at the repo root. Individual plugins do NOT have their own `.claude-plugin/` directories.
+A marketplace catalogs multiple plugins. Each plugin remains self-contained with its own manifest:
 
 ```
 my-marketplace/
 ├── .claude-plugin/
-│   └── marketplace.json # Defines all plugins
-├── plugin-a/            # No .claude-plugin/ here
+│   └── marketplace.json # Catalogs plugins
+├── plugin-a/
+│   ├── .claude-plugin/
+│   │   └── plugin.json  # Plugin A's manifest
 │   ├── commands/
 │   ├── agents/
-│   ├── hooks/
-│   │   └── hooks.json   # Auto-discovered hooks
 │   └── README.md
-├── plugin-b/            # No .claude-plugin/ here
+├── plugin-b/
+│   ├── .claude-plugin/
+│   │   └── plugin.json  # Plugin B's manifest
 │   ├── skills/
 │   └── README.md
 └── README.md
 ```
 
-**Key difference:** Marketplace plugins are defined in `marketplace.json` with a `source` field pointing to each plugin directory. The plugin directories themselves contain only components (commands, agents, hooks, skills), not manifest files.
+**Key principle:** Plugins are self-contained. The marketplace.json simply points to plugin directories via `source`. Marketplace entries can supplement metadata but should not replace the plugin's own manifest.
 
 ## Directory Structure
 
@@ -113,12 +113,19 @@ my-plugin/
 
 | Field | Type | Description |
 |-------|------|-------------|
-| `commands` | array | Custom paths to command files |
-| `agents` | array | Custom paths to agent files |
-| `mcpServers` | object | MCP server configurations |
-| `strict` | boolean | Require plugin.json (default: true) |
+| `commands` | string\|array | Custom paths to command files or directories |
+| `agents` | string\|array | Custom paths to agent files |
+| `hooks` | string\|object | Hook config path or inline config |
+| `mcpServers` | string\|object | MCP config path or inline config |
+| `lspServers` | string\|object | LSP config path or inline config |
 
-> **Note:** Hooks are NOT defined in plugin.json. They are auto-discovered from `hooks/hooks.json`.
+### Behavior Control
+
+| Field | Type | Default | Description |
+|-------|------|---------|-------------|
+| `strict` | boolean | `true` | When `true`, marketplace entry merges with plugin's manifest. When `false`, plugin needs no manifest. |
+
+> **Note:** Hooks can be defined inline in plugin.json OR in a separate `hooks/hooks.json` file.
 
 ### Complete Example
 
@@ -157,7 +164,7 @@ my-plugin/
 }
 ```
 
-> **Note:** Hooks are defined in `hooks/hooks.json`, not in plugin.json. See [Event Hooks](#event-hooks) below.
+> **Note:** Hooks can be inlined in plugin.json (add a `"hooks"` key) or defined in `hooks/hooks.json`. See [Event Hooks](#event-hooks) below.
 
 ## Slash Commands
 
@@ -229,16 +236,41 @@ Your responsibilities:
 
 ## Event Hooks
 
-Hooks are **auto-discovered** from `hooks/hooks.json` inside the plugin directory. Do NOT define hooks in `plugin.json`.
+Two ways to define hooks in a plugin:
 
-### Hook File Location
+1. **Inline in plugin.json** — Add a `"hooks"` key directly
+2. **File-based** — Auto-discovered from `hooks/hooks.json`
+
+### Option 1: Inline in plugin.json
+
+```json
+{
+  "name": "my-plugin",
+  "version": "1.0.0",
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "${CLAUDE_PLUGIN_ROOT}/scripts/format.sh"
+          }
+        ]
+      }
+    ]
+  }
+}
+```
+
+### Option 2: Separate hooks.json File
 
 ```
 my-plugin/
 ├── .claude-plugin/
-│   └── plugin.json      # NO hooks field here
+│   └── plugin.json      # Can also have hooks inline here
 └── hooks/
-    └── hooks.json       # Hooks defined here (auto-discovered)
+    └── hooks.json       # Auto-discovered if present
 ```
 
 ### Hook Types
@@ -254,7 +286,7 @@ my-plugin/
 
 ### hooks/hooks.json Format
 
-**Important:** The file requires a root-level `"hooks"` wrapper:
+When using a separate file, it requires a root-level `"hooks"` wrapper:
 
 ```json
 {
@@ -289,8 +321,8 @@ my-plugin/
 
 ### Key Points
 
-- Hooks are auto-discovered from `hooks/hooks.json`
-- The file MUST have a root `"hooks"` object wrapper
+- Hooks can be inline in plugin.json OR in `hooks/hooks.json`
+- Both formats use a `"hooks"` object containing event types
 - Use `${CLAUDE_PLUGIN_ROOT}` for paths relative to plugin
 - Use `$file` for the affected file path in PostToolUse
 

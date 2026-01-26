@@ -346,7 +346,7 @@ git show <snapshot>:index/path/to/file.txt
 
 - [gitbutler-virtual-branches](../virtual-branches/SKILL.md) — Core GitButler workflows
 - [gitbutler-stacks](../stacks/SKILL.md) — Stacked branches
-- [multi-agent-vcs](../../../outfitter/skills/multi-agent-vcs/SKILL.md) — Tool-agnostic multi-agent policy
+- **outfitter:multi-agent-vcs** — Tool-agnostic multi-agent policy (invoke with Skill tool)
 
 ### External
 

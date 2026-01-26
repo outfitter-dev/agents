@@ -306,6 +306,5 @@ NEVER:
 - [evidence-patterns.md](references/evidence-patterns.md) - diagnostic techniques
 - [reproduction.md](references/reproduction.md) - reproduction techniques
 - [integration.md](references/integration.md) - workflow integration, anti-patterns
-- [FORMATTING.md](../../shared/rules/FORMATTING.md) - formatting conventions
 
 </references>

@@ -301,7 +301,6 @@ NEVER:
 
 Core methodology:
 - [checklist.md](references/checklist.md) — extended checklist details, examples, severity guidance
-- [FORMATTING.md](../../shared/rules/FORMATTING.md) — formatting conventions
 
 Related skills:
 - codebase-recon — evidence-based investigation (foundation for review)

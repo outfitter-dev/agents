@@ -1080,8 +1080,6 @@ exit 0
 
 ## Environment Variables
 
-> **See also:** [Environment Variables Reference](../../shared/rules/ENV-VARS.md) for comprehensive documentation on `${CLAUDE_PLUGIN_ROOT}` vs `$CLAUDE_PROJECT_DIR`.
-
 ### Available Variables
 
 #### `$CLAUDE_PROJECT_DIR`

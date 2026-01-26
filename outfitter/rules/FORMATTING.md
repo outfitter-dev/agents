@@ -168,9 +168,9 @@ Avoid: `[path/to/filename.md](path/to/filename.md)`
 ```text
 # Good
 - [confidence.md](references/confidence.md)
-- [FORMATTING.md](../../shared/rules/FORMATTING.md)
+- [FORMATTING.md](../rules/FORMATTING.md)
 
 # Avoid
 - [references/confidence.md](references/confidence.md)
-- [../../shared/rules/FORMATTING.md](../../shared/rules/FORMATTING.md)
+- [../rules/FORMATTING.md](../rules/FORMATTING.md)
 ```

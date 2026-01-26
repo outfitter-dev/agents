@@ -332,7 +332,6 @@ NEVER:
 <references>
 
 **Core**:
-- [FORMATTING.md](../../shared/rules/FORMATTING.md) — formatting conventions
 
 **Deep Dives**:
 - [technology-selection.md](references/technology-selection.md) — database, framework, infrastructure selection

@@ -34,6 +34,8 @@ A marketplace is a catalog of plugins defined in `.claude-plugin/marketplace.jso
 
 ### Complete Example
 
+Keep plugin entries minimal when plugins have their own `.claude-plugin/plugin.json`:
+
 ```json
 {
   "name": "company-tools",
@@ -44,26 +46,28 @@ A marketplace is a catalog of plugins defined in `.claude-plugin/marketplace.jso
   "metadata": {
     "description": "Internal development tools",
     "version": "2.0.0",
-    "pluginRoot": "./plugins",
     "homepage": "https://docs.company.com/plugins"
   },
   "plugins": [
     {
       "name": "code-formatter",
-      "source": "./code-formatter",
-      "description": "Automatic code formatting",
-      "version": "2.1.0",
-      "author": {"name": "Tools Team"},
-      "keywords": ["formatting", "code-quality"],
-      "category": "development"
+      "source": "./code-formatter"
+    },
+    {
+      "name": "deployment-tools",
+      "source": "./deployment"
     }
   ]
 }
 ```
 
+Each plugin directory should have its own `.claude-plugin/plugin.json` with metadata.
+
 ## Plugin Entry Schema
 
-### Minimal Entry
+### Minimal Entry (Recommended)
+
+When the plugin has its own `.claude-plugin/plugin.json`:
 
 ```json
 {
@@ -72,7 +76,11 @@ A marketplace is a catalog of plugins defined in `.claude-plugin/marketplace.jso
 }
 ```
 
-### Complete Entry
+The marketplace just points to the plugin. Metadata comes from the plugin's own manifest.
+
+### Verbose Entry
+
+When referencing external repos or plugins without their own manifest, provide metadata in the marketplace entry:
 
 ```json
 {
@@ -88,38 +96,56 @@ A marketplace is a catalog of plugins defined in `.claude-plugin/marketplace.jso
     "name": "Enterprise Team",
     "email": "team@company.com"
   },
-  "homepage": "https://docs.company.com/plugins",
-  "repository": "https://github.com/company/plugin",
   "license": "MIT",
-  "keywords": ["enterprise", "workflow"],
-  "category": "productivity",
-  "strict": false
+  "keywords": ["enterprise", "workflow"]
 }
 ```
+
+Use verbose entries when:
+- The plugin is an external GitHub repo without its own manifest
+- You need to override or supplement the plugin's metadata
+- The plugin predates the `.claude-plugin/plugin.json` convention
 
 ### Entry Fields
 
 **Required:**
-- `name` - Plugin identifier (kebab-case)
-- `source` - Where to fetch plugin
 
-**Optional:**
-- `description` - Brief description
-- `version` - Plugin version
-- `author` - Author info
-- `homepage` - Documentation URL
-- `repository` - Source URL
-- `license` - SPDX identifier
-- `keywords` - Search tags
-- `category` - Plugin category
-- `tags` - Additional tags
-- `strict` - Require plugin.json (default: true)
+| Field | Type | Description |
+|-------|------|-------------|
+| `name` | string | Plugin identifier (kebab-case, no spaces) |
+| `source` | string\|object | Where to fetch plugin (relative path, GitHub, or git URL) |
 
-**Component overrides:**
-- `commands` - Custom command paths
-- `agents` - Custom agent paths
-- `hooks` - Hook configurations
-- `mcpServers` - MCP configurations
+**Standard metadata** (optional):
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `description` | string | Brief plugin description |
+| `version` | string | Plugin version |
+| `author` | object | Author info (`name` required, `email` optional) |
+| `homepage` | string | Documentation URL |
+| `repository` | string | Source code URL |
+| `license` | string | SPDX identifier (MIT, Apache-2.0) |
+| `keywords` | array | Tags for discovery |
+| `category` | string | Plugin category |
+| `tags` | array | Additional searchability tags |
+
+**Behavior control:**
+
+| Field | Type | Default | Description |
+|-------|------|---------|-------------|
+| `strict` | boolean | `true` | When `true`, plugin must have `.claude-plugin/plugin.json` and marketplace fields merge with it. When `false`, plugin needs no manifest - marketplace entry defines everything. |
+
+**Component configuration** (optional):
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `commands` | string\|array | Custom paths to command files or directories |
+| `agents` | string\|array | Custom paths to agent files |
+| `hooks` | string\|object | Hook configuration or path to hooks file |
+| `mcpServers` | string\|object | MCP server configuration or path to MCP config |
+| `lspServers` | string\|object | LSP server configuration or path to LSP config |
+
+Use component fields when defining simple plugins entirely in the marketplace (`strict: false`) or to supplement/override paths from the plugin's own manifest.
 
 ## Plugin Source Types
 

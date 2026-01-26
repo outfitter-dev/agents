@@ -213,6 +213,5 @@ NEVER:
 - [discovery-patterns.md](references/discovery-patterns.md) — detailed research workflows
 
 **Related resources**:
-- [FORMATTING.md](../../shared/rules/FORMATTING.md) — formatting conventions
 
 </references>
