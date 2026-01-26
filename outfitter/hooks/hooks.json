@@ -1,0 +1,16 @@
+{
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Write(**/SKILL.md)|Edit(**/SKILL.md)",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "${CLAUDE_PLUGIN_ROOT}/scripts/validate-skill-frontmatter.ts",
+            "timeout": 10
+          }
+        ]
+      }
+    ]
+  }
+}

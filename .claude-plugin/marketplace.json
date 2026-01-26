@@ -12,45 +12,49 @@
 	},
 	"plugins": [
 		{
-			"name": "baselayer",
-			"source": "./baselayer",
-			"description": "Core development methodology skills: TDD, systematic debugging, type safety, architecture design, technical research, and requirements discovery",
-			"version": "0.8.1",
+			"name": "outfitter",
+			"source": "./outfitter",
+			"description": "Core development methodology and Claude Code extensibility. Includes TDD, debugging, architecture, research, multi-agent coordination, plus skills/plugins/agents/hooks authoring for Claude Code and Codex configuration.",
+			"version": "1.0.0",
 			"keywords": [
 				"tdd",
 				"debugging",
 				"type-safety",
 				"architecture",
 				"research",
-				"methodology"
-			]
-		},
-		{
-			"name": "agent-kit",
-			"source": "./agent-kit",
-			"description": "Skills for authoring Agent Skills (cross-tool) and platform-specific configuration for Claude Code, Codex, and other AI coding assistants",
-			"version": "2.6.1",
-			"keywords": [
+				"methodology",
+				"multi-agent",
+				"coordination",
 				"agent-skills",
 				"skills-development",
 				"claude-code",
 				"codex",
-				"configuration",
 				"plugins",
-				"cross-tool"
+				"hooks"
 			]
 		},
 		{
-			"name": "vcs",
-			"source": "./vcs",
-			"description": "Version control workflows for Graphite stacks, GitButler branches, and multi-agent coordination",
+			"name": "but",
+			"source": "./but",
+			"description": "GitButler virtual branch workflows for parallel development, multi-agent coordination, and post-hoc commit organization",
+			"version": "1.0.0",
+			"keywords": [
+				"gitbutler",
+				"virtual-branches",
+				"parallel-development",
+				"multi-agent"
+			]
+		},
+		{
+			"name": "gt",
+			"source": "./gt",
+			"description": "Graphite stack workflows for trunk-based development with stacked PRs",
 			"version": "1.0.0",
 			"keywords": [
 				"graphite",
-				"gitbutler",
-				"git",
-				"stacks",
-				"version-control"
+				"stacked-prs",
+				"trunk-based",
+				"gt-commands"
 			]
 		},
 		{

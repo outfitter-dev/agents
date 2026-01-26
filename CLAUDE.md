@@ -36,9 +36,10 @@ Each plugin follows Claude Code's plugin structure with a `.claude-plugin/plugin
 
 | Plugin | Purpose |
 |--------|---------|
-| **baselayer** | Core development methodology: TDD, debugging, type safety, architecture, research |
-| **agent-kit** | Authoring Claude Code plugins, agents, skills, and configuration |
-| **gitbutler** | GitButler virtual branch workflows for parallel development |
+| **outfitter** | Core methodology + Claude Code extensibility (TDD, debugging, architecture, research, plugins, skills, agents) |
+| **but** | GitButler virtual branch workflows for parallel development |
+| **gt** | Graphite stacked PR workflows for trunk-based development |
+| **cli-dev** | CLI development: argument parsing, help text, subcommands |
 
 ## Working with Skills
 
@@ -46,30 +47,34 @@ Skills are markdown-based instruction sets that guide agent behavior for specifi
 
 ### Finding Skills
 
-```bash
-# List all skills in the repo
-find . -name "SKILL.md" -not -path "*/node_modules/*"
+| Plugin | Path | Contains |
+|--------|------|----------|
+| outfitter | `outfitter/skills/` | TDD, debugging, pathfinding, plugin authoring |
+| but | `but/skills/` | GitButler virtual branch workflows |
+| gt | `gt/skills/` | Graphite stacked PR workflows |
+| cli-dev | `cli-dev/skills/` | CLI development patterns |
 
-# Skills live under each plugin
-baselayer/skills/     # TDD, debugging, pathfinding, etc.
-agent-kit/skills/     # Plugin authoring, agents, skills, config
-gitbutler/skills/     # Version control workflows
+```bash
+# List all skills
+find . -name "SKILL.md" -not -path "*/node_modules/*"
 ```
 
 ### Loading Skills into Context
 
 To use a skill, read the `SKILL.md` file into context. Skills use **progressive disclosure**:
 
-1. **Start with SKILL.md** - Contains YAML frontmatter (name, description, triggers) plus the core workflow
-2. **Load references on demand** - `references/` subdirectory has deep-dive docs
-3. **Check examples** - `examples/` or `EXAMPLES.md` for concrete patterns
+| Step | File | Contains |
+|------|------|----------|
+| 1. Core | `SKILL.md` | YAML frontmatter + workflow |
+| 2. Deep-dive | `references/*.md` | Detailed patterns, edge cases |
+| 3. Examples | `examples/` or `EXAMPLES.md` | Concrete worked patterns |
 
 ```bash
 # Example: load the pathfinding skill
-cat baselayer/skills/pathfinding/SKILL.md
+cat outfitter/skills/pathfinding/SKILL.md
 
 # If you need more detail on confidence levels
-cat baselayer/skills/pathfinding/references/confidence.md
+cat outfitter/skills/pathfinding/references/confidence.md
 ```
 
 ### Skill Anatomy
@@ -115,6 +120,8 @@ The root `.claude-plugin/marketplace.json` defines available plugins with source
 
 ## Conventions
 
-- **Bun** is the runtime and package manager for TypeScript projects
-- **Biome** for linting and formatting
-- Skills should follow formatting conventions in `.claude/rules/FORMATTING.md`
+| Tool | Purpose |
+|------|---------|
+| Bun | Runtime and package manager |
+| Biome | Linting and formatting |
+| `.claude/rules/FORMATTING.md` | Skill output formatting conventions |

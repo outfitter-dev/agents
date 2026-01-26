@@ -1,3 +1,3 @@
 # Formatting Conventions
 
-@../../baselayer/shared/`rules/`FORMATTING.md
+@../../outfitter/shared/`rules/`FORMATTING.md

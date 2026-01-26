@@ -52,18 +52,18 @@ Only `.claude-plugin/`, `skills/`, and `README.md` are required.
 
 | Plugin | Purpose |
 |--------|---------|
-| **baselayer** | Core methodology: TDD, debugging, type safety, architecture, research, pathfinding |
-| **agent-kit** | Authoring skills, plugins, agents, and platform configuration (Claude Code, Codex) |
-| **gitbutler** | GitButler virtual branch workflows, multi-agent collaboration |
+| **outfitter** | Core methodology + extensibility: TDD, debugging, architecture, research, pathfinding, plus plugin/skill/agent authoring |
+| **but** | GitButler virtual branch workflows, multi-agent collaboration |
+| **gt** | Graphite stacked PR workflows, trunk-based development |
 | **cli-dev** | CLI development: argument parsing, help text, subcommands |
 
 ## Layer Strategy
 
-**baselayer**: Universal skills (tdd, debugging, type-safety, pathfinding)
-**domain plugins**: Tool-specific (gitbutler, cli-dev, agent-kit)
+**outfitter**: Universal skills (tdd, debugging, type-safety, pathfinding, extensibility)
+**domain plugins**: Tool-specific (but, gt, cli-dev)
 **user overrides**: `~/.claude/` and project `.claude/`
 
-Hierarchy: user → project → plugin → baselayer
+Hierarchy: user → project → plugin → outfitter
 
 ## Component Decision Tree
 
@@ -88,6 +88,6 @@ Keep SKILL.md focused. Move details to references/.
 
 ## Cross-Referencing
 
-Skills reference skills: "Consider using the **baselayer:test-driven-development** skill for this task."
+Skills reference skills: "Consider using the **outfitter:tdd** skill for this task."
 Agents load skills: "Load TDD skill with Skill tool"
 Commands invoke skills: "Load the **debugging** skill and begin by..."

@@ -18,33 +18,35 @@ This repository hosts the **Outfitter Marketplace** — a curated collection of 
 
 ## Available Plugins
 
-### baselayer
+### outfitter
 
-Core development methodology skills: TDD, debugging, architecture, research, and code quality.
+Core development methodology and Claude Code extensibility. Includes TDD, debugging, architecture, research, plus skills/plugins/agents/hooks authoring.
 
 ```bash
-/plugin install baselayer@outfitter
+/plugin install outfitter@outfitter
 ```
 
-**18 skills** including:
+**35 skills** including:
 - Test-driven development (Red-Green-Refactor)
 - Systematic debugging (root cause first)
 - Architecture design with tradeoff analysis
 - Technical research with citations
 - TypeScript, Bun, Hono, React patterns
+- Plugin, skill, agent, command, hook authoring
+- Claude Code and Codex configuration
 
-**7 agents**: developer, analyst, reviewer, tester, specialist, skeptic, pattern-analyzer
+**11 agents**: quartermaster, analyst, debugger, engineer, librarian, pattern-analyzer, reviewer, scout, skeptic, specialist, tester
 
-[See baselayer/README.md](baselayer/README.md)
+[See outfitter/README.md](outfitter/README.md)
 
 ---
 
-### gitbutler
+### but
 
 GitButler virtual branch workflows for parallel development and multi-agent collaboration.
 
 ```bash
-/plugin install gitbutler@outfitter
+/plugin install but@outfitter
 ```
 
 **4 skills** for:
@@ -55,41 +57,50 @@ GitButler virtual branch workflows for parallel development and multi-agent coll
 
 **1 agent**: gitbutler-expert
 
-[See gitbutler/README.md](gitbutler/README.md)
+[See but/README.md](but/README.md)
 
 ---
 
-### agent-kit
+### gt
 
-Cross-tool skills plus Claude Code authoring, validation, and configuration utilities.
+Graphite stacked PR workflows for trunk-based development.
 
 ```bash
-/plugin install agent-kit@outfitter
+/plugin install gt@outfitter
 ```
 
-**What it does:**
-- **Cross-tool skills** for Agent Skills authoring and validation
-- **Claude Code skills** for plugin authoring, commands, hooks, skills, agents, config, and distribution
-- **Utility scripts** for plugin workflow (`init-plugin.sh`, `validate-plugin.sh`, `test-plugin.sh`)
+**Skills** for:
+- Stacked PR management
+- Trunk-based development with `gt` commands
 
-**Use when:** Building plugins, creating commands/hooks/skills/agents, configuring Claude, or distributing plugins.
+[See gt/README.md](gt/README.md)
 
-[See agent-kit/README.md](agent-kit/README.md)
+---
+
+### cli-dev
+
+CLI development skills: argument parsing, help text, subcommands.
+
+```bash
+/plugin install cli-dev@outfitter
+```
+
+[See cli-dev/README.md](cli-dev/README.md)
 
 ## Quick Start
 
-For most projects, start with baselayer:
+For most projects, start with outfitter:
 
 ```bash
 # Add marketplace and install foundation
 /plugin marketplace add outfitter-dev/agents
-/plugin install baselayer@outfitter
+/plugin install outfitter@outfitter
 
 # Add GitButler if using virtual branches
-/plugin install gitbutler@outfitter
+/plugin install but@outfitter
 
-# Add agent-kit if building plugins
-/plugin install agent-kit@outfitter
+# Add Graphite if using stacked PRs
+/plugin install gt@outfitter
 ```
 
 ## Repository Structure
@@ -98,10 +109,10 @@ For most projects, start with baselayer:
 agents/
 ├── .claude-plugin/
 │   └── marketplace.json    # Plugin catalog
-├── baselayer/              # Core methodology (18 skills, 7 agents)
-├── gitbutler/              # Virtual branch workflows (4 skills, 1 agent)
-├── agent-kit/              # Authoring + validation + config utilities
-├── shared/                 # Shared scripts and utilities
+├── outfitter/              # Core methodology + extensibility (35 skills, 11 agents)
+├── but/                    # GitButler workflows (4 skills, 1 agent)
+├── gt/                     # Graphite workflows
+├── cli-dev/                # CLI development
 ├── SECURITY.md             # Security model and review guidelines
 └── README.md
 ```
@@ -112,59 +123,78 @@ Plugins are code. Review what you install. See [SECURITY.md](SECURITY.md) for th
 
 | Plugin | Filesystem | Shell | Scripts | Notes |
 |--------|------------|-------|---------|-------|
-| baselayer | read | no | no | Instructions-only |
-| gitbutler | read | yes | no | Runs `but`/`git` commands |
-| agent-kit | read/write | yes | yes | Scaffolding scripts |
+| outfitter | read/write | yes | yes | Includes scaffolding scripts |
+| but | read | yes | no | Runs `but`/`git` commands |
+| gt | read | yes | no | Runs `gt`/`git` commands |
+| cli-dev | read | no | no | Instructions-only |
 
 ## Skills Reference
 
-| Plugin | Skill | Description |
-|--------|-------|-------------|
-| baselayer | tdd | Test-driven development with Red-Green-Refactor |
-| baselayer | debugging | Systematic root cause investigation |
-| baselayer | analysis | Evidence-based investigation methodology |
-| baselayer | software-architecture | System design with technology selection |
-| baselayer | research | Multi-source technical research with citations |
-| baselayer | pathfinding | Collaborative Q&A for unclear requirements |
-| baselayer | complexity-analysis | Pushback against over-engineering |
-| baselayer | patternify | Extract reusable patterns from conversations |
-| baselayer | code-review | Pre-commit quality gate checklist |
-| baselayer | scenario-testing | End-to-end testing without mocks |
-| baselayer | software-engineering | Engineering judgment and decision principles |
-| baselayer | conversation-analysis | Signal extraction from chat history |
-| baselayer | typescript-dev | TypeScript patterns and strict typing |
-| baselayer | bun-dev | Bun runtime APIs and patterns |
-| baselayer | hono-dev | Type-safe Hono API development |
-| baselayer | react-dev | React 18-19 TypeScript patterns |
-| baselayer | performance-engineering | Profiling and optimization |
-| baselayer | security-engineering | Security auditing and vulnerability detection |
-| gitbutler | version-control | Core GitButler workflow patterns |
-| gitbutler | multi-agent | Coordinate multiple AI agents |
-| gitbutler | stack-workflows | Stacked branches with `--anchor` |
-| gitbutler | complete-branch | Safely merge virtual branches to main |
-| agent-kit | claude-plugin-development | Create, validate, and distribute Claude Code plugins |
-| agent-kit | claude-command-authoring | Create Claude Code slash commands |
-| agent-kit | claude-hook-authoring | Create Claude Code hooks |
-| agent-kit | claude-agent-development | Create and validate Claude Code agents |
-| agent-kit | claude-code-configuration | Manage Claude configuration files |
-| agent-kit | skills-development | Create and validate cross-tool Agent Skills |
-| agent-kit | codex-configuration | Manage Codex CLI configuration |
+### outfitter - Development Methodology
+
+| Skill | Description |
+|-------|-------------|
+| tdd | Test-driven development with Red-Green-Refactor |
+| debugging | Systematic root cause investigation |
+| codebase-recon | Evidence-based investigation methodology |
+| architecture | System design with technology selection |
+| research | Multi-source technical research with citations |
+| pathfinding | Collaborative Q&A for unclear requirements |
+| simplify | Pushback against over-engineering |
+| patternify | Extract reusable patterns from conversations |
+| code-review | Pre-commit quality gate checklist |
+| scenarios | End-to-end testing without mocks |
+| software-craft | Engineering judgment and decision principles |
+| typescript-dev | TypeScript patterns and strict typing |
+| bun-dev | Bun runtime APIs and patterns |
+| hono-dev | Type-safe Hono API development |
+| react-dev | React 18-19 TypeScript patterns |
+| performance | Profiling and optimization |
+| security | Security auditing and vulnerability detection |
+
+### outfitter - Claude Code Extensibility
+
+| Skill | Description |
+|-------|-------------|
+| skills-dev | Agent Skills authoring (cross-platform spec + Claude extensions via `references/claude-code.md`) |
+| claude-plugins | Create, validate, and distribute Claude Code plugins |
+| claude-agents | Create and validate Claude Code agents |
+| claude-commands | Create Claude Code slash commands |
+| claude-hooks | Create Claude Code hooks |
+| claude-rules | Project rules in .claude/rules/ |
+| claude-config | Manage Claude Code/Desktop configuration |
+| codex-config | Manage Codex CLI configuration |
+
+### but - GitButler
+
+| Skill | Description |
+|-------|-------------|
+| virtual-branches | Core GitButler workflow patterns |
+| multi-agent | Coordinate multiple AI agents |
+| stacks | Stacked branches with `--anchor` |
+| complete-branch | Safely merge virtual branches to main |
+
+### gt - Graphite
+
+| Skill | Description |
+|-------|-------------|
+| stacks | Stacked PR workflows with `gt` commands |
 
 ## Plugin Development
 
-Want to add your own plugin to the marketplace?
+Want to build your own Claude Code plugin?
 
-1. **Install agent-kit**: Get the plugin authoring skills
+1. **Install outfitter**: Get the plugin authoring skills
 
    ```bash
-   /plugin install agent-kit@outfitter
+   /plugin install outfitter@outfitter
    ```
 
-2. **Create your plugin**: Use the skills to build your plugin
+2. **Use the extensibility skills**: `claude-plugins`, `skills-dev`, `claude-agents`, etc.
 
 3. **Submit a PR**: Add your plugin to `.claude-plugin/marketplace.json`
 
-See [agent-kit/README.md](agent-kit/README.md) for detailed guidance.
+See [outfitter/README.md](outfitter/README.md) for detailed guidance.
 
 ## Links
 
