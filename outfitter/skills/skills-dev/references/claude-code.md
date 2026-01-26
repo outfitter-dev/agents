@@ -1,6 +1,8 @@
 # Claude Code Extensions
 
-Claude Code-specific implementation details for Agent Skills. For cross-platform concepts (structure, frontmatter, validation), see the main [SKILL.md](../SKILL.md).
+> **Note**: For comprehensive Claude Code skill development, load the `outfitter:claude-skills` skill. This reference provides a quick overview.
+
+Claude Code-specific implementation details for Agent Skills. For cross-platform concepts (structure, frontmatter, validation), load the `outfitter:skills-dev` skill.
 
 ## Table of Contents
 
@@ -612,9 +614,15 @@ claude --debug
 
 ## Related Resources
 
-- [SKILL.md](../SKILL.md) — Cross-platform skill structure and validation
-- [best-practices.md](./best-practices.md) — Community patterns and testing strategies
-- [patterns.md](./patterns.md) — Advanced skill patterns and degrees of freedom
-- [claude-plugins](../../claude-plugins/SKILL.md) — Plugin development
-- [claude-hooks](../../claude-hooks/SKILL.md) — Hook integration
-- [claude-commands](../../claude-commands/SKILL.md) — Command integration
+For comprehensive guidance, load the relevant skill:
+
+- Claude Code skills: `outfitter:claude-skills`
+- Cross-platform skills: `outfitter:skills-dev`
+- Plugin development: `outfitter:claude-plugins`
+- Hook integration: `outfitter:claude-hooks`
+- Command integration: `outfitter:claude-commands`
+
+Reference docs in this directory:
+
+- [best-practices.md](best-practices.md) — Community patterns and testing strategies
+- [patterns.md](patterns.md) — Advanced skill patterns and degrees of freedom
