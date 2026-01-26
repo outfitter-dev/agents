@@ -63,7 +63,7 @@ Skills moved and renamed to shorter forms. Prefix changes from `baselayer:` to `
 | `baselayer:cli-development-guidelines` | `outfitter:cli-dev` |
 | `baselayer:pathfinding` | `outfitter:pathfinding` |
 | `baselayer:code-review` | `outfitter:code-review` |
-| `baselayer:patternify` | `outfitter:patternify` |
+| `baselayer:patternify` | `outfitter:codify` |
 | `baselayer:context-management` | `outfitter:context-management` |
 | *(all other baselayer skills)* | *(same pattern)* |
 
@@ -129,7 +129,7 @@ Claude-specific guidance (tool restrictions, testing, troubleshooting) is now in
 | `baselayer:specialist` | `outfitter:specialist` |
 | `baselayer:scout` | `outfitter:scout` |
 | `baselayer:librarian` | `outfitter:librarian` |
-| `baselayer:pattern-analyzer` | `outfitter:pattern-analyzer` |
+| `baselayer:pattern-analyzer` | `outfitter:analyst` |
 | `vcs:gitbutler-expert` | `but:gitbutler-expert` |
 
 ### Agent Renames (outfitter 1.0)
@@ -147,7 +147,7 @@ Claude-specific guidance (tool restrictions, testing, troubleshooting) is now in
 | `/baselayer:tdd` | *(removed — use `outfitter:tdd` skill directly)* |
 | `/baselayer:pathfind` | `/outfitter:collab` |
 | `/baselayer:simplify` | `/outfitter:simplify` |
-| `/baselayer:patternify` | `/outfitter:patternify` |
+| `/baselayer:patternify` | `/outfitter:codify` |
 | `/baselayer:sitrep` | `/outfitter:sitrep` |
 | `/baselayer:best-tool` | `/outfitter:toolcheck` |
 | `/baselayer:dispatch-agents` | `/outfitter:crew:dispatch` |

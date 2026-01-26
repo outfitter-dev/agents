@@ -16,21 +16,38 @@ A marketplace is a catalog of plugins defined in `.claude-plugin/marketplace.jso
 
 | Field | Type | Description |
 |-------|------|-------------|
-| `name` | string | Marketplace identifier (kebab-case) |
+| `name` | string | Marketplace identifier (kebab-case, no spaces) |
 | `owner` | object | Maintainer information |
-| `owner.name` | string | Maintainer name |
-| `owner.email` | string | Contact email |
 | `plugins` | array | List of plugin entries |
+
+### Owner Fields
+
+| Field | Required | Description |
+|-------|----------|-------------|
+| `owner.name` | Yes | Name of maintainer or team |
+| `owner.email` | No | Contact email |
+
+### Reserved Names
+
+The following marketplace names are reserved and cannot be used:
+
+- `claude-code-marketplace`
+- `claude-code-plugins`
+- `claude-plugins-official`
+- `anthropic-marketplace`
+- `anthropic-plugins`
+- `agent-skills`
+- `life-sciences`
+
+Names that impersonate official marketplaces (like `official-claude-plugins` or `anthropic-tools-v2`) are also blocked.
 
 ### Optional Metadata
 
 | Field | Type | Description |
 |-------|------|-------------|
-| `metadata.description` | string | Marketplace description |
+| `metadata.description` | string | Brief marketplace description |
 | `metadata.version` | string | Marketplace version |
-| `metadata.pluginRoot` | string | Base path for relative sources |
-| `metadata.homepage` | string | Documentation URL |
-| `metadata.repository` | string | Source code URL |
+| `metadata.pluginRoot` | string | Base directory prepended to relative plugin source paths (e.g., `"./plugins"` lets you write `"source": "formatter"` instead of `"source": "./plugins/formatter"`) |
 
 ### Complete Example
 
@@ -45,8 +62,7 @@ Keep plugin entries minimal when plugins have their own `.claude-plugin/plugin.j
   },
   "metadata": {
     "description": "Internal development tools",
-    "version": "2.0.0",
-    "homepage": "https://docs.company.com/plugins"
+    "version": "2.0.0"
   },
   "plugins": [
     {
@@ -191,6 +207,25 @@ With specific version:
 }
 ```
 
+Pin to exact commit:
+
+```json
+{
+  "source": {
+    "source": "github",
+    "repo": "owner/plugin-repo",
+    "ref": "v2.0.0",
+    "sha": "a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0"
+  }
+}
+```
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `repo` | string | Required. GitHub repository in `owner/repo` format |
+| `ref` | string | Optional. Git branch or tag (defaults to repository default branch) |
+| `sha` | string | Optional. Full 40-character commit SHA for exact version pinning |
+
 ### Git URL
 
 For GitLab, Bitbucket, or self-hosted:
@@ -204,6 +239,43 @@ For GitLab, Bitbucket, or self-hosted:
   }
 }
 ```
+
+With SHA pinning:
+
+```json
+{
+  "source": {
+    "source": "url",
+    "url": "https://gitlab.com/team/plugin.git",
+    "ref": "main",
+    "sha": "a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0"
+  }
+}
+```
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `url` | string | Required. Full git repository URL (must end with `.git`) |
+| `ref` | string | Optional. Git branch or tag (defaults to repository default branch) |
+| `sha` | string | Optional. Full 40-character commit SHA for exact version pinning |
+
+### Private Repository Authentication
+
+Claude Code supports installing plugins from private repositories. Set the appropriate authentication token in your environment:
+
+| Provider | Environment Variables | Notes |
+|----------|----------------------|-------|
+| GitHub | `GITHUB_TOKEN` or `GH_TOKEN` | Personal access token or GitHub App token |
+| GitLab | `GITLAB_TOKEN` or `GL_TOKEN` | Personal access token or project token |
+| Bitbucket | `BITBUCKET_TOKEN` | App password or repository access token |
+
+Set the token in your shell configuration (`.bashrc`, `.zshrc`) or pass it when running Claude Code:
+
+```bash
+export GITHUB_TOKEN=ghp_xxxxxxxxxxxxxxxxxxxx
+```
+
+Authentication tokens are only used when a repository requires authentication. Public repositories work without tokens.
 
 ## Marketplace Types
 
@@ -251,12 +323,10 @@ For GitLab, Bitbucket, or self-hosted:
 {
   "name": "awesome-plugins",
   "owner": {
-    "name": "Community",
-    "email": "community@example.com"
+    "name": "Community"
   },
   "metadata": {
-    "description": "Curated Claude Code plugins",
-    "homepage": "https://github.com/awesome-claude"
+    "description": "Curated Claude Code plugins"
   },
   "plugins": [
     {

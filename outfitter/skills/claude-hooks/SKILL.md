@@ -16,12 +16,23 @@ Create event hooks that automate workflows, validate operations, and respond to 
 
 ## Hook Types
 
-Two hook execution types:
+Three hook execution types:
 
 | Type | Best For | Example |
 |------|----------|---------|
-| **prompt** | Complex reasoning, context-aware validation | LLM evaluates if action is safe |
 | **command** | Deterministic checks, external tools, performance | Bash script validates paths |
+| **prompt** | Complex reasoning, context-aware validation | LLM evaluates if action is safe |
+| **agent** | Multi-step verification requiring tool access | Agent with Read/Grep tools verifies consistency |
+
+**Command hooks** (for deterministic/fast checks):
+
+```json
+{
+  "type": "command",
+  "command": "${CLAUDE_PLUGIN_ROOT}/scripts/validate.sh",
+  "timeout": 10
+}
+```
 
 **Prompt hooks** (recommended for complex logic):
 
@@ -33,15 +44,18 @@ Two hook execution types:
 }
 ```
 
-**Command hooks** (for deterministic/fast checks):
+**Agent hooks** (for complex multi-step verification):
 
 ```json
 {
-  "type": "command",
-  "command": "${CLAUDE_PLUGIN_ROOT}/scripts/validate.sh",
-  "timeout": 10
+  "type": "agent",
+  "prompt": "Verify this code change maintains consistency with the existing codebase. Check imports, type signatures, and naming conventions. Use Read and Grep tools as needed.",
+  "allowedTools": ["Read", "Grep", "Glob"],
+  "timeout": 120
 }
 ```
+
+Agent hooks spawn a subagent with tool access for verification tasks that require reading files, searching code, or multi-step reasoning. Use when prompt hooks are insufficient.
 
 ## Hook Events
 
@@ -56,6 +70,7 @@ Two hook execution types:
 | **Stop** | Main agent finishes | No | Cleanup, completion notifications |
 | **SubagentStart** | Subagent spawns | No | Track subagent usage |
 | **SubagentStop** | Subagent finishes | No | Log results, trigger follow-ups |
+| **Setup** | `--init`, `--init-only`, or `--maintenance` flags | No | Initialize environment, install dependencies |
 | **PreCompact** | Before context compacts | No | Backup conversation, preserve context |
 | **SessionStart** | Session starts/resumes | No | Load context, show status, init resources |
 | **SessionEnd** | Session ends | No | Cleanup, save state, log metrics |
@@ -226,7 +241,11 @@ All hooks receive JSON on stdin:
 - UserPromptSubmit: `user_prompt`
 - Stop/SubagentStop: `reason`
 
-**Prompt hooks** access fields via: `$TOOL_INPUT`, `$TOOL_RESULT`, `$USER_PROMPT`
+**Prompt hooks** access fields via placeholders:
+- `$ARGUMENTS` - Full context passed to the hook (general-purpose)
+- `$TOOL_INPUT` - Tool input for tool-related events
+- `$TOOL_RESULT` - Tool result (PostToolUse only)
+- `$USER_PROMPT` - User prompt (UserPromptSubmit only)
 
 ### Reading Input
 

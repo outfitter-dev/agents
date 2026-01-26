@@ -48,11 +48,16 @@ Detailed breakdown of which skills each agent can load and when. Agents are grou
 | pathfinding | Unclear requirements, many unknowns |
 | status | Project status, progress reports |
 | report-findings | Structuring analysis output |
+| patterns | Analyzing code patterns |
+| codify | Extracting reusable workflows |
+| session-analysis | Mining conversation for patterns |
 
 **Typical combos**:
 - **codebase-recon** + **report-findings** (codebase exploration)
 - **research** (technology comparison)
 - **pathfinding** (requirements clarification)
+- **codify** + **session-analysis** (capture workflow from session)
+- **patterns** (analyze codebase patterns)
 
 ## debugger (debugging role)
 
@@ -106,20 +111,6 @@ Detailed breakdown of which skills each agent can load and when. Agents are grou
 - Deployment → loads infrastructure patterns
 
 Specialist loads skills dynamically based on detected domain. Other specialist agents (e.g., `cicd-expert`, `design-agent`, `bun-expert`) may be preferred when available.
-
-## pattern-analyzer (patterns role)
-
-**Identity**: Pattern extractor, workflow capturer.
-
-| Skill | Load When |
-|-------|-----------|
-| patterns | Analyzing code patterns |
-| patternify | Extracting reusable workflows |
-| session-analysis | Mining conversation for patterns |
-
-**Typical combos**:
-- **patternify** + **session-analysis** (capture workflow from session)
-- **patterns** (analyze codebase patterns)
 
 ## Skill Categories
 

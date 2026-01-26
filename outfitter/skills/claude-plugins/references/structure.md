@@ -89,9 +89,14 @@ my-plugin/
 
 ### Required Fields
 
+| Field | Type | Description | Example |
+|-------|------|-------------|---------|
+| `name` | string | Unique identifier (kebab-case, no spaces) | `"deployment-tools"` |
+
+### Recommended Metadata Fields
+
 | Field | Type | Description |
 |-------|------|-------------|
-| `name` | string | Plugin identifier (kebab-case, unique) |
 | `version` | string | Semantic version (e.g., "1.0.0") |
 | `description` | string | Brief plugin description |
 
@@ -214,17 +219,33 @@ Agents are markdown files with YAML frontmatter in `agents/`.
 
 ```markdown
 ---
-name: agent-name
-description: "What this agent does"
+description: "What this agent specializes in"
+capabilities: ["task1", "task2", "task3"]
 allowed-tools: Read, Grep, Glob
 ---
 
-You are a specialized agent for [purpose].
+# Agent Name
 
-Your responsibilities:
-1. Task 1
-2. Task 2
+Detailed description of the agent's role, expertise, and when Claude should invoke it.
+
+## Capabilities
+
+- Specific task the agent excels at
+- Another specialized capability
+- When to use this agent vs others
+
+## Context and examples
+
+Provide examples of when this agent should be used.
 ```
+
+### Agent Frontmatter Fields
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `description` | string | Brief explanation of what the agent does |
+| `capabilities` | array | List of tasks the agent can perform (aids discovery) |
+| `allowed-tools` | string | Comma-separated list of allowed tools (optional) |
 
 ### Tool Restrictions
 
@@ -332,10 +353,14 @@ When using a separate file, it requires a root-level `"hooks"` wrapper:
 
 ```json
 {
-  "tool": "Write",
-  "parameters": {
-    "file_path": "/path/to/file.ts",
-    "content": "file content"
+  "session_id": "abc123",
+  "transcript_path": "/path/to/transcript.jsonl",
+  "cwd": "/current/working/directory",
+  "hook_event_name": "PreToolUse",
+  "tool_name": "Write",
+  "tool_input": {
+    "file_path": "/project/src/file.ts",
+    "content": "export const foo = 'bar';"
   }
 }
 ```
@@ -374,8 +399,8 @@ Modify:
 #!/usr/bin/env bash
 input=$(cat)
 
-file_path=$(echo "$input" | jq -r '.parameters.file_path')
-content=$(echo "$input" | jq -r '.parameters.content')
+file_path=$(echo "$input" | jq -r '.tool_input.file_path')
+content=$(echo "$input" | jq -r '.tool_input.content')
 
 # Check for secrets
 if echo "$content" | grep -qiE 'api[_-]?key.*=.*[a-zA-Z0-9]{16,}'; then

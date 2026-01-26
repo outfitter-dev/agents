@@ -32,7 +32,7 @@ Core development methodology and Claude Code extensibility. Provides disciplined
 | **multi-agent-vcs** | Tool-agnostic multi-agent git coordination |
 | **pathfinding** | Collaborative Q&A for unclear requirements |
 | **patterns** | Identify and extract reusable patterns |
-| **patternify** | Extract reusable patterns from conversations |
+| **codify** | Extract reusable patterns from conversations |
 | **performance** | Profiling and optimization |
 | **react-dev** | React 18-19 TypeScript patterns |
 | **report-findings** | Structure and present research findings |
@@ -66,15 +66,14 @@ Core development methodology and Claude Code extensibility. Provides disciplined
 |-------|---------|
 | **codex-config** | OpenAI Codex CLI configuration |
 
-### Agents (11)
+### Agents (10)
 
 | Agent | Role |
 |-------|------|
 | **quartermaster** | Equips and provisions Claude Code extensions (plugins, agents, skills, hooks) |
-| **analyst** | Investigate, research, explore |
+| **analyst** | Investigate, research, explore, identify patterns |
 | **debugger** | Debug, diagnose, troubleshoot, trace |
 | **librarian** | Find documentation, API references |
-| **pattern-analyzer** | Identify patterns and abstractions |
 | **reviewer** | Review, critique, check, audit |
 | **scout** | Status reports, project health, what's changed |
 | **engineer** | Build, fix, implement, refactor |

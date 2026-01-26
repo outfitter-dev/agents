@@ -64,7 +64,7 @@ Coordination uses **roles** (what function is needed) mapped to **agents** (who 
 | testing | **tester** | Validate, prove, verify behavior |
 | challenging | **skeptic** | Challenge complexity, question assumptions |
 | specialist | **specialist** | Domain expertise (CI/CD, design, accessibility, etc.) |
-| patterns | **pattern-analyzer** | Extract reusable patterns from work |
+| patterns | **analyst** | Extract reusable patterns from work |
 
 ### Other Available Agents
 
@@ -344,4 +344,4 @@ For detailed workflows and recovery procedures, see the **source-control** plugi
 
 **"Deploy to production"** → specialist role + domain skills
 
-**"Make this workflow reusable"** → patterns role + patternify
+**"Make this workflow reusable"** → patterns role + codify

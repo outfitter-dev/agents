@@ -35,7 +35,7 @@ Core development methodology and Claude Code extensibility. Includes TDD, debugg
 - Plugin, skill, agent, command, hook authoring
 - Claude Code and Codex configuration
 
-**11 agents**: quartermaster, analyst, debugger, engineer, librarian, pattern-analyzer, reviewer, scout, skeptic, specialist, tester
+**10 agents**: quartermaster, analyst, debugger, engineer, librarian, reviewer, scout, skeptic, specialist, tester
 
 [See outfitter/README.md](outfitter/README.md)
 
@@ -109,7 +109,7 @@ For most projects, start with outfitter:
 agents/
 ├── .claude-plugin/
 │   └── marketplace.json    # Plugin catalog
-├── outfitter/              # Core methodology + extensibility (35 skills, 11 agents)
+├── outfitter/              # Core methodology + extensibility (35 skills, 10 agents)
 ├── but/                    # GitButler workflows (4 skills, 1 agent)
 ├── gt/                     # Graphite workflows
 ├── cli-dev/                # CLI development
@@ -141,7 +141,7 @@ Plugins are code. Review what you install. See [SECURITY.md](SECURITY.md) for th
 | research | Multi-source technical research with citations |
 | pathfinding | Collaborative Q&A for unclear requirements |
 | simplify | Pushback against over-engineering |
-| patternify | Extract reusable patterns from conversations |
+| codify | Extract reusable patterns from conversations |
 | code-review | Pre-commit quality gate checklist |
 | scenarios | End-to-end testing without mocks |
 | software-craft | Engineering judgment and decision principles |

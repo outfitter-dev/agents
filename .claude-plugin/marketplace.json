@@ -6,9 +6,7 @@
 	},
 	"metadata": {
 		"description": "Official Outfitter development tools and integrations for Claude Code",
-		"version": "1.1.0",
-		"homepage": "https://github.com/outfitter-dev/agents",
-		"repository": "https://github.com/outfitter-dev/agents"
+		"version": "1.1.0"
 	},
 	"plugins": [
 		{

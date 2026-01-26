@@ -22,7 +22,7 @@ Full cycle from requirements to delivery:
 5. testing + scenarios
    └─► Validate end-to-end behavior
 
-6. patterns + patternify (optional)
+6. patterns + codify (optional)
    └─► Capture reusable patterns from the work
 ```
 
@@ -166,7 +166,7 @@ Workflows adapt based on:
 
 - **Project phase**: Early = more analyst, late = more tester
 - **Risk level**: High = mandatory skeptic + reviewer
-- **Time pressure**: Can skip pattern-analyzer, abbreviate reviewer
+- **Time pressure**: Can skip patterns role, abbreviate reviewer
 - **Team context**: Solo = lighter review, team = full workflow
 
 User preferences in `CLAUDE.md` override defaults.

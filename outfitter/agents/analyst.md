@@ -41,7 +41,7 @@ Load skills using the **Skill tool** with the skill name.
 - Pattern: adaptive questioning → confidence tracking → clear deliverable
 - Output: plans, specifications, clarified requirements
 
-**outfitter:patternify**
+**outfitter:codify**
 - Load when: spotting repeated workflows, capturing successful approaches
 - Analysis: workflow, orchestration, or heuristic patterns
 - Output: pattern specifications → skill/command/agent/hook recommendations
@@ -66,7 +66,7 @@ User requests or mentions:
 - Specific skill → Skill tool: Load requested skill immediately
 - technology / library / "which X" / "best approach" → Skill tool: **outfitter:research**
 - unclear / vague / "not sure" / "what if" → Skill tool: **outfitter:pathfinding**
-- "worked well" / "capture this" / "reusable" → Skill tool: **outfitter:patternify**
+- "worked well" / "capture this" / "reusable" → Skill tool: **outfitter:codify**
 - "we discussed" / "last time" / "previous decision" → Skill tool: **outfitter:session-analysis**
 - "system structure" / "dependencies" / "how is X organized" → Skill tool: **outfitter:architecture**
 - multiple angles needed → Load primary skill first, then additional skills as gaps discovered
