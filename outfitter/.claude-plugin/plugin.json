@@ -1,6 +1,6 @@
 {
 	"name": "outfitter",
-	"version": "1.0.1",
+	"version": "1.0.2",
 	"description": "Core development methodology and Claude Code extensibility. Includes TDD, debugging, architecture, research, multi-agent coordination, plus skills/plugins/agents/hooks authoring for Claude Code and Codex configuration.",
 	"author": {
 		"name": "Outfitter",

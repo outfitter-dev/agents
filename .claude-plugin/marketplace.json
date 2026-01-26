@@ -6,7 +6,7 @@
 	},
 	"metadata": {
 		"description": "Official Outfitter development tools and integrations for Claude Code",
-		"version": "1.0.1",
+		"version": "1.0.2",
 		"homepage": "https://github.com/outfitter-dev/agents",
 		"repository": "https://github.com/outfitter-dev/agents"
 	},
@@ -15,7 +15,7 @@
 			"name": "outfitter",
 			"source": "./outfitter",
 			"description": "Core development methodology and Claude Code extensibility. Includes TDD, debugging, architecture, research, multi-agent coordination, plus skills/plugins/agents/hooks authoring for Claude Code and Codex configuration.",
-			"version": "1.0.1",
+			"version": "1.0.2",
 			"keywords": [
 				"tdd",
 				"debugging",
