@@ -35,6 +35,8 @@ async function detectOriginRepo(): Promise<string | null> {
     const exitCode = await proc.exited;
 
     if (exitCode !== 0) {
+      const stderr = await new Response(proc.stderr).text();
+      if (stderr) console.error("git remote error:", stderr.trim());
       return null;
     }
 

@@ -502,4 +502,7 @@ async function main() {
   console.log("  4. Begin adoption with plan/01-foundation.md");
 }
 
-main().catch(console.error);
+main().catch((err) => {
+  console.error(err);
+  process.exit(1);
+});

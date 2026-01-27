@@ -37,6 +37,13 @@ Claude Code plugin for @outfitter/* packages. Provides skills, agents, and comma
 | `/adopt [path]` | Phased Outfitter Stack adoption workflow |
 | `/audit [path]` | Quick compliance audit of file or directory |
 
+## Scripts
+
+| Script | Purpose |
+|--------|---------|
+| `skills/stack-audit/scripts/init-audit.ts` | Scan codebase for adoption candidates |
+| `skills/stack-feedback/scripts/create-issue.ts` | Create GitHub issues for stack feedback |
+
 ## Quick Start
 
 ### Learn the Stack
