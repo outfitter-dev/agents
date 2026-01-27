@@ -35,13 +35,44 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Update PR title with versions
+        if: steps.changesets.outputs.pullRequestNumber
+        run: |
+          # Build descriptive title by comparing versions against main
+          VERSIONS=""
+          for plugin in outfitter but gt cli-dev outfitter-stack; do
+            PKG_PATH="plugins/$plugin/package.json"
+            if [ -f "$PKG_PATH" ]; then
+              NEW_VERSION=$(jq -r .version "$PKG_PATH")
+              # Get version from main branch (may not exist for new plugins)
+              OLD_VERSION=$(git show origin/main:"$PKG_PATH" 2>/dev/null | jq -r '.version // "0.0.0"' 2>/dev/null || echo "0.0.0")
+
+              # Include if version changed
+              if [ "$NEW_VERSION" != "$OLD_VERSION" ]; then
+                if [ -n "$VERSIONS" ]; then
+                  VERSIONS="$VERSIONS, "
+                fi
+                VERSIONS="${VERSIONS}${plugin}@${NEW_VERSION}"
+              fi
+            fi
+          done
+
+          if [ -n "$VERSIONS" ]; then
+            TITLE="chore: release $VERSIONS"
+            gh pr edit ${{ steps.changesets.outputs.pullRequestNumber }} --title "$TITLE"
+            echo "Updated PR title to: $TITLE"
+          fi
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Create git tags
         if: steps.changesets.outputs.hasChangesets == 'false'
         run: |
           # After version PR is merged, create tags for each plugin
-          for plugin in outfitter but gt cli-dev; do
-            if [ -f "$plugin/package.json" ]; then
-              VERSION=$(bun -e "try { console.log(require('./$plugin/package.json').version) } catch(e) { console.error('Failed to read version for $plugin'); process.exit(1) }")
+          for plugin in outfitter but gt cli-dev outfitter-stack; do
+            PKG_PATH="plugins/$plugin/package.json"
+            if [ -f "$PKG_PATH" ]; then
+              VERSION=$(jq -r .version "$PKG_PATH")
               TAG="${plugin}@${VERSION}"
 
               # Check if tag already exists
