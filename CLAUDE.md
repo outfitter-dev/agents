@@ -19,18 +19,19 @@ This is the **Outfitter Marketplace** - a collection of Claude Code plugins for 
 
 ### Plugin Structure
 
-Each plugin follows Claude Code's plugin structure with a `.claude-plugin/plugin.json` manifest:
+Each plugin lives in the `plugins/` directory:
 
 ```
-<plugin-name>/
-├── .claude-plugin/
-│   └── plugin.json       # Plugin manifest (name, version, hooks, commands)
-├── agents/               # Custom agents (markdown files)
-├── commands/             # Slash commands (markdown files)
-├── skills/               # Skills with SKILL.md entry points
-├── hooks/                # Event hooks (TypeScript for complex logic)
-└── README.md
+plugins/
+├── <plugin-name>/
+│   ├── agents/           # Custom agents (markdown files)
+│   ├── commands/         # Slash commands (markdown files)
+│   ├── skills/           # Skills with SKILL.md entry points
+│   ├── hooks/            # Event hooks (TypeScript for complex logic)
+│   └── README.md
 ```
+
+Plugin metadata is consolidated in `.claude-plugin/marketplace.json` (no individual plugin.json files needed).
 
 ### Available Plugins
 
@@ -50,10 +51,10 @@ Skills are markdown-based instruction sets that guide agent behavior for specifi
 
 | Plugin | Path | Contains |
 |--------|------|----------|
-| outfitter | `outfitter/skills/` | TDD, debugging, pathfinding, plugin authoring, skills-discovery, skills-workflows |
-| but | `but/skills/` | GitButler virtual branch workflows |
-| gt | `gt/skills/` | Graphite stacked PR workflows |
-| cli-dev | `cli-dev/skills/` | CLI development patterns |
+| outfitter | `plugins/outfitter/skills/` | TDD, debugging, pathfinding, plugin authoring, skills-discovery, skills-workflows |
+| but | `plugins/but/skills/` | GitButler virtual branch workflows |
+| gt | `plugins/gt/skills/` | Graphite stacked PR workflows |
+| cli-dev | `plugins/cli-dev/skills/` | CLI development patterns |
 
 ### Notable Agents
 
@@ -79,10 +80,10 @@ To use a skill, read the `SKILL.md` file into context. Skills use **progressive 
 
 ```bash
 # Example: load the pathfinding skill
-cat outfitter/skills/pathfinding/SKILL.md
+cat plugins/outfitter/skills/pathfinding/SKILL.md
 
 # If you need more detail on confidence levels
-cat outfitter/skills/pathfinding/references/confidence.md
+cat plugins/outfitter/skills/pathfinding/references/confidence.md
 ```
 
 ### Skill Anatomy
@@ -124,7 +125,7 @@ Skills and output should follow `.claude/rules/FORMATTING.md`:
 
 ## Marketplace Configuration
 
-The root `.claude-plugin/marketplace.json` defines available plugins with source locations and metadata. Plugins can reference local directories (`./plugin-name`) or external GitHub repos.
+The root `.claude-plugin/marketplace.json` defines available plugins with source locations and metadata. Local plugins use explicit `./plugins/<name>` paths in source fields (schema requires `./` prefix for relative paths). External plugins reference GitHub repos.
 
 ## Conventions
 
