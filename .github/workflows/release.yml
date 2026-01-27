@@ -70,6 +70,7 @@ jobs:
       - name: Label and auto-merge version PR
         if: steps.changesets.outputs.pullRequestNumber
         run: |
+          set -e
           # Label may fail if it doesn't exist yet - continue anyway
           gh pr edit ${{ steps.changesets.outputs.pullRequestNumber }} --add-label "release:publish" || true
           gh pr merge ${{ steps.changesets.outputs.pullRequestNumber }} --auto --squash
