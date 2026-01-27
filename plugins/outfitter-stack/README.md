@@ -9,7 +9,7 @@ Claude Code plugin for @outfitter/* packages. Provides skills, agents, and comma
 /plugin marketplace add outfitter-dev/agents
 
 # Install plugin
-/plugin install stack@outfitter
+/plugin install outfitter-stack@outfitter
 ```
 
 ## Skills
