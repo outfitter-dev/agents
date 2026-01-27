@@ -35,8 +35,7 @@ async function detectOriginRepo(): Promise<string | null> {
     const exitCode = await proc.exited;
 
     if (exitCode !== 0) {
-      const stderr = await new Response(proc.stderr).text();
-      if (stderr) console.error("git remote error:", stderr.trim());
+      // Silently fail - this is expected when not in a git repo
       return null;
     }
 
@@ -139,8 +138,12 @@ function interpolate(template: string, fields: Record<string, string>): string {
   return result;
 }
 
+/**
+ * Escape single quotes for shell display.
+ * NOTE: This is ONLY used for displaying the command to users (dry-run output).
+ * Actual issue creation uses Bun.spawn with array arguments, which is safe.
+ */
 function escapeForShell(str: string): string {
-  // Escape single quotes for shell
   return str.replace(/'/g, "'\\''");
 }
 

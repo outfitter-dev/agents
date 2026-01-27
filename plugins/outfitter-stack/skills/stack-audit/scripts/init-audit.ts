@@ -12,6 +12,9 @@
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { basename, dirname, join } from "node:path";
 
+// Constants
+const FUNCTION_PROXIMITY_LINES = 50; // How close a throw must be to a function to be associated
+
 // Types
 interface ScanResult {
   file: string;
@@ -73,52 +76,76 @@ async function runRg(
   pattern: string,
   options: string[] = []
 ): Promise<ScanResult[]> {
-  const proc = Bun.spawn(["rg", pattern, "--type", "ts", "-n", ...options], {
-    stdout: "pipe",
-    stderr: "pipe",
-  });
+  try {
+    const proc = Bun.spawn(["rg", pattern, "--type", "ts", "-n", ...options], {
+      stdout: "pipe",
+      stderr: "pipe",
+    });
 
-  const output = await new Response(proc.stdout).text();
-  const results: ScanResult[] = [];
+    const output = await new Response(proc.stdout).text();
+    const exitCode = await proc.exited;
 
-  for (const line of output.split("\n").filter(Boolean)) {
-    const match = line.match(/^(.+?):(\d+):(.*)$/);
-    if (match) {
-      results.push({
-        file: match[1],
-        line: Number.parseInt(match[2], 10),
-        content: match[3].trim(),
-      });
+    // Exit code 1 means no matches (not an error), 2+ means actual error
+    if (exitCode > 1) {
+      console.error(`Warning: rg failed with exit code ${exitCode}. Is ripgrep installed?`);
+      return [];
     }
-  }
 
-  return results;
+    const results: ScanResult[] = [];
+
+    for (const line of output.split("\n").filter(Boolean)) {
+      const match = line.match(/^(.+?):(\d+):(.*)$/);
+      if (match) {
+        results.push({
+          file: match[1],
+          line: Number.parseInt(match[2], 10),
+          content: match[3].trim(),
+        });
+      }
+    }
+
+    return results;
+  } catch (error) {
+    console.error("Warning: Failed to run rg. Is ripgrep installed?", error);
+    return [];
+  }
 }
 
 async function countMatches(pattern: string): Promise<number> {
-  const proc = Bun.spawn(["rg", pattern, "--type", "ts", "-c"], {
-    stdout: "pipe",
-    stderr: "pipe",
-  });
+  try {
+    const proc = Bun.spawn(["rg", pattern, "--type", "ts", "-c"], {
+      stdout: "pipe",
+      stderr: "pipe",
+    });
 
-  const output = await new Response(proc.stdout).text();
-  let total = 0;
+    const output = await new Response(proc.stdout).text();
+    const exitCode = await proc.exited;
 
-  for (const line of output.split("\n").filter(Boolean)) {
-    // rg -c outputs "file:count" for multiple files, or just "count" for single file
-    const colonIndex = line.lastIndexOf(":");
-    if (colonIndex !== -1) {
-      // file:count format
-      const count = Number.parseInt(line.slice(colonIndex + 1), 10);
-      if (!Number.isNaN(count)) total += count;
-    } else {
-      // just count (single file case)
-      const count = Number.parseInt(line, 10);
-      if (!Number.isNaN(count)) total += count;
+    // Exit code 1 means no matches (not an error), 2+ means actual error
+    if (exitCode > 1) {
+      return 0;
     }
-  }
 
-  return total;
+    let total = 0;
+
+    for (const line of output.split("\n").filter(Boolean)) {
+      // rg -c outputs "file:count" for multiple files, or just "count" for single file
+      const colonIndex = line.lastIndexOf(":");
+      if (colonIndex !== -1) {
+        // file:count format
+        const count = Number.parseInt(line.slice(colonIndex + 1), 10);
+        if (!Number.isNaN(count)) total += count;
+      } else {
+        // just count (single file case)
+        const count = Number.parseInt(line, 10);
+        if (!Number.isNaN(count)) total += count;
+      }
+    }
+
+    return total;
+  } catch {
+    return 0;
+  }
 }
 
 async function scanThrows(): Promise<ScanResult[]> {
@@ -230,6 +257,11 @@ async function scanHandlers(throws: ScanResult[]): Promise<HandlerInfo[]> {
   }
 
   // Find functions containing throws
+  // NOTE: This regex finds common function patterns but may miss:
+  // - Arrow functions without const (e.g., assigned to object properties)
+  // - Class methods
+  // - export default function
+  // These limitations are acceptable for audit purposes; manual review catches edge cases.
   for (const [file, fileResults] of fileThrows) {
     const funcResults = await runRg(
       "(async )?(function |const )\\w+.*=.*async|async \\w+\\(",
@@ -243,7 +275,7 @@ async function scanHandlers(throws: ScanResult[]): Promise<HandlerInfo[]> {
       if (nameMatch) {
         const name = nameMatch[2] || nameMatch[3];
         const nearbyThrows = fileResults.filter(
-          (t) => Math.abs(t.line - func.line) < 50
+          (t) => Math.abs(t.line - func.line) < FUNCTION_PROXIMITY_LINES
         );
 
         if (nearbyThrows.length > 0) {
@@ -379,6 +411,11 @@ function effortLevel(count: number): string {
 }
 
 function generatePlanFile(stage: string, data: ScanData): string {
+  // Validate stage to prevent path traversal
+  if (!/^[\w-]+\.md$/.test(stage)) {
+    return `# ${stage}\n\nInvalid stage name.`;
+  }
+
   const templatePath = join(
     dirname(import.meta.path),
     `../templates/plan/${stage}`
