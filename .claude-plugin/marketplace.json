@@ -6,14 +6,19 @@
 	},
 	"metadata": {
 		"description": "Official Outfitter development tools and integrations for Claude Code",
-		"version": "1.2.0"
+		"version": "1.3.0",
+		"pluginRoot": "./"
 	},
+	"repository": "https://github.com/outfitter-dev/agents",
+	"homepage": "https://github.com/outfitter-dev/agents",
+	"strict": false,
 	"plugins": [
 		{
 			"name": "outfitter",
-			"source": "./outfitter",
+			"source": "outfitter",
 			"description": "Core development methodology and Claude Code extensibility. Includes TDD, debugging, architecture, research, multi-agent coordination, plus skills/plugins/agents/hooks authoring for Claude Code and Codex configuration.",
-			"version": "1.2.0",
+			"version": "1.3.0",
+			"license": "MIT",
 			"keywords": [
 				"tdd",
 				"debugging",
@@ -33,9 +38,10 @@
 		},
 		{
 			"name": "but",
-			"source": "./but",
+			"source": "but",
 			"description": "GitButler virtual branch workflows for parallel development, multi-agent coordination, and post-hoc commit organization",
 			"version": "1.1.0",
+			"license": "Apache-2.0",
 			"keywords": [
 				"gitbutler",
 				"virtual-branches",
@@ -45,9 +51,10 @@
 		},
 		{
 			"name": "gt",
-			"source": "./gt",
+			"source": "gt",
 			"description": "Graphite stack workflows for trunk-based development with stacked PRs",
 			"version": "1.1.0",
+			"license": "Apache-2.0",
 			"keywords": [
 				"graphite",
 				"stacked-prs",
@@ -57,32 +64,24 @@
 		},
 		{
 			"name": "cli-dev",
-			"source": "./cli-dev",
+			"source": "cli-dev",
 			"description": "Skills for building command-line tools: argument parsing, help text, subcommands, and CLI best practices",
 			"version": "1.1.0",
-			"keywords": ["cli", "command-line", "argument-parsing", "terminal"]
+			"license": "CC-BY-SA-4.0 AND MIT",
+			"keywords": [
+				"cli",
+				"command-line",
+				"argument-parsing",
+				"terminal"
+			]
 		},
 		{
 			"name": "stack",
 			"source": {
 				"source": "github",
 				"repo": "outfitter-dev/outfitter",
-				"path": "packages/claude-plugin",
-				"ref": "main"
-			},
-			"description": "Outfitter Stack patterns and migration tooling for @outfitter/* packages. Handler contract, Result types, error taxonomy, and transport-agnostic patterns.",
-			"version": "0.1.0",
-			"keywords": [
-				"outfitter-stack",
-				"result-types",
-				"handler-contract",
-				"error-taxonomy",
-				"migration",
-				"cli",
-				"mcp",
-				"daemon",
-				"logging"
-			]
+				"path": "./packages/claude-plugin"
+			}
 		}
 	]
 }

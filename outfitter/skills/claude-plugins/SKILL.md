@@ -67,14 +67,14 @@ Before creating a plugin, clarify:
 
 ## Stage 2: Initialization
 
-### Plugin Structure
+### Standalone Plugin
 
-Every plugin should have its own `.claude-plugin/plugin.json` manifest:
+Standalone plugins need their own `.claude-plugin/plugin.json`:
 
 ```
 my-plugin/
 ├── .claude-plugin/
-│   └── plugin.json      # Required: plugin metadata
+│   └── plugin.json      # Required for standalone
 ├── README.md            # Required for distribution
 ├── commands/            # Optional components
 ├── agents/
@@ -82,7 +82,7 @@ my-plugin/
 └── hooks/
 ```
 
-### plugin.json
+### plugin.json (Standalone)
 
 ```json
 {
@@ -97,24 +97,22 @@ my-plugin/
 }
 ```
 
-### Marketplace Structure
+### Marketplace with Local Plugins (Consolidated)
 
-A marketplace catalogs multiple plugins. Each plugin remains self-contained:
+For marketplaces where all plugins live in the same repo, use `strict: false` to consolidate metadata. Plugins don't need their own manifests:
 
 ```
 my-marketplace/
 ├── .claude-plugin/
-│   └── marketplace.json # Catalogs plugins
+│   └── marketplace.json # All metadata here (strict: false)
 ├── plugin-a/
-│   ├── .claude-plugin/
-│   │   └── plugin.json  # Plugin A's own manifest
 │   └── commands/
+├── plugin-b/
+│   └── skills/
 └── README.md
 ```
 
-### marketplace.json
-
-Keep marketplace entries minimal - just point to plugin directories:
+### marketplace.json (Consolidated)
 
 ```json
 {
@@ -123,12 +121,17 @@ Keep marketplace entries minimal - just point to plugin directories:
     "name": "Team Name",
     "email": "team@example.com"
   },
+  "strict": false,
   "plugins": [
-    {"name": "plugin-a", "source": "./plugin-a"},
-    {"name": "plugin-b", "source": "./plugin-b"}
+    {"name": "plugin-a", "source": "./plugin-a", "version": "1.0.0", "description": "Plugin A", "license": "MIT"},
+    {"name": "plugin-b", "source": "./plugin-b", "version": "1.0.0", "description": "Plugin B", "license": "MIT"}
   ]
 }
 ```
+
+**Benefits:** Single source of truth, no version drift between marketplace and plugin manifests.
+
+For external plugins (GitHub repos), use minimal entries and let the external repo own its manifest.
 
 See [structure.md](references/structure.md) for complete plugin.json schema.
 
@@ -232,7 +235,8 @@ Before distribution, validate the plugin.
 ### Checklist
 
 **Structure:**
-- [ ] plugin.json exists and is valid JSON
+- [ ] Standalone: plugin.json exists and is valid JSON
+- [ ] Marketplace (consolidated): metadata in marketplace.json with `strict: false`
 - [ ] Required fields present (name, version, description)
 - [ ] Plugin name matches directory name (kebab-case)
 
@@ -361,9 +365,10 @@ See [marketplace.md](references/marketplace.md) for full schema, team configurat
 ## Troubleshooting
 
 **Plugin not loading:**
-- Verify plugin.json syntax: `jq empty plugin.json`
+- Standalone: verify plugin.json syntax: `jq empty .claude-plugin/plugin.json`
+- Marketplace: verify marketplace.json syntax and `strict: false` if no plugin.json
 - Check plugin name matches directory
-- Ensure required fields present
+- Ensure required fields present (name, version, description)
 
 **Commands not appearing:**
 - Verify YAML frontmatter exists
@@ -391,7 +396,9 @@ See [marketplace.md](references/marketplace.md) for full schema, team configurat
 <rules>
 
 ALWAYS:
-- Create `.claude-plugin/plugin.json` for every plugin
+- Standalone plugins: create `.claude-plugin/plugin.json`
+- Marketplace local plugins: use `strict: false` and consolidate metadata in marketplace.json
+- External plugins: let the external repo own its manifest
 - Keep plugin resources within plugin directory (caching limitation)
 - Use kebab-case for all names
 - Include README.md and LICENSE for distribution
@@ -401,7 +408,7 @@ NEVER:
 - Hardcode secrets in plugin files
 - Use path traversal (`../`) for cross-plugin resources
 - Skip validation before distribution
-- Omit description in plugin.json
+- Omit description (in plugin.json or marketplace entry)
 
 </rules>
 

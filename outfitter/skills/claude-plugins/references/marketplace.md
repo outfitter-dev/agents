@@ -47,11 +47,11 @@ Names that impersonate official marketplaces (like `official-claude-plugins` or 
 |-------|------|-------------|
 | `metadata.description` | string | Brief marketplace description |
 | `metadata.version` | string | Marketplace version |
-| `metadata.pluginRoot` | string | Base directory prepended to relative plugin source paths (e.g., `"./plugins"` lets you write `"source": "formatter"` instead of `"source": "./plugins/formatter"`) |
+| `metadata.pluginRoot` | string | Base path for relative sources. Use `"./"` for plugins at repo root, `"./packages/"` for a subdirectory. Avoids repeating paths in each plugin entry. |
 
 ### Complete Example
 
-Keep plugin entries minimal when plugins have their own `.claude-plugin/plugin.json`:
+For local plugins (relative paths), use `strict: false` to consolidate metadata and `pluginRoot` to simplify source paths:
 
 ```json
 {
@@ -62,65 +62,69 @@ Keep plugin entries minimal when plugins have their own `.claude-plugin/plugin.j
   },
   "metadata": {
     "description": "Internal development tools",
-    "version": "2.0.0"
+    "version": "2.0.0",
+    "pluginRoot": "./"
   },
+  "strict": false,
   "plugins": [
     {
       "name": "code-formatter",
-      "source": "./code-formatter"
+      "source": "code-formatter",
+      "version": "1.0.0",
+      "description": "Auto-format code on save",
+      "license": "MIT"
     },
     {
       "name": "deployment-tools",
-      "source": "./deployment"
+      "source": "deployment",
+      "version": "2.1.0",
+      "description": "Deploy to staging and production",
+      "license": "MIT"
     }
   ]
 }
 ```
 
-Each plugin directory should have its own `.claude-plugin/plugin.json` with metadata.
+With `strict: false`, plugins don't need their own `.claude-plugin/plugin.json`—the marketplace is the single source of truth.
 
 ## Plugin Entry Schema
 
-### Minimal Entry (Recommended)
+### Local Plugins (Consolidated)
 
-When the plugin has its own `.claude-plugin/plugin.json`:
+For plugins in the same repo as the marketplace, define all metadata in the marketplace entry:
 
 ```json
 {
-  "name": "plugin-name",
-  "source": "./path/to/plugin"
+  "name": "code-formatter",
+  "source": "./code-formatter",
+  "version": "1.0.0",
+  "description": "Auto-format code on save",
+  "license": "MIT",
+  "keywords": ["formatting", "linting"]
 }
 ```
 
-The marketplace just points to the plugin. Metadata comes from the plugin's own manifest.
+Set `strict: false` at the marketplace level. Plugins don't need their own `.claude-plugin/plugin.json`.
 
-### Verbose Entry
+**Benefits:** Single source of truth, prevents version/metadata drift between marketplace and plugin manifests.
 
-When referencing external repos or plugins without their own manifest, provide metadata in the marketplace entry:
+### External Plugins (Distributed)
+
+For plugins in external repos, use minimal entries—let the external repo own its manifest:
 
 ```json
 {
   "name": "enterprise-tools",
   "source": {
     "source": "github",
-    "repo": "company/enterprise-plugin",
-    "ref": "v2.0.0"
-  },
-  "description": "Enterprise workflow automation",
-  "version": "2.0.0",
-  "author": {
-    "name": "Enterprise Team",
-    "email": "team@company.com"
-  },
-  "license": "MIT",
-  "keywords": ["enterprise", "workflow"]
+    "repo": "company/enterprise-plugin"
+  }
 }
 ```
 
-Use verbose entries when:
-- The plugin is an external GitHub repo without its own manifest
-- You need to override or supplement the plugin's metadata
-- The plugin predates the `.claude-plugin/plugin.json` convention
+The external repo should have its own `.claude-plugin/plugin.json` with metadata.
+
+**Why:** External plugins may be used outside your marketplace. They should be self-contained.
 
 ### Entry Fields
 
@@ -149,7 +153,15 @@ Use verbose entries when:
 
 | Field | Type | Default | Description |
 |-------|------|---------|-------------|
-| `strict` | boolean | `true` | When `true`, plugin must have `.claude-plugin/plugin.json` and marketplace fields merge with it. When `false`, plugin needs no manifest - marketplace entry defines everything. |
+| `strict` | boolean | `true` | When `false`, plugins don't need their own `.claude-plugin/plugin.json`—marketplace defines everything. Use for local plugins (relative paths). When `true`, plugins must have their own manifest. |
+
+**When to use each mode:**
+
+| Pattern | `strict` | Use when |
+|---------|----------|----------|
+| Consolidated | `false` | All plugins are local (relative paths in same repo) |
+| Distributed | `true` | Plugins are external repos that may be used elsewhere |
+| Mixed | `false` | Local plugins consolidated, external plugins own their manifests |
 
 **Component configuration** (optional):
 
@@ -161,25 +173,45 @@ Use verbose entries when:
 | `mcpServers` | string\|object | MCP server configuration or path to MCP config |
 | `lspServers` | string\|object | LSP server configuration or path to LSP config |
 
-Use component fields when defining simple plugins entirely in the marketplace (`strict: false`) or to supplement/override paths from the plugin's own manifest.
-
 ## Plugin Source Types
 
 ### Relative Path
 
-For plugins in the same repository:
+For plugins in the same repository, use `pluginRoot` to avoid repeating the base path:
 
-```json
-{"source": "./plugins/my-plugin"}
-```
-
-With `pluginRoot`:
+**Plugins at repo root:**
 
 ```json
 {
-  "metadata": {"pluginRoot": "./plugins"},
+  "metadata": {"pluginRoot": "./"},
   "plugins": [
-    {"name": "my-plugin", "source": "./my-plugin"}
+    {"name": "my-plugin", "source": "my-plugin"},
+    {"name": "another", "source": "another"}
+  ]
+}
+```
+
+**Plugins in a subdirectory:**
+
+```json
+{
+  "metadata": {"pluginRoot": "./packages/"},
+  "plugins": [
+    {"name": "my-plugin", "source": "my-plugin"},
+    {"name": "another", "source": "another"}
+  ]
+}
+```
+
+Both resolve to `./packages/my-plugin`, `./packages/another`, etc.
+
+**Without `pluginRoot`** (verbose, but works):
+
+```json
+{
+  "plugins": [
+    {"name": "my-plugin", "source": "./packages/my-plugin"},
+    {"name": "another", "source": "./packages/another"}
   ]
 }
 ```
@@ -220,10 +252,31 @@ Pin to exact commit:
 }
 ```
 
+Monorepo pattern (plugin in a subdirectory):
+
+```json
+{
+  "source": {
+    "source": "github",
+    "repo": "owner/my-project",
+    "path": "./packages/claude-plugin"
+  }
+}
+```
+
+Use `path` when the plugin lives alongside application code in a monorepo. Common patterns:
+
+| Monorepo Structure | `path` Value |
+|--------------------|--------------|
+| `packages/claude-plugin/` | `./packages/claude-plugin` |
+| `.claude-plugin/` at root | (omit — this is the default) |
+| `tools/claude-plugin/` | `./tools/claude-plugin` |
+
 | Field | Type | Description |
 |-------|------|-------------|
 | `repo` | string | Required. GitHub repository in `owner/repo` format |
-| `ref` | string | Optional. Git branch or tag (defaults to repository default branch) |
+| `path` | string | Optional. Subdirectory containing `.claude-plugin/plugin.json` |
+| `ref` | string | Optional. Branch name or tag (omit to use default branch) |
 | `sha` | string | Optional. Full 40-character commit SHA for exact version pinning |
 
 ### Git URL
@@ -234,20 +287,19 @@ For GitLab, Bitbucket, or self-hosted:
 {
   "source": {
     "source": "url",
-    "url": "https://gitlab.com/team/plugin.git",
-    "ref": "main"
+    "url": "https://gitlab.com/team/plugin.git"
   }
 }
 ```
 
-With SHA pinning:
+With specific branch or SHA pinning:
 
 ```json
 {
   "source": {
     "source": "url",
     "url": "https://gitlab.com/team/plugin.git",
-    "ref": "main",
+    "ref": "develop",
     "sha": "a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0"
   }
 }
@@ -256,7 +308,8 @@ With SHA pinning:
 | Field | Type | Description |
 |-------|------|-------------|
 | `url` | string | Required. Full git repository URL (must end with `.git`) |
-| `ref` | string | Optional. Git branch or tag (defaults to repository default branch) |
+| `path` | string | Optional. Subdirectory containing `.claude-plugin/plugin.json` |
+| `ref` | string | Optional. Branch name or tag (omit to use default branch) |
 | `sha` | string | Optional. Full 40-character commit SHA for exact version pinning |
 
 ### Private Repository Authentication
@@ -367,20 +420,21 @@ Automatically installed when team members trust the folder.
     "development": {
       "source": {
         "source": "github",
-        "repo": "company/dev-plugins",
+        "repo": "company/plugins",
         "ref": "develop"
       }
     },
     "production": {
       "source": {
         "source": "github",
-        "repo": "company/prod-plugins",
-        "ref": "main"
+        "repo": "company/plugins"
       }
     }
   }
 }
 ```
+
+Use `ref` to point development at a non-default branch. Production uses the default branch (no `ref` needed).
 
 ## Marketplace Commands
 

@@ -8,10 +8,14 @@ Create distributable plugin structure.
 
 ## Directory Structure
 
+### Standalone Plugin (External Repo)
+
+For plugins in their own repo that will be referenced by marketplaces, place `.claude-plugin/` at the **repo root**:
+
 ```
-my-plugin/
+my-plugin/                    # Repo root
 ├── .claude-plugin/
-│   └── plugin.json
+│   └── plugin.json           # At repo root — required for external reference
 ├── README.md
 ├── commands/
 │   └── main-command.md
@@ -25,7 +29,60 @@ my-plugin/
     └── hooks.json
 ```
 
-## plugin.json
+When a marketplace references this via `{"source": {"source": "github", "repo": "owner/my-plugin"}}`, Claude Code looks for `.claude-plugin/plugin.json` at the repo root.
+
+### Plugin in a Marketplace (Consolidated)
+
+When adding to a marketplace with `strict: false`, skip `.claude-plugin/`:
+
+```
+my-plugin/
+├── README.md
+├── commands/
+│   └── main-command.md
+├── skills/
+│   └── primary-skill/
+│       └── SKILL.md
+└── hooks/
+    └── hooks.json
+```
+
+Metadata goes in the marketplace's `marketplace.json` instead.
+
+### Plugin in a Monorepo
+
+When the plugin lives alongside application code, place it in a conventional location:
+
+```
+my-project/                   # Monorepo root
+├── packages/
+│   └── claude-plugin/        # Plugin subdirectory
+│       ├── .claude-plugin/
+│       │   └── plugin.json   # Required — plugin owns its manifest
+│       ├── README.md
+│       ├── commands/
+│       └── skills/
+├── src/                      # Application code
+└── package.json
+```
+
+Marketplaces reference this with the `path` field:
+
+```json
+{
+  "source": {
+    "source": "github",
+    "repo": "owner/my-project",
+    "path": "./packages/claude-plugin"
+  }
+}
+```
+
+Common monorepo locations: `packages/claude-plugin/`, `tools/claude-plugin/`, `.claude/plugin/`
+
+## plugin.json (Standalone Only)
+
+Only needed for standalone plugins or those distributed outside a marketplace:
 
 ```json
 {
@@ -69,7 +126,8 @@ Brief description.
 ## Checklist
 
 - [ ] Move components from `artifacts/plugin-engineer/components/` to plugin directory
-- [ ] Create `.claude-plugin/plugin.json`
+- [ ] If standalone: Create `.claude-plugin/plugin.json`
+- [ ] If marketplace: Add entry to `marketplace.json` (skip plugin.json with `strict: false`)
 - [ ] Write README.md with installation instructions
 - [ ] Add LICENSE file
 - [ ] Verify all paths and references

@@ -4,14 +4,16 @@ Complete directory layout and configuration schemas for Claude Code plugins.
 
 ## Plugin Structure
 
-Every plugin should have its own `.claude-plugin/plugin.json` manifest, whether distributed standalone or via a marketplace.
+How you structure plugins depends on how they're distributed.
 
-### Single Plugin
+### Single Plugin (Standalone)
+
+Standalone plugins need their own `.claude-plugin/plugin.json`:
 
 ```
 my-plugin/
 ├── .claude-plugin/
-│   └── plugin.json      # Plugin manifest
+│   └── plugin.json      # Plugin manifest (required)
 ├── commands/
 ├── agents/
 ├── hooks/
@@ -19,29 +21,59 @@ my-plugin/
 └── README.md
 ```
 
-### Marketplace with Multiple Plugins
+### Marketplace with Local Plugins (Consolidated)
 
-A marketplace catalogs multiple plugins. Each plugin remains self-contained with its own manifest:
+When all plugins live in the same repo as the marketplace, use `strict: false` to consolidate metadata in `marketplace.json`. Plugins don't need their own manifests:
 
 ```
 my-marketplace/
 ├── .claude-plugin/
-│   └── marketplace.json # Catalogs plugins
+│   └── marketplace.json # All metadata here (strict: false)
 ├── plugin-a/
-│   ├── .claude-plugin/
-│   │   └── plugin.json  # Plugin A's manifest
 │   ├── commands/
 │   ├── agents/
 │   └── README.md
 ├── plugin-b/
-│   ├── .claude-plugin/
-│   │   └── plugin.json  # Plugin B's manifest
 │   ├── skills/
 │   └── README.md
 └── README.md
 ```
 
-**Key principle:** Plugins are self-contained. The marketplace.json simply points to plugin directories via `source`. Marketplace entries can supplement metadata but should not replace the plugin's own manifest.
+**Benefits:** Single source of truth, no version drift, simpler structure.
+
+### Marketplace with External Plugins (Distributed)
+
+When referencing plugins from external repos (GitHub, GitLab, etc.), let each plugin own its manifest:
+
+```
+my-marketplace/
+├── .claude-plugin/
+│   └── marketplace.json # Points to external repos
+└── README.md
+
+# External repos each have:
+external-plugin/
+├── .claude-plugin/
+│   └── plugin.json      # Plugin owns its manifest
+├── commands/
+└── README.md
+```
+
+**Key principle:** External plugins are self-contained. The marketplace.json points to them via `source` but doesn't define their metadata.
+
+### Mixed Approach
+
+Marketplaces can combine both patterns—consolidated for local plugins, distributed for external:
+
+```json
+{
+  "strict": false,
+  "plugins": [
+    {"name": "local-plugin", "source": "./local-plugin", "version": "1.0.0"},
+    {"name": "external-plugin", "source": {"source": "github", "repo": "owner/plugin"}}
+  ]
+}
+```
 
 ## Directory Structure
 
@@ -128,7 +160,7 @@ my-plugin/
 
 | Field | Type | Default | Description |
 |-------|------|---------|-------------|
-| `strict` | boolean | `true` | When `true`, marketplace entry merges with plugin's manifest. When `false`, plugin needs no manifest. |
+| `strict` | boolean | `true` | Set at marketplace level. When `false`, local plugins don't need `.claude-plugin/plugin.json`—marketplace defines all metadata. Use `false` for consolidated local plugins, `true` (or omit) for external plugins. |
 
 > **Note:** Hooks can be defined inline in plugin.json OR in a separate `hooks/hooks.json` file.
 
