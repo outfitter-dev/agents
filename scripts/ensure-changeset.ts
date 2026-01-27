@@ -16,7 +16,7 @@
  */
 
 import { execSync } from "node:child_process";
-import { existsSync, readFileSync, writeFileSync } from "node:fs";
+import { existsSync, readFileSync, unlinkSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 
 const ROOT = import.meta.dirname ? join(import.meta.dirname, "..") : process.cwd();
@@ -79,7 +79,7 @@ function getParentBranch(): string {
 function getChangedFiles(parentBranch: string): string[] {
 	// Get files changed in current branch vs parent
 	// Include both committed and staged changes
-	const committed = exec(`git diff --name-only ${parentBranch}...HEAD 2>/dev/null`);
+	const committed = exec(`git diff --name-only ${JSON.stringify(parentBranch)}...HEAD 2>/dev/null`);
 	const staged = exec("git diff --name-only --cached");
 
 	const files = new Set<string>();
@@ -223,6 +223,13 @@ function main() {
 	const bump = getBumpType(parsed);
 
 	if (bump === "skip") {
+		// Clean up stale changeset if one exists from previous non-skip commits
+		const changesetPath = getChangesetPath(branch);
+		if (existsSync(changesetPath)) {
+			unlinkSync(changesetPath);
+			execSync(`git add ${JSON.stringify(changesetPath)}`, { cwd: ROOT });
+			console.log(`🗑 Removed stale changeset: ${changesetPath}`);
+		}
 		console.log(`⏭ Skipping changeset for ${parsed.type}: commit`);
 		process.exit(0);
 	}
@@ -245,7 +252,7 @@ function main() {
 	writeChangeset(changesetPath, data);
 
 	// Stage the changeset
-	exec(`git add "${changesetPath}"`);
+	execSync(`git add ${JSON.stringify(changesetPath)}`, { cwd: ROOT });
 
 	const pluginList = plugins.map((p) => `${p}:${bump}`).join(", ");
 	console.log(`✓ Changeset updated: ${pluginList}`);

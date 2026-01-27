@@ -41,7 +41,7 @@ jobs:
           # After version PR is merged, create tags for each plugin
           for plugin in outfitter but gt cli-dev; do
             if [ -f "$plugin/package.json" ]; then
-              VERSION=$(bun -e "console.log(require('./$plugin/package.json').version)")
+              VERSION=$(bun -e "try { console.log(require('./$plugin/package.json').version) } catch(e) { console.error('Failed to read version for $plugin'); process.exit(1) }")
               TAG="${plugin}@${VERSION}"
 
               # Check if tag already exists

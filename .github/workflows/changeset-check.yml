@@ -8,6 +8,10 @@ on:
       - "but/**"
       - "gt/**"
       - "cli-dev/**"
+      - "!**/package.json"
+
+permissions:
+  contents: read
 
 jobs:
   check:
@@ -18,24 +22,18 @@ jobs:
         with:
           fetch-depth: 0
 
-      - uses: oven-sh/setup-bun@v2
-        with:
-          bun-version: latest
-
-      - name: Install dependencies
-        run: bun install
-
       - name: Check for changeset
         run: |
-          # Get list of changeset files (excluding config and README)
-          CHANGESETS=$(find .changeset -name "*.md" ! -name "README.md" 2>/dev/null | wc -l)
+          # Check if this PR adds a changeset file
+          CHANGESETS_ADDED=$(git diff --name-only origin/main...HEAD | grep -E '^\.changeset/.*\.md$' | grep -v README.md | wc -l)
 
-          if [ "$CHANGESETS" -eq 0 ]; then
-            echo "::error::No changeset found. Run 'bun changeset' to create one."
+          if [ "$CHANGESETS_ADDED" -eq 0 ]; then
+            echo "::error::No changeset found in this PR."
             echo ""
             echo "This PR modifies plugin files but doesn't include a changeset."
-            echo "Please run 'bun changeset' and commit the generated file."
+            echo "If this is a feature or fix, run 'bun changeset' to create one."
+            echo "If this is a chore/test/ci/build commit, the changeset is optional."
             exit 1
           fi
 
-          echo "✓ Found $CHANGESETS changeset file(s)"
+          echo "✓ Found $CHANGESETS_ADDED changeset file(s) added in this PR"
