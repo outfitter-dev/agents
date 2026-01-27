@@ -15,7 +15,7 @@ const ROOT = import.meta.dirname ? join(import.meta.dirname, "..") : process.cwd
 const MARKETPLACE_PATH = join(ROOT, ".claude-plugin/marketplace.json");
 
 // Local plugins tracked by changesets
-const LOCAL_PLUGINS = ["outfitter", "but", "gt", "cli-dev"];
+const LOCAL_PLUGINS = ["outfitter", "but", "gt", "cli-dev", "outfitter-stack"];
 
 interface Plugin {
 	name: string;
@@ -43,7 +43,7 @@ function main() {
 	let highestVersion = "0.0.0";
 
 	for (const pluginName of LOCAL_PLUGINS) {
-		const pkgPath = join(ROOT, pluginName, "package.json");
+		const pkgPath = join(ROOT, "plugins", pluginName, "package.json");
 
 		let pkg: { version: string };
 		try {
