@@ -94,7 +94,7 @@ exceptions:
     action: Document exception in PR description
 
 splitting_strategies:
-  logical_phases: Schema → Backend → Frontend → Tests
+  logical_stages: Schema → Backend → Frontend → Tests
   commit_boundaries: Each commit becomes PR in stack
   refactor_vs_feature: Preparatory refactoring separate from feature
   by_component: Separate PRs per service/module

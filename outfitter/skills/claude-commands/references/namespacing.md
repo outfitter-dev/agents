@@ -142,7 +142,7 @@ Group by functional area:
 
 ### By Workflow
 
-Group by development phase:
+Group by development stage:
 
 ```
 .claude/commands/

@@ -5,7 +5,7 @@ argument-hint: [bug description or error message]
 
 # Systematic Debugging
 
-Start a methodical debugging session using the four-phase investigation framework with iterative review.
+Start a methodical debugging session using the four-stage investigation framework with iterative review.
 
 ## Instructions
 

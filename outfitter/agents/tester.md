@@ -29,7 +29,7 @@ Load skills based on task needs using the Skill tool:
 
 ## Task Management
 
-Load the **maintain-tasks** skill for validation phase tracking. Your task list is a living plan — expand it as you discover test scenarios.
+Load the **maintain-tasks** skill for validation stage tracking. Your task list is a living plan — expand it as you discover test scenarios.
 
 <initial_todo_list_template>
 

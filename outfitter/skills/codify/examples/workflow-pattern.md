@@ -22,7 +22,7 @@ Pattern: Systematic debugging - structured investigation, not trial-and-error.
 
 <classification>
 
-Type: Workflow (multi-step sequence with clear phases)
+Type: Workflow (multi-step sequence with clear stages)
 
 Why not orchestration: Doesn't primarily coordinate external tools
 Why not heuristic: Not a decision rule, but a procedural process
@@ -36,7 +36,7 @@ name: systematic-debugging
 type: workflow
 description: Structured root cause investigation
 
-phases:
+stages:
   - name: Reproduction
     goal: Create reliable, minimal reproduction
     actions:
@@ -71,7 +71,7 @@ phases:
     exit_criteria: Test would fail if bug reoccurs
 
 quality_criteria:
-  - Each phase has clear outputs
+  - Each stage has clear outputs
   - Don't skip reproduction for "fixes"
   - Don't accept fixes without root cause
   - Always add regression test

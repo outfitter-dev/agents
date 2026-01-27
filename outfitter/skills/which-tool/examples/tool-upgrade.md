@@ -1,6 +1,6 @@
 # Tool Upgrade Example: grep → ripgrep
 
-Worked example showing the research phase triggered by slow performance.
+Worked example showing the research stage triggered by slow performance.
 
 ## Scenario
 
@@ -17,7 +17,7 @@ grep -r "authentication" .
 # ... eventually returns results mixed with noise from node_modules, .git, etc.
 ```
 
-## Phase 1: Trigger Detection
+## Stage 1: Trigger Detection
 
 ### Performance Trigger
 
@@ -50,7 +50,7 @@ Decision: TRIGGER RESEARCH
 
 **User response:** "Yes, please"
 
-## Phase 2: Research
+## Stage 2: Research
 
 ### Step 1: Search for Candidates
 
@@ -193,7 +193,7 @@ grep -n  → rg -n (same, but rg shows by default)
 # May need to update some scripts with specific grep flags
 ```
 
-## Phase 3: Evaluation Summary
+## Stage 3: Evaluation Summary
 
 ### Performance Analysis
 
@@ -257,7 +257,7 @@ If user runs 10 searches/day:
 
 **Overall Confidence:** HIGH
 
-## Phase 4: Recommendation
+## Stage 4: Recommendation
 
 ### Presentation to User
 
@@ -380,7 +380,7 @@ change your mind. For now, I'll continue using grep.
 
 ```
 
-## Phase 5: Outcome
+## Stage 5: Outcome
 
 ### Result: INSTALL accepted
 

@@ -21,11 +21,11 @@ NOT for: trivial tasks, clear requirements with validated complexity, regulatory
 
 </when_to_use>
 
-<phases>
+<stages>
 
 Load the **maintain-tasks** skill when applying framework to non-trivial proposals:
 
-| Phase | Trigger | activeForm |
+| Stage | Trigger | activeForm |
 |-------|---------|------------|
 | Identify | Complexity smell detected | "Identifying complexity smell" |
 | Alternative | Generating simpler options | "Proposing simpler alternatives" |
@@ -45,9 +45,9 @@ Workflow:
 - Start: Create Identify `in_progress` when smell detected
 - Transition: Mark current `completed`, add next `in_progress`
 - Skip to Document if complexity validated immediately
-- Optional phases: skip Alternative if obvious, skip Question if constraints clear
+- Optional stages: skip Alternative if obvious, skip Question if constraints clear
 
-</phases>
+</stages>
 
 <escalation>
 

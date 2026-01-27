@@ -22,11 +22,11 @@ NOT for: performance optimization, general code review, feature implementation
 
 </when_to_use>
 
-<phases>
+<stages>
 
-Load the **maintain-tasks** skill for phase tracking. Each phase feeds the next.
+Load the **maintain-tasks** skill for stage tracking. Each stage feeds the next.
 
-| Phase | Trigger | activeForm |
+| Stage | Trigger | activeForm |
 |-------|---------|------------|
 | Threat Model | Session start | "Building threat model" |
 | Attack Surface | Model complete | "Mapping attack surface" |
@@ -36,7 +36,7 @@ Load the **maintain-tasks** skill for phase tracking. Each phase feeds the next.
 
 Critical findings: add urgent remediation task immediately.
 
-</phases>
+</stages>
 
 <severity_levels>
 
@@ -302,7 +302,7 @@ ALWAYS:
 - Provide specific remediation with code
 - Verify fixes don't introduce new vulnerabilities
 - Document security assumptions
-- Update todos when transitioning phases
+- Update todos when transitioning stages
 
 NEVER:
 - Skip threat modeling for "simple" features

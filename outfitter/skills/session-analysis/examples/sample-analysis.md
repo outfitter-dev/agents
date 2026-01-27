@@ -175,12 +175,12 @@ Excellent work. This is exactly what I needed. Let's move on to the API rate lim
    - Confidence: High (explicit satisfaction language)
    - Context: Complete feature meets requirements
 
-3. **Workflow (phase transition)**
+3. **Workflow (stage transition)**
    - Quote: "Let's move on to the API rate limiting next"
    - Confidence: High (completion + new direction)
    - Context: Auth complete, moving to new feature
 
-**Pattern note**: Strong success signal followed by phase transition indicates task completion and satisfaction.
+**Pattern note**: Strong success signal followed by stage transition indicates task completion and satisfaction.
 
 ### Step 3: Signal Classification
 
@@ -205,7 +205,7 @@ Excellent work. This is exactly what I needed. Let's move on to the API rate lim
 - Message 5: "Always validate user input before processing" (requirement, high confidence)
 
 **Workflow signals** (1 total):
-- Message 9: "Let's move on to the API rate limiting next" (phase transition, high confidence)
+- Message 9: "Let's move on to the API rate limiting next" (stage transition, high confidence)
 
 ### Step 4: Pattern Detection
 
@@ -402,7 +402,7 @@ See JSON output below.
       },
       {
         "type": "workflow",
-        "subtype": "phase_transition",
+        "subtype": "stage_transition",
         "message_id": "msg_009",
         "timestamp": "2025-11-28T09:20:00Z",
         "quote": "Let's move on to the API rate limiting next",

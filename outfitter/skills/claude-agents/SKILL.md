@@ -52,7 +52,7 @@ Copy a template from `templates/`:
 
 ---
 
-## Phase 1: Discovery
+## Stage 1: Discovery
 
 Before writing code, clarify:
 
@@ -68,7 +68,7 @@ Before writing code, clarify:
 
 ---
 
-## Phase 2: Design
+## Stage 2: Design
 
 ### Agent Archetypes
 
@@ -128,7 +128,7 @@ See [tools.md](references/tools.md) for patterns.
 
 ---
 
-## Phase 3: Implementation
+## Stage 3: Implementation
 
 ### Agent File Structure
 
@@ -158,11 +158,11 @@ You are a security expert specializing in [expertise].
 
 ## Process
 
-### Step 1: [Phase Name]
+### Step 1: [Stage Name]
 - Action item
 - Action item
 
-### Step 2: [Phase Name]
+### Step 2: [Stage Name]
 - Action item
 
 ## Output Format
@@ -217,7 +217,7 @@ Define structured output so results are predictable and parseable.
 
 ---
 
-## Phase 4: Validation
+## Stage 4: Validation
 
 After creating an agent, validate against these checklists.
 

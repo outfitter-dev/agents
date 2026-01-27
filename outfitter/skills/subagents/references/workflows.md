@@ -164,7 +164,7 @@ Production issues:
 
 Workflows adapt based on:
 
-- **Project phase**: Early = more analyst, late = more tester
+- **Project stage**: Early = more analyst, late = more tester
 - **Risk level**: High = mandatory skeptic + reviewer
 - **Time pressure**: Can skip patterns role, abbreviate reviewer
 - **Team context**: Solo = lighter review, team = full workflow

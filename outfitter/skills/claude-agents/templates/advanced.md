@@ -67,22 +67,22 @@ model: inherit
 
 ## Process
 
-### Step 1: { Phase Name }
+### Step 1: { Stage Name }
 
 - { Action item }
 - { Action item }
 
-### Step 2: { Phase Name }
+### Step 2: { Stage Name }
 
 - { Action item }
 - { Action item }
 
-### Step 3: { Phase Name }
+### Step 3: { Stage Name }
 
 - { Action item }
 - { Action item }
 
-### Step 4: { Reporting Phase }
+### Step 4: { Reporting Stage }
 
 - { Output action }
 - { Documentation action }

@@ -24,7 +24,7 @@ NOT for: deep-dive into specific items, real-time monitoring, single-source quer
 
 <core_pattern>
 
-**Three-phase workflow**:
+**Three-stage workflow**:
 
 1. **Gather** - collect from multiple sources
 2. **Aggregate** - combine, filter, cross-reference by time/stack/status
@@ -41,7 +41,7 @@ Key principles:
 
 <workflow>
 
-**Phase 1: Parse Constraints**
+**Stage 1: Parse Constraints**
 
 Extract time from natural language:
 - "last X hours" -> `-Xh`
@@ -53,7 +53,7 @@ Extract time from natural language:
 
 Default: 7 days if unspecified.
 
-**Phase 2: Gather Data**
+**Stage 2: Gather Data**
 
 Run parallel queries for each available source:
 
@@ -64,7 +64,7 @@ Run parallel queries for each available source:
 
 Skip unavailable sources gracefully.
 
-**Phase 3: Aggregate**
+**Stage 3: Aggregate**
 
 Cross-reference and organize:
 - Group PRs by stack position (if stack-aware)
@@ -73,7 +73,7 @@ Cross-reference and organize:
 - Identify blockers (failed CI, blocking reviews)
 - Calculate relative timestamps
 
-**Phase 4: Present**
+**Stage 4: Present**
 
 Format for scanning:
 - Hierarchical sections (VCS -> PRs -> Issues -> CI)

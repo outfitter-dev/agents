@@ -117,10 +117,10 @@ Expand dynamically as you discover specific work items.
 Use `[agent-name]` prefix in task subjects and `blockedBy` for dependencies:
 
 ```
-#1: "[analyst] Research phase" - pending
-#2: "[engineer] Implementation phase" - pending, blockedBy: #1
-#3: "[reviewer] Review phase" - pending, blockedBy: #2
-#4: "[tester] Validation phase" - pending, blockedBy: #3
+#1: "[analyst] Research stage" - pending
+#2: "[engineer] Implementation stage" - pending, blockedBy: #1
+#3: "[reviewer] Review stage" - pending, blockedBy: #2
+#4: "[tester] Validation stage" - pending, blockedBy: #3
 #5: "Synthesize results" - pending, blockedBy: #4
 ```
 

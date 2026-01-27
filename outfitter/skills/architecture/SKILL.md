@@ -21,11 +21,11 @@ NOT for: trivial tech choices, premature optimization, undocumented requirements
 
 </when_to_use>
 
-<phases>
+<stages>
 
-Load the **maintain-tasks** skill for phase tracking. Phases advance only, never regress.
+Load the **maintain-tasks** skill for stage tracking. Stages advance only, never regress.
 
-| Phase | Trigger | activeForm |
+| Stage | Trigger | activeForm |
 |-------|---------|------------|
 | Discovery | Session start | "Gathering requirements" |
 | Codebase Analysis | Requirements clear | "Analyzing codebase" |
@@ -58,7 +58,7 @@ Workflow:
 - High start: skip to Solution Design for clear problems
 - Optional end: Documentation skippable if ADR not needed
 
-</phases>
+</stages>
 
 <principles>
 
@@ -299,10 +299,10 @@ Before documenting:
 - Check success metrics defined
 - Validate migration path if applicable
 
-At Documentation phase:
+At Documentation stage:
 - Create ADR if architectural decision
 - Skip if simple tech choice
-- Mark phase complete after delivery
+- Mark stage complete after delivery
 
 </workflow>
 
@@ -310,7 +310,7 @@ At Documentation phase:
 
 ALWAYS:
 - Create Discovery todo at session start
-- Update todos at phase transitions
+- Update todos at stage transitions
 - Ask clarifying questions about requirements and constraints before proposing
 - Present 2-3 viable options with clear tradeoffs
 - Document decisions with rationale (ADR when appropriate)
@@ -325,7 +325,7 @@ NEVER:
 - Propose architectures the team can't operate
 - Ignore operational complexity in technology selection
 - Proceed without understanding non-functional requirements
-- Skip phase transitions when moving through workflow
+- Skip stage transitions when moving through workflow
 
 </rules>
 

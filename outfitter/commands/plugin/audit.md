@@ -19,7 +19,7 @@ $ARGUMENTS
 
 ## Workflow
 
-### Phase 1: Audit
+### Stage 1: Audit
 
 Run the plugin audit skill on the target path. If no path provided, use current directory.
 
@@ -29,7 +29,7 @@ Capture:
 - Info (suggestions)
 - Which issues are auto-fixable
 
-### Phase 2: Auto-Fix Decision
+### Stage 2: Auto-Fix Decision
 
 If auto-fixable issues found:
 
@@ -46,7 +46,7 @@ Use `AskUserQuestion` with options:
 2. Review each fix individually
 3. Skip auto-fixes, show manual issues only
 
-### Phase 3: Apply Fixes
+### Stage 3: Apply Fixes
 
 For each auto-fix:
 1. Show the proposed change
@@ -55,7 +55,7 @@ For each auto-fix:
 
 Use Tasks to what was fixed vs what remains.
 
-### Phase 4: Follow-Up
+### Stage 4: Follow-Up
 
 Present remaining issues that need manual attention:
 

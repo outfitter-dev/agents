@@ -33,7 +33,7 @@ NOT for: real-time monitoring, content generation, single message analysis
 | Frustration | Repetition | Same request 2+ times, escalating specificity |
 | Frustration | Explicit | "This isn't working", "Why did you...", accusatory tone |
 | Workflow | Sequence | "First...", "Then...", "Finally...", numbered lists |
-| Workflow | Transition | "Now that X is done, let's Y", phase changes |
+| Workflow | Transition | "Now that X is done, let's Y", stage changes |
 | Workflow | Tool Chain | Recurring tool usage patterns (Read → Edit → Bash) |
 | Workflow | Context Switch | Abrupt topic changes, no transition language |
 | Request | Prohibition | "Don't use X", "Never do Y", "Avoid Z" |
@@ -48,11 +48,11 @@ Confidence levels:
 
 </signal_taxonomy>
 
-<phases>
+<stages>
 
-Load the **maintain-tasks** skill for phase tracking. Phases advance only, never regress.
+Load the **maintain-tasks** skill for stage tracking. Stages advance only, never regress.
 
-| Phase | Trigger | activeForm |
+| Stage | Trigger | activeForm |
 |-------|---------|------------|
 | Parse Input | Session start | "Parsing input" |
 | Extract Signals | Scope validated | "Extracting signals" |
@@ -78,7 +78,7 @@ Workflow:
 - Transition: Mark current `completed`, add next `in_progress`
 - After delivery: Mark Synthesize Report `completed`
 
-</phases>
+</stages>
 
 <workflow>
 
@@ -181,18 +181,18 @@ JSON structure:
 
 ALWAYS:
 - Create Parse Input at session start
-- Update todos at phase transitions
+- Update todos at stage transitions
 - Include confidence levels for all signals
 - Support patterns with 2+ signals minimum
 - Mark Synthesize Report `completed` after delivery
 - Apply recency weighting (recent overrides old)
 
 NEVER:
-- Skip phase transitions
+- Skip stage transitions
 - Extract low-confidence signals without marking them
 - Claim patterns from single occurrences
-- Regress phases
-- Deliver without marking final phase complete
+- Regress stages
+- Deliver without marking final stage complete
 - Over-interpret neutral language
 
 </rules>

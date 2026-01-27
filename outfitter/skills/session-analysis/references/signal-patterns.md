@@ -184,7 +184,7 @@ Extended taxonomy with edge cases, disambiguation guidance, and confidence scori
 - **Medium**: Single sequence marker with clear temporal relationship
 - **Low**: Ambiguous temporal language ("before", "after") without clear sequence
 
-### Phase Transitions
+### Stage Transitions
 
 **Core indicators**: Reference to completion + new direction, explicit context shift.
 
@@ -194,7 +194,7 @@ Extended taxonomy with edge cases, disambiguation guidance, and confidence scori
 - "With that complete, next is..."
 
 **Edge cases**:
-- "Let's do Y" without completion reference → Context switch, not phase transition
+- "Let's do Y" without completion reference → Context switch, not stage transition
 - "After X, do Y" (pre-planning) → Sequence marker, not transition
 - "Y is next" → Future reference, not active transition
 
@@ -232,7 +232,7 @@ Extended taxonomy with edge cases, disambiguation guidance, and confidence scori
 - Mid-task: "Actually, let's work on something else"
 
 **Edge cases**:
-- Switch after completing task → Phase transition, not context switch
+- Switch after completing task → Stage transition, not context switch
 - Switch with explanation → Intentional pivot, still a switch but lower friction
 - Return to previous context → Resumption, not new switch
 

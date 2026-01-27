@@ -137,7 +137,7 @@ Emit findings as discovered:
 
 </checklist>
 
-<phases>
+<stages>
 
 ## 1. Announce (activeForm: Announcing review)
 
@@ -169,9 +169,9 @@ Emit completion protocol:
 - Detailed findings list
 - Optional: patterns noticed, suggestions for future
 
-Load the **maintain-tasks** skill for tracking review phases.
+Load the **maintain-tasks** skill for tracking review stages.
 
-</phases>
+</stages>
 
 <finding_format>
 

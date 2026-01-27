@@ -23,7 +23,7 @@ Create skills that follow the [Agent Skills specification](https://agentskills.i
 4. **Customization** — Tailor to specific needs
 5. **Validation** — Verify quality before committing
 
-## Phase 1: Discovery
+## Stage 1: Discovery
 
 Ask about the skill:
 
@@ -32,7 +32,7 @@ Ask about the skill:
 - What triggers should invoke it? (phrases users would say)
 - Where should it live? (personal, project, or plugin)
 
-## Phase 2: Archetype Selection
+## Stage 2: Archetype Selection
 
 | Archetype | Use When | Example |
 |-----------|----------|---------|
@@ -42,7 +42,7 @@ Ask about the skill:
 | **dev-workflow** | Automating development tasks | Git workflow, project scaffolder |
 | **research-synthesizer** | Gathering and synthesizing information | Competitive analysis, literature review |
 
-## Phase 3: Directory Structure
+## Stage 3: Directory Structure
 
 ```
 skill-name/
@@ -52,7 +52,7 @@ skill-name/
 └── assets/            # Optional: templates, resources
 ```
 
-## Phase 4: Frontmatter Schema
+## Stage 4: Frontmatter Schema
 
 ```yaml
 ---
@@ -112,7 +112,7 @@ description: Extracts text and tables from PDF files, fills forms, merges docume
 - [ ] Uses third-person voice
 - [ ] Under 200 words
 
-## Phase 5: Validation
+## Stage 5: Validation
 
 ### Validation Checklist
 

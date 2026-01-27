@@ -4,7 +4,7 @@ Extended examples, anti-patterns, and guidance for complex pattern scenarios.
 
 ## Workflow Patterns
 
-Multi-step sequences with defined phases and transitions.
+Multi-step sequences with defined stages and transitions.
 
 ### Examples
 
@@ -14,7 +14,7 @@ name: tdd-workflow
 type: workflow
 description: Red-Green-Refactor cycle
 
-phases:
+stages:
 - name: Red
     actions: [understand requirement, write failing test, confirm failure]
     exit_criteria: test fails with clear assertion
@@ -43,7 +43,7 @@ name: systematic-debugging
 type: workflow
 description: Structured root cause investigation
 
-phases:
+stages:
   - name: Reproduction
     actions: [create minimal case, document steps, confirm consistency]
     exit_criteria: reproducible steps
@@ -76,7 +76,7 @@ name: pr-review
 type: workflow
 description: Comprehensive PR review process
 
-phases:
+stages:
 - name: Context
     actions: [read description, understand problem, review discussion]
     exit_criteria: clear understanding of intent
@@ -148,7 +148,7 @@ orchestration_aspects:
   - GitHub PR creation
   - Stack synchronization
 
-phases:
+stages:
   - name: Planning
     actions: [break into commits, define stack]
     orchestration: [gt init]

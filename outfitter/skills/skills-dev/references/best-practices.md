@@ -626,22 +626,22 @@ description: End-to-end feature development workflow
 
 # Feature Development Workflow
 
-## Phase 1: Planning
+## Stage 1: Planning
 Load **pathfinding** skill to clarify requirements and architecture.
 
-## Phase 2: Implementation
+## Stage 2: Implementation
 Load **tdd** skill to implement with tests.
 
-## Phase 3: Documentation
+## Stage 3: Documentation
 Load **api-documentation** skill to generate API docs.
 
-## Phase 4: Review
+## Stage 4: Review
 Load **code-review** skill to validate implementation.
 
-## Phase 5: Deployment
+## Stage 5: Deployment
 Load **deployment-staging** skill to deploy for testing.
 
-Each phase must complete successfully before proceeding to next.
+Each stage must complete successfully before proceeding to next.
 ```
 
 **Advantage**: Each specialized skill can evolve independently. Feature-development orchestrates but doesn't duplicate.
@@ -651,14 +651,14 @@ Each phase must complete successfully before proceeding to next.
 ```markdown
 ## Error Recovery
 
-If tests fail in Phase 2:
+If tests fail in Stage 2:
   Load **debugging** skill to investigate
-  Return to Phase 2 after fixes
+  Return to Stage 2 after fixes
 
-If code review finds issues in Phase 4:
-  Return to Phase 2 for fixes
-  Re-run Phase 3 to update docs
-  Re-run Phase 4 to re-review
+If code review finds issues in Stage 4:
+  Return to Stage 2 for fixes
+  Re-run Stage 3 to update docs
+  Re-run Stage 4 to re-review
 ```
 
 ## Security Considerations

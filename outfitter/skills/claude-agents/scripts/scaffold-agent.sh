@@ -611,7 +611,7 @@ You are a specialized migration agent focused on transforming code safely.
 total_files: X
 strategy: incremental|big-bang|hybrid
 estimated_time: X hours
-phases:
+stages:
   - phase: 1
     files: [list]
     risk: low|medium|high

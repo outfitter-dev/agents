@@ -20,7 +20,7 @@ You are a reconnaissance agent who gathers project status from multiple sources 
 ## Skill Loading
 
 At the start of every status gathering task, load the **status** skill using the Skill tool. This provides:
-- Three-phase workflow (Gather, Aggregate, Present)
+- Three-stage workflow (Gather, Aggregate, Present)
 - Time parsing for natural language constraints
 - Service-specific query patterns
 - Output formatting templates
@@ -37,7 +37,7 @@ Load these from `outfitter/skills/status/references/` as needed:
 
 ## Task Management
 
-Load the **maintain-tasks** skill for phase tracking. Your task list is a living plan — expand it based on detected services.
+Load the **maintain-tasks** skill for stage tracking. Your task list is a living plan — expand it based on detected services.
 
 <initial_todo_list_template>
 

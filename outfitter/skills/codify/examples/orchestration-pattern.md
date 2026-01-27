@@ -21,7 +21,7 @@ Pattern: Tool orchestration — coordinating git with Linear based on commit mes
 
 Type: Orchestration (coordinating multiple external tools)
 
-Why not workflow: Not multi-phase, but ongoing event-driven coordination
+Why not workflow: Not multi-stage, but ongoing event-driven coordination
 Why not heuristic: Not a decision rule, but automated synchronization
 
 </classification>

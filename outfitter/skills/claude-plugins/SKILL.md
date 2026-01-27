@@ -54,7 +54,7 @@ Discovery -> Init -> Components -> Validate -> Distribute -> Marketplace
   Type      README      Hooks      Quality     Release       Share
 ```
 
-## Phase 1: Discovery
+## Stage 1: Discovery
 
 Before creating a plugin, clarify:
 
@@ -65,7 +65,7 @@ Before creating a plugin, clarify:
 | What components are needed? | Commands, agents, hooks, MCP servers |
 | Where will it live? | Personal, project, or marketplace |
 
-## Phase 2: Initialization
+## Stage 2: Initialization
 
 ### Plugin Structure
 
@@ -132,7 +132,7 @@ Keep marketplace entries minimal - just point to plugin directories:
 
 See [structure.md](references/structure.md) for complete plugin.json schema.
 
-## Phase 3: Components
+## Stage 3: Components
 
 Add components based on plugin needs. See Steps section for which skills to load.
 
@@ -225,7 +225,7 @@ When plugins are installed, Claude Code copies them to a cache directory. This h
 
 See [caching.md](references/caching.md) for workarounds and best practices.
 
-## Phase 4: Validation
+## Stage 4: Validation
 
 Before distribution, validate the plugin.
 
@@ -261,7 +261,7 @@ Before distribution, validate the plugin.
 
 See [structure.md](references/structure.md) for validation commands and detailed component schemas.
 
-## Phase 5: Distribution
+## Stage 5: Distribution
 
 ### Semantic Versioning
 
@@ -295,7 +295,7 @@ gh release create v1.0.0 --title "v1.0.0" --notes "Initial release"
 
 See [distribution.md](references/distribution.md) for packaging, CI/CD, and release automation.
 
-## Phase 6: Marketplace
+## Stage 6: Marketplace
 
 A marketplace catalogs plugins for discovery and installation.
 

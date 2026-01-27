@@ -100,7 +100,7 @@ Use with: `/commit`
 
 ---
 
-## Phase 1: Discovery
+## Stage 1: Discovery
 
 Before writing code, clarify:
 
@@ -116,7 +116,7 @@ Before writing code, clarify:
 
 ---
 
-## Phase 2: Design
+## Stage 2: Design
 
 ### Command Scopes
 
@@ -153,7 +153,7 @@ See [frontmatter.md](references/frontmatter.md) for complete schema.
 
 ---
 
-## Phase 3: Implementation
+## Stage 3: Implementation
 
 ### File Structure
 
@@ -256,7 +256,7 @@ See [permissions.md](references/permissions.md) for patterns.
 
 ---
 
-## Phase 4: Validation
+## Stage 4: Validation
 
 After creating a command, validate against these checklists.
 

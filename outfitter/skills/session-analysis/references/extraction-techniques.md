@@ -286,7 +286,7 @@ function detectSequence(message) {
 }
 ```
 
-#### Phase Transition Detection
+#### Stage Transition Detection
 
 **Patterns**:
 
@@ -305,16 +305,16 @@ function detectSequence(message) {
 1. Check for completion language: "done", "finished", "complete", "that's it"
 2. Check for new direction: "now", "next", "let's", "time to"
 3. Must have both completion and new direction for high confidence
-4. If only new direction: context switch, not phase transition
+4. If only new direction: context switch, not stage transition
 
 **Context checks**:
 
 ```
-If phase transition suspected:
+If stage transition suspected:
   - Check if previous task mentioned in completion language
   - Verify previous task was in progress (not already complete)
-  - Check if new direction is related (phase) or unrelated (context switch)
-  - Related = phase transition, unrelated = context switch
+  - Check if new direction is related (stage) or unrelated (context switch)
+  - Related = stage transition, unrelated = context switch
 ```
 
 #### Tool Chain Detection

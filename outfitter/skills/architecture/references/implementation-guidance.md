@@ -2,7 +2,7 @@
 
 ## Phased Delivery
 
-| Phase | Timeline | Focus |
+| Stage | Timeline | Focus |
 |-------|----------|-------|
 | MVP | 2-4 weeks | Core workflow only, simplest architecture, manual processes OK. Validate problem-solution fit. |
 | Beta | 4-8 weeks | Key features, basic scalability, monitoring, automated deployment. Validate product-market fit. |
@@ -11,7 +11,7 @@
 
 ## Critical Path Analysis
 
-For each phase identify:
+For each stage identify:
 - **Blocking dependencies**: What must be done first?
 - **Parallel workstreams**: What can happen simultaneously?
 - **Resource constraints**: Who's needed, when?

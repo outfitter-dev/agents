@@ -36,7 +36,7 @@ NOT for: one-off tasks, simple questions, well-documented existing patterns
 | Orchestration | Tool coordination | Git + Linear + PR automation |
 | Heuristic | Decision rules | "When X, do Y because Z" |
 
-Workflows: Step-by-step processes with defined phases and transitions.
+Workflows: Step-by-step processes with defined stages and transitions.
 Orchestration: Tool combinations that work together for a goal.
 Heuristics: Conditional logic and decision trees for common situations.
 
@@ -47,7 +47,7 @@ Heuristics: Conditional logic and decision trees for common situations.
 Match pattern type to implementation:
 
 ```text
-Is it a multi-step process with phases?
+Is it a multi-step process with stages?
 ├─ Yes → Does it need tool restrictions?
 │        ├─ Yes → Skill (with allowed_tools)
 │        └─ No → Skill
@@ -75,8 +75,8 @@ Pattern spec format (YAML):
 name: pattern-name
 type: workflow | orchestration | heuristic
 trigger: when to apply
-phases:  # workflow
-  - name: phase-name
+stages:  # workflow
+  - name: stage-name
     actions: [...]
     exit_criteria: condition
 tools:   # orchestration
@@ -113,7 +113,7 @@ All five quality checks must pass before codifying.
 5. Quality: Validate against SRVDS criteria
 6. Implement: Create the component(s)
 
-Task phases:
+Task stages:
 
 ```text
 - Identify { pattern description }

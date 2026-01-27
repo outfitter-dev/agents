@@ -90,7 +90,7 @@ Report which files you created/modified when done.
 Track git operations explicitly in task lists:
 
 ```
-# Phase: Parallel Implementation
+# Stage: Parallel Implementation
 - [ ] [engineer] Implement config module (filesystem only)
 - [ ] [engineer] Implement logging module (filesystem only)
 - [ ] [engineer] Implement state module (filesystem only)

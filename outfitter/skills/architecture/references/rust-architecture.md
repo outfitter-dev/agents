@@ -10,7 +10,7 @@
 - Concurrent processing with correctness guarantees
 
 **May not be worth it:**
-- Prototype/MVP phase (slower iteration)
+- Prototype/MVP stage (slower iteration)
 - Small team without Rust experience
 - Standard CRUD API (TS faster to develop)
 - Heavy dependency on ecosystem libraries only in other languages

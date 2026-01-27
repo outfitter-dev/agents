@@ -4,26 +4,26 @@ Strategies for adopting TypeScript 5.5+ features in existing codebases.
 
 ## Upgrade Strategy Overview
 
-### Phase 1: Foundation (Week 1)
+### Stage 1: Foundation (Week 1)
 
 1. Update TypeScript version
 2. Run type checking, fix any new errors
 3. Update tsconfig.json with recommended options
 4. Verify build pipeline compatibility
 
-### Phase 2: Automated Refactoring (Week 2)
+### Stage 2: Automated Refactoring (Week 2)
 
 1. Remove redundant type predicates (let TS 5.5+ infer)
 2. Replace manual cleanup with `using` where applicable
 3. Convert type assertions to `satisfies` where beneficial
 
-### Phase 3: Manual Improvements (Weeks 3-4)
+### Stage 3: Manual Improvements (Weeks 3-4)
 
 1. Adopt const type parameters for literal preservation
 2. Use template literal types for advanced patterns
 3. Leverage new compiler options (path rewriting, etc.)
 
-### Phase 4: Validation (Week 5)
+### Stage 4: Validation (Week 5)
 
 1. Test thoroughly in development and staging
 2. Monitor bundle sizes

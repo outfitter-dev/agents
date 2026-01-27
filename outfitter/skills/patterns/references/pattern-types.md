@@ -4,10 +4,10 @@ Classification system for different types of reusable patterns.
 
 ## Workflow Pattern
 
-Sequential process with defined phases.
+Sequential process with defined stages.
 
 **Characteristics**:
-- Sequential phases with clear transitions
+- Sequential stages with clear transitions
 - Decision points triggering next steps
 - Quality gates or validation checkpoints
 - Repeatable across similar contexts
@@ -15,12 +15,12 @@ Sequential process with defined phases.
 **Example structure**:
 
 ```
-Phase 1 → Validation → Phase 2 → Validation → Phase 3 → Complete
+Stage 1 → Validation → Stage 2 → Validation → Stage 3 → Complete
 ```
 
 **When to codify as workflow**:
 - Steps always occur in same order
-- Each phase has clear entry/exit criteria
+- Each stage has clear entry/exit criteria
 - Others can follow the sequence
 - Consistent outcomes when followed
 
@@ -29,14 +29,14 @@ Phase 1 → Validation → Phase 2 → Validation → Phase 3 → Complete
 ```markdown
 # Workflow: {Name}
 
-## Phases
-1. {Phase} — {purpose}, exit when {condition}
-2. {Phase} — {purpose}, exit when {condition}
-3. {Phase} — {purpose}, exit when {condition}
+## Stages
+1. {Stage} — {purpose}, exit when {condition}
+2. {Stage} — {purpose}, exit when {condition}
+3. {Stage} — {purpose}, exit when {condition}
 
 ## Quality Gates
-- Before Phase 2: {validation}
-- Before Phase 3: {validation}
+- Before Stage 2: {validation}
+- Before Stage 3: {validation}
 
 ## Exit Criteria
 {how to know workflow is complete}
@@ -172,7 +172,7 @@ Appears reasonable → Causes {problem} → Better approach: {alternative}
 
 | Pattern Type | Key Indicator | Use When |
 |--------------|---------------|----------|
-| Workflow | Sequential steps | Process has clear phases |
+| Workflow | Sequential steps | Process has clear stages |
 | Orchestration | Multiple actors | Coordination needed |
 | Heuristic | Decision point | Repeated judgment calls |
 | Anti-Pattern | Repeated failure | Want to prevent mistakes |
@@ -182,7 +182,7 @@ Appears reasonable → Causes {problem} → Better approach: {alternative}
 Some patterns combine types:
 
 - **Workflow + Heuristics**: Process with embedded decision rules
-- **Orchestration + Workflow**: Coordinated multi-phase process
+- **Orchestration + Workflow**: Coordinated multi-stage process
 - **Heuristic + Anti-Pattern**: "Do X, avoid Y" guidance
 
 Choose primary classification based on dominant characteristic.

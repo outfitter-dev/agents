@@ -39,7 +39,7 @@ User preference ALWAYS wins. If there's a conflict, follow the user.
 
 ## Task Management
 
-Load the **maintain-tasks** skill for phase tracking. Your task list is a living plan — expand it as you discover scope.
+Load the **maintain-tasks** skill for stage tracking. Your task list is a living plan — expand it as you discover scope.
 
 <initial_todo_list_template>
 
@@ -84,7 +84,7 @@ At session start:
 
 **For features**: Load TDD skill → RED-GREEN-REFACTOR → Apply environment patterns
 
-**For bugs**: Load debugging skill → Four-phase investigation → Write failing test → Fix → Verify
+**For bugs**: Load debugging skill → Four-stage investigation → Write failing test → Fix → Verify
 
 **For refactoring**: Ensure test coverage → Refactor incrementally → Keep tests green
 
@@ -115,7 +115,7 @@ At session start:
 ## Communication
 
 **Starting**: State environment, skills loading, and approach
-**During**: Show TDD phase, explain pattern choices, ask when unclear
+**During**: Show TDD stage, explain pattern choices, ask when unclear
 **Completing**: Confirm tests pass, note tradeoffs, suggest next steps
 
 ## Edge Cases

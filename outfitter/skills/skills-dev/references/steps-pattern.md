@@ -1,6 +1,6 @@
 # Steps Pattern
 
-Composable building blocks for skill workflows. Use when skills depend on other skills or have clear sequential phases.
+Composable building blocks for skill workflows. Use when skills depend on other skills or have clear sequential stages.
 
 ## Basic Structure
 
@@ -213,7 +213,7 @@ Each step should be one line. If a step needs explanation, the detail belongs in
 ### 3-6 Steps Ideal
 
 - Fewer than 3: probably doesn't need Steps section
-- More than 6: consider splitting into phases or separate skills
+- More than 6: consider splitting into stages or separate skills
 
 ### Steps vs Workflow Tag
 
@@ -225,9 +225,9 @@ Each step should be one line. If a step needs explanation, the detail belongs in
 
 Can combine both: Steps for orchestration, `<workflow>` for detail within a step.
 
-### Steps vs Phases
+### Steps vs Stages
 
-Steps are for the top-level flow. Phases are for detailed breakdown within the skill body.
+Steps are for the top-level flow. Stages are for detailed breakdown within the skill body.
 
 ```markdown
 # Skill Name
@@ -235,16 +235,16 @@ Steps are for the top-level flow. Phases are for detailed breakdown within the s
 ## Steps
 
 1. Load prerequisite skill
-2. Execute Phase 1-3 below
+2. Execute Stage 1-3 below
 3. Load synthesis skill
 
-## Phase 1: Discovery
+## Stage 1: Discovery
 { detailed content }
 
-## Phase 2: Analysis
+## Stage 2: Analysis
 { detailed content }
 
-## Phase 3: Output
+## Stage 3: Output
 { detailed content }
 ```
 
@@ -274,7 +274,7 @@ Steps are for the top-level flow. Phases are for detailed breakdown within the s
 ### Steps That Are Just Headers
 
 ```markdown
-# Wrong - these are phases, not steps
+# Wrong - these are stages, not steps
 ## Steps
 1. Discovery
 2. Analysis

@@ -29,7 +29,7 @@ Bad: "Ask question wait response"
 Use XML tags for structural sections in skill files:
 - `<when_to_use>` — trigger conditions
 - `<confidence>` — confidence levels/tracking
-- `<phases>` — workflow phases
+- `<stages>` — workflow stages
 - `<workflow>` — core process loop
 - `<rules>` — always/never constraints
 - `<references>` — links to supporting docs
@@ -138,7 +138,7 @@ Pattern: `N. Option name [★] — brief description *why recommended*`
 
 ## Tasks
 
-Give tasks friendly, context-specific descriptions instead of generic phase names. The description should tell the user what's actually happening.
+Give tasks friendly, context-specific descriptions instead of generic stage names. The description should tell the user what's actually happening.
 
 **Prefer**:
 
@@ -202,7 +202,7 @@ Use a `## Steps` section for composable skill workflows. Place immediately after
 - Skill references use: `Load the \`plugin:skill-name\` skill`
 - Conditional steps: `If { condition }, load...` or `If { condition }, { action }`
 - Action descriptions: brief, imperative, no articles
-- Keep to 3-6 steps; split into phases if longer
+- Keep to 3-6 steps; split into stages if longer
 
 **Delegated skills**: See "Skill References" section above for load vs delegate language.
 
@@ -222,7 +222,7 @@ Use a `## Steps` section for composable skill workflows. Place immediately after
 **When to use**:
 
 - Skill depends on another skill being loaded first
-- Workflow has clear sequential phases
+- Workflow has clear sequential stages
 - Steps can branch based on context
 
 **When to skip**:

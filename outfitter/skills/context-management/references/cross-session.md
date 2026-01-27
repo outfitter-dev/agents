@@ -136,7 +136,7 @@ For longer projects:
 ```json
 {
   "project": "api-redesign",
-  "phase": "research",
+  "stage": "research",
   "completed": ["Identified 12 endpoints", "Documented current patterns"],
   "remaining": ["Design new patterns", "Plan migration"],
   "key_findings": "Inconsistent error handling across endpoints"
@@ -149,7 +149,7 @@ For longer projects:
 ```json
 {
   "project": "api-redesign",
-  "phase": "design",
+  "stage": "design",
   "completed": ["New error pattern designed", "Migration strategy outlined"],
   "remaining": ["Implement error utilities", "Migrate endpoints"],
   "decisions": {"error_format": "RFC 7807 Problem Details"}
@@ -166,10 +166,10 @@ Episodic memory is your **session-level** state. External trackers handle **proj
 |------|-------|----------------|
 | Tasks | Within conversation | Every task completion |
 | Episodic memory | Across sessions | Session boundaries |
-| Linear/GitHub | Project lifetime | Phase completions |
+| Linear/GitHub | Project lifetime | Stage completions |
 
 Workflow:
 1. Pull task from Linear/GitHub
 2. Track in Tasks during session
 3. Save to episodic memory at session end
-4. Update Linear/GitHub at phase completion
+4. Update Linear/GitHub at stage completion

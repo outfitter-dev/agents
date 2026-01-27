@@ -344,7 +344,7 @@ Filter recommendations by:
 - User's stack/constraints
 - Scale requirements
 - Team expertise
-- Project phase
+- Project stage
 
 ### Output Structure
 

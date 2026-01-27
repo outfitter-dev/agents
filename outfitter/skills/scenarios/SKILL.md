@@ -200,7 +200,7 @@ grep -q '.scratch/' .gitignore || echo '.scratch/' >> .gitignore
 
 </gitignore_check>
 
-<phases>
+<stages>
 
 ## 1. Setup → Setting up scenario environment
 
@@ -214,10 +214,10 @@ Prepare real dependencies:
 
 Create .scratch/ test script:
 - Import real dependencies (no mocks)
-- Setup phase: prepare state
-- Execute phase: perform actions
-- Verify phase: assert on results
-- Cleanup phase: restore state
+- Setup stage: prepare state
+- Execute stage: perform actions
+- Verify stage: assert on results
+- Cleanup stage: restore state
 
 ## 3. Execute → Running against real dependencies
 
@@ -237,7 +237,7 @@ If scenario validates behavior:
 
 Delete .scratch/ script or promote to permanent test suite.
 
-</phases>
+</stages>
 
 <rules>
 
@@ -248,14 +248,14 @@ ALWAYS:
 - Document successful scenarios in scenarios.jsonl
 - Cleanup test data after execution
 - Tag scenarios for easy filtering
-- Include cleanup phase in all scripts
+- Include cleanup stage in all scripts
 - Use test credentials (never production)
 
 NEVER:
 - Use mocks, stubs, or test doubles
 - Commit .scratch/ directory contents
 - Test against production data
-- Skip cleanup phase
+- Skip cleanup stage
 - Assume behavior without verification
 - Promote assumptions to truth
 - Test mocked behavior instead of reality

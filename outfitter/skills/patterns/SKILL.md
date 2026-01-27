@@ -54,7 +54,7 @@ Four primary pattern types:
 
 | Type | Characteristics | Use When |
 |------|-----------------|----------|
-| **Workflow** | Sequential phases, clear transitions, quality gates | Process has ordered steps |
+| **Workflow** | Sequential stages, clear transitions, quality gates | Process has ordered steps |
 | **Orchestration** | Coordinates components, manages state, routes work | Multiple actors involved |
 | **Heuristic** | Condition → action mapping, context-sensitive | Repeated decisions |
 | **Anti-Pattern** | Common mistake, causes rework, has better alternative | Preventing failures |

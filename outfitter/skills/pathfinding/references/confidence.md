@@ -25,13 +25,13 @@ Consider:
 | `▓▓▓▓░`   | 4     | **Mapped**   | 75–89%     |
 | `▓▓▓▓▓`   | 5     | **Ready**    | 90–100%    |
 
-## Phase Transitions
+## Stage Transitions
 
-Confidence levels trigger phase transitions. Phases always advance, never regress.
+Confidence levels trigger stage transitions. Stages always advance, never regress.
 
-### Phase-Confidence Mapping
+### Stage-Confidence Mapping
 
-| Level | Phase | activeForm |
+| Level | Stage | activeForm |
 |-------|-------|------------|
 | 0–1 | Prep | "Prepping" |
 | 2–3 | Explore | "Exploring" |
@@ -40,10 +40,10 @@ Confidence levels trigger phase transitions. Phases always advance, never regres
 
 ### Rules
 
-1. **No regression**: If confidence drops (4 → 3), stay in current phase
+1. **No regression**: If confidence drops (4 → 3), stay in current stage
 2. **Skip when starting high**: Level 5 start → go directly to Deliver
-3. **Phase independence**: Confidence can fluctuate within a phase
-4. **Early delivery**: User can request delivery at any phase → add `△ Caveats`
+3. **Stage independence**: Confidence can fluctuate within a stage
+4. **Early delivery**: User can request delivery at any stage → add `△ Caveats`
 
 ### Edge Cases
 
@@ -51,11 +51,11 @@ Confidence levels trigger phase transitions. Phases always advance, never regres
 
 **Confidence drop**: Reach Mapped (4), enter Clarify, then realize gap (drops to 3) → Stay in Clarify, ask targeted questions
 
-**Rapid ascent**: Start at Exploring (2) → one answer jumps to Mapped (4) → next to Ready (5) → transition through phases quickly
+**Rapid ascent**: Start at Exploring (2) → one answer jumps to Mapped (4) → next to Ready (5) → transition through stages quickly
 
 ### Level 0: Prepping `░░░░░`
 
-**Phase**: Prep
+**Stage**: Prep
 
 **When**: Request completely unclear, no domain context, pure guessing
 
@@ -65,7 +65,7 @@ Confidence levels trigger phase transitions. Phases always advance, never regres
 
 ### Level 1: Scouting `▓░░░░`
 
-**Phase**: Prep
+**Stage**: Prep
 
 **When**: Vague direction, domain clear but specifics aren't
 
@@ -75,7 +75,7 @@ Confidence levels trigger phase transitions. Phases always advance, never regres
 
 ### Level 2: Exploring `▓▓░░░`
 
-**Phase**: Explore
+**Stage**: Explore
 
 **When**: General area understood, lack critical details, multiple approaches possible
 
@@ -85,7 +85,7 @@ Confidence levels trigger phase transitions. Phases always advance, never regres
 
 ### Level 3: Charting `▓▓▓░░`
 
-**Phase**: Explore
+**Stage**: Explore
 
 **When**: Reasonable understanding, could deliver with notable assumptions
 
@@ -98,7 +98,7 @@ Confidence levels trigger phase transitions. Phases always advance, never regres
 
 ### Level 4: Mapped `▓▓▓▓░`
 
-**Phase**: Clarify
+**Stage**: Clarify
 
 **When**: Solid understanding, few clarifications would reach Ready, low risk
 
@@ -108,7 +108,7 @@ Confidence levels trigger phase transitions. Phases always advance, never regres
 
 ### Level 5: Ready `▓▓▓▓▓`
 
-**Phase**: Deliver
+**Stage**: Deliver
 
 **When**: Clear understanding, no major assumptions, minimal risk
 

@@ -72,15 +72,15 @@ Common debugging mistakes to avoid:
 
 **Random Walk** - trying different things hoping one works
 - Why it fails: Wastes time, may mask real issue
-- Instead: Follow phases 1-2 to understand system
+- Instead: Follow stages 1-2 to understand system
 
 **Quick Fix** - stopping symptom without finding root cause
 - Why it fails: Bug will resurface or manifest differently
-- Instead: Use phase 1 to find root cause before fixing
+- Instead: Use stage 1 to find root cause before fixing
 
 **Cargo Cult** - copying code without understanding why
 - Why it fails: May not apply to your context
-- Instead: Use phase 2 to understand working examples
+- Instead: Use stage 2 to understand working examples
 
 **Shotgun Approach** - changing multiple things simultaneously
 - Why it fails: Can't tell which change fixed it

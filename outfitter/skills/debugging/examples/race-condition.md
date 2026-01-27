@@ -1,12 +1,12 @@
 # Race Condition Debugging Session
 
-This example demonstrates debugging an intermittent issue using the four-phase framework.
+This example demonstrates debugging an intermittent issue using the four-stage framework.
 
 ## The Bug
 
 User reports: "Cache occasionally returns stale data. Works most of the time, but sometimes shows old values after updates."
 
-## Phase 1: Collect Evidence
+## Stage 1: Collect Evidence
 
 **Task state**: "Collecting evidence" (in_progress)
 
@@ -97,7 +97,7 @@ Captured logs from a failure:
 
 **Transition**: Evidence gathered showing timing issue. Mark "Collect Evidence" complete, add "Isolate Variables" as in_progress.
 
-## Phase 2: Isolate Variables
+## Stage 2: Isolate Variables
 
 **Task state**: "Isolating variables" (in_progress)
 
@@ -169,7 +169,7 @@ Broken code:
 
 **Transition**: Pattern identified. Mark "Isolate Variables" complete, add "Formulate Hypotheses" as in_progress.
 
-## Phase 3: Formulate Hypotheses & Test
+## Stage 3: Formulate Hypotheses & Test
 
 **Task state**: "Formulating hypotheses" (in_progress)
 
@@ -244,7 +244,7 @@ Run 100 times:
 
 **Transition**: Solution verified. Mark "Test Hypothesis" complete, add "Verify Fix" as in_progress.
 
-## Phase 4: Verify Fix
+## Stage 4: Verify Fix
 
 **Task state**: "Verifying fix" (in_progress)
 

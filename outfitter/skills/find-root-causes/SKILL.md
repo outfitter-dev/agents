@@ -70,7 +70,7 @@ See [elimination-techniques.md](references/elimination-techniques.md) for detail
 Log every step for handoff and pattern recognition:
 
 ```
-[TIME] PHASE: Action → Result
+[TIME] STAGE: Action → Result
 [10:15] DISCOVERY: Gathered error logs → Found NullPointerException
 [10:22] HYPOTHESIS: User object not initialized
 [10:28] TEST: Added null check logging → Confirmed user is null

@@ -22,11 +22,11 @@ NOT for: exploratory coding, UI prototypes, static config, trivial glue code
 
 </when_to_use>
 
-<phases>
+<stages>
 
-Load the **maintain-tasks** skill for phase tracking. Advance through RED-GREEN-REFACTOR cycle.
+Load the **maintain-tasks** skill for stage tracking. Advance through RED-GREEN-REFACTOR cycle.
 
-| Phase | Trigger | activeForm |
+| Stage | Trigger | activeForm |
 |-------|---------|------------|
 | Red | Session start / cycle restart | "Writing failing test" |
 | Green | Test written and failing | "Implementing code" |
@@ -43,17 +43,17 @@ Task format:
 ```
 
 Workflow:
-- Start: Create "Red" phase `in_progress`
+- Start: Create "Red" stage `in_progress`
 - Transition: Mark current `completed`, add next `in_progress`
-- After each phase: Run tests before advancing
+- After each stage: Run tests before advancing
 - Multiple cycles: Return to "Red" for next feature
 
 Edge cases:
 - Good existing tests: Start at "Refactor" after confirming pass
 - Bug fix: Start at "Red" with failing test reproducing bug
-- No regression: Tests must continue passing through all phases
+- No regression: Tests must continue passing through all stages
 
-</phases>
+</stages>
 
 <cycle>
 
@@ -309,7 +309,7 @@ function divide(a: number, b: number): Result {
 ALWAYS:
 - Track progress with Tasks (load **maintain-tasks** skill)
 - Write tests before implementation (RED first)
-- Run tests after each phase
+- Run tests after each stage
 - Verify tests fail for right reason in RED
 - Keep cycles 5-15 min max
 - Descriptive test names forming sentences
@@ -322,7 +322,7 @@ NEVER:
 - Test implementation details or private methods
 - Allow tests to depend on execution order
 - Write flaky tests
-- Mark phase complete without running tests
+- Mark stage complete without running tests
 - Multiple unrelated assertions per test
 
 </rules>

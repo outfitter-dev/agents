@@ -19,7 +19,7 @@ For complex multi-agent tasks, **start with the Plan subagent** to research and 
 ```
 Complex task arrives
     │
-    ├─► Plan subagent (research phase)
+    ├─► Plan subagent (research stage)
     │   └─► Explore codebase, gather context
     │   └─► Identify which agents and skills needed
     │   └─► Design execution sequence (sequential, parallel, or hybrid)
@@ -114,7 +114,7 @@ One agent completes, passes to next:
 research (investigate) → coding (implement) → reviewing (verify) → testing (validate)
 ```
 
-**Use when**: Clear phases, each requires different expertise.
+**Use when**: Clear stages, each requires different expertise.
 
 ### Parallel Execution
 
@@ -246,7 +246,7 @@ Continue long-running work across invocations:
 Agent preserves full context from previous execution.
 
 **Use cases**:
-- Multi-phase research spanning topics
+- Multi-stage research spanning topics
 - Iterative refinement without re-explaining context
 - Long debugging sessions with incremental discoveries
 
@@ -267,7 +267,7 @@ Override model for specific needs:
 
 ## Coordination Rules
 
-1. **Single owner**: One role owns each task phase
+1. **Single owner**: One role owns each task stage
 2. **Clear handoffs**: Explicit deliverables between agents
 3. **Skill loading**: Agent loads only needed skills
 4. **User prefs first**: Check `CLAUDE.md` before applying defaults

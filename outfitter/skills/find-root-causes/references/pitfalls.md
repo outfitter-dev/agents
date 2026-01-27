@@ -132,7 +132,7 @@ Stopping investigation too early.
 ### Warning Signs
 
 - Relief when finding "a" cause
-- Desire to move to fix phase quickly
+- Desire to move to fix stage quickly
 - Skipping verification steps
 - Not testing alternative hypotheses
 
@@ -140,7 +140,7 @@ Stopping investigation too early.
 
 - Multiple working hypotheses rule
 - Require explicit disconfirmation of alternatives
-- Verification phase mandatory before declaring root cause
+- Verification stage mandatory before declaring root cause
 - Ask "what else could cause this symptom?"
 
 ## Sunk Cost Fallacy
@@ -166,7 +166,7 @@ When you recognize you're stuck in a pitfall:
 
 1. **Acknowledge** — Name the bias or pattern
 2. **Document** — Write down current state and reasoning
-3. **Reset** — Return to discovery phase
+3. **Reset** — Return to discovery stage
 4. **Reframe** — Look at problem from different angle
 5. **Seek outside perspective** — Fresh eyes often see what you miss
 

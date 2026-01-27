@@ -1,12 +1,12 @@
 # Runtime Error Debugging Session
 
-This example demonstrates systematic debugging of a runtime error using the four-phase framework.
+This example demonstrates systematic debugging of a runtime error using the four-stage framework.
 
 ## The Bug
 
 User reports: "Application crashes when processing certain user profiles with `TypeError: Cannot read property 'email' of undefined`"
 
-## Phase 1: Collect Evidence
+## Stage 1: Collect Evidence
 
 **Task state**: "Collecting evidence" (in_progress)
 
@@ -84,7 +84,7 @@ User object from API is missing email field.
 
 **Transition**: Evidence gathered, reproduction confirmed. Mark "Collect Evidence" complete, add "Isolate Variables" as in_progress.
 
-## Phase 2: Isolate Variables
+## Stage 2: Isolate Variables
 
 **Task state**: "Isolating variables" (in_progress)
 
@@ -150,7 +150,7 @@ const user = profile.user; // May be incomplete
 
 **Transition**: Key differences identified. Mark "Isolate Variables" complete, add "Formulate Hypotheses" as in_progress.
 
-## Phase 3: Formulate Hypotheses & Test
+## Stage 3: Formulate Hypotheses & Test
 
 **Task state**: "Formulating hypotheses" (in_progress)
 
@@ -189,7 +189,7 @@ Run with reverted code:
 
 **Transition**: Hypothesis confirmed, ready to implement fix. Mark "Test Hypothesis" complete, add "Verify Fix" as in_progress.
 
-## Phase 4: Verify Fix
+## Stage 4: Verify Fix
 
 **Task state**: "Verifying fix" (in_progress)
 

@@ -128,7 +128,7 @@ Load based on technology in use:
 
 ### Process-Oriented
 
-Load based on workflow phase:
+Load based on workflow stage:
 - tdd, code-review, scenarios
 
 ### Analysis-Oriented

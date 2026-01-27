@@ -301,7 +301,7 @@ alias awk=...       # No good modern replacement (awk is unique)
 
 ## Testing Workflow
 
-### Phase 1: Quick Evaluation (5 minutes)
+### Stage 1: Quick Evaluation (5 minutes)
 
 **Install in isolated way:**
 
@@ -328,7 +328,7 @@ hyperfine '{old-tool} args' '{new-tool} args'
 
 **Decision point:** If not obviously better (2×+ speed or significantly better UX), stop here.
 
-### Phase 2: Real-World Testing (15 minutes)
+### Stage 2: Real-World Testing (15 minutes)
 
 **Test on actual project workloads:**
 
@@ -360,7 +360,7 @@ cd ~/Developer  # or another large directory tree
 
 **Decision point:** If issues found, check GitHub issues. If widespread problems or dealbreaker bugs, stop.
 
-### Phase 3: Integration Testing (10 minutes)
+### Stage 3: Integration Testing (10 minutes)
 
 **Check fit with existing workflow:**
 

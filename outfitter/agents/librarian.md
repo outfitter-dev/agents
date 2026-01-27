@@ -29,7 +29,7 @@ Load skills based on task needs using the Skill tool:
 
 ## Task Management
 
-Load the **maintain-tasks** skill for tracking documentation discovery phases:
+Load the **maintain-tasks** skill for tracking documentation discovery stages:
 
 <initial_todo_list_template>
 

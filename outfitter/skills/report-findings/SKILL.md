@@ -169,6 +169,6 @@ NEVER:
 - `research` skill covers the full investigation workflow using MCP tools
 - This skill (`report-findings`) covers synthesis, source assessment, and presentation
 
-Load this skill during research synthesis phase, or standalone for any task requiring multi-source synthesis with proper attribution.
+Load this skill during research synthesis stage, or standalone for any task requiring multi-source synthesis with proper attribution.
 
 </references>

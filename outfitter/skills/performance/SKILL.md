@@ -38,31 +38,31 @@ Optimizing unmeasured code wastes time and introduces bugs.
 
 </iron_law>
 
-<phases>
+<stages>
 
-Load the **maintain-tasks** skill for phase tracking:
+Load the **maintain-tasks** skill for stage tracking:
 
-**Phase 1: Establishing baseline**
+**Stage 1: Establishing baseline**
 - content: "Establish performance baseline with realistic workload"
 - activeForm: "Establishing performance baseline"
 
-**Phase 2: Profiling bottlenecks**
+**Stage 2: Profiling bottlenecks**
 - content: "Profile code to identify actual bottlenecks"
 - activeForm: "Profiling code to identify bottlenecks"
 
-**Phase 3: Analyzing root cause**
+**Stage 3: Analyzing root cause**
 - content: "Analyze profiling data to determine root cause"
 - activeForm: "Analyzing profiling data"
 
-**Phase 4: Implementing optimization**
+**Stage 4: Implementing optimization**
 - content: "Implement targeted optimization for identified bottleneck"
 - activeForm: "Implementing optimization"
 
-**Phase 5: Validating improvement**
+**Stage 5: Validating improvement**
 - content: "Measure performance gains and verify no regressions"
 - activeForm: "Validating performance improvement"
 
-</phases>
+</stages>
 
 <metrics>
 

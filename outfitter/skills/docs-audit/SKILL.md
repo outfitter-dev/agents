@@ -43,7 +43,7 @@ Audit documentation files against the current codebase state, checking for accur
 
 ## Workflow
 
-### Phase 1: Discovery
+### Stage 1: Discovery
 
 Run the discovery script to get a manifest of all markdown files with git metadata:
 
@@ -56,7 +56,7 @@ Parse the JSON output to understand:
 - Activity status distribution (active/recent/idle/stale/ancient)
 - Files with related code changes (potential staleness indicators)
 
-### Phase 2: Prioritization
+### Stage 2: Prioritization
 
 Select files for deep analysis based on `focus` argument:
 
@@ -68,7 +68,7 @@ Select files for deep analysis based on `focus` argument:
 
 Target: Select top `limit` files (default 10) for deep analysis.
 
-### Phase 3: Deep Analysis
+### Stage 3: Deep Analysis
 
 For each selected file, perform these checks:
 
@@ -94,7 +94,7 @@ For each selected file, perform these checks:
 - [ ] Examples provided for complex features
 - [ ] Error handling documented where relevant
 
-### Phase 4: Docstring Coverage
+### Stage 4: Docstring Coverage
 
 Check TSDoc/JSDoc/docstring coverage for code files related to the documentation:
 
@@ -126,7 +126,7 @@ grep -rn "^func [A-Z]" --include="*.go" | head -20
 
 Calculate coverage percentage per language detected.
 
-### Phase 5: Report Generation
+### Stage 5: Report Generation
 
 First, generate the report path using the helper script:
 
@@ -319,7 +319,7 @@ The default `.pack/reports/` location:
 
 This skill uses `context: fork` to run in isolation. The token budget strategy:
 
-| Phase | Token Target | Strategy |
+| Stage | Token Target | Strategy |
 |-------|--------------|----------|
 | Discovery | ~200-500 | Script output is compact JSON |
 | Prioritization | ~100 | Selection logic only |
@@ -331,11 +331,11 @@ This skill uses `context: fork` to run in isolation. The token budget strategy:
 
 ## Task Management
 
-Use task tools (`TaskCreate`, `TaskUpdate`, `TaskList`) to track progress through phases. Tasks survive context compaction and allow resumption if the audit is interrupted.
+Use task tools (`TaskCreate`, `TaskUpdate`, `TaskList`) to track progress through stages. Tasks survive context compaction and allow resumption if the audit is interrupted.
 
 ### Initial Task Setup
 
-After discovery, create tasks for the audit phases:
+After discovery, create tasks for the audit stages:
 
 ```
 TaskCreate:
@@ -363,8 +363,8 @@ TaskCreate:
 
 Update tasks as you work:
 
-1. **Before starting a phase** → `TaskUpdate` with `status: in_progress`
-2. **After completing a phase** → `TaskUpdate` with `status: completed`, update description with key findings
+1. **Before starting a stage** → `TaskUpdate` with `status: in_progress`
+2. **After completing a stage** → `TaskUpdate` with `status: completed`, update description with key findings
 3. **If issues found** → `TaskCreate` follow-up tasks for fixes
 
 ### State Persistence
@@ -381,14 +381,14 @@ TaskUpdate:
     Remaining: config.md, setup.md, advanced.md
 ```
 
-This ensures findings survive compaction even if the phase isn't complete.
+This ensures findings survive compaction even if the stage isn't complete.
 
 ### Resumption
 
 If context resets mid-audit:
 1. `TaskList` to see current state
 2. `TaskGet` on `in_progress` task to read checkpoint data
-3. Skip completed phases
+3. Skip completed stages
 4. Resume from checkpoint, don't re-analyze completed files
 5. Reference persisted findings in final report
 

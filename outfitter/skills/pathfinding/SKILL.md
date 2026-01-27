@@ -39,18 +39,18 @@ Below level 5: include `△ Caveats` section.
 
 </confidence>
 
-<phases>
+<stages>
 
-Load the **maintain-tasks** skill for phase tracking. Phases advance only, never regress.
+Load the **maintain-tasks** skill for stage tracking. Stages advance only, never regress.
 
-| Phase | Trigger | activeForm |
+| Stage | Trigger | activeForm |
 |-------|---------|------------|
 | Prep | level 0–1 | "Prepping" |
 | Explore | level 2–3 | "Exploring" |
 | Clarify | level 4 | "Clarifying" |
 | Deliver | level 5 | "Delivering" |
 
-Task format — each phase gets context-specific title:
+Task format — each stage gets context-specific title:
 
 ```text
 - Prep { domain } requirements
@@ -64,12 +64,12 @@ Situational (insert before Deliver when triggered):
 - Validate Assumptions → high-risk assumptions before delivery
 
 Workflow:
-- Start: Create phase matching initial confidence `in_progress`
+- Start: Create stage matching initial confidence `in_progress`
 - Transition: Mark current `completed`, add next `in_progress`
 - High start (4+): Skip directly to `Clarify` or `Deliver`
 - Early delivery: Skip to `Deliver` + `△ Caveats`
 
-</phases>
+</stages>
 
 <gather>
 
@@ -190,7 +190,7 @@ Launch with Task tool:
 
 After skeptic returns:
 - Present findings to user
-- If verdict is `block` → add Resolve Conflicts phase
+- If verdict is `block` → add Resolve Conflicts stage
 - If verdict is `caution` → offer choice to address or acknowledge
 - If verdict is `proceed` → continue to delivery
 
@@ -232,7 +232,7 @@ Below 5: Append `△ Caveats`:
 <rules>
 
 ALWAYS:
-- Task phase matching initial confidence at start
+- Task stage matching initial confidence at start
 - `EnterPlanMode` for each question (keyboard nav)
 - Prose above tool for context + ★ recommendation
 - One question at a time, wait for response
@@ -247,7 +247,7 @@ NEVER:
 - Stack questions or bury decisions in paragraphs
 - Put recommendation inside plan tool (keep in prose)
 - Skip reflection after answer
-- Regress phases
+- Regress stages
 - Ignore skeptic auto-invoke triggers
 
 </rules>

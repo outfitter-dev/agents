@@ -9,7 +9,7 @@ Real-time documentation during investigation.
 ### Format
 
 ```
-[TIMESTAMP] PHASE: Action → Result
+[TIMESTAMP] STAGE: Action → Result
 
 [10:15] DISCOVERY: Gathered error logs → Found NullPointerException in UserService
 [10:22] HYPOTHESIS: Suspect user object not initialized when accessed

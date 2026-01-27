@@ -86,10 +86,10 @@ Don't pass full agent output to next agent. Extract and summarize.
 
 ## Pattern: Resumable Long-Running Work
 
-For multi-phase work:
+For multi-stage work:
 
 ```json
-// Phase 1
+// Stage 1
 {
   "description": "Begin auth analysis",
   "prompt": "Analyze authentication patterns in src/auth/",
@@ -97,7 +97,7 @@ For multi-phase work:
 }
 // Returns agent-id: abc123
 
-// Phase 2 (later)
+// Stage 2 (later)
 {
   "description": "Continue auth analysis",
   "prompt": "Now examine the session management aspect",

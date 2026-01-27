@@ -27,15 +27,15 @@ Systematic investigation → evidence-based analysis → authoritative recommend
 - Best practices and industry standards research
 - Implementation guidance with authoritative sources
 
-NOT for: quick lookups, well-known patterns, time-critical debugging without investigation phase
+NOT for: quick lookups, well-known patterns, time-critical debugging without investigation stage
 
 </when_to_use>
 
-<phases>
+<stages>
 
-Load the **maintain-tasks** skill for phase tracking. Phases advance only, never regress.
+Load the **maintain-tasks** skill for stage tracking. Stages advance only, never regress.
 
-| Phase | Trigger | activeForm |
+| Stage | Trigger | activeForm |
 |-------|---------|------------|
 | Analyze Request | Session start | "Analyzing research request" |
 | Discover Sources | Criteria defined | "Discovering sources" |
@@ -50,18 +50,18 @@ Workflow:
 - Gaps during synthesis: Add new "Gather Information" task
 - Early termination: Skip to "Compile Report" with caveats
 
-</phases>
+</stages>
 
 <methodology>
 
-Five-phase systematic approach:
+Five-stage systematic approach:
 
-**1. Question Phase** — Define scope
+**1. Question Stage** — Define scope
 - Decision to be made?
 - Evaluation parameters? (performance, maintainability, security, adoption)
 - Constraints? (timeline, expertise, infrastructure)
 
-**2. Discovery Phase** — Multi-source retrieval
+**2. Discovery Stage** — Multi-source retrieval
 
 | Use Case | Primary | Secondary | Tertiary |
 |----------|---------|-----------|----------|
@@ -70,7 +70,7 @@ Five-phase systematic approach:
 | Code examples | octocode repos | firecrawl tutorials | context7 examples |
 | Technology eval | Parallel all | Cross-reference | Validate |
 
-**3. Evaluation Phase** — Analyze against criteria
+**3. Evaluation Stage** — Analyze against criteria
 
 | Criterion | Metrics |
 |-----------|---------|
@@ -79,11 +79,11 @@ Five-phase systematic approach:
 | Security | CVEs, audits, compliance |
 | Adoption | Downloads, production usage, industry patterns |
 
-**4. Comparison Phase** — Systematic tradeoff analysis
+**4. Comparison Stage** — Systematic tradeoff analysis
 
 For each option: Strengths → Weaknesses → Best fit → Deal breakers
 
-**5. Recommendation Phase** — Clear guidance with rationale
+**5. Recommendation Stage** — Clear guidance with rationale
 
 Primary recommendation → Alternatives → Implementation steps → Limitations
 
@@ -201,14 +201,14 @@ Next steps, common pitfalls, validation.
 
 ALWAYS:
 - Create "Analyze Request" todo at session start
-- One phase `in_progress` at a time
+- One stage `in_progress` at a time
 - Use multi-source approach (context7, octocode, firecrawl)
 - Provide direct citations with links
 - Cross-reference critical information
 - Include confidence levels and limitations
 
 NEVER:
-- Skip "Analyze Request" phase without defining scope
+- Skip "Analyze Request" stage without defining scope
 - Single-source when multi-source available
 - Deliver recommendations without citations
 - Include deprecated approaches without flagging
@@ -226,6 +226,6 @@ NEVER:
 - This skill (`research`) covers the full investigation workflow using MCP tools
 - `report-findings` skill covers synthesis, source assessment, and presentation
 
-Use `research` for technology evaluation, documentation discovery, and best practices research. Load `report-findings` during synthesis phase for source authority assessment and confidence calibration.
+Use `research` for technology evaluation, documentation discovery, and best practices research. Load `report-findings` during synthesis stage for source authority assessment and confidence calibration.
 
 </references>

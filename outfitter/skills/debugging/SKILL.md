@@ -1,6 +1,6 @@
 ---
 name: debugging
-description: This skill should be used when encountering bugs, errors, failing tests, or unexpected behavior. Provides systematic debugging with evidence-based root cause investigation using a four-phase framework.
+description: This skill should be used when encountering bugs, errors, failing tests, or unexpected behavior. Provides systematic debugging with evidence-based root cause investigation using a four-stage framework.
 metadata:
   version: "2.2.0"
   related-skills:
@@ -15,7 +15,7 @@ Evidence-based investigation -> root cause -> verified fix.
 
 ## Steps
 
-1. Load the `outfitter:maintain-tasks` skill for phase tracking
+1. Load the `outfitter:maintain-tasks` skill for stage tracking
 2. Collect evidence (reproduce, gather symptoms)
 3. Isolate variables (narrow scope)
 4. Formulate and test hypotheses
@@ -45,11 +45,11 @@ Never propose solutions or "try this" without understanding root cause through s
 
 </iron_law>
 
-<phases>
+<stages>
 
-See Steps section for skill dependencies. Phases advance forward only.
+See Steps section for skill dependencies. Stages advance forward only.
 
-| Phase | Trigger | activeForm |
+| Stage | Trigger | activeForm |
 |-------|---------|------------|
 | Collect Evidence | Session start | "Collecting evidence" |
 | Isolate Variables | Evidence gathered | "Isolating variables" |
@@ -65,10 +65,10 @@ See Steps section for skill dependencies. Phases advance forward only.
 - Transition: Mark current `completed`, add next `in_progress`
 - Failed hypothesis: Add "Iterate" task
 - Quick fixes: If root cause obvious from error, skip to "Verify Fix" (still create failing test)
-- Need more evidence: Add new evidence task (don't regress phases)
+- Need more evidence: Add new evidence task (don't regress stages)
 - Circuit breaker: After 3 failed hypotheses -> escalate
 
-</phases>
+</stages>
 
 <quick_start>
 
@@ -78,11 +78,11 @@ See Steps section for skill dependencies. Phases advance forward only.
 4. Analyze - compare working vs broken, find differences
 5. Test hypothesis - single specific hypothesis, minimal test
 6. Implement - failing test first, then fix
-7. Update todos on phase transitions
+7. Update todos on stage transitions
 
 </quick_start>
 
-<phase_1_root_cause>
+<stage_1_root_cause>
 
 Goal: Understand what's actually happening.
 
@@ -122,9 +122,9 @@ Red flags (return to evidence gathering):
 - "It might be related to Z"
 - Starting to write code before understanding
 
-</phase_1_root_cause>
+</stage_1_root_cause>
 
-<phase_2_pattern_analysis>
+<stage_2_pattern_analysis>
 
 Goal: Learn from working code to understand broken code.
 
@@ -163,9 +163,9 @@ Questions to answer:
 - Edge cases working version handles?
 - Invariants working version maintains?
 
-</phase_2_pattern_analysis>
+</stage_2_pattern_analysis>
 
-<phase_3_hypothesis_testing>
+<stage_3_hypothesis_testing>
 
 Goal: Test one specific idea with minimal change.
 
@@ -175,7 +175,7 @@ Transition: Mark complete when specific, evidence-based hypothesis formed.
 - Template: "X is root cause because Y"
 - Must explain all symptoms
 - Must be testable with small change
-- Must be based on evidence from phases 1-2
+- Must be based on evidence from stages 1-2
 
 **Design minimal test**
 - Smallest change to test hypothesis
@@ -205,9 +205,9 @@ Good hypotheses (specific, testable):
 - "Race condition: fetchData() called before initializeClient() completes"
 - "Memory leak: event listeners in useEffect never removed in cleanup"
 
-</phase_3_hypothesis_testing>
+</stage_3_hypothesis_testing>
 
-<phase_4_implementation>
+<stage_4_implementation>
 
 Goal: Fix root cause permanently with verification.
 
@@ -243,11 +243,11 @@ If 3+ fixes tried without success: STOP
 - Document root cause
 - Consider similar bugs elsewhere
 
-</phase_4_implementation>
+</stage_4_implementation>
 
 <red_flags>
 
-STOP and return to Phase 1 if you catch yourself:
+STOP and return to Stage 1 if you catch yourself:
 
 - "Quick fix for now, investigate later"
 - "Just try changing X and see"
@@ -297,8 +297,8 @@ Before claiming "fixed":
 
 ALWAYS:
 - Create "Collect Evidence" todo at session start
-- Follow four-phase framework
-- Update todos on phase transitions
+- Follow four-stage framework
+- Update todos on stage transitions
 - Create failing test before fix
 - Test single hypothesis at a time
 - Document root cause after fix
@@ -311,7 +311,7 @@ NEVER:
 - Skip failing test case
 - Fix symptoms instead of root cause
 - Continue after 3 failed fixes without escalation
-- Regress phases - add new tasks if needed
+- Regress stages - add new tasks if needed
 
 </rules>
 
