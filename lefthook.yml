@@ -1,0 +1,5 @@
+# Lefthook configuration for Outfitter Marketplace
+# https://github.com/evilmartians/lefthook
+
+# Changesets are created manually with `bun changeset`
+# No automated hooks - version bumps require developer judgment

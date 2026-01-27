@@ -1,0 +1,42 @@
+name: Changeset Check
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - "outfitter/**"
+      - "but/**"
+      - "gt/**"
+      - "cli-dev/**"
+      - "!**/package.json"
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    name: Check for changeset
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Check for changeset
+        run: |
+          # Check if this PR adds a changeset file
+          CHANGESETS_ADDED=$(git diff --name-only origin/main...HEAD | grep -E '^\.changeset/.*\.md$' | grep -v README.md | wc -l)
+
+          if [ "$CHANGESETS_ADDED" -eq 0 ]; then
+            echo "::warning::No changeset found in this PR."
+            echo ""
+            echo "This PR modifies plugin files but doesn't include a changeset."
+            echo "If this change should bump a version, run: bun changeset"
+            echo ""
+            echo "Skipping changeset is fine for:"
+            echo "  - Infrastructure/tooling changes"
+            echo "  - Documentation-only changes"
+            echo "  - Changes that don't affect plugin consumers"
+          else
+            echo "✓ Found $CHANGESETS_ADDED changeset file(s) added in this PR"
+          fi
