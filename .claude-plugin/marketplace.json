@@ -71,6 +71,7 @@
 				"ref": "6890fb652396e4f1b819ef5f3f0ece24cdb6bd66"
 			},
 			"description": "Outfitter Stack patterns and migration tooling for @outfitter/* packages. Handler contract, Result types, error taxonomy, and transport-agnostic patterns.",
+			"version": "0.1.0",
 			"keywords": [
 				"outfitter-stack",
 				"result-types",
