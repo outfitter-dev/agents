@@ -61,6 +61,26 @@
 			"description": "Skills for building command-line tools: argument parsing, help text, subcommands, and CLI best practices",
 			"version": "1.1.0",
 			"keywords": ["cli", "command-line", "argument-parsing", "terminal"]
+		},
+		{
+			"name": "os",
+			"source": {
+				"source": "github",
+				"repo": "outfitter-dev/stack",
+				"path": "packages/claude-plugin"
+			},
+			"description": "Outfitter Stack patterns and migration tooling for @outfitter/* packages. Handler contract, Result types, error taxonomy, and transport-agnostic patterns.",
+			"keywords": [
+				"outfitter-stack",
+				"result-types",
+				"handler-contract",
+				"error-taxonomy",
+				"migration",
+				"cli",
+				"mcp",
+				"daemon",
+				"logging"
+			]
 		}
 	]
 }
