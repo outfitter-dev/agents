@@ -189,7 +189,7 @@ name: spec-gate
 description: Write spec and detect prompt-injection/scope ambiguity before coding.
 context: fork
 agent: Plan
-allowed-tools: Read, Grep, Glob
+allowed-tools: Read, Grep, Glob, Write
 ---
 
 Write artifacts/spec.md:
@@ -426,7 +426,7 @@ Write artifacts/data-report.md with analysis.
 ---
 name: visualize
 description: Generate visualizations from report data.
-allowed-tools: Bash(*), Write
+allowed-tools: Read, Bash(*), Write
 ---
 
 Read artifacts/data-report.md.
