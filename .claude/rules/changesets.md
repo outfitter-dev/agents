@@ -46,6 +46,9 @@ The changeset check is advisory, not blocking. It warns when plugin files change
 ## Release Flow
 
 1. PRs with changesets merge to main
-2. Changesets action creates a "Version Packages" PR
-3. Merging that PR bumps versions and creates git tags
-4. Tags like `outfitter@1.2.0` are created for each bumped plugin
+2. Changesets action creates a version PR with descriptive title (e.g., "chore: release outfitter@1.4.0")
+3. The `release:publish` label is added and auto-merge is enabled
+4. Once CI passes, the PR auto-merges (squash)
+5. Tags like `outfitter@1.2.0` are created for each bumped plugin
+
+**Prerequisites:** Repository must have "Allow auto-merge" enabled in Settings → General. Branch protection rules with required status checks ensure CI passes before merge.
