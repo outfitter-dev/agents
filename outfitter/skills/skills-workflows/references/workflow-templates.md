@@ -46,7 +46,7 @@ name: triage
 description: Turn incoming task into problem statement + acceptance criteria.
 context: fork
 agent: Explore
-allowed-tools: Read, Grep, Glob
+allowed-tools: Read, Grep, Glob, Write
 ---
 
 Triage $ARGUMENTS.
@@ -99,7 +99,7 @@ Follow artifacts/plan.md.
 name: test
 description: Run test plan and summarize failures deterministically.
 disable-model-invocation: true
-allowed-tools: Bash, Read
+allowed-tools: Read, Bash, Write
 ---
 
 Run commands from artifacts/plan.md "Test plan".
@@ -118,7 +118,7 @@ name: review
 description: Self-review like a strict PR reviewer. Propose follow-ups.
 context: fork
 agent: Plan
-allowed-tools: Read, Grep, Glob
+allowed-tools: Read, Grep, Glob, Write
 ---
 
 Review diffs and artifacts.
@@ -207,7 +207,7 @@ name: adversarial-review
 description: Adversarial review against prompt injection and unsafe tool use.
 context: fork
 agent: Plan
-allowed-tools: Read, Grep, Glob
+allowed-tools: Read, Grep, Glob, Write
 ---
 
 Review diff and artifacts/spec.md.
@@ -232,7 +232,7 @@ name: pr-summary
 description: Summarize current PR using live gh CLI output.
 context: fork
 agent: Explore
-allowed-tools: Bash(gh:*)
+allowed-tools: Read, Bash(gh:*), Write
 ---
 
 ## Pull Request Context
@@ -251,7 +251,7 @@ name: review-notes
 description: Generate review notes from PR summary.
 context: fork
 agent: Plan
-allowed-tools: Read
+allowed-tools: Read, Write
 ---
 
 Read artifacts/pr-summary.md.
@@ -269,7 +269,7 @@ Write artifacts/review-notes.md:
 name: update-pr
 description: Update PR description with generated summary.
 disable-model-invocation: true
-allowed-tools: Bash(gh:*)
+allowed-tools: Read, Bash(gh:*)
 ---
 
 Read artifacts/pr-summary.md.
@@ -328,7 +328,7 @@ name: incident-triage
 description: Initial incident assessment and severity classification.
 context: fork
 agent: Explore
-allowed-tools: Read, Grep, Glob
+allowed-tools: Read, Grep, Glob, Write
 ---
 
 Assess:
@@ -348,7 +348,7 @@ name: gather-evidence
 description: Collect logs and metrics deterministically.
 context: fork
 agent: Explore
-allowed-tools: Read, Bash(grep:*), Bash(tail:*)
+allowed-tools: Read, Bash(grep:*), Bash(tail:*), Write
 ---
 
 ## Current State
@@ -367,7 +367,7 @@ name: hypothesize
 description: Form and rank hypotheses from evidence.
 context: fork
 agent: Plan
-allowed-tools: Read
+allowed-tools: Read, Write
 ---
 
 Read artifacts/evidence.md.
@@ -386,7 +386,7 @@ name: postmortem
 description: Generate postmortem from incident artifacts.
 context: fork
 agent: Plan
-allowed-tools: Read
+allowed-tools: Read, Write
 ---
 
 Read all incident artifacts.
@@ -413,7 +413,7 @@ name: data-report
 description: Gather and analyze data for report.
 context: fork
 agent: Explore
-allowed-tools: Read, Bash(*)
+allowed-tools: Read, Bash(*), Write
 ---
 
 Gather data per $ARGUMENTS.
@@ -460,7 +460,7 @@ name: council-review
 description: Gather multiple perspectives on a decision.
 context: fork
 agent: Plan
-allowed-tools: Read, Grep, Glob
+allowed-tools: Read, Grep, Glob, Write
 ---
 
 Review $ARGUMENTS from perspectives:
@@ -503,7 +503,7 @@ name: explore-safe
 description: Read-only codebase exploration.
 context: fork
 agent: Explore
-allowed-tools: Read, Grep, Glob
+allowed-tools: Read, Grep, Glob, Write
 ---
 
 Explore $ARGUMENTS without making changes.
@@ -518,7 +518,7 @@ name: refactor-plan
 description: Plan refactoring from exploration findings.
 context: fork
 agent: Plan
-allowed-tools: Read
+allowed-tools: Read, Write
 ---
 
 Read artifacts/exploration.md.
@@ -557,7 +557,7 @@ name: outline
 description: Create high-level outline before specifying.
 context: fork
 agent: Plan
-allowed-tools: Read
+allowed-tools: Read, Write
 ---
 
 Write artifacts/outline.md with structure and goals.
@@ -599,7 +599,7 @@ Preflight → Build → Deploy (manual) → Verify → Announce
 ---
 name: preflight
 description: Pre-release validation checklist.
-allowed-tools: Bash(*), Read
+allowed-tools: Read, Bash(*), Write
 ---
 
 Run preflight checks:
@@ -619,7 +619,7 @@ Block if any checks fail.
 name: deploy
 description: Deploy to environment. Manual invocation only.
 disable-model-invocation: true
-allowed-tools: Bash(*)
+allowed-tools: Read, Bash(*)
 ---
 
 Read artifacts/preflight.md (must exist and pass).
@@ -632,7 +632,7 @@ Deploy to $ARGUMENTS environment.
 ---
 name: verify
 description: Post-deploy verification.
-allowed-tools: Bash(*), Read
+allowed-tools: Read, Bash(*), Write
 ---
 
 Verify deployment health:
