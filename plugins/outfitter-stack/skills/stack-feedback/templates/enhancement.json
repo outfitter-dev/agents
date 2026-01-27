@@ -1,0 +1,8 @@
+{
+  "type": "enhancement",
+  "labels": ["feature", "feedback", "source/agent"],
+  "titlePrefix": "[feat]:",
+  "bodyTemplate": "## Package\n\n`{package}`\n\n## Description\n\n{description}\n\n## Use Case\n\n{useCase}\n\n## Proposed API\n\n{proposedApi}\n\n## Alternatives Considered\n\n{alternatives}\n\n---\n\n*Created via `outfitter-stack:stack-feedback` skill*",
+  "requiredFields": ["package", "description", "useCase"],
+  "optionalFields": ["proposedApi", "alternatives"]
+}

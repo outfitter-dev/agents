@@ -1,0 +1,8 @@
+{
+  "type": "conversion-helper",
+  "labels": ["adoption", "feedback", "source/agent"],
+  "titlePrefix": "[adoption]:",
+  "bodyTemplate": "## Legacy Pattern\n\n{legacyPattern}\n\n## Description\n\n{description}\n\n## Target Pattern\n\n{targetPattern}\n\n## Proposed Helper\n\n{proposedHelper}\n\n## Frequency\n\n{frequency}\n\n---\n\n*Created via `outfitter-stack:stack-feedback` skill*",
+  "requiredFields": ["legacyPattern", "description", "targetPattern"],
+  "optionalFields": ["proposedHelper", "frequency"]
+}

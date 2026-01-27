@@ -3,8 +3,6 @@ paths:
   - "**/agents/**/*.md"
 ---
 
-# Agent Development
+# Claude Agents Development
 
-When creating or modifying agents, load the **outfitter:claude-agents** skill for guidance on agent structure, frontmatter, and routing patterns.
-
-Use: `Skill tool with skill: "outfitter:claude-agents"`
+When creating or modifying Claude agents, load the `outfitter:claude-agents` skill.

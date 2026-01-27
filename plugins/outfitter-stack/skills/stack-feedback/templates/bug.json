@@ -1,0 +1,8 @@
+{
+  "type": "bug",
+  "labels": ["bug", "feedback", "source/agent"],
+  "titlePrefix": "[bug]:",
+  "bodyTemplate": "## Package\n\n`{package}`\n\n## Description\n\n{description}\n\n## Expected Behavior\n\n{expected}\n\n## Actual Behavior\n\n{actual}\n\n## Reproduction\n\n{steps}\n\n## Workaround\n\n{workaround}\n\n---\n\n*Created via `outfitter-stack:stack-feedback` skill*",
+  "requiredFields": ["package", "description", "actual"],
+  "optionalFields": ["expected", "steps", "workaround"]
+}

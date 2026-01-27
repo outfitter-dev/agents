@@ -1,0 +1,8 @@
+{
+  "type": "dx",
+  "labels": ["dx", "feedback", "source/agent"],
+  "titlePrefix": "[dx]:",
+  "bodyTemplate": "## Package\n\n`{package}`\n\n## Description\n\n{description}\n\n## Current Experience\n\n{current}\n\n## Ideal Experience\n\n{ideal}\n\n## Impact\n\n{impact}\n\n---\n\n*Created via `outfitter-stack:stack-feedback` skill*",
+  "requiredFields": ["package", "description", "current"],
+  "optionalFields": ["ideal", "impact"]
+}

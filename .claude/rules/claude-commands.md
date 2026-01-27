@@ -3,8 +3,6 @@ paths:
   - "**/commands/**/*.md"
 ---
 
-# Command Development
+# Claude Commands Development
 
-When creating or modifying slash commands, load the **outfitter:claude-commands** skill for guidance on command structure, frontmatter, and argument handling.
-
-Use: `Skill tool with skill: "outfitter:claude-commands"`
+When creating or modifying Claude commands, load the `outfitter:claude-commands` skill.

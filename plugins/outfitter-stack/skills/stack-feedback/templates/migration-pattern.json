@@ -1,0 +1,8 @@
+{
+  "type": "migration-pattern",
+  "labels": ["adoption", "feedback", "source/agent"],
+  "titlePrefix": "[adoption]:",
+  "bodyTemplate": "## Source Pattern\n\n{sourcePattern}\n\n## Description\n\n{description}\n\n## Migration Scenario\n\n{scenario}\n\n## Current Guidance\n\n{currentGuidance}\n\n## Suggested Approach\n\n{suggestion}\n\n---\n\n*Created via `outfitter-stack:stack-feedback` skill*",
+  "requiredFields": ["sourcePattern", "description", "scenario"],
+  "optionalFields": ["currentGuidance", "suggestion"]
+}

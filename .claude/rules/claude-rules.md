@@ -4,8 +4,6 @@ paths:
   - "**/rules/*.md"
 ---
 
-# Rule Development
+# Claude Rules Development
 
-When creating or modifying rule files, load the **outfitter:claude-rules** skill for guidance on rule structure, path patterns, and formatting conventions.
-
-Use: `Skill tool with skill: "outfitter:claude-rules"`
+When creating or modifying Claude rules, load the `outfitter:claude-rules` skill.

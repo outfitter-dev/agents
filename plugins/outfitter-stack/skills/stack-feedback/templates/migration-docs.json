@@ -1,0 +1,8 @@
+{
+  "type": "migration-docs",
+  "labels": ["documentation", "adoption", "feedback", "source/agent"],
+  "titlePrefix": "[docs]:",
+  "bodyTemplate": "## Migration Area\n\n{area}\n\n## Description\n\n{description}\n\n## Documentation Gap\n\n{gap}\n\n## Suggested Content\n\n{suggestion}\n\n## Priority\n\n{priority}\n\n---\n\n*Created via `outfitter-stack:stack-feedback` skill*",
+  "requiredFields": ["area", "description", "gap"],
+  "optionalFields": ["suggestion", "priority"]
+}

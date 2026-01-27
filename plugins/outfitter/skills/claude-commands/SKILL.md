@@ -77,10 +77,10 @@ allowed-tools: Bash(git *)
 ---
 
 ## Context
-
-Current branch: !`git branch --show-current`
-Staged changes: !`git diff --staged`
-Recent commits: !`git log --oneline -5`
+<!-- NOTE: Place "!" before the opening backtick for preprocessing to work -->
+Current branch: `git branch --show-current`
+Staged changes: `git diff --staged`
+Recent commits: `git log --oneline -5`
 
 ## Task
 
@@ -170,9 +170,9 @@ Target: $1
 Options: $2
 
 ## Pre-flight Checks
-
-Environment: !`echo "$1" | grep -E "^(staging|production)$" || echo "Invalid"`
-Tests: !`[[ "$2" == *"--skip-tests"* ]] && echo "Skipped" || bun test`
+<!-- NOTE: Place "!" before the opening backtick for preprocessing to work -->
+Environment: `echo "$1" | grep -E "^(staging|production)$" || echo "Invalid"`
+Tests: `[[ "$2" == *"--skip-tests"* ]] && echo "Skipped" || bun test`
 
 ## Task
 
@@ -209,13 +209,14 @@ See [arguments.md](references/arguments.md) for advanced patterns.
 
 ### Bash Execution
 
-Execute commands and include output:
+Execute commands and include output. The `!` must precede the opening backtick for preprocessing to work:
 
 ```markdown
 ## Git Context
-Branch: !`git branch --show-current`
-Status: !`git status --short`
-Diff: !`git diff --stat`
+<!-- NOTE: Place "!" before the opening backtick for preprocessing to work -->
+Branch: `git branch --show-current`
+Status: `git status --short`
+Diff: `git diff --stat`
 
 Based on the above, suggest next steps.
 ```

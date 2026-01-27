@@ -1,0 +1,8 @@
+{
+  "type": "unclear-pattern",
+  "labels": ["question", "feedback", "source/agent"],
+  "titlePrefix": "[question]:",
+  "bodyTemplate": "## Package/Area\n\n`{package}`\n\n## Question\n\n{description}\n\n## Context\n\n{context}\n\n## What I've Tried\n\n{attempted}\n\n## Specific Confusion\n\n{confusion}\n\n---\n\n*Created via `outfitter-stack:stack-feedback` skill*",
+  "requiredFields": ["package", "description", "context"],
+  "optionalFields": ["attempted", "confusion"]
+}

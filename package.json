@@ -1,7 +1,7 @@
 {
 	"name": "outfitter-marketplace",
 	"private": true,
-	"workspaces": ["plugins/outfitter", "plugins/but", "plugins/gt", "plugins/cli-dev"],
+	"workspaces": ["plugins/outfitter", "plugins/but", "plugins/gt", "plugins/cli-dev", "plugins/outfitter-stack"],
 	"scripts": {
 		"changeset": "changeset",
 		"changeset:ensure": "bun scripts/ensure-changeset.ts",

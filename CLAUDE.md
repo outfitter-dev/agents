@@ -41,7 +41,7 @@ Plugin metadata is consolidated in `.claude-plugin/marketplace.json` (no individ
 | **but** | GitButler virtual branch workflows for parallel development |
 | **gt** | Graphite stacked PR workflows for trunk-based development |
 | **cli-dev** | CLI development: argument parsing, help text, subcommands |
-| **stack** | Outfitter Stack patterns: Result types, handler contract, error taxonomy (external) |
+| **outfitter-stack** | Outfitter Stack patterns: Result types, handler contract, error taxonomy |
 
 ## Working with Skills
 
@@ -52,6 +52,7 @@ Skills are markdown-based instruction sets that guide agent behavior for specifi
 | Plugin | Path | Contains |
 |--------|------|----------|
 | outfitter | `plugins/outfitter/skills/` | TDD, debugging, pathfinding, plugin authoring, skills-discovery, skills-workflows |
+| outfitter-stack | `plugins/outfitter-stack/skills/` | Stack patterns, templates, review, audit, architecture |
 | but | `plugins/but/skills/` | GitButler virtual branch workflows |
 | gt | `plugins/gt/skills/` | Graphite stacked PR workflows |
 | cli-dev | `plugins/cli-dev/skills/` | CLI development patterns |
@@ -62,6 +63,7 @@ Skills are markdown-based instruction sets that guide agent behavior for specifi
 |--------|-------|---------|
 | outfitter | `workflow-architect` | Design multi-skill workflow systems |
 | outfitter | `plugin-engineer` | Transform external repos into plugins |
+| outfitter-stack | `stacker` | Stack-specialist for @outfitter/* patterns |
 
 ```bash
 # List all skills
