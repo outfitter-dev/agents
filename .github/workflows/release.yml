@@ -70,7 +70,8 @@ jobs:
       - name: Label and auto-merge version PR
         if: steps.changesets.outputs.pullRequestNumber
         run: |
-          gh pr edit ${{ steps.changesets.outputs.pullRequestNumber }} --add-label "release:publish"
+          # Label may fail if it doesn't exist yet - continue anyway
+          gh pr edit ${{ steps.changesets.outputs.pullRequestNumber }} --add-label "release:publish" || true
           gh pr merge ${{ steps.changesets.outputs.pullRequestNumber }} --auto --squash
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
