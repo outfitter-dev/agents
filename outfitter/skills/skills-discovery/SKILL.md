@@ -69,11 +69,11 @@ filename:SKILL.md "disable-model-invocation"
 
 ### Recency Filters
 
-Focus on actively maintained projects:
+Focus on actively maintained projects (adjust dates as needed):
 
 ```text
-# Updated in last 90 days
-pushed:>2025-10-27
+# Updated in last 90 days (calculate: date -v-90d +%Y-%m-%d)
+pushed:>YYYY-MM-DD
 
 # Updated since plugins era (Oct 2025+)
 pushed:>2025-10-01
