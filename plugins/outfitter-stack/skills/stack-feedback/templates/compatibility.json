@@ -1,0 +1,8 @@
+{
+  "type": "compatibility",
+  "labels": ["adoption", "feedback", "source/agent"],
+  "titlePrefix": "[compat]:",
+  "bodyTemplate": "## Package\n\n`{package}`\n\n## Description\n\n{description}\n\n## Breaking Change\n\n{breakingChange}\n\n## Impact Assessment\n\n{impact}\n\n## Suggested Mitigation\n\n{mitigation}\n\n---\n\n*Created via `outfitter-stack:stack-feedback` skill*",
+  "requiredFields": ["package", "description", "breakingChange"],
+  "optionalFields": ["impact", "mitigation"]
+}

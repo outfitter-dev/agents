@@ -75,12 +75,18 @@
 			]
 		},
 		{
-			"name": "stack",
-			"source": {
-				"source": "github",
-				"repo": "outfitter-dev/outfitter",
-				"path": "./packages/claude-plugin"
-			}
+			"name": "outfitter-stack",
+			"source": "./plugins/outfitter-stack",
+			"description": "Outfitter Stack patterns: Result types, handler contract, error taxonomy for type-safe APIs",
+			"version": "1.0.0",
+			"license": "MIT",
+			"keywords": [
+				"result-types",
+				"error-handling",
+				"handler-contract",
+				"type-safety",
+				"api-patterns"
+			]
 		}
 	]
 }

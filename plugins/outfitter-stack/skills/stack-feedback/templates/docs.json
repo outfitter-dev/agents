@@ -1,0 +1,8 @@
+{
+  "type": "docs",
+  "labels": ["documentation", "feedback", "source/agent"],
+  "titlePrefix": "[docs]:",
+  "bodyTemplate": "## Package/Area\n\n`{package}`\n\n## Description\n\n{description}\n\n## What's Missing or Unclear\n\n{gap}\n\n## Suggested Improvement\n\n{suggestion}\n\n## Context\n\n{context}\n\n---\n\n*Created via `outfitter-stack:stack-feedback` skill*",
+  "requiredFields": ["package", "description", "gap"],
+  "optionalFields": ["suggestion", "context"]
+}
