@@ -1,0 +1,54 @@
+name: Release
+
+on:
+  push:
+    branches: [main]
+
+concurrency: ${{ github.workflow }}-${{ github.ref }}
+
+jobs:
+  release:
+    name: Release
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - name: Install dependencies
+        run: bun install
+
+      - name: Create Release Pull Request or Tag
+        id: changesets
+        uses: changesets/action@v1
+        with:
+          version: bun run version
+          publish: echo "No publish step - plugins are consumed from git"
+          title: "chore: version packages"
+          commit: "chore: version packages"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Create git tags
+        if: steps.changesets.outputs.hasChangesets == 'false'
+        run: |
+          # After version PR is merged, create tags for each plugin
+          for plugin in outfitter but gt cli-dev; do
+            if [ -f "$plugin/package.json" ]; then
+              VERSION=$(bun -e "console.log(require('./$plugin/package.json').version)")
+              TAG="${plugin}@${VERSION}"
+
+              # Check if tag already exists
+              if ! git rev-parse "$TAG" >/dev/null 2>&1; then
+                echo "Creating tag: $TAG"
+                git tag "$TAG"
+                git push origin "$TAG"
+              fi
+            fi
+          done

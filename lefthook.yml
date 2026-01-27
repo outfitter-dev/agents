@@ -1,0 +1,16 @@
+# Lefthook configuration for Outfitter Marketplace
+# https://github.com/evilmartians/lefthook
+
+pre-commit:
+  commands:
+    changeset:
+      glob: "{outfitter,but,gt,cli-dev}/**/*"
+      run: bun scripts/ensure-changeset.ts
+      stage_fixed: true
+
+commit-msg:
+  commands:
+    # Re-run with actual commit message (for gt modify -a where message is known)
+    changeset:
+      run: bun scripts/ensure-changeset.ts "$(cat {1})"
+      stage_fixed: true

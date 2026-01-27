@@ -1,0 +1,14 @@
+{
+	"name": "outfitter-marketplace",
+	"private": true,
+	"workspaces": ["outfitter", "but", "gt", "cli-dev"],
+	"scripts": {
+		"changeset": "changeset",
+		"changeset:ensure": "bun scripts/ensure-changeset.ts",
+		"version": "changeset version && bun run sync-versions",
+		"sync-versions": "bun scripts/sync-versions.ts"
+	},
+	"devDependencies": {
+		"@changesets/cli": "^2.27.0"
+	}
+}
