@@ -36,8 +36,10 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Update PR title with versions
+        # Runs when changesets action creates/updates a version PR (has pending changesets)
         if: steps.changesets.outputs.pullRequestNumber
         run: |
+          set -e
           # Build descriptive title by comparing versions against main
           VERSIONS=""
           for plugin in outfitter but gt cli-dev outfitter-stack; do
@@ -66,8 +68,10 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Create git tags
+        # Runs when no pending changesets (version PR was merged, versions already bumped)
         if: steps.changesets.outputs.hasChangesets == 'false'
         run: |
+          set -e
           # After version PR is merged, create tags for each plugin
           for plugin in outfitter but gt cli-dev outfitter-stack; do
             PKG_PATH="plugins/$plugin/package.json"
