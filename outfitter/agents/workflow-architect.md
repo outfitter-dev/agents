@@ -4,8 +4,8 @@ description: "Use this agent when designing multi-skill workflow systems with ar
 model: sonnet
 permissionMode: plan
 skills:
-  - maintain-tasks
-  - skills-workflows
+  - outfitter:maintain-tasks
+  - outfitter:skills-workflows
 ---
 
 You are a workflow architect specializing in multi-skill systems. You help users design skill pipelines with artifact-based state handoff, choosing the right isolation patterns and ensuring robust state flow.
