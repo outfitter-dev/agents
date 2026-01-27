@@ -2,6 +2,19 @@
 
 Complete audit checklist before installing community skills, plugins, or marketplaces.
 
+## Table of Contents
+
+- [Threat Model](#threat-model)
+- [Pre-Installation Audit](#pre-installation-audit)
+- [Red Flags Checklist](#red-flags-checklist)
+- [Safe Installation Patterns](#safe-installation-patterns)
+- [Post-Installation Monitoring](#post-installation-monitoring)
+- [Marketplace-Specific Checks](#marketplace-specific-checks)
+- [Recovery Procedures](#recovery-procedures)
+- [Template: Audit Report](#template-audit-report)
+
+---
+
 ## Threat Model
 
 **Core principle**: Installing skills/plugins = running code. Treat with same care as npm packages.

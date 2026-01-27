@@ -104,20 +104,26 @@ filename:SKILL.md path:__tests__
 
 ## Recency Filters
 
-GitHub search supports date filters:
+GitHub search supports date filters. Calculate dates relative to today:
+
+```bash
+# Get date for 30 days ago
+date -v-30d +%Y-%m-%d  # macOS
+date -d "30 days ago" +%Y-%m-%d  # Linux
+```
 
 ```
-# Updated in last 30 days
-pushed:>2026-01-01
+# Updated in last 30 days (adjust date)
+pushed:>YYYY-MM-DD
 
-# Updated in last 90 days
-pushed:>2025-10-27
+# Updated in last 90 days (adjust date)
+pushed:>YYYY-MM-DD
 
 # Updated since plugins announcement (Oct 2025)
 pushed:>2025-10-01
 
-# Created recently
-created:>2025-10-01
+# Created recently (adjust date)
+created:>YYYY-MM-DD
 ```
 
 Combine with other searches:

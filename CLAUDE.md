@@ -40,6 +40,7 @@ Each plugin follows Claude Code's plugin structure with a `.claude-plugin/plugin
 | **but** | GitButler virtual branch workflows for parallel development |
 | **gt** | Graphite stacked PR workflows for trunk-based development |
 | **cli-dev** | CLI development: argument parsing, help text, subcommands |
+| **stack** | Outfitter Stack patterns: Result types, handler contract, error taxonomy (external) |
 
 ## Working with Skills
 
@@ -49,10 +50,17 @@ Skills are markdown-based instruction sets that guide agent behavior for specifi
 
 | Plugin | Path | Contains |
 |--------|------|----------|
-| outfitter | `outfitter/skills/` | TDD, debugging, pathfinding, plugin authoring |
+| outfitter | `outfitter/skills/` | TDD, debugging, pathfinding, plugin authoring, skills-discovery, skills-workflows |
 | but | `but/skills/` | GitButler virtual branch workflows |
 | gt | `gt/skills/` | Graphite stacked PR workflows |
 | cli-dev | `cli-dev/skills/` | CLI development patterns |
+
+### Notable Agents
+
+| Plugin | Agent | Purpose |
+|--------|-------|---------|
+| outfitter | `workflow-architect` | Design multi-skill workflow systems |
+| outfitter | `plugin-engineer` | Transform external repos into plugins |
 
 ```bash
 # List all skills

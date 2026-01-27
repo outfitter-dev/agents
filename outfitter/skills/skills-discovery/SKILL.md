@@ -39,10 +39,10 @@ High-signal discovery starting points:
 
 | Topic | Content | URL |
 |-------|---------|-----|
-| `claude-code-plugin` | Plugins | github.com/topics/claude-code-plugin |
-| `claude-code-plugin-marketplace` | Marketplaces | github.com/topics/claude-code-plugin-marketplace |
-| `claude-code-skills` | Skill packs | github.com/topics/claude-code-skills |
-| `claude-code-skill` | Individual skills | github.com/topics/claude-code-skill |
+| `claude-code-plugin` | Plugins | https://github.com/topics/claude-code-plugin |
+| `claude-code-plugin-marketplace` | Marketplaces | https://github.com/topics/claude-code-plugin-marketplace |
+| `claude-code-skills` | Skill packs | https://github.com/topics/claude-code-skills |
+| `claude-code-skill` | Individual skills | https://github.com/topics/claude-code-skill |
 
 ### Code Search Patterns
 

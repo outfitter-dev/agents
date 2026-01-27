@@ -243,6 +243,30 @@ Preprocessing runs synchronously before skill loads. Keep commands fast:
 
 If command might be slow, use tools instead (can stream output, user sees progress).
 
+## Timeouts
+
+Preprocessing commands have a **5-second timeout**. Commands exceeding this will:
+- Be terminated
+- Show timeout error in output
+- Still allow skill to load (with error visible)
+
+**Implications:**
+- Keep commands under 2 seconds for reliable execution
+- Network calls are risky (latency varies)
+- Large file operations may timeout
+- Complex pipelines may need optimization
+
+**Workarounds for slow operations:**
+
+| Slow Pattern | Alternative |
+|--------------|-------------|
+| `curl api/endpoint` | Use WebFetch tool instead |
+| `find / -name ...` | Narrow scope or use Glob tool |
+| `git log --all` | Limit with `-n 10` |
+| `npm test` | Run as tool (shows progress) |
+
+**No timeout control**: You cannot extend the timeout. If a command needs more than 5 seconds, it belongs in a tool call, not preprocessing.
+
 ## Debugging
 
 If preprocessing seems wrong:
