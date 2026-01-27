@@ -1,3 +1,7 @@
+# Dependencies
+node_modules/
+bun.lock
+
 # Scratch directory for scenario testing
 .scratch/
 
