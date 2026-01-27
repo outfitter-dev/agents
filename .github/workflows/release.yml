@@ -67,6 +67,16 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Label and auto-merge version PR
+        if: steps.changesets.outputs.pullRequestNumber
+        run: |
+          set -e
+          # Label may fail if it doesn't exist yet - continue anyway
+          gh pr edit ${{ steps.changesets.outputs.pullRequestNumber }} --add-label "release:publish" || true
+          gh pr merge ${{ steps.changesets.outputs.pullRequestNumber }} --auto --squash
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Create git tags
         # Runs when no pending changesets (version PR was merged, versions already bumped)
         if: steps.changesets.outputs.hasChangesets == 'false'
