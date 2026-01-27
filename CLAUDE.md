@@ -125,7 +125,7 @@ Skills and output should follow `.claude/rules/FORMATTING.md`:
 
 ## Marketplace Configuration
 
-The root `.claude-plugin/marketplace.json` defines available plugins with source locations and metadata. Local plugins live in `plugins/` (via `pluginRoot: "./plugins"`). External plugins reference GitHub repos.
+The root `.claude-plugin/marketplace.json` defines available plugins with source locations and metadata. Local plugins use explicit `./plugins/<name>` paths in source fields (schema requires `./` prefix for relative paths). External plugins reference GitHub repos.
 
 ## Conventions
 

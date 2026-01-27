@@ -47,11 +47,11 @@ Names that impersonate official marketplaces (like `official-claude-plugins` or 
 |-------|------|-------------|
 | `metadata.description` | string | Brief marketplace description |
 | `metadata.version` | string | Marketplace version |
-| `metadata.pluginRoot` | string | Base path for relative sources. Use `"./"` for plugins at repo root, `"./packages/"` for a subdirectory. Avoids repeating paths in each plugin entry. |
+| `metadata.pluginRoot` | string | Documentation hint for where plugins live. Does NOT affect schema validation—always use explicit `./` prefix in source paths. |
 
 ### Complete Example
 
-For local plugins (relative paths), use `strict: false` to consolidate metadata and `pluginRoot` to simplify source paths:
+For local plugins (relative paths), use `strict: false` to consolidate metadata. Always use explicit `./` prefix for source paths:
 
 ```json
 {
@@ -62,21 +62,20 @@ For local plugins (relative paths), use `strict: false` to consolidate metadata 
   },
   "metadata": {
     "description": "Internal development tools",
-    "version": "2.0.0",
-    "pluginRoot": "./"
+    "version": "2.0.0"
   },
   "strict": false,
   "plugins": [
     {
       "name": "code-formatter",
-      "source": "code-formatter",
+      "source": "./code-formatter",
       "version": "1.0.0",
       "description": "Auto-format code on save",
       "license": "MIT"
     },
     {
       "name": "deployment-tools",
-      "source": "deployment",
+      "source": "./deployment",
       "version": "2.1.0",
       "description": "Deploy to staging and production",
       "license": "MIT"
@@ -177,35 +176,20 @@ The external repo should have its own `.claude-plugin/plugin.json` with metadata
 
 ### Relative Path
 
-For plugins in the same repository, use `pluginRoot` to avoid repeating the base path:
+For plugins in the same repository, always use explicit `./` prefix paths:
 
 **Plugins at repo root:**
 
 ```json
 {
-  "metadata": {"pluginRoot": "./"},
   "plugins": [
-    {"name": "my-plugin", "source": "my-plugin"},
-    {"name": "another", "source": "another"}
+    {"name": "my-plugin", "source": "./my-plugin"},
+    {"name": "another", "source": "./another"}
   ]
 }
 ```
 
 **Plugins in a subdirectory:**
-
-```json
-{
-  "metadata": {"pluginRoot": "./packages/"},
-  "plugins": [
-    {"name": "my-plugin", "source": "my-plugin"},
-    {"name": "another", "source": "another"}
-  ]
-}
-```
-
-Both resolve to `./packages/my-plugin`, `./packages/another`, etc.
-
-**Without `pluginRoot`** (verbose, but works):
 
 ```json
 {
@@ -215,6 +199,8 @@ Both resolve to `./packages/my-plugin`, `./packages/another`, etc.
   ]
 }
 ```
+
+The schema requires the `./` prefix for relative paths. Bare names like `"source": "my-plugin"` fail validation.
 
 ### GitHub Repository
 
