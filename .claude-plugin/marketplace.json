@@ -78,7 +78,7 @@
 			"name": "outfitter-stack",
 			"source": "./plugins/outfitter-stack",
 			"description": "Outfitter Stack patterns: Result types, handler contract, error taxonomy for type-safe APIs",
-			"version": "1.1.0",
+			"version": "1.2.0",
 			"license": "MIT",
 			"keywords": [
 				"result-types",
