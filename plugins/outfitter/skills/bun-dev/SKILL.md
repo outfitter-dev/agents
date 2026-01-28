@@ -397,6 +397,29 @@ bun build ./index.ts --compile --target=bun-windows-x64 --outfile myapp.exe
 
 </building>
 
+<routing>
+
+## Task Router
+
+| If user wants to... | Load workflow |
+|---------------------|---------------|
+| Create new API/server | [workflows/build-new-api.md](workflows/build-new-api.md) |
+| Create new CLI tool | [workflows/build-new-cli.md](workflows/build-new-cli.md) |
+| Add SQLite database | [workflows/add-database.md](workflows/add-database.md) |
+| Add WebSocket support | [workflows/add-websocket.md](workflows/add-websocket.md) |
+| Debug Bun-specific issue | [workflows/debug-runtime.md](workflows/debug-runtime.md) |
+| Write tests | [workflows/write-tests.md](workflows/write-tests.md) |
+| Build standalone executable | [workflows/ship-executable.md](workflows/ship-executable.md) |
+| Other Bun patterns | Use references directly |
+
+**Cross-skill integrations:**
+- For Hono route patterns: Load **hono-dev** skill
+- For CLI conventions: Load **cli-dev** skill
+- For TDD methodology: Load **tdd** skill
+- For systematic debugging: Load **debugging** skill
+
+</routing>
+
 <rules>
 
 ALWAYS:

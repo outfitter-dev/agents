@@ -21,6 +21,23 @@ NOT for: Bun runtime APIs (use bun-dev), other frameworks (Express, Fastify)
 
 </when_to_use>
 
+<routing>
+
+## Task Router
+
+| If user wants to... | Load workflow |
+|---------------------|---------------|
+| Create new API from scratch | [workflows/build-new-api.md](workflows/build-new-api.md) |
+| Add new route module | [workflows/add-route-group.md](workflows/add-route-group.md) |
+| Add OpenAPI/Swagger docs | [workflows/add-openapi.md](workflows/add-openapi.md) |
+| Create custom middleware | [workflows/add-middleware.md](workflows/add-middleware.md) |
+| Fix route chain type errors | [workflows/debug-types.md](workflows/debug-types.md) |
+| Write API tests | [workflows/write-tests.md](workflows/write-tests.md) |
+| Deploy API with documentation | [workflows/ship-with-docs.md](workflows/ship-with-docs.md) |
+| (Other) | Use references directly |
+
+</routing>
+
 <version_notes>
 
 Hono v4+ with @hono/zod-openapi v1.0+
