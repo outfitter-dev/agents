@@ -190,6 +190,8 @@ chunk([1, 2, 3, 4, 5], 2);     // [[1, 2], [3, 4], [5]]
 
 ### Type Utilities
 
+Standard TypeScript utility types for common patterns:
+
 ```typescript
 import type { Prettify, DeepPartial, Nullable } from "@outfitter/types";
 

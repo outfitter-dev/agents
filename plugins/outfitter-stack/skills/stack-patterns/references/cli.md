@@ -264,7 +264,7 @@ import { parseDateRange } from "@outfitter/cli";
 const range = parseDateRange("last 7 days");
 // { start: Date, end: Date }
 
-const range2 = parseDateRange("2024-01-01..2024-01-31");
+const range2 = parseDateRange("2026-01-01..2026-01-31");
 // { start: Date, end: Date }
 
 // Supported formats:

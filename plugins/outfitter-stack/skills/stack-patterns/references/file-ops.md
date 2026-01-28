@@ -66,6 +66,8 @@ const writeResult = await withExclusiveLock("/path/to/data.lock", async () => {
 });
 ```
 
+**Lock fairness note:** Reader-writer locks can cause starvation. With many concurrent readers, writers may wait indefinitely (and vice versa). For high-contention scenarios, consider using exclusive locks only or implementing application-level queuing.
+
 ### Lock Options
 
 ```typescript

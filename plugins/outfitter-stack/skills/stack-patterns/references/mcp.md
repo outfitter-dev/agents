@@ -249,6 +249,8 @@ const heavyTool = defineDeferredTool({
   },
 });
 
+// Deferred tools use the same registerTool() API - the server
+// detects the deferred wrapper and handles lazy loading internally
 server.registerTool(heavyTool);
 ```
 
