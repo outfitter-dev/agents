@@ -1,5 +1,28 @@
 # outfitter-stack
 
+## 1.2.0
+
+### Minor Changes
+
+- Update documentation to match upstream @outfitter/* package changes
+
+#### New Documentation
+
+- **CLI utilities**: Document `parseDateRange`, `formatDuration`, `formatBytes`, `pluralize`, `slugify`, `registerRenderer`
+- **File operations reference**: New `references/file-ops.md` with atomic writes, `withSharedLock()` reader-writer locking, secure paths
+- **@outfitter/types**: Document collection helpers (`sortBy`, `dedupe`, `chunk`) and type utilities (`Prettify<T>`, `DeepPartial`, `Nullable`)
+- **Package tier system**: Document Foundation/Runtime/Tooling tier architecture in stack-architecture skill
+- **ERROR_CODES constant**: Document validation constant for error categories
+
+#### Pattern Updates
+
+- **MCP tools**: Update templates to use `defineTool()` helper for better type inference
+- **UI merger**: Note that `@outfitter/ui` merged into `@outfitter/cli`
+
+#### Fixes
+
+- Fix incorrect `@outfitter/result` package references to `@outfitter/contracts`
+
 ## 1.1.0
 
 ### Minor Changes

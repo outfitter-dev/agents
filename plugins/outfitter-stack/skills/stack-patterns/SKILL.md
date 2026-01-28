@@ -148,22 +148,64 @@ const ctx = createContext({
 | Package | Purpose | When to Use |
 |---------|---------|-------------|
 | `@outfitter/contracts` | Result types, errors, Handler contract | Always (foundation) |
-| `@outfitter/cli` | CLI commands, output modes, Commander.js | CLI applications |
+| `@outfitter/types` | Type utilities, collection helpers | Type manipulation |
+| `@outfitter/cli` | CLI commands, output modes, formatting | CLI applications |
 | `@outfitter/mcp` | MCP server, tool registration, Zod schemas | AI agent tools |
 | `@outfitter/config` | XDG paths, config loading, env handling | Configuration needed |
 | `@outfitter/logging` | Structured logging, sinks, redaction | Logging needed |
 | `@outfitter/daemon` | Background services, IPC, health checks | Long-running services |
-| `@outfitter/file-ops` | Secure paths, atomic writes, file safety | File operations |
+| `@outfitter/file-ops` | Secure paths, atomic writes, file locking | File operations |
 | `@outfitter/state` | Pagination, cursor state | Paginated data |
 | `@outfitter/testing` | Test harnesses, fixtures, Bun test | Testing |
 
 **Selection guidance:**
 
 - All projects start with `@outfitter/contracts`
-- CLI apps add `@outfitter/cli`
+- CLI apps add `@outfitter/cli` (includes UI components)
 - MCP servers add `@outfitter/mcp`
 - Projects with config add `@outfitter/config`
 - File operations need `@outfitter/file-ops` for safety
+
+## Type Utilities
+
+`@outfitter/types` provides collection helpers and type utilities:
+
+### Collection Helpers
+
+```typescript
+import { sortBy, dedupe, chunk } from "@outfitter/types";
+
+// Sort by property
+const users = [{ name: "Bob" }, { name: "Alice" }];
+sortBy(users, "name");         // [{ name: "Alice" }, { name: "Bob" }]
+sortBy(users, u => u.name);    // Same, with accessor function
+
+// Remove duplicates
+dedupe([1, 2, 2, 3, 3, 3]);    // [1, 2, 3]
+dedupe(users, u => u.name);    // Dedupe by property
+
+// Split into chunks
+chunk([1, 2, 3, 4, 5], 2);     // [[1, 2], [3, 4], [5]]
+```
+
+### Type Utilities
+
+Standard TypeScript utility types for common patterns:
+
+```typescript
+import type { Prettify, DeepPartial, Nullable } from "@outfitter/types";
+
+// Prettify: Flatten complex intersection types for better IntelliSense
+type Combined = { a: string } & { b: number };
+type Pretty = Prettify<Combined>;  // Shows { a: string; b: number }
+
+// DeepPartial: Make all properties optional recursively
+type Config = { db: { host: string; port: number } };
+type PartialConfig = DeepPartial<Config>;
+
+// Nullable: T | null
+type MaybeUser = Nullable<User>;
+```
 
 ## Domain Error Mapping
 
@@ -227,8 +269,9 @@ Prefer Bun-native APIs:
 
 ### Package Deep Dives
 
-- [CLI Patterns](references/cli.md) - Output modes, pagination, Commander.js
+- [CLI Patterns](references/cli.md) - Output modes, pagination, formatting utilities
 - [MCP Patterns](references/mcp.md) - Tool registration, resources, schemas
+- [File Operations](references/file-ops.md) - Atomic writes, locking, secure paths
 - [Logging Patterns](references/logging.md) - Structured logging, sinks, redaction
 - [Testing Patterns](references/testing.md) - Test harnesses, fixtures
 - [Daemon Patterns](references/daemon.md) - Lifecycle, IPC, health checks

@@ -5,7 +5,7 @@ Deep dive into @outfitter/mcp patterns.
 ## Creating a Server
 
 ```typescript
-import { createMcpServer } from "@outfitter/mcp";
+import { createMcpServer, defineTool } from "@outfitter/mcp";
 
 const server = createMcpServer({
   name: "my-server",
@@ -23,9 +23,12 @@ server.start();
 
 ## Tool Definition
 
-### Basic Tool
+### Using defineTool()
+
+The `defineTool()` helper provides full type inference from the Zod schema:
 
 ```typescript
+import { defineTool } from "@outfitter/mcp";
 import { Result, ValidationError } from "@outfitter/contracts";
 import { z } from "zod";
 
@@ -34,18 +37,17 @@ const InputSchema = z.object({
   limit: z.number().int().positive().default(10).describe("Max results"),
 });
 
-export const searchTool = {
+export const searchTool = defineTool({
   name: "search",
   description: "Search for items. Use when user asks to find or search.",
   inputSchema: InputSchema,
 
-  handler: async (
-    input: z.infer<typeof InputSchema>
-  ): Promise<Result<SearchOutput, ValidationError>> => {
+  handler: async (input): Promise<Result<SearchOutput, ValidationError>> => {
+    // input is automatically typed from InputSchema
     const results = await performSearch(input.query, input.limit);
     return Result.ok({ results, total: results.length });
   },
-};
+});
 ```
 
 ### Schema Best Practices
@@ -70,7 +72,7 @@ const InputSchema = z.object({
 ### Tool with Context
 
 ```typescript
-export const myTool = {
+export const myTool = defineTool({
   name: "my_tool",
   description: "Tool description",
   inputSchema: InputSchema,
@@ -86,7 +88,7 @@ export const myTool = {
 
     return result;
   },
-};
+});
 ```
 
 ## Resources
@@ -235,7 +237,9 @@ Add to `~/Library/Application Support/Claude/claude_desktop_config.json`:
 For tools that are expensive to load:
 
 ```typescript
-server.registerDeferredTool({
+import { defineDeferredTool } from "@outfitter/mcp";
+
+const heavyTool = defineDeferredTool({
   name: "heavy_tool",
   description: "Expensive tool loaded on demand",
 
@@ -244,6 +248,10 @@ server.registerDeferredTool({
     return heavyTool;
   },
 });
+
+// Deferred tools use the same registerTool() API - the server
+// detects the deferred wrapper and handles lazy loading internally
+server.registerTool(heavyTool);
 ```
 
 ## Testing MCP Servers

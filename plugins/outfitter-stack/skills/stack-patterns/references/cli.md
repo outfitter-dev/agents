@@ -233,8 +233,10 @@ if (isPiped()) {
 
 ## Progress Indicators
 
+> **Note:** UI components merged into `@outfitter/cli`. Import from `@outfitter/cli` directly.
+
 ```typescript
-import { createSpinner, createProgressBar } from "@outfitter/ui";
+import { createSpinner, createProgressBar } from "@outfitter/cli";
 
 // Spinner
 const spinner = createSpinner("Loading...");
@@ -248,6 +250,103 @@ for (let i = 0; i <= 100; i++) {
   progress.update(i);
 }
 progress.stop();
+```
+
+## Formatting Utilities
+
+### Date Range Parsing
+
+Parse human-readable date ranges:
+
+```typescript
+import { parseDateRange } from "@outfitter/cli";
+
+const range = parseDateRange("last 7 days");
+// { start: Date, end: Date }
+
+const range2 = parseDateRange("2026-01-01..2026-01-31");
+// { start: Date, end: Date }
+
+// Supported formats:
+// - "last N days/weeks/months"
+// - "today", "yesterday", "this week", "this month"
+// - "YYYY-MM-DD..YYYY-MM-DD" (range)
+// - "YYYY-MM-DD" (single day)
+```
+
+### Duration Formatting
+
+Format milliseconds as human-readable duration:
+
+```typescript
+import { formatDuration } from "@outfitter/cli";
+
+formatDuration(1500);       // "1.5s"
+formatDuration(65000);      // "1m 5s"
+formatDuration(3661000);    // "1h 1m 1s"
+formatDuration(90061000);   // "1d 1h 1m"
+```
+
+### Byte Formatting
+
+Format bytes as human-readable sizes:
+
+```typescript
+import { formatBytes } from "@outfitter/cli";
+
+formatBytes(1024);         // "1 KB"
+formatBytes(1536);         // "1.5 KB"
+formatBytes(1048576);      // "1 MB"
+formatBytes(1073741824);   // "1 GB"
+```
+
+### Pluralization
+
+Pluralize words based on count:
+
+```typescript
+import { pluralize } from "@outfitter/cli";
+
+pluralize(1, "file");      // "1 file"
+pluralize(5, "file");      // "5 files"
+pluralize(0, "item");      // "0 items"
+
+// Custom plural form
+pluralize(2, "person", "people");  // "2 people"
+```
+
+### Slugification
+
+Convert strings to URL-safe slugs:
+
+```typescript
+import { slugify } from "@outfitter/cli";
+
+slugify("Hello World");           // "hello-world"
+slugify("My New Feature!");       // "my-new-feature"
+slugify("Café Résumé");           // "cafe-resume"
+```
+
+### Custom Renderers
+
+Register custom output renderers for specific data types:
+
+```typescript
+import { registerRenderer, output } from "@outfitter/cli";
+
+interface User {
+  id: string;
+  name: string;
+  email: string;
+}
+
+registerRenderer<User>("user", {
+  human: (user) => `${user.name} <${user.email}>`,
+  json: (user) => JSON.stringify(user),
+});
+
+// Now output() will use your renderer when type matches
+await output(user, { type: "user" });
 ```
 
 ## Best Practices
