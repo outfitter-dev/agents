@@ -355,6 +355,24 @@ See [tanstack-router.md](references/tanstack-router.md) for nested routes, befor
 
 </tanstack_integration>
 
+<routing>
+
+## Task Router
+
+| If user wants to... | Load workflow |
+|---------------------|---------------|
+| Create component | [workflows/build-component.md](workflows/build-component.md) |
+| Create page with routing | [workflows/build-page.md](workflows/build-page.md) |
+| Add form with validation | [workflows/add-form.md](workflows/add-form.md) |
+| Add server action | [workflows/add-server-action.md](workflows/add-server-action.md) |
+| Migrate to React 19 | [workflows/migrate-19.md](workflows/migrate-19.md) |
+| Debug hook issues | [workflows/debug-hooks.md](workflows/debug-hooks.md) |
+| Debug hydration mismatch | [workflows/debug-hydration.md](workflows/debug-hydration.md) |
+| Write component tests | [workflows/write-tests.md](workflows/write-tests.md) |
+| (Other) | Use references directly |
+
+</routing>
+
 <rules>
 
 ALWAYS:
