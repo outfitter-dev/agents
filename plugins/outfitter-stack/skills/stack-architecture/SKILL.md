@@ -70,24 +70,59 @@ Map domain errors to the 10 categories:
 
 ### Step 4: Choose Packages
 
-Select packages based on requirements:
+Packages are organized into three tiers:
+
+#### Package Tiers
+
+```
+┌─────────────────────────────────────────────────────────────────┐
+│                        TOOLING TIER                              │
+│  Build-time, dev-time, test-time packages                       │
+│  @outfitter/testing                                             │
+└─────────────────────────────────────────────────────────────────┘
+                              ▲
+                              │ depends on
+┌─────────────────────────────────────────────────────────────────┐
+│                        RUNTIME TIER                              │
+│  Application-specific packages for different deployment targets  │
+│  @outfitter/cli    @outfitter/mcp    @outfitter/daemon          │
+│  @outfitter/config @outfitter/logging @outfitter/file-ops       │
+│  @outfitter/state                                               │
+└─────────────────────────────────────────────────────────────────┘
+                              ▲
+                              │ depends on
+┌─────────────────────────────────────────────────────────────────┐
+│                       FOUNDATION TIER                            │
+│  Zero-runtime-dependency core packages                          │
+│  @outfitter/contracts    @outfitter/types                       │
+└─────────────────────────────────────────────────────────────────┘
+```
+
+| Tier | Packages | Dependency Rule |
+|------|----------|-----------------|
+| **Foundation** | `contracts`, `types` | No @outfitter/* deps |
+| **Runtime** | `cli`, `mcp`, `daemon`, `config`, `logging`, `file-ops`, `state` | May depend on Foundation |
+| **Tooling** | `testing` | May depend on Foundation + Runtime |
+
+#### Package Selection
 
 | Package | Purpose | When to Use |
 |---------|---------|-------------|
 | `@outfitter/contracts` | Result types, errors, Handler contract | Always (foundation) |
-| `@outfitter/cli` | CLI commands, output modes | CLI applications |
+| `@outfitter/types` | Type utilities, collection helpers | Type manipulation |
+| `@outfitter/cli` | CLI commands, output modes, formatting | CLI applications |
 | `@outfitter/mcp` | MCP server, tool registration | AI agent tools |
 | `@outfitter/config` | XDG paths, config loading | Configuration needed |
 | `@outfitter/logging` | Structured logging, redaction | Logging needed |
 | `@outfitter/daemon` | Background services, IPC | Long-running services |
-| `@outfitter/file-ops` | Secure paths, atomic writes | File operations |
+| `@outfitter/file-ops` | Secure paths, atomic writes, locking | File operations |
 | `@outfitter/state` | Pagination, cursor state | Paginated data |
 | `@outfitter/testing` | Test harnesses, fixtures | Testing |
 
 **Selection criteria:**
 
 - All projects need `@outfitter/contracts` (foundation)
-- CLI applications add `@outfitter/cli`
+- CLI applications add `@outfitter/cli` (includes UI components)
 - MCP servers add `@outfitter/mcp`
 - File operations need both `@outfitter/config` (paths) and `@outfitter/file-ops` (safety)
 

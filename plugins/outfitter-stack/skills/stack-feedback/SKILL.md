@@ -45,7 +45,7 @@ The preferred method for creating issues. The script handles templates, labels, 
 bun plugins/outfitter-stack/skills/stack-feedback/scripts/create-issue.ts \
   --type bug \
   --title "Result.unwrap throws on valid input" \
-  --package "@outfitter/result" \
+  --package "@outfitter/contracts" \
   --description "When calling unwrap on Ok value, it unexpectedly throws" \
   --actual "Throws TypeError instead of returning value"
 ```
@@ -59,7 +59,7 @@ By default, the script outputs JSON with the `gh` command without executing it:
   "command": "gh issue create --repo outfitter-dev/outfitter --title '[Bug] Result.unwrap throws...' --label bug --label feedback --label source/agent --body '...'",
   "title": "[Bug] Result.unwrap throws on valid input",
   "labels": ["bug", "feedback", "source/agent"],
-  "body": "## Package\n\n`@outfitter/result`\n..."
+  "body": "## Package\n\n`@outfitter/contracts`\n..."
 }
 ```
 
@@ -75,7 +75,7 @@ Add `--submit` to actually create the issue:
 bun plugins/outfitter-stack/skills/stack-feedback/scripts/create-issue.ts \
   --type enhancement \
   --title "Add Result.tap helper" \
-  --package "@outfitter/result" \
+  --package "@outfitter/contracts" \
   --description "Helper to run side effects without unwrapping" \
   --useCase "Logging without breaking method chains" \
   --submit

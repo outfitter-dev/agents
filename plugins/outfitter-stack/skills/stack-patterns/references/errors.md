@@ -201,6 +201,30 @@ const status = getStatusCode(error.category);
 res.status(status).json({ error: error.message });
 ```
 
+## ERROR_CODES Constant
+
+Use `ERROR_CODES` for type-safe category validation and iteration:
+
+```typescript
+import { ERROR_CODES, type ErrorCategory } from "@outfitter/contracts";
+
+// ERROR_CODES is a readonly object mapping category names to exit codes
+ERROR_CODES.validation;  // 1
+ERROR_CODES.not_found;   // 2
+ERROR_CODES.conflict;    // 3
+// ... etc
+
+// Validate a category exists
+const isValidCategory = (cat: string): cat is ErrorCategory => {
+  return cat in ERROR_CODES;
+};
+
+// Iterate over all categories
+for (const [category, exitCode] of Object.entries(ERROR_CODES)) {
+  console.log(`${category}: exit ${exitCode}`);
+}
+```
+
 ## Creating Custom Errors
 
 Extend the base classes for domain-specific errors:

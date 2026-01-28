@@ -148,9 +148,10 @@ cli.program.parse();
 
 ## MCP Tool
 
-Zod schema with Result return:
+Use `defineTool()` for type-safe tool definitions with automatic schema inference:
 
 ```typescript
+import { defineTool } from "@outfitter/mcp";
 import { Result, ValidationError } from "@outfitter/contracts";
 import { z } from "zod";
 
@@ -164,18 +165,17 @@ interface Output {
   total: number;
 }
 
-export const myTool = {
+export const myTool = defineTool({
   name: "my_tool",
   description: "Tool description for AI agent",
   inputSchema: InputSchema,
 
-  handler: async (
-    input: z.infer<typeof InputSchema>
-  ): Promise<Result<Output, ValidationError>> => {
+  handler: async (input): Promise<Result<Output, ValidationError>> => {
+    // input is automatically typed as z.infer<typeof InputSchema>
     const results = await search(input.query, input.limit);
     return Result.ok({ results, total: results.length });
   },
-};
+});
 ```
 
 Register in server:
