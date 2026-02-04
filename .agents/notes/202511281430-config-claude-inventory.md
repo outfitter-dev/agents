@@ -49,7 +49,7 @@
 
 - **implement-linear-issue** (488 lines) - End-to-end Linear issue workflow
 - **implement-pr-feedback** (529 lines) - PR feedback across Graphite stacks
-- **sitrep** - Multi-source status reports (Graphite, GitHub, Linear)
+- **sitrep** - Multi-source 'check-status' reports (Graphite, GitHub, Linear)
 
 ---
 

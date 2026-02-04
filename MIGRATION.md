@@ -57,7 +57,7 @@ Skills moved and renamed to shorter forms. Prefix changes from `baselayer:` to `
 | `baselayer:pattern-analysis` | `outfitter:patterns` |
 | `baselayer:scenario-testing` | `outfitter:scenarios` |
 | `baselayer:subagent-coordination` | `outfitter:subagents` |
-| `baselayer:status-reporting` | `outfitter:status` |
+| `baselayer:status-reporting` | `outfitter:check-status` |
 | `baselayer:codebase-analysis` | `outfitter:codebase-recon` |
 | `baselayer:conversation-analysis` | `outfitter:session-analysis` |
 | `baselayer:cli-development-guidelines` | `outfitter:cli-dev` |
@@ -226,7 +226,7 @@ s/complexity-analysis/simplify/g
 s/pattern-analysis/patterns/g
 s/scenario-testing/scenarios/g
 s/subagent-coordination/subagents/g
-s/status-reporting/status/g
+s/status-reporting/check-status/g
 s/codebase-analysis/codebase-recon/g
 s/conversation-analysis/session-analysis/g
 s/cli-development-guidelines/cli-dev/g
@@ -251,7 +251,7 @@ All verbose skill names shortened for cleaner invocations:
 | `pattern-analysis` | `patterns` |
 | `scenario-testing` | `scenarios` |
 | `subagent-coordination` | `subagents` |
-| `status-reporting` | `status` |
+| `status-reporting` | `check-status` |
 | `codebase-analysis` | `codebase-recon` |
 | `conversation-analysis` | `session-analysis` |
 | `cli-development-guidelines` | `cli-dev` |

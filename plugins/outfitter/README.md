@@ -42,7 +42,7 @@ Core development methodology and Claude Code extensibility. Provides disciplined
 | **security** | Security auditing and vulnerability detection |
 | **architecture** | System design with technology selection frameworks |
 | **software-craft** | Engineering judgment and decision principles |
-| **status** | Comprehensive status reports across VCS, PRs, issues, CI/CD |
+| **check-status** | Comprehensive status reports across VCS, PRs, issues, CI/CD |
 | **subagents** | Orchestrate outfitter subagents for complex tasks |
 | **tdd** | Test-driven development with Red-Green-Refactor cycles |
 | **typescript-dev** | TypeScript patterns and strict typing |

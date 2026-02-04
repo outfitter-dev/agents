@@ -9,7 +9,7 @@ Generate a scannable status report for the current project.
 
 ## Steps
 
-1. **Detect** — Check for available services listed below.
+1. **Detect** — Load the `check-status` skill and run the detection script.
 2. **Consider** — Parse the context below for time range and service filters. Ultrathink.
 3. **Dispatch** — Launch the **outfitter:scout** agent via Task tool with detected services and context
 4. **Retain** — Keep the agent ID for follow-up questions (use `resume` parameter)
@@ -24,7 +24,3 @@ Generate a scannable status report for the current project.
 ## Context
 
 - $ARGUMENTS
-
-### Available Services
-
-!`bun ${CLAUDE_PLUGIN_ROOT}/skills/status/scripts/detect.ts`
