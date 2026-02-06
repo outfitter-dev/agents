@@ -107,13 +107,13 @@ Each agent owns dedicated branch(es):
 ```bash
 # Agent A owns auth domain
 but branch new agent-a-auth
-but mark "src/auth/**" agent-a-auth
+but mark agent-a-auth
 
 # Agent B owns api domain
 but branch new agent-b-api
-but mark "src/api/**" agent-b-api
+but mark agent-b-api
 
-# Changes auto-route to correct branches
+# New changes auto-route to marked branch
 ```
 
 **Best for:** Independent parallel development
@@ -194,8 +194,8 @@ but status > /tmp/agent-status-$(hostname)-$(date +%s).txt
 
 ```bash
 # Machine-readable status
-but --json status | jq '.stacks'
-but --json log | jq '.[].branchDetails'
+but status --json | jq '.stacks'
+but show feature-branch --json | jq '.commits'
 ```
 
 ---
@@ -211,7 +211,7 @@ Add to agent system prompt:
 2. NEVER use `git add` - GitButler manages staging
 3. NEVER use `git checkout` - all branches always applied
 4. ALWAYS check file IDs with `but status` before `but rub`
-5. ALWAYS snapshot before risky operations: `but snapshot`
+5. ALWAYS snapshot before risky operations: `but oplog snapshot`
 6. Return to workspace after git ops: `git checkout gitbutler/workspace`
 
 ## Your Branch
@@ -247,7 +247,7 @@ but oplog
 but undo
 
 # Or restore from snapshot
-but restore <snapshot-id>
+but oplog restore <snapshot-id>
 ```
 
 ### Agent committed with git

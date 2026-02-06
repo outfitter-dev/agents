@@ -23,7 +23,7 @@ Virtual branches → parallel development → post-hoc organization.
 - Post-hoc commit reorganization needed
 - Visual organization preferred (GUI + CLI)
 
-NOT for: projects using Graphite (incompatible models), simple linear workflows (use plain git), when PR submission automation required end-to-end (use Graphite instead)
+NOT for: projects using Graphite (incompatible models), simple linear workflows (use plain git)
 
 </when_to_use>
 
@@ -31,13 +31,13 @@ NOT for: projects using Graphite (incompatible models), simple linear workflows 
 
 | Task | This | Not That |
 | ---- | ---- | -------- |
-| Initialize workspace | `but init` | manual setup |
+| Initialize workspace | `but setup` | manual setup |
 | Create branch | `but branch new name` | `git checkout -b name` |
 | View changes | `but status` | `git status` |
 | Assign file to branch | `but rub <file-id> <branch>` | manual staging |
 | Commit to branch | `but commit <branch> -m "msg"` | `git commit -m "msg"` |
 | Move commit | `but rub <sha> <branch>` | `git cherry-pick` |
-| Squash commits | `but rub <newer> <older>` | `git rebase -i` |
+| Squash commits | `but squash <branch>` | `git rebase -i` |
 | Undo operation | `but undo` | `git reset` |
 | Switch context | Create new branch | `git checkout` |
 
@@ -57,7 +57,7 @@ NOT for: projects using Graphite (incompatible models), simple linear workflows 
 
 ```bash
 # Initialize (one time)
-but init
+but setup
 
 # Create branch
 but branch new feature-auth
@@ -98,28 +98,29 @@ Swiss Army knife — combines entities to perform operations:
 
 | Command | Purpose |
 |---------|---------|
-| `but init` | Initialize GitButler in repository |
+| `but setup` | Initialize GitButler in repository |
 | `but status` | View changes and file IDs |
-| `but log` | View commits on active branches |
 | `but branch new <name>` | Create virtual branch |
 | `but branch new <name> --anchor <parent>` | Create stacked branch |
-| `but track --parent <parent>` | Track existing git branch as virtual branch |
 | `but rub <source> <target>` | Assign/move/squash/amend |
 | `but commit <branch> -m "msg"` | Commit to branch |
 | `but commit <branch> -o -m "msg"` | Commit only assigned files |
 | `but absorb` | Auto-amend uncommitted changes to appropriate commits |
-| `but publish` | Push branches and create/update PRs on forge |
-| `but publish -b <branch>` | Publish specific branch only |
-| `but forge auth` | Authenticate with GitHub (OAuth) |
-| `but mark "pattern" <branch>` | Auto-assign files matching pattern to branch |
+| `but squash <commits>` | Squash commits (by IDs, range, or branch) |
+| `but show <id>` | Inspect a commit or branch in detail |
+| `but resolve <commit>` | Enter conflict resolution mode |
+| `but push` | Push branches to remote |
+| `but pr new` | Create/update PRs on forge |
+| `but config forge auth` | Authenticate with GitHub (OAuth) |
+| `but mark <branch>` | Auto-assign new changes to branch |
 | `but unmark` | Remove all mark rules from workspace |
 | `but oplog` | Show operation history |
 | `but undo` | Undo last operation |
-| `but snapshot --message "msg"` | Create manual snapshot |
-| `but base update` | Update workspace with latest base |
-| `but .` | Open GitButler GUI for current repo |
+| `but oplog snapshot --message "msg"` | Create manual snapshot |
+| `but pull` | Update workspace with latest base |
+| `but gui` | Open GitButler GUI for current repo |
 
-**Global flags come first**: `but --json status` ✓ | `but status --json` ✗
+**JSON output**: Use `--json` or `-j` flag on any command: `but status --json`
 
 ## Parallel Development
 
@@ -149,36 +150,41 @@ GitButler handles conflicts **per-commit** during rebase/update (unlike Git's al
 
 1. Rebase continues even when some commits conflict
 2. Conflicted commits marked in UI/status
-3. Resolve conflicts per commit, then continue
+3. Use `but resolve` to enter resolution mode per commit
 4. Partial resolution can be saved for later
 
 ```bash
 # Update base (may cause conflicts)
-but base update
+but pull
 
-# If conflicts appear, resolve them in affected files
-# Use `but status` to see which commits have conflicts
-# After resolving, GitButler auto-detects resolution
+# Check which commits have conflicts
+but status
+
+# Enter resolution mode for a specific commit
+but resolve <commit-id>
+
+# Fix conflicts in your editor, then check remaining
+but resolve status
+
+# Finalize when done (or cancel to abort)
+but resolve finish
 ```
 
-For detailed conflict resolution workflows, see `references/reference.md#troubleshooting-guide`.
+For detailed conflict resolution workflows, see `references/reference.md#conflict-resolution`.
 
 ## Auto-Assignment with Marks
 
 Set up workspace rules to auto-assign files to branches:
 
 ```bash
-# Auto-assign all src/auth/* changes to auth-feature branch
-but mark "src/auth/**/*.ts" auth-feature
-
-# Auto-assign test files
-but mark "**/*.test.ts" test-infrastructure
+# Auto-assign new changes to auth-feature branch
+but mark auth-feature
 
 # Remove all rules
 but unmark
 ```
 
-Useful for multi-agent workflows where files follow predictable patterns.
+Useful for multi-agent workflows where changes should route to a specific branch.
 
 <rules>
 
@@ -186,7 +192,7 @@ ALWAYS:
 - Use `but` for all work within virtual branches
 - Use `git` only for integrating completed work into main
 - Return to `gitbutler/workspace` after git operations: `git checkout gitbutler/workspace`
-- Snapshot before risky operations: `but snapshot --message "..."`
+- Snapshot before risky operations: `but oplog snapshot --message "..."`
 - Assign files immediately after creating: `but rub <id> <branch>`
 - Check file IDs with `but status` before using `but rub`
 
@@ -211,14 +217,14 @@ NEVER:
 |---------|----------|
 | Files not committing | Assign first: `but rub <file-id> <branch>` |
 | Broken pipe panic | Capture output: `output=$(but status)` |
-| Mixed git/but broke state | `but base update` or `but init` |
-| Lost work | `but undo` or `but restore <snapshot-id>` |
+| Mixed git/but broke state | `but pull` or `but setup` |
+| Lost work | `but undo` or `but oplog restore <snapshot-id>` |
 
 For detailed troubleshooting (branch tracking, conflicts, filename issues), see `references/reference.md#troubleshooting-guide`.
 
 ## Recovery
 
-Quick undo: `but undo` | Full restore: `but restore <snapshot-id>` | View history: `but oplog`
+Quick undo: `but undo` | Full restore: `but oplog restore <snapshot-id>` | View history: `but oplog`
 
 For recovery from lost work or corrupted state, see `references/reference.md#recovery-scenarios`.
 
