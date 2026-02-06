@@ -36,5 +36,5 @@ End-to-end branch completion workflow from implementation through PR. Use when f
 
 ## Requirements
 
-- GitButler CLI (`but`) installed and configured
+- GitButler CLI (`but`) v0.19.0+ installed and configured
 - Repository initialized with GitButler (`but setup`)
