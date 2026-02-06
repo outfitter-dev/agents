@@ -37,7 +37,7 @@ NOT for: projects using Graphite (incompatible models), simple linear workflows 
 | Assign file to branch | `but rub <file-id> <branch>` | manual staging |
 | Commit to branch | `but commit <branch> -m "msg"` | `git commit -m "msg"` |
 | Move commit | `but rub <sha> <branch>` | `git cherry-pick` |
-| Squash commits | `but rub <newer> <older>` | `git rebase -i` |
+| Squash commits | `but squash <branch>` | `git rebase -i` |
 | Undo operation | `but undo` | `git reset` |
 | Switch context | Create new branch | `git checkout` |
 
@@ -106,6 +106,9 @@ Swiss Army knife — combines entities to perform operations:
 | `but commit <branch> -m "msg"` | Commit to branch |
 | `but commit <branch> -o -m "msg"` | Commit only assigned files |
 | `but absorb` | Auto-amend uncommitted changes to appropriate commits |
+| `but squash <commits>` | Squash commits (by IDs, range, or branch) |
+| `but show <id>` | Inspect a commit or branch in detail |
+| `but resolve <commit>` | Enter conflict resolution mode |
 | `but push` | Push branches to remote |
 | `but pr new` | Create/update PRs on forge |
 | `but config forge auth` | Authenticate with GitHub (OAuth) |
@@ -147,19 +150,27 @@ GitButler handles conflicts **per-commit** during rebase/update (unlike Git's al
 
 1. Rebase continues even when some commits conflict
 2. Conflicted commits marked in UI/status
-3. Resolve conflicts per commit, then continue
+3. Use `but resolve` to enter resolution mode per commit
 4. Partial resolution can be saved for later
 
 ```bash
 # Update base (may cause conflicts)
 but pull
 
-# If conflicts appear, resolve them in affected files
-# Use `but status` to see which commits have conflicts
-# After resolving, GitButler auto-detects resolution
+# Check which commits have conflicts
+but status
+
+# Enter resolution mode for a specific commit
+but resolve <commit-id>
+
+# Fix conflicts in your editor, then check remaining
+but resolve status
+
+# Finalize when done (or cancel to abort)
+but resolve finish
 ```
 
-For detailed conflict resolution workflows, see `references/reference.md#troubleshooting-guide`.
+For detailed conflict resolution workflows, see `references/reference.md#conflict-resolution`.
 
 ## Auto-Assignment with Marks
 

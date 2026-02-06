@@ -149,7 +149,7 @@ Key operations for restructuring stacks:
 
 | Operation | Command |
 |-----------|---------|
-| Squash commits | `but rub <newer> <older>` |
+| Squash commits | `but squash <branch>` or `but rub <newer> <older>` |
 | Move commit | `but rub <sha> <target-branch>` |
 | Split branch | Create anchored branch, move commits |
 
