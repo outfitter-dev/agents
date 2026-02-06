@@ -27,9 +27,9 @@ NOT for: ongoing work, branches needing more development, stacks (complete botto
 
 ## TL;DR
 
-**Using `but publish`** (preferred): `but snapshot` -> `but publish -b <branch>` -> merge PR on GitHub -> `but branch rm <branch>`
+**Using CLI** (preferred): `but oplog snapshot` -> `but push <branch>` -> `but pr new <branch>` -> merge PR on GitHub -> `but branch delete <branch>`
 
-**Direct merge**: `but snapshot` -> `git checkout main` -> `git pull` -> `git merge --no-ff refs/gitbutler/<branch>` -> `git push` -> `but branch rm <branch>` -> `git checkout gitbutler/workspace`
+**Direct merge**: `but oplog snapshot` -> `git checkout main` -> `git pull` -> `git merge --no-ff refs/gitbutler/<branch>` -> `git push` -> `but branch delete <branch>` -> `git checkout gitbutler/workspace`
 
 **Manual PR workflow**: `git push origin refs/gitbutler/<branch>:refs/heads/<branch>` -> `gh pr create` -> merge PR -> cleanup
 
@@ -44,36 +44,37 @@ Run through before any integration:
 | GitButler running | `but --version` | Version output |
 | Work committed | `but status` | Committed changes, no unassigned files |
 | Tests passing | `bun test` (or project equivalent) | All green |
-| Base updated | `but base update` | Up to date with main |
-| Snapshot created | `but snapshot -m "Before integrating..."` | Snapshot ID returned |
+| Base updated | `but pull` | Up to date with main |
+| Snapshot created | `but oplog snapshot -m "Before integrating..."` | Snapshot ID returned |
 
 ## Integration Workflows
 
-### A. Using `but publish` (Preferred)
+### A. Using CLI (Preferred)
 
 ```bash
 # 1. Verify branch state
 but status
-but log
+but show feature-auth
 
 # 2. Create snapshot
-but snapshot --message "Before publishing feature-auth"
+but oplog snapshot --message "Before publishing feature-auth"
 
 # 3. Authenticate with forge (one-time)
-but forge auth
+but config forge auth
 
-# 4. Publish branch (pushes and creates PR)
-but publish -b feature-auth
+# 4. Push branch and create PR
+but push feature-auth
+but pr new feature-auth
 
 # 5. Review and merge PR on GitHub
 
 # 6. Update local and clean up
-but base update
-but branch rm feature-auth
+but pull
+but branch delete feature-auth
 ```
 
 **Benefits:**
-- Handles push and PR creation in one command
+- Full CLI workflow, no GUI needed
 - Correct base branch set automatically for stacks
 - Stays in GitButler workspace throughout
 
@@ -82,10 +83,10 @@ but branch rm feature-auth
 ```bash
 # 1. Verify branch state
 but status
-but log
+but show feature-auth
 
 # 2. Create snapshot
-but snapshot --message "Before integrating feature-auth"
+but oplog snapshot --message "Before integrating feature-auth"
 
 # 3. Switch to main
 git checkout main
@@ -100,7 +101,7 @@ git merge --no-ff refs/gitbutler/feature-auth -m "feat: add user authentication"
 git push origin main
 
 # 7. Clean up
-but branch rm feature-auth
+but branch delete feature-auth
 git checkout gitbutler/workspace
 ```
 
@@ -123,7 +124,7 @@ gh pr merge feature-auth --squash
 # 5. Update main and clean up
 git checkout main
 git pull origin main
-but branch rm feature-auth
+but branch delete feature-auth
 git checkout gitbutler/workspace
 ```
 
@@ -136,17 +137,17 @@ git checkout gitbutler/workspace
 git checkout main && git pull
 git merge --no-ff refs/gitbutler/feature-base -m "feat: base feature"
 git push origin main
-but branch rm feature-base
+but branch delete feature-base
 git checkout gitbutler/workspace
 
 # 2. Update remaining branches
-but base update
+but pull
 
 # 3. Merge next level
 git checkout main && git pull
 git merge --no-ff refs/gitbutler/feature-api -m "feat: API feature"
 git push origin main
-but branch rm feature-api
+but branch delete feature-api
 git checkout gitbutler/workspace
 
 # 4. Repeat for remaining stack levels
@@ -174,7 +175,7 @@ git commit
 git push origin main
 
 # Clean up
-but branch rm feature-auth
+but branch delete feature-auth
 git checkout gitbutler/workspace
 ```
 
@@ -204,20 +205,20 @@ git push origin main
 
 ```bash
 # Delete integrated virtual branch
-but branch rm feature-auth
+but branch delete feature-auth
 
 # Clean up remote branch (if created for PR)
 git push origin --delete feature-auth
 
 # Verify workspace is clean
 but status  # Should show remaining active branches only
-but log     # Branch should be gone
+but status  # Branch should be gone
 ```
 
 <rules>
 
 ALWAYS:
-- Create snapshot before integration: `but snapshot --message "..."`
+- Create snapshot before integration: `but oplog snapshot --message "..."`
 - Use `--no-ff` flag to preserve branch history
 - Return to workspace after git operations: `git checkout gitbutler/workspace`
 - Run tests before integrating
@@ -261,7 +262,7 @@ git checkout gitbutler/workspace
 **Update base regularly:**
 
 ```bash
-but base update
+but pull
 ```
 
 **Test before integrating:**

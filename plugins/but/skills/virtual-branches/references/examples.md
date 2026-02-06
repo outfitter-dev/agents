@@ -11,7 +11,7 @@ Real-world patterns and workflows for virtual branches, multi-agent collaboratio
 ```bash
 # Initialize (one time)
 cd /path/to/repo
-but init
+but setup
 
 # Check state
 but status
@@ -67,7 +67,7 @@ but commit feature-dashboard -m "feat: add dashboard"
 
 ```bash
 # Oops, committed to wrong branch!
-but log
+but status
 # Shows def5678 "feat: add new feature" on bugfix-branch
 
 # Create correct branch
@@ -77,18 +77,15 @@ but branch new feature-new-capability
 but rub def5678 feature-new-capability
 
 # Commit moved!
-but log
+but status
 ```
 
 ### Squashing Commits
 
 ```bash
-# Too many small commits
-but log
-# c3d4e5f, c2d3e4f, c1d2e3f on feature-branch
-
-# Squash (newer into older)
-but rub c3d4e5f c2d3e4f
+# Too many small commits on feature-branch
+# Squash using explicit command
+but squash feature-branch
 ```
 
 ### Post-Hoc File Assignment
@@ -202,7 +199,7 @@ but rub <id> test-new-model
 but commit test-new-model -m "test: comprehensive model tests"
 
 # Visualize stack
-but log
+but status
 ```
 
 ### Submit Stack as PRs
@@ -235,14 +232,14 @@ but oplog
 but undo
 
 # Verify recovery
-but log  # Branch recovered!
+but status  # Branch recovered!
 ```
 
 ### Recover from Bad Reorganization
 
 ```bash
 # Snapshot before risky operations
-but snapshot --message "Before reorganizing commits"
+but oplog snapshot --message "Before reorganizing commits"
 
 # Attempt reorganization
 but rub <commit1> <branch1>
@@ -250,7 +247,7 @@ but rub <commit2> <branch2>
 
 # Result is a mess - restore to snapshot
 snapshot_id=$(but oplog | grep "Before reorganizing" | awk '{print $1}')
-but restore $snapshot_id
+but oplog restore $snapshot_id
 
 # Back to pre-reorganization state!
 ```
@@ -267,11 +264,11 @@ git add file.ts
 git commit -m "oops"  # WRONG!
 
 # Recovery
-but base update
+but pull
 
 # If still broken, reinitialize
-but snapshot --message "Before recovery"
-but init
+but oplog snapshot --message "Before recovery"
+but setup
 ```
 
 ---
@@ -293,9 +290,9 @@ but branch new bugfix-timeout
 ### Snapshot Cadence
 
 ```bash
-but snapshot --message "Before major reorganization"
-but snapshot --message "Before multi-agent coordination"
-but snapshot --message "Before complex stack changes"
+but oplog snapshot --message "Before major reorganization"
+but oplog snapshot --message "Before multi-agent coordination"
+but oplog snapshot --message "Before complex stack changes"
 ```
 
 ### File Assignment Discipline
@@ -309,12 +306,9 @@ but rub <id> my-branch  # Right away
 ### JSON Output
 
 ```bash
-# Get all branch names
-but --json log | jq '.[0].branchDetails[] | .name'
+# Get branch commits
+but show feature-branch --json | jq '.commits[] | .id'
 
-# Check push status
-but --json log | jq '.[0].branchDetails[] | {name, pushStatus}'
-
-# Find unpushed branches
-but --json log | jq '.[0].branchDetails[] | select(.pushStatus != "fullyPushed") | .name'
+# Workspace overview
+but status --json | jq '.stacks'
 ```

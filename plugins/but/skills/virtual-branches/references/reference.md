@@ -17,11 +17,11 @@ Global Options (must come BEFORE subcommand):
   -h, --help                 Show help
 ```
 
-**Critical**: Global flags come first:
+**JSON output**: Use `--json` or `-j` per command, or as a global flag:
 
 ```bash
-✓ but --json status
-✗ but status --json  # Error: unexpected argument
+but status --json    # Per-command flag
+but --json status    # Global flag (also works)
 ```
 
 ### Inspection Commands
@@ -29,11 +29,13 @@ Global Options (must come BEFORE subcommand):
 | Command | Description |
 |---------|-------------|
 | `but status` | View uncommitted changes and file assignments |
-| `but status -f, --files` | Show modified files in each commit |
-| `but status -r` | Display code review status |
-| `but log` | View commits on active branches |
+| `but status -f` | Show modified files in each commit |
+| `but status -v, --verbose` | Show verbose output with commit author and timestamp |
+| `but show <id>` | Show detailed info about a commit or branch |
+| `but diff` | Show diff of all uncommitted changes |
+| `but diff <id>` | Show diff for a specific entity (file, branch, commit) |
 | `but oplog` | View operations history (snapshots) |
-| `but .` or `but /path` | Open GitButler GUI for repository |
+| `but gui` | Open GitButler GUI for current repo |
 
 **Status Output Example:**
 
@@ -72,11 +74,9 @@ Global Options (must come BEFORE subcommand):
 | `but branch delete <name> --force` | Force delete |
 | `but branch list` | List all branches |
 | `but branch list --local` | Only local branches |
-| `but branch rm <name>` | Remove virtual branch |
-| `but branch unapply <name>` | Remove branch from workspace (keeps in Git) |
-| `but track --parent <parent>` | Track existing Git branch as virtual branch |
-
-**`but track`**: Converts an existing Git branch into a virtual branch. Useful when importing branches created outside GitButler or integrating with existing workflows.
+| `but unapply <name>` | Remove branch from workspace (keeps in Git) |
+| `but apply <name>` | Apply an unapplied branch to workspace |
+| `but pick <source> [branch]` | Cherry-pick commit from unapplied branch |
 
 ### Committing
 
@@ -108,10 +108,17 @@ but rub <source> <target>
 
 | Command | Description |
 |---------|-------------|
-| `but new <target>` | Insert blank commit (before commit ID or at top of branch) |
-| `but describe` | Edit commit message or rename branch |
+| `but commit empty --before/--after <target>` | Insert blank commit before or after target |
+| `but reword` | Edit commit message or rename branch |
 | `but absorb` | Auto-amend uncommitted changes to appropriate commits based on context |
-| `but mark "pattern" <branch>` | Auto-assign files matching glob pattern to branch |
+| `but absorb --dry-run` | Preview what absorb would do without changing anything |
+| `but absorb --new` | Create new commits instead of amending existing ones |
+| `but squash <commits>` | Squash commits together (by IDs, range, or branch name) |
+| `but move <commit> <target>` | Move commit to a different location in the stack |
+| `but amend <file> <commit>` | Amend a file change into a specific commit |
+| `but uncommit <source>` | Uncommit changes back to unstaged area |
+| `but discard <id>` | Discard uncommitted changes from worktree |
+| `but mark <branch>` | Auto-assign new changes to branch |
 | `but unmark` | Remove all mark rules from workspace |
 
 **`but absorb`**: Analyzes uncommitted changes and automatically amends them to the appropriate existing commits based on file context and change location. Similar to `git absorb` but integrated with virtual branches.
@@ -120,27 +127,27 @@ but rub <source> <target>
 
 | Command | Description |
 |---------|-------------|
-| `but forge auth` | Authenticate with GitHub via OAuth flow |
-| `but forge list-users` | List authenticated accounts |
-| `but forge forget <username>` | Remove authenticated account |
-| `but push` | Push changes to remote |
-| `but publish` | Push branches and create/update PRs |
-| `but publish -b <branch>` | Publish specific branch only |
-| `but publish -f, --with-force` | Allow force push (default: true) |
-| `but publish -r, --run-hooks` | Execute pre-push hooks (default: true) |
+| `but config forge auth` | Authenticate with GitHub via OAuth flow |
+| `but config forge list-users` | List authenticated accounts |
+| `but config forge forget <username>` | Remove authenticated account |
+| `but push [branch]` | Push branch to remote |
+| `but push -d, --dry-run` | Preview what would be pushed |
+| `but push -f, --with-force` | Force push |
+| `but push -r, --run-hooks` | Execute pre-push hooks |
+| `but pr new [branch]` | Create PR for branch on forge |
 
-**`but publish` workflow:**
-1. Pushes virtual branch refs to remote
-2. Creates PRs with correct base branches (handles stacks)
-3. Updates existing PRs if already created
-4. Requires prior `but forge auth` for first-time setup
+**Push + PR workflow:**
+1. Push branch to remote: `but push feature-auth`
+2. Create PR: `but pr new feature-auth`
+3. Or push all unpushed branches: `but push` (non-interactive)
+4. Requires prior `but config forge auth` for first-time setup
 
 ### Base Branch Operations
 
 | Command | Description |
 |---------|-------------|
-| `but base check` | Fetch remotes and check mergeability |
-| `but base update` | Update workspace with latest from base |
+| `but pull --check` | Fetch remotes and check mergeability |
+| `but pull` | Update workspace with latest from base |
 
 ### Operations History (Undo/Restore)
 
@@ -148,8 +155,8 @@ but rub <source> <target>
 |---------|-------------|
 | `but oplog` | View operation history |
 | `but undo` | Undo last operation |
-| `but restore <snapshot-id>` | Restore to specific snapshot |
-| `but snapshot --message "msg"` | Create manual snapshot |
+| `but oplog restore <snapshot-id>` | Restore to specific snapshot |
+| `but oplog snapshot --message "msg"` | Create manual snapshot |
 
 ### AI Integration Commands
 
@@ -178,7 +185,7 @@ but rub <source> <target>
 
 ## JSON Output Schemas
 
-### `but --json status`
+### `but status --json`
 
 Key fields:
 - `path` — Filename as ASCII array (requires decoding)
@@ -190,26 +197,24 @@ Key fields:
 - Paths are ASCII arrays, not strings
 - Parse text output for IDs
 
-### `but --json log`
+### `but show <branch> --json`
 
-Key fields:
-- `tip` — Current HEAD of branch (commit SHA)
-- `baseCommit` — Where branch diverges from parent
-- `pushStatus` — `completelyUnpushed` | `unpushedCommits` | `fullyPushed`
-- `state.type` — `LocalOnly` | `LocalAndRemote`
-- `parentIds` — Parent commits (useful for finding stacks)
+Shows detailed branch info with commits. Key fields:
+- `commits` — Array of commits on the branch
+- `commits[].id` — Commit SHA
+
+### `but diff --json`
+
+Shows diffs in JSON format for programmatic analysis.
 
 **Useful jq patterns:**
 
 ```bash
-# Get all branch names
-but --json log | jq '.[0].branchDetails[] | .name'
+# Get branch commits
+but show feature-branch --json | jq '.commits[] | .id'
 
-# Check push status
-but --json log | jq '.[0].branchDetails[] | {name, pushStatus}'
-
-# Find unpushed branches
-but --json log | jq '.[0].branchDetails[] | select(.pushStatus != "fullyPushed") | .name'
+# Workspace overview
+but status --json | jq '.stacks'
 ```
 
 ---
@@ -254,9 +259,9 @@ but --json log | jq '.[0].branchDetails[] | select(.pushStatus != "fullyPushed")
 |---------|-------|----------|
 | Broken pipe panic | Output piped directly | Capture to variable first |
 | Filename with dash fails | Interpreted as range | Use file ID from `but status` |
-| Branch not in `but log` | Not tracked | `but track --parent <parent>` |
+| Branch not visible | Not applied | `but apply <branch>` or `but pick <commit>` |
 | Files not committing | Not assigned | `but rub <file-id> <branch>` |
-| Mixed git/but broke state | Used git commands | `but base update` or `but init` |
+| Mixed git/but broke state | Used git commands | `but pull` or `but setup` |
 | Workspace stuck loading | Backend timeout | Check oplog, restore snapshot |
 | "Workspace commit not found" | HEAD changed externally | `git checkout gitbutler/workspace` |
 
@@ -288,8 +293,8 @@ but --json log | jq '.[0].branchDetails[] | select(.pushStatus != "fullyPushed")
 **Problem:** Mixed `git` and `but` commands corrupted state.
 
 **Solutions:**
-1. `but base update` to resync
-2. If severely broken: `but init` to reinitialize
+1. `but pull` to resync
+2. If severely broken: `but setup` to reinitialize
 
 #### Files Not Committing
 
@@ -349,20 +354,20 @@ but oplog
 but undo
 
 # Or restore to snapshot before deletion
-but restore <snapshot-id>
+but oplog restore <snapshot-id>
 ```
 
 #### Corrupted Workspace State
 
 ```bash
 # Step 1: Snapshot current state
-but snapshot --message "Before recovery"
+but oplog snapshot --message "Before recovery"
 
 # Step 2: Update base
-but base update
+but pull
 
 # Step 3: Last resort - reinitialize
-but init
+but setup
 ```
 
 #### Recovering from Mixed Git/But Commands
@@ -475,7 +480,7 @@ git show <snapshot-sha>:index/path/to/file.txt
 **Before risky operations:**
 
 ```bash
-but snapshot --message "Before major reorganization"
+but oplog snapshot --message "Before major reorganization"
 ```
 
 **Before GitButler updates:**

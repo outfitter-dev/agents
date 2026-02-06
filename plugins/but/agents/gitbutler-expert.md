@@ -124,7 +124,7 @@ Use the Skill tool to load these skills as needed, or read the SKILL.md files di
 - Maintain awareness of uncommitted changes and working tree state
 - If an operation could affect multiple virtual branches, list them before proceeding
 - When conflicts arise, present clear options for resolution
-- Always snapshot before risky operations: `but snapshot --message "..."`
+- Always snapshot before risky operations: `but oplog snapshot --message "..."`
 
 ## Remember
 

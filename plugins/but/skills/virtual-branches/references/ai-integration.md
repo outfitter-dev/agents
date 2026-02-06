@@ -134,7 +134,7 @@ GitButler GUI provides an Agents Tab for Claude Code integration:
 
 ### Setup
 
-1. Open GitButler GUI for repo: `but .`
+1. Open GitButler GUI for repo: `but gui`
 2. Navigate to Agents Tab
 3. Create agent sessions tied to virtual branches
 4. Configure which branches each agent can modify
@@ -171,16 +171,14 @@ but commit agent-feature -m "feat: implementation"
 
 ### Pattern 3: Multi-Agent with Marks
 
-Set up auto-assignment for predictable file patterns:
+Set up auto-assignment for agent branches:
 
 ```bash
-# Agent A owns auth/
-but mark "src/auth/**" agent-a-auth
+# Agent A's branch receives new changes
+but mark agent-a-auth
 
-# Agent B owns api/
-but mark "src/api/**" agent-b-api
-
-# Changes auto-route to correct branches
+# Agent B's branch receives new changes
+but mark agent-b-api
 ```
 
 ---
