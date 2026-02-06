@@ -1,7 +1,7 @@
 ---
 name: workflow-architect
 description: "Use this agent when designing multi-skill workflow systems with artifact-based state handoff. Triggers include \"workflow system\", \"skill pipeline\", \"sequenced workflow\", \"state handoff\", and \"workflow design\".\n\n<example>\nContext: User wants to build a development workflow.\nuser: \"Help me design a workflow for triaging issues through implementation\"\nassistant: \"I'll use the workflow-architect agent to design a skill pipeline with proper state handoff.\"\n</example>\n\n<example>\nContext: User has multiple skills that need to work together.\nuser: \"How should these skills pass state between each other?\"\nassistant: \"I'll launch the workflow-architect agent to design the artifact-based state handoff pattern.\"\n</example>\n\n<example>\nContext: User wants to understand workflow patterns.\nuser: \"What's the right pattern for a PR review workflow?\"\nassistant: \"I'll use the workflow-architect agent to show you the PR workflow template and customize it for your needs.\"\n</example>"
-model: sonnet
+model: opus
 permissionMode: plan
 skills:
   - outfitter:maintain-tasks

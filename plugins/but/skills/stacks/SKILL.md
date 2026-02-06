@@ -83,17 +83,18 @@ See `references/reorganization.md` for detailed workflows.
 
 ## Publishing Stacks
 
-### Using `but publish` (Preferred)
+### Using CLI (Preferred)
 
 ```bash
-# Publish entire stack - pushes and creates PRs
-but publish
+# Push and create PR for a branch
+but push dependent-feature
+but pr new dependent-feature
 
-# Publish specific branch only
-but publish -b dependent-feature
+# Push all unpushed branches
+but push
 ```
 
-`but publish` handles:
+`but push` + `but pr new` handles:
 - Pushing branches to remote
 - Creating PRs with correct base branches
 - Updating existing PRs if already created
@@ -132,7 +133,7 @@ GitButler resolves conflicts **per-commit** during rebase:
 
 ```bash
 # Update base (may trigger rebases in stack)
-but base update
+but pull
 
 # Check which commits have conflicts
 but status
@@ -160,14 +161,17 @@ See `references/reorganization.md` for detailed examples.
 
 ```bash
 # View full stack structure
-but log
+but status
 
 # Work on any branch directly (no checkout needed)
 but commit base-feature -m "update base"
 but commit dependent-feature -m "update dependent"
 
+# Inspect a specific branch
+but show dependent-feature
+
 # JSON for programmatic analysis
-but --json log | jq '.[] | .branchDetails[] | {name, baseCommit}'
+but show dependent-feature --json | jq '.commits[] | .id'
 ```
 
 <rules>
@@ -175,7 +179,7 @@ but --json log | jq '.[] | .branchDetails[] | {name, baseCommit}'
 ALWAYS:
 - Create stacks with `--anchor` from the start
 - Merge stacks bottom-to-top (base first, dependents after)
-- Snapshot before reorganizing: `but snapshot --message "Before stack reorganization"`
+- Snapshot before reorganizing: `but oplog snapshot --message "Before stack reorganization"`
 - Keep each level small (100-250 LOC) for reviewability
 - Delete empty branches after reorganization
 
@@ -191,7 +195,7 @@ NEVER:
 
 | Symptom | Cause | Solution |
 |---------|-------|----------|
-| Stack not showing in `but log` | Missing `--anchor` | Recreate with correct anchor |
+| Stack not showing in `but status` | Missing `--anchor` | Recreate with correct anchor |
 | Commits in wrong stack level | Wrong branch targeted | `but rub <sha> correct-branch` |
 | Can't merge middle of stack | Wrong order | Merge bottom-to-top only |
 
@@ -211,7 +215,7 @@ See `references/reorganization.md` for complete recovery procedures.
 
 ### Maintenance
 
-- Run `but log` regularly to verify structure
+- Run `but status` regularly to verify structure
 - Commit to correct branches immediately
 - Clean up empty branches
 

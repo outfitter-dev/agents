@@ -122,7 +122,7 @@ but rub <c-file-id> shared-feature
 but commit shared-feature -m "feat: collaborative implementation"
 ```
 
-Use with Workspace Rules (`but mark`) for auto-assignment by path patterns.
+Use with Workspace Rules (`but mark`) for auto-assignment to branches.
 
 ### Pattern 6: Exploratory Development
 
@@ -156,7 +156,8 @@ but rub <file-id> hotfix-urgent
 but commit hotfix-urgent -m "fix: prod outage"
 
 # Push and create PR
-but publish -b hotfix-urgent
+but push hotfix-urgent
+but pr new hotfix-urgent
 
 # Other agents continue unaffected in their lanes
 ```
@@ -172,7 +173,7 @@ Examples:
 - codex-refactor-database-layer
 ```
 
-Makes ownership immediately visible in `but status` and `but log`.
+Makes ownership immediately visible in `but status`.
 
 ## AI Integration Methods
 
@@ -182,7 +183,7 @@ Makes ownership immediately visible in `but status` and `but log`.
 - Each virtual branch = independent agent session
 - Automatic commit management per session
 - Parallel execution with branch isolation
-- Access: `but .` then navigate to Agents Tab
+- Access: `but gui` then navigate to Agents Tab
 
 ### 2. Lifecycle Hooks (CLI)
 
@@ -213,11 +214,11 @@ Exposes `gitbutler_update_branches` tool for async commit processing.
 ### 4. Workspace Rules (Auto-Assignment)
 
 ```bash
-but mark "src/auth/**" agent-auth-branch
-but mark "src/api/**" agent-api-branch
+but mark agent-auth-branch
+but mark agent-api-branch
 ```
 
-Files matching patterns auto-route to designated branches.
+New changes auto-route to the marked branch.
 
 **Key Instruction for All Agents:**
 > "Never use the git commit command after a task is finished"
@@ -259,7 +260,7 @@ but status > /tmp/agent-$(whoami)-status.txt
 |--------|----------|---------------|-----------|
 | Multi-agent concurrency | Serial | N directories | Parallel ✓ |
 | Post-hoc organization | Difficult | Difficult | `but rub` ✓ |
-| PR Submission | `gt submit` ✓ | Manual | `but publish` ✓ |
+| PR Submission | `gt submit` ✓ | Manual | `but push` + `but pr new` ✓ |
 | Physical layout | 1 directory | N × repo | 1 directory ✓ |
 | Context switching | `gt checkout` | `cd` | None ✓ |
 | Conflict detection | Late (merge) | Late (merge) | Early ✓ |

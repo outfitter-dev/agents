@@ -14,13 +14,13 @@ Advanced techniques for reorganizing GitButler stacks.
 
 # Stack feature-b on feature-a
 but branch new feature-b-stacked --anchor feature-a
-commit_sha=$(but log | grep "feature-b:" | head -1 | awk '{print $1}')
+commit_sha=$(but show feature-b --json | jq -r '.commits[0].id')
 but rub $commit_sha feature-b-stacked
 but branch delete feature-b --force
 
 # Stack feature-c on feature-b-stacked
 but branch new feature-c-stacked --anchor feature-b-stacked
-commit_sha=$(but log | grep "feature-c:" | head -1 | awk '{print $1}')
+commit_sha=$(but show feature-c --json | jq -r '.commits[0].id')
 but rub $commit_sha feature-c-stacked
 but branch delete feature-c --force
 ```
@@ -30,9 +30,11 @@ but branch delete feature-c --force
 Combine commits within the same stack level.
 
 ```bash
-newer_commit=$(but log | grep "newer" | awk '{print $1}')
-older_commit=$(but log | grep "older" | awk '{print $1}')
-but rub $newer_commit $older_commit
+# Squash all commits in a branch
+but squash my-branch
+
+# Or squash specific commits
+but squash <newer-commit> <older-commit>
 ```
 
 ## Moving Commits Between Stack Levels
@@ -40,8 +42,8 @@ but rub $newer_commit $older_commit
 Relocate a commit to the correct branch in the stack.
 
 ```bash
-commit_sha=$(but log | grep "specific commit" | awk '{print $1}')
-but rub $commit_sha correct-branch
+# Use commit ID from `but status` or `but show`
+but rub <commit-id> correct-branch
 ```
 
 ## Splitting a Branch
@@ -51,8 +53,8 @@ Extract part of a branch into a new stack level.
 ```bash
 # Original has multiple features
 but branch new second-feature --anchor original-branch
-commit_sha=$(but log | grep "second feature commit" | awk '{print $1}')
-but rub $commit_sha second-feature
+# Use commit ID from `but show original-branch`
+but rub <commit-id> second-feature
 ```
 
 ## Recovery
@@ -62,7 +64,7 @@ Recreate a branch with correct anchor when the original was created wrong.
 ```bash
 # Recreate branch with correct anchor
 but branch new child-stacked --anchor parent
-commit_sha=$(but log | grep "child:" | head -1 | awk '{print $1}')
+commit_sha=$(but show child --json | jq -r '.commits[0].id')
 but rub $commit_sha child-stacked
 but branch delete child --force
 ```
