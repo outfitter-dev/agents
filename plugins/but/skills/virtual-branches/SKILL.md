@@ -23,7 +23,7 @@ Virtual branches → parallel development → post-hoc organization.
 - Post-hoc commit reorganization needed
 - Visual organization preferred (GUI + CLI)
 
-NOT for: projects using Graphite (incompatible models), simple linear workflows (use plain git), when PR submission automation required end-to-end (use Graphite instead)
+NOT for: projects using Graphite (incompatible models), simple linear workflows (use plain git)
 
 </when_to_use>
 

@@ -272,24 +272,25 @@ but status --json | jq '.stacks'
 | **Branch Switching** | Required (`gt up`/`gt down`) | Never needed (all applied) |
 | **Branch Creation** | `gt create -am "msg"` | `but branch new name [--anchor parent]` |
 | **Committing** | `gt modify -cam "msg"` | `but commit -m "msg"` |
-| **Stack Navigation** | ✓ `gt up`/`gt down` | ✗ No CLI equivalent |
-| **PR Submission** | ✓ `gt submit --stack` | ✗ No CLI (GUI or `gh` CLI) |
-| **JSON Output** | Limited | ✓ Comprehensive via `--json` |
+| **Stack Navigation** | ✓ `gt up`/`gt down` | ✗ No CLI equivalent (all applied) |
+| **PR Submission** | ✓ `gt submit --stack` | ✓ `but push` + `but pr new` |
+| **JSON Output** | Limited | ✓ Comprehensive via `--json` per command |
 | **Multi-Feature Work** | Switch branches | All in one workspace |
-| **CLI Completeness** | ✓ Full automation | ⚠️ Partial (missing PR/push) |
+| **CLI Completeness** | ✓ Full automation | ✓ Full automation (as of 0.19.0) |
+| **Conflict Resolution** | Standard git rebase | ✓ Per-commit via `but resolve` |
 
 **Choose Graphite when:**
-- Need end-to-end CLI automation
-- PR submission required in scripts
-- Terminal-first workflow
-- Stack navigation commands needed
+- Stack navigation commands needed (`gt up`/`gt down`)
+- Terminal-first linear workflow
+- Established stacked PR practices
 
 **Choose GitButler when:**
 - Multiple unrelated features simultaneously
 - Multi-agent concurrent development
 - Exploratory coding (organize after)
 - Post-hoc commit reorganization
-- Visual organization preferred
+- Per-commit conflict resolution needed
+- Visual organization preferred (GUI + CLI)
 
 **Don't use both in same repo** — incompatible models.
 
