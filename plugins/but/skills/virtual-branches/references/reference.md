@@ -85,9 +85,14 @@ but --json status    # Global flag (also works)
 | `but commit -m "message"` | Commit to inferred branch |
 | `but commit <branch> -m "message"` | Commit to specific branch |
 | `but commit <branch> -o -m "msg"` | Only commit assigned files (`-o` flag) |
+| `but commit -p <id>,<id>` | Commit specific files/hunks by CLI ID |
+| `but commit --ai` | Generate commit message with AI |
+| `but commit -c` | Create new branch for this commit |
 | `but commit` | Opens `$EDITOR` for message |
+| `but commit empty --before <target>` | Insert blank commit before target |
+| `but commit empty --after <target>` | Insert blank commit after target |
 
-**Note:** Unlike git, GitButler commits all changes by default. Use `-o/--only` to commit only assigned files.
+**Note:** Unlike git, GitButler commits all changes by default. Use `-o/--only` to commit only assigned files, or `-p/--changes` to select specific file/hunk IDs.
 
 ### File and Commit Manipulation
 
@@ -157,6 +162,45 @@ but rub <source> <target>
 | `but undo` | Undo last operation |
 | `but oplog restore <snapshot-id>` | Restore to specific snapshot |
 | `but oplog snapshot --message "msg"` | Create manual snapshot |
+
+### Conflict Resolution
+
+| Command | Description |
+|---------|-------------|
+| `but resolve <commit-id>` | Enter resolution mode for a conflicted commit |
+| `but resolve status` | Show remaining conflicted files |
+| `but resolve finish` | Finalize resolution and return to workspace |
+| `but resolve cancel` | Cancel resolution and return to workspace |
+
+**Workflow:**
+1. `but status` shows conflicted commits
+2. `but resolve <commit-id>` to enter resolution mode
+3. Fix conflict markers in your editor
+4. `but resolve status` to check remaining conflicts
+5. `but resolve finish` to finalize
+
+### Workspace Lifecycle
+
+| Command | Description |
+|---------|-------------|
+| `but setup` | Initialize GitButler project from existing Git repo |
+| `but setup --init` | Initialize new Git repo and set up GitButler |
+| `but teardown` | Exit GitButler mode, return to normal Git |
+
+**`but teardown`**: Creates an oplog snapshot, checks out the first active branch as a regular Git branch, and provides instructions for returning to GitButler mode.
+
+### Configuration
+
+| Command | Description |
+|---------|-------------|
+| `but config` | Show configuration overview |
+| `but config user` | View user configuration |
+| `but config user set name "Name"` | Set user name |
+| `but config user set email "email"` | Set user email |
+| `but config forge` | View forge configuration |
+| `but config forge auth` | Authenticate with forge (GitHub OAuth) |
+| `but config forge list-users` | List authenticated accounts |
+| `but config forge forget <user>` | Remove authenticated account |
 
 ### AI Integration Commands
 

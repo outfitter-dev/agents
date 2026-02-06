@@ -205,6 +205,19 @@ but status
 ### Submit Stack as PRs
 
 ```bash
+# Using but CLI (preferred)
+but push refactor-database
+but pr new refactor-database
+
+but push feature-new-model
+but pr new feature-new-model
+
+but push test-new-model
+but pr new test-new-model
+```
+
+```bash
+# Alternative: using git + gh directly
 git push origin refactor-database
 gh pr create --title "refactor: database layer" --base main
 
@@ -269,6 +282,81 @@ but pull
 # If still broken, reinitialize
 but oplog snapshot --message "Before recovery"
 but setup
+```
+
+---
+
+## New in 0.19.0
+
+### Selective Commit with `--changes`
+
+```bash
+# Check status for file/hunk IDs
+but status
+# ╭┄00 [Unassigned Changes]
+# │   m6 A src/auth.ts
+# │   p9 A src/api.ts
+# │   i3 M README.md
+
+# Commit only specific files by ID
+but commit feature-auth -p m6,i3 -m "feat: add auth and update docs"
+
+# p9 remains uncommitted
+```
+
+### Conflict Resolution with `but resolve`
+
+```bash
+# After pulling, a commit has conflicts
+but pull
+but status
+# Shows conflicted commit with ⚠️ marker
+
+# Enter resolution mode
+but resolve abc1234
+
+# Fix conflict markers in your editor
+# Check what's left
+but resolve status
+
+# Finalize
+but resolve finish
+```
+
+### Squashing with Ranges
+
+```bash
+# Squash all commits in a branch
+but squash feature-branch
+
+# Squash specific commits
+but squash abc1234 def5678
+
+# Squash a range
+but squash abc1234..ghi9012
+```
+
+### Absorb with Preview
+
+```bash
+# Preview where changes would be absorbed
+but absorb --dry-run
+
+# Absorb into new commits instead of amending
+but absorb --new
+```
+
+### Push with Preview
+
+```bash
+# See what would be pushed without pushing
+but push --dry-run
+
+# Push a specific branch
+but push feature-auth
+
+# Push all unpushed branches
+but push
 ```
 
 ---
