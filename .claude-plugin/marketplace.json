@@ -16,7 +16,7 @@
 			"name": "outfitter",
 			"source": "./plugins/outfitter",
 			"description": "Core development methodology and Claude Code extensibility. Includes TDD, debugging, architecture, research, multi-agent coordination, plus skills/plugins/agents/hooks authoring for Claude Code and Codex configuration.",
-			"version": "1.3.1",
+			"version": "1.3.0",
 			"license": "MIT",
 			"keywords": [
 				"tdd",
@@ -39,7 +39,7 @@
 			"name": "but",
 			"source": "./plugins/but",
 			"description": "GitButler virtual branch workflows for parallel development, multi-agent coordination, and post-hoc commit organization",
-			"version": "1.1.0",
+			"version": "1.2.0",
 			"license": "Apache-2.0",
 			"keywords": [
 				"gitbutler",
@@ -54,7 +54,12 @@
 			"description": "Graphite stack workflows for trunk-based development with stacked PRs",
 			"version": "1.1.0",
 			"license": "Apache-2.0",
-			"keywords": ["graphite", "stacked-prs", "trunk-based", "gt-commands"]
+			"keywords": [
+				"graphite",
+				"stacked-prs",
+				"trunk-based",
+				"gt-commands"
+			]
 		},
 		{
 			"name": "cli-dev",
@@ -62,7 +67,12 @@
 			"description": "Skills for building command-line tools: argument parsing, help text, subcommands, and CLI best practices",
 			"version": "1.1.0",
 			"license": "CC-BY-SA-4.0 AND MIT",
-			"keywords": ["cli", "command-line", "argument-parsing", "terminal"]
+			"keywords": [
+				"cli",
+				"command-line",
+				"argument-parsing",
+				"terminal"
+			]
 		},
 		{
 			"name": "outfitter-stack",
